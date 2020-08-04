@@ -983,7 +983,16 @@ public class MainController : MonoBehaviour
 
         marioEmotion = emotion;
 
-        mariano.GetComponent<CharacterCTRL>().PlayAnimation(marioEmotion);
+        if (marioEmotion != "")
+        {
+            if (marioEmotion == "joy")
+                marioEmotion = emotion = "happiness";
+
+            string emoAnim = marioEmotion.Substring(0, 1).ToUpper() + marioEmotion.Substring(1) + "_C";
+            UnityEngine.Debug.Log(emoAnim);
+
+            mariano.GetComponent<CharacterCTRL>().PlayAnimation(emoAnim);
+        }
 
         //StartCoroutine(EyesMovement(actionScript));
         //StartCoroutine(EyeBrowsMovement());

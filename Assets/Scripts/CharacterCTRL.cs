@@ -39,41 +39,51 @@ public class CharacterCTRL : MonoBehaviour
     // Emotions dropdown menu
     private void CreateEmotionsList()
     {
-        emotionsList = new List<string>();
-        emotionsList.Add("Anger");
-        emotionsList.Add("Disgust");
-        emotionsList.Add("Doubt");
-        emotionsList.Add("Fear");
-        emotionsList.Add("Friendly");
-        //emotionsList.Add("Idle1"); // Same animation as "Friendly"
-        emotionsList.Add("Joy");
-        emotionsList.Add("Sadness");
-        emotionsList.Add("Sleep");
-        emotionsList.Add("Surprise");
-        emotionsList.Add("Worried");
+        /*emotionsList = new List<string>();
+        emotionsList.Add("Neutral");
+        emotionsList.Add("Anger_A");
+        emotionsList.Add("Anger_B");
+        emotionsList.Add("Anger_C");
+        emotionsList.Add("Disgust_A");
+        emotionsList.Add("Disgust_B");
+        emotionsList.Add("Disgust_C");
+        emotionsList.Add("Fear_A");
+        emotionsList.Add("Fear_B");
+        emotionsList.Add("Fear_C");
+        emotionsList.Add("Fear_D");
+        emotionsList.Add("Happiness_A");
+        emotionsList.Add("Happiness_B");
+        emotionsList.Add("Happiness_C");
+        emotionsList.Add("Sadness_A");
+        emotionsList.Add("Sadness_B");
+        emotionsList.Add("Sadness_C");
+        emotionsList.Add("Sadness_D");
+        emotionsList.Add("Surprise_A");
+        emotionsList.Add("Surprise_B");
+        emotionsList.Add("Surprise_C");*/
     }
 
-    private void CreateEmotionsDDMenu()
+    /*private void CreateEmotionsDDMenu()
     {
         ddMenu.onValueChanged.AddListener(delegate { PlayAnimation(ddMenu); });
         ddMenu.ClearOptions();
         ddMenu.AddOptions(emotionsList);
         ddMenu.gameObject.SetActive(true);
-    }
+    }*/
 
-    private void PlayAnimation(Dropdown menu)
+    /*private void PlayAnimation(Dropdown menu)
     {
         //Debug.Log("E: " + emotionsList[menu.value]);
         if (oldTrigger != null) animator.ResetTrigger(oldTrigger);
         oldTrigger = emotionsList[menu.value];
         animator.SetTrigger(oldTrigger);
-    }
+    }*/
 
     //new play animation, with string only
     public void PlayAnimation(string menu)
     {
         //get the index according the emotion
-        int index;
+        /*int index;
         switch (menu)
         {
             case "anger":
@@ -100,11 +110,12 @@ public class CharacterCTRL : MonoBehaviour
             default:
                 index = 4;
                 break;
-        }
+        }*/
 
         //Debug.Log("E: " + emotionsList[menu.value]);
         if (oldTrigger != null) animator.ResetTrigger(oldTrigger);
-        oldTrigger = emotionsList[index];
+        //oldTrigger = emotionsList[index];
+        oldTrigger = menu;
         animator.SetTrigger(oldTrigger);
     }
 
