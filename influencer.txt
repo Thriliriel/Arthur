@@ -1,0 +1,11 @@
+########################################
+#Arthur can try to influence people to do one thing or another.
+#
+#File structure:
+#Each line is a sentence
+#
+#Example:
+#ID;Sentence
+#1;Last time we talked, you were feeling good. How are you today?
+# 
+########################################

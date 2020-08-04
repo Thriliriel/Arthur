@@ -1,0 +1,6 @@
+7/10/2020 2:48:30 PM;3;i met Knob;meet new person;disgust;0;2;1
+7/12/2020 3:40:38 PM;24;old Knob;learn thing;disgust;0;23;22;1
+7/12/2020 3:40:42 PM;27;study Knob;learn thing;surprise;0.4019;1
+7/12/2020 3:40:47 PM;30;study course Knob;learn thing;surprise;0;29;1;28
+7/12/2020 3:40:49 PM;33;work Knob;learn thing;surprise;-0.296;32;1;31
+7/12/2020 3:40:53 PM;35;children Knob;learn thing;joy;-0.296;34;31;1

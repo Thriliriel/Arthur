@@ -1,0 +1,16 @@
+########################################
+#Depending the way the person answers the icebreakers, Arthur can answer in a way or another. This file maintains all the negative answers for the icebreakers.
+#if there is no sentence for a given id, it means it should say nothing
+#
+#File structure:
+#Each line is an answer
+#
+#Example:
+#ID;Question
+#1;Last time we talked, you were not feeling good. Did you get better?
+# 
+########################################
+
+2;Did you start studying?
+3;And were you able to get a job?
+4;And kids, got them?
