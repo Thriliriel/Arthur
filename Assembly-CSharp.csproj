@@ -103,6 +103,7 @@
     <Compile Include="Assets\Anima2D\Scripts\SpriteMesh.cs" />
     <Compile Include="Assets\Anima2D\Scripts\SpriteMeshAnimation.cs" />
     <Compile Include="Assets\Anima2D\Scripts\SpriteMeshInstance.cs" />
+    <Compile Include="Assets\Scripts\Calibration.cs" />
     <Compile Include="Assets\Scripts\CharacterCTRL.cs" />
     <Compile Include="Assets\Scripts\DictationScript.cs" />
     <Compile Include="Assets\Scripts\EyeCTRL.cs" />
@@ -313,16 +314,16 @@
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.0f1/Editor/Data/Managed/UnityEditor.dll</HintPath>
     </Reference>
     <Reference Include="CustomMarshalers">
-      <HintPath>C:/Users/Willian/Documents/VHLab/Unity Projects/Arthur/Assets/CustomMarshalers.dll</HintPath>
+      <HintPath>C:/Users/Willian/Documents/VHLab/Unity_Projects/Arthur/Assets/CustomMarshalers.dll</HintPath>
     </Reference>
     <Reference Include="Interop.SpeechLib">
-      <HintPath>C:/Users/Willian/Documents/VHLab/Unity Projects/Arthur/Assets/Interop.SpeechLib.dll</HintPath>
+      <HintPath>C:/Users/Willian/Documents/VHLab/Unity_Projects/Arthur/Assets/Interop.SpeechLib.dll</HintPath>
     </Reference>
     <Reference Include="AsyncIO">
-      <HintPath>C:/Users/Willian/Documents/VHLab/Unity Projects/Arthur/Assets/Plugins/AsyncIO.dll</HintPath>
+      <HintPath>C:/Users/Willian/Documents/VHLab/Unity_Projects/Arthur/Assets/Plugins/AsyncIO.dll</HintPath>
     </Reference>
     <Reference Include="NetMQ">
-      <HintPath>C:/Users/Willian/Documents/VHLab/Unity Projects/Arthur/Assets/Plugins/NetMQ.dll</HintPath>
+      <HintPath>C:/Users/Willian/Documents/VHLab/Unity_Projects/Arthur/Assets/Plugins/NetMQ.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.0f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>
@@ -679,31 +680,31 @@
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.0f1/Editor/Data/MonoBleedingEdge/lib/mono/unityscript/Boo.Lang.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline.Editor">
-      <HintPath>C:/Users/Willian/Documents/VHLab/Unity Projects/Arthur/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
+      <HintPath>C:/Users/Willian/Documents/VHLab/Unity_Projects/Arthur/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VSCode.Editor">
-      <HintPath>C:/Users/Willian/Documents/VHLab/Unity Projects/Arthur/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
+      <HintPath>C:/Users/Willian/Documents/VHLab/Unity_Projects/Arthur/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>C:/Users/Willian/Documents/VHLab/Unity Projects/Arthur/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+      <HintPath>C:/Users/Willian/Documents/VHLab/Unity_Projects/Arthur/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>C:/Users/Willian/Documents/VHLab/Unity Projects/Arthur/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+      <HintPath>C:/Users/Willian/Documents/VHLab/Unity_Projects/Arthur/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline">
-      <HintPath>C:/Users/Willian/Documents/VHLab/Unity Projects/Arthur/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
+      <HintPath>C:/Users/Willian/Documents/VHLab/Unity_Projects/Arthur/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
     </Reference>
     <Reference Include="Unity.CollabProxy.Editor">
-      <HintPath>C:/Users/Willian/Documents/VHLab/Unity Projects/Arthur/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
+      <HintPath>C:/Users/Willian/Documents/VHLab/Unity_Projects/Arthur/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Rider.Editor">
-      <HintPath>C:/Users/Willian/Documents/VHLab/Unity Projects/Arthur/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
+      <HintPath>C:/Users/Willian/Documents/VHLab/Unity_Projects/Arthur/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>C:/Users/Willian/Documents/VHLab/Unity Projects/Arthur/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>C:/Users/Willian/Documents/VHLab/Unity_Projects/Arthur/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.UI">
-      <HintPath>C:/Users/Willian/Documents/VHLab/Unity Projects/Arthur/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+      <HintPath>C:/Users/Willian/Documents/VHLab/Unity_Projects/Arthur/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup></ItemGroup>

@@ -3,3 +3,11 @@ Library/
 ProjectSettings/
 Logs/
 Packages/
+Clusters/
+Clustering/Clusters/*
+Clustering/CSV/*
+Clustering/Images/*
+Clustering/Logs/*
+Clustering/OpenFace/*
+Clustering/OpenFace_Output/*
+Clustering/Profiles/*
