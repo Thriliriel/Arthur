@@ -616,10 +616,20 @@ public class MainController : MonoBehaviour
                     }
                 }
 
-                responseText = "Yes, i already know " + personName;
+                //if the answer is about Arthur himself, lets make it more personal =)
+                if (personName == "Arthur")
+                {
+                    responseText = "Of course i know myself! Duh!!";
+                }
+                else
+                {
+                    responseText = "Yes, i already know " + personName;
 
-                //depending the emotion found for the event
-                responseText += ". It seemed " + EmotionMemoryPicker(retrieved.emotion) + " when we first met!";
+                    //depending the emotion found for the event
+                    responseText += ". It seemed " + EmotionMemoryPicker(retrieved.emotion) + " when we first met!";
+                }
+
+                //talk motherfucker!
                 SpeakYouFool(responseText);
 
                 break;
@@ -659,14 +669,47 @@ public class MainController : MonoBehaviour
 
                 if (met)
                 {
-                    //get all information about this person
-                    foreach (MemoryClass mk in retrieved.nodes)
+                    //if it is something about Arthur, lets make it more personal
+                    if (tokens.ContainsKey("Arthur"))
                     {
-                        if (!tokens.ContainsKey(mk.information))
+                        if (tokens.ContainsKey("old"))
                         {
-                            responseText += mk.information + " ";
+                            responseText = "I am ";
+
+                            foreach (MemoryClass mk in retrieved.nodes)
+                            {
+                                if (!tokens.ContainsKey(mk.information))
+                                {
+                                    responseText += mk.information + " ";
+                                }
+                            }
+
+                            responseText += "year old!";
+                        }else if (tokens.ContainsKey("study"))
+                        {
+                            responseText = "No, i do not study";
+                        }
+                        else if (tokens.ContainsKey("work"))
+                        {
+                            responseText = "No, i do not work";
+                        }
+                        else if (tokens.ContainsKey("children"))
+                        {
+                            responseText = "I have no children";
                         }
                     }
+                    else
+                    {
+                        //get all information about this person
+                        foreach (MemoryClass mk in retrieved.nodes)
+                        {
+                            if (!tokens.ContainsKey(mk.information))
+                            {
+                                responseText += mk.information + " ";
+                            }
+                        }
+                    }
+                    
                     responseText = responseText.Trim();
                 }
                 else
@@ -1561,7 +1604,8 @@ public class MainController : MonoBehaviour
                         //UnityEngine.Debug.Log(mem.activation);
 
                         //if activation drops below 0.2, loses a bit weight also
-                        if (mem.activation < 0.2f)
+                        //update: if has max weight, memory node is permanent
+                        if (mem.activation < 0.2f && mem.weight < 1)
                         {
                             mem.weight = Mathf.Log(mem.weight + 1);
                         }
@@ -1608,7 +1652,7 @@ public class MainController : MonoBehaviour
             {
                 //Timestamp;ID;Information;Type;Activation;Weight;Node1;Node2;...
                 writingLTM.Write(mem.memoryTime + ";" + mem.informationID.ToString() + ";" + mem.information.Trim() + ";"
-                    + mem.informationType.ToString() + ";" + mem.activation.ToString() + ";" + mem.weight.ToString());
+                    + mem.informationType.ToString() + ";" + mem.activation + ";" + mem.weight);
 
                 //if has nodes connected, save it also
                 if (mem.nodes.Count > 0)
@@ -1728,9 +1772,10 @@ public class MainController : MonoBehaviour
         agentShortTermMemory.Clear();
 
         //first: all memory nodes with low activation have their respective weights lowered
+        //update: memory nodes with weight 1 are considered permanent
         foreach (MemoryClass memC in agentLongTermMemory)
         {
-            if (memC.activation < 0.2f)
+            if (memC.activation < 0.2f && memC.weight < 1)
             {
                 memC.weight = Mathf.Log(memC.weight + 1);
             }

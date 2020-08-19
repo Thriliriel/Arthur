@@ -36,7 +36,7 @@ public class Calibration : MonoBehaviour
         menu.onValueChanged.AddListener(delegate { SetEmotion(menu); });
         menu.ClearOptions();
         menu.AddOptions(emotionsList);
-        menu.gameObject.SetActive(true);
+        //menu.gameObject.SetActive(true);
     }
 
     private void CreateRunButton()
