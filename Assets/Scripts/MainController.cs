@@ -1056,6 +1056,15 @@ public class MainController : MonoBehaviour
         string textSend = inputText.GetComponent<InputField>().text;
         inputText.GetComponent<InputField>().text = "";
 
+        //replace occurences of "you" for "Arthur"
+        textSend = textSend.Replace(" you ", " Arthur ");
+
+        //replace occurences of "me" for personName
+        textSend = textSend.Replace(" me ", " "+ personName +" ");
+        textSend = textSend.Replace(" me?", " " + personName + " ");
+        textSend = textSend.Replace(" i ", " " + personName + " ");
+        textSend = textSend.Replace(" i?", " " + personName + " ");
+
         if (!isGettingInformation && isKnowingNewPeople)
         {
             SaveNewPerson(textSend);
