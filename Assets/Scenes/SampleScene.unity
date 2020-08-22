@@ -8462,8 +8462,13 @@ MonoBehaviour:
   usingIceBreaker: 0
   isInfluencing: 0
   rootIceBreaker: 0
+  isSmallTalking: 0
+  usingSmallTalk: 0
+  rootSmallTalk: 0
   mariano: {fileID: 568877340}
   webServicePath: 
+  idleTimer: 0
+  waitForSeconds: 15
 --- !u!4 &1328823187
 Transform:
   m_ObjectHideFlags: 0

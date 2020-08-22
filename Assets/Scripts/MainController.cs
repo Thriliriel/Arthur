@@ -119,6 +119,15 @@ public class MainController : MonoBehaviour
     //id of the actual root icebreaker, if it is going down the tree
     public int rootIceBreaker;
 
+    //smallTalk stuff
+    private SmallTalkClass smallTalk;
+    //is small talking?
+    public bool isSmallTalking;
+    //id of the actual small talk
+    public int usingSmallTalk;
+    //id of the actual root smallTalk, if it is going down the tree
+    public int rootSmallTalk;
+
     //has the face recognition already returned?
     //private bool isFaceReco;
 
@@ -134,6 +143,11 @@ public class MainController : MonoBehaviour
     //webservice path
     public string webServicePath;
 
+    //timer for small talk
+    public float idleTimer;
+    //how much time should Arthur wait?
+    public float waitForSeconds;
+
     private void Awake()
     {
         //if arthur cannot speak, deactivate the game Object
@@ -141,9 +155,6 @@ public class MainController : MonoBehaviour
         {
             GameObject.Find("Speaker").SetActive(false);
         }
-
-        //start it with now
-        DateTime epochStart = System.DateTime.Now;
 
         webServicePath = "http://localhost:8080/";
 
@@ -163,6 +174,15 @@ public class MainController : MonoBehaviour
 
         //load icebreakers and answers from the file
         LoadIceBreakersAndStuff();
+
+        //set the small talks
+        usingSmallTalk = rootSmallTalk = -1;
+        //first element is just the pointer to the root questions
+        smallTalk = new SmallTalkClass(0, "", false);
+        usingSmallTalk = 0;
+
+        //load the small talks from the file
+        LoadSmallTalk();
 
         //hide zzz
         zzz.SetActive(false);
@@ -260,7 +280,7 @@ public class MainController : MonoBehaviour
     }
 
     //method to execute the python batch
-    static void ExecuteCommand(string command, string args)
+    /*static void ExecuteCommand(string command, string args)
     {
         var processInfo = new ProcessStartInfo("cmd.exe", "/c " + command);
         processInfo.CreateNoWindow = true;
@@ -281,8 +301,8 @@ public class MainController : MonoBehaviour
         process.WaitForExit();
 
         //Console.WriteLine("ExitCode: {0}", process.ExitCode);
-        process.Close();*/
-    }
+        process.Close();*
+    }*/
 
     // Start is called before the first frame update
     void Start()
@@ -303,6 +323,9 @@ public class MainController : MonoBehaviour
         StartCoroutine(ChangeFaceName());
 
         //SetEmotion("disgust");
+
+        //start the idle timer with the seconds now
+        idleTimer = Time.time;
     }
 
     private void OnDestroy()
@@ -522,6 +545,13 @@ public class MainController : MonoBehaviour
 
                 //reset files
                 ResetTokenFiles();
+            }
+
+            //if it is not breaking ice or already small talking, check the idle timer for a small talk
+            if(!isBreakingIce && !isSmallTalking)
+            if(Time.time - idleTimer > waitForSeconds)
+            {
+                SmallTalking();
             }
         }
     }
@@ -930,7 +960,10 @@ public class MainController : MonoBehaviour
                         string token = info[0];
                         string tknType = info[1];
 
-                        returnValues.Add(token, tknType);
+                        if (!returnValues.ContainsKey(token))
+                        {
+                            returnValues.Add(token, tknType);
+                        }
                     }
                 }
             } while (line != null);
@@ -1056,8 +1089,12 @@ public class MainController : MonoBehaviour
         string textSend = inputText.GetComponent<InputField>().text;
         inputText.GetComponent<InputField>().text = "";
 
+        //reset the idle timer
+        idleTimer = Time.time;
+
         //replace occurences of "you" for "Arthur"
         textSend = textSend.Replace(" you ", " Arthur ");
+        textSend = textSend.Replace(" you?", " Arthur ");
 
         //replace occurences of "me" for personName
         textSend = textSend.Replace(" me ", " "+ personName +" ");
@@ -1998,7 +2035,7 @@ public class MainController : MonoBehaviour
     }
 
     //check memory for an icebreaker
-    private bool FindIceBreakerInMemory(int whichIceBreaker)
+    /*private bool FindIceBreakerInMemory(int whichIceBreaker)
     {
         IceBreakingTreeClass thisIceBreaker = iceBreakers.FindIcebreaker(whichIceBreaker);
 
@@ -2017,12 +2054,15 @@ public class MainController : MonoBehaviour
         }
 
         return false;
-    }
+    }*/
 
     //breaking the ice!
     private void BreakIce(string beforeText = "")
     {
         saveNewMemoryNode = false;
+
+        //reset the idle timer
+        idleTimer = Time.time;
 
         IceBreakingTreeClass actualIceBreaker = iceBreakers.FindIcebreaker(usingIceBreaker);
 
@@ -2182,6 +2222,174 @@ public class MainController : MonoBehaviour
         }
     }
 
+    //find next small talk
+    private void SmallTalking(string beforeText = "")
+    {
+        saveNewMemoryNode = false;
+        isSmallTalking = true;
+
+        //reset idle timer
+        idleTimer = Time.time;
+
+        SmallTalkClass actualST = smallTalk.FindSmallTalk(usingSmallTalk);
+
+        //first, lets check if the actual icebreaker has an influencer, IF it is not yet influencing
+        /*if (!isInfluencing)
+        {
+            int actualId = actualIceBreaker.GetId();
+            if (influencer.ContainsKey(actualId))
+            {
+                //just try to influence if the answer has a contrary polarity
+                if ((actualIceBreaker.GetPolarity() == true && lastPolarity < 0) ||
+                    (actualIceBreaker.GetPolarity() == false && lastPolarity > 0))
+                {
+                    isInfluencing = !isInfluencing;
+
+                    SpeakYouFool(beforeText + influencer[actualId]);
+                    return;
+                }
+            }
+        }
+        else
+        {
+            //if was influencing, toggle it back
+            if (isInfluencing) isInfluencing = !isInfluencing;
+        }*/
+
+
+        //just follow the tree
+        //if still not using any, get the first
+        if (usingSmallTalk == 0)
+        {
+            usingSmallTalk = smallTalk.GetChild(0).GetId();
+            //rootSmallTalk = smallTalk.GetChild(0).GetId();
+            rootSmallTalk = smallTalk.GetId();
+
+            //check the memory for this little motherfucker
+        }
+        else
+        {
+            //othewise, we check if this small talk has children. 
+            //If it has, it means it has an alternative route depending on the answer of the person
+            if (actualST.QntChildren() > 0)
+            {
+                //now we check which question is it
+                //if it is one of the first levels, we check the polarity of the answer: if it is opposite of what was expected, we take the route
+                if (actualST.GetParent().GetId() == 0)
+                {
+                    if ((actualST.GetPolarity() == true && lastPolarity < 0) ||
+                        (actualST.GetPolarity() == false && lastPolarity > 0))
+                    {
+                        //if needed further ahead, here we would keep the root
+                        rootSmallTalk = actualST.GetId();
+
+                        //down the hill
+                        usingSmallTalk = actualST.GetChild(0).GetId();
+                    }
+                    else
+                    {
+                        //otherwise, we just get next
+                        int thisChild = actualST.CheckWhichChild();
+
+                        //next one
+                        thisChild++;
+
+                        //see if the parent has more children
+                        if (smallTalk.FindSmallTalk(rootSmallTalk).QntChildren() > thisChild)
+                        {
+                            usingSmallTalk = smallTalk.FindSmallTalk(rootSmallTalk).GetChild(thisChild).GetId();
+                        }//otherwise, we are done
+                        else
+                        {
+                            usingSmallTalk = rootSmallTalk = -1;
+                        }
+                    }
+                }//otherwise, just keep going
+                else
+                {
+                    usingSmallTalk = actualST.GetChild(0).GetId();
+                }
+            }
+            //Otherwise, we can just go on to the next
+            else
+            {
+                int thisChild = actualST.CheckWhichChild();
+
+                //next one
+                thisChild++;
+
+                //see if the parent has more children
+                if (smallTalk.FindSmallTalk(rootSmallTalk).QntChildren() > thisChild)
+                {
+                    usingSmallTalk = smallTalk.FindSmallTalk(rootSmallTalk).GetChild(thisChild).GetId();
+                }//otherwise, we are done
+                else
+                {
+                    usingSmallTalk = rootSmallTalk = -1;
+                }
+            }
+        }
+
+        //if found some small talk to still use, small talk should not be empty
+        if (usingSmallTalk > 0)
+        {
+            //before we speak, we should check the memory to see if this questions was already answered before.
+            //DEACTIVATED SO FAR
+            SmallTalkClass target = smallTalk.FindSmallTalk(usingSmallTalk);
+
+            //so, lets try to find some general event
+            GeneralEvent fuck = null;
+
+            /*foreach (GeneralEvent geez in agentGeneralEvents)
+            {
+                //if it exists, ding!
+                if (geez.information.Contains(personName)) //&& geez.information.Contains(target.GetType()
+                {
+                    fuck = geez;
+                    break;
+                }
+            }*/
+
+            //if found it, we change the question to reflect the previous knowledge
+            //update: here, we do not make questions again. We just dont call icebreakers
+            if (fuck != null)
+            {
+                //we check the polarity of the answer.
+                /*if (fuck.polarity > 0)
+                {
+                    SpeakYouFool(beforeText + positiveAnswer[target.GetId()]);
+                }
+                else if (fuck.polarity < 0)
+                {
+                    SpeakYouFool(beforeText + negativeAnswer[target.GetId()]);
+                }
+                else
+                {
+                    SpeakYouFool(beforeText + target.GetQuestion());
+                }*/
+                BreakIce(beforeText);
+                return;
+            }//otherwise, just make the question
+            else
+            {
+                SpeakYouFool(beforeText + target.Getsentence());
+            }
+        }//else, there is no more to talk about. Stop it
+        else
+        {
+            /*if (beforeText != "")
+            {
+                SpeakYouFool(beforeText);
+            }
+            else
+            {
+                SpeakYouFool("Thanks! Anything else you would like to talk about?");
+            }*/
+
+            isSmallTalking = false;
+        }
+    }
+
     //hide the random image
     public void HideRandomImage()
     {
@@ -2308,6 +2516,45 @@ public class MainController : MonoBehaviour
                     string ibQuestion = info[1];
 
                     influencer.Add(ibId, ibQuestion);
+                }
+            } while (line != null);
+        }
+        readingLTM.Close();
+    }
+
+    private void LoadSmallTalk()
+    {
+        string smallTalkFile = "smallTalk.txt";
+
+        StreamReader readingLTM = new StreamReader(smallTalkFile, System.Text.Encoding.Default);
+        using (readingLTM)
+        {
+            string line;
+            do
+            {
+                line = readingLTM.ReadLine();
+
+                if (line != "" && line != null)
+                {
+                    //skip comments
+                    if (line.Contains("#")) continue;
+
+                    //id;sentence;polarity;parent
+                    string[] info = line.Split(';');
+                    int ibId = int.Parse(info[0]);
+                    string ibQuestion = info[1];
+                    bool ibPolarity = bool.Parse(info[2]);
+                    int ibParent = int.Parse(info[3]);
+
+                    //if parent is 0, is one of the primary ones
+                    if (ibParent == 0)
+                    {
+                        smallTalk.AddChild(new SmallTalkClass(ibId, ibQuestion, ibPolarity));
+                    }//otherwise, it is one of the secondary ones. Need to first find the parent and, then, add
+                    else
+                    {
+                        smallTalk.FindSmallTalk(ibParent).AddChild(new SmallTalkClass(ibId, ibQuestion, ibPolarity));
+                    }
                 }
             } while (line != null);
         }

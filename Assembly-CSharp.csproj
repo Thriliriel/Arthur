@@ -114,6 +114,7 @@
     <Compile Include="Assets\Scripts\MemoryClass.cs" />
     <Compile Include="Assets\Scripts\MicrophoneController.cs" />
     <Compile Include="Assets\Scripts\RunAbleThread.cs" />
+    <Compile Include="Assets\Scripts\SmallTalkClass.cs" />
     <Compile Include="Assets\Scripts\SpeakerController.cs" />
     <None Include="Assets\StreamingAssets\affdex-data-3\haarcascade\haarcascade_frontalface_alt2.xml" />
     <None Include="Assets\Anima2D\Readme.txt" />
