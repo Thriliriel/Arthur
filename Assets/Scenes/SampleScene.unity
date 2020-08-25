@@ -8468,7 +8468,7 @@ MonoBehaviour:
   mariano: {fileID: 568877340}
   webServicePath: 
   idleTimer: 0
-  waitForSeconds: 15
+  waitForSeconds: 5
 --- !u!4 &1328823187
 Transform:
   m_ObjectHideFlags: 0

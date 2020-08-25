@@ -307,6 +307,17 @@ public class MainController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        /*SmallTalkClass teste = smallTalk.FindSmallTalk(6);
+        try
+        {
+            UnityEngine.Debug.Log(teste.Getsentence());
+        }
+        catch
+        {
+            UnityEngine.Debug.Log("Erroouuuu");
+        }
+        UnityEngine.Debug.Break();*/
+
         //reset the result file
         StreamWriter writingResult;
         writingResult = File.CreateText("result.txt");
@@ -426,8 +437,8 @@ public class MainController : MonoBehaviour
                         if (isYesNoQuestion)
                         {
                             DealYesNo();
-                        }//else, if it is breaking the ice, dont need to try to recover memory neither. Just save the information later and try to keep going                 
-                        else if (!isBreakingIce)
+                        }//else, if it is breaking the ice or small talking, dont need to try to recover memory neither. Just save the information later and try to keep going                 
+                        else if (!isBreakingIce && !isSmallTalking)
                         {
                             GeneralEvent foundIt = GenerativeRetrieval(tokens);
                             string unknoun = "";
@@ -536,6 +547,10 @@ public class MainController : MonoBehaviour
                         if (isBreakingIce)
                         {
                             BreakIce();
+                        }//else, if it is just small talking, get the answer
+                        else if (isSmallTalking)
+                        {
+                            SmallTalking();
                         }
                     }
                 }
@@ -1114,7 +1129,8 @@ public class MainController : MonoBehaviour
 
             //do not save memory of this
             saveNewMemoryNode = false;
-        }//else, tokenize
+        }
+        //else, tokenize
         else
         {
             //tokenize the text, removing the stop words
@@ -2225,6 +2241,9 @@ public class MainController : MonoBehaviour
     //find next small talk
     private void SmallTalking(string beforeText = "")
     {
+        //it is over already
+        if (usingSmallTalk == -1) return;
+
         saveNewMemoryNode = false;
         isSmallTalking = true;
 
@@ -2233,99 +2252,99 @@ public class MainController : MonoBehaviour
 
         SmallTalkClass actualST = smallTalk.FindSmallTalk(usingSmallTalk);
 
-        //first, lets check if the actual icebreaker has an influencer, IF it is not yet influencing
-        /*if (!isInfluencing)
-        {
-            int actualId = actualIceBreaker.GetId();
-            if (influencer.ContainsKey(actualId))
-            {
-                //just try to influence if the answer has a contrary polarity
-                if ((actualIceBreaker.GetPolarity() == true && lastPolarity < 0) ||
-                    (actualIceBreaker.GetPolarity() == false && lastPolarity > 0))
-                {
-                    isInfluencing = !isInfluencing;
-
-                    SpeakYouFool(beforeText + influencer[actualId]);
-                    return;
-                }
-            }
-        }
-        else
-        {
-            //if was influencing, toggle it back
-            if (isInfluencing) isInfluencing = !isInfluencing;
-        }*/
-
-
         //just follow the tree
         //if still not using any, get the first
         if (usingSmallTalk == 0)
         {
             usingSmallTalk = smallTalk.GetChild(0).GetId();
             //rootSmallTalk = smallTalk.GetChild(0).GetId();
-            rootSmallTalk = smallTalk.GetId();
-
-            //check the memory for this little motherfucker
+            rootSmallTalk = 0;
         }
         else
         {
-            //othewise, we check if this small talk has children. 
-            //If it has, it means it has an alternative route depending on the answer of the person
-            if (actualST.QntChildren() > 0)
+            //we get the children which corresponds with the polarity of the user's answer
+            if (actualST.QntChildren() > 1)
             {
-                //now we check which question is it
-                //if it is one of the first levels, we check the polarity of the answer: if it is opposite of what was expected, we take the route
-                if (actualST.GetParent().GetId() == 0)
+                if(actualST.GetPolarity() == true && lastPolarity > 0)
                 {
-                    if ((actualST.GetPolarity() == true && lastPolarity < 0) ||
-                        (actualST.GetPolarity() == false && lastPolarity > 0))
+                    if(actualST.GetChild(0).GetPolarity() == true)
                     {
-                        //if needed further ahead, here we would keep the root
-                        rootSmallTalk = actualST.GetId();
-
+                        //down the hill
+                        usingSmallTalk = actualST.GetChild(0).GetId();
+                    }else if (actualST.GetChild(1).GetPolarity() == true)
+                    {
+                        //down the hill
+                        usingSmallTalk = actualST.GetChild(1).GetId();
+                    }
+                }else
+                if (actualST.GetPolarity() == false && lastPolarity < 0)
+                {
+                    if (actualST.GetChild(0).GetPolarity() == false)
+                    {
                         //down the hill
                         usingSmallTalk = actualST.GetChild(0).GetId();
                     }
+                    else if (actualST.GetChild(1).GetPolarity() == false)
+                    {
+                        //down the hill
+                        usingSmallTalk = actualST.GetChild(1).GetId();
+                    }
+                }else if (actualST.GetPolarity() == true && lastPolarity < 0)
+                {
+                    if (actualST.GetChild(0).GetPolarity() == false)
+                    {
+                        //down the hill
+                        usingSmallTalk = actualST.GetChild(0).GetId();
+                    }
+                    else if (actualST.GetChild(1).GetPolarity() == false)
+                    {
+                        //down the hill
+                        usingSmallTalk = actualST.GetChild(1).GetId();
+                    }
+                }
+                else
+                if (actualST.GetPolarity() == false && lastPolarity > 0)
+                {
+                    if (actualST.GetChild(0).GetPolarity() == true)
+                    {
+                        //down the hill
+                        usingSmallTalk = actualST.GetChild(0).GetId();
+                    }
+                    else if (actualST.GetChild(1).GetPolarity() == true)
+                    {
+                        //down the hill
+                        usingSmallTalk = actualST.GetChild(1).GetId();
+                    }
+                }
+                /*else
+                {
+                    //otherwise, we just get next
+                    int thisChild = actualST.CheckWhichChild();
+
+                    //next one
+                    thisChild++;
+
+                    //see if the parent has more children
+                    if (smallTalk.FindSmallTalk(rootSmallTalk).QntChildren() > thisChild)
+                    {
+                        usingSmallTalk = smallTalk.FindSmallTalk(rootSmallTalk).GetChild(thisChild).GetId();
+                    }//otherwise, we are done
                     else
                     {
-                        //otherwise, we just get next
-                        int thisChild = actualST.CheckWhichChild();
-
-                        //next one
-                        thisChild++;
-
-                        //see if the parent has more children
-                        if (smallTalk.FindSmallTalk(rootSmallTalk).QntChildren() > thisChild)
-                        {
-                            usingSmallTalk = smallTalk.FindSmallTalk(rootSmallTalk).GetChild(thisChild).GetId();
-                        }//otherwise, we are done
-                        else
-                        {
-                            usingSmallTalk = rootSmallTalk = -1;
-                        }
+                        usingSmallTalk = rootSmallTalk = -1;
                     }
-                }//otherwise, just keep going
-                else
-                {
-                    usingSmallTalk = actualST.GetChild(0).GetId();
-                }
-            }
-            //Otherwise, we can just go on to the next
+                }*/
+            }//else, we reached a leaf. Go back to root and get next
             else
             {
-                int thisChild = actualST.CheckWhichChild();
-
-                //next one
-                thisChild++;
-
-                //see if the parent has more children
-                if (smallTalk.FindSmallTalk(rootSmallTalk).QntChildren() > thisChild)
+                rootSmallTalk++;
+                if(smallTalk.QntChildren() > rootSmallTalk)
                 {
-                    usingSmallTalk = smallTalk.FindSmallTalk(rootSmallTalk).GetChild(thisChild).GetId();
-                }//otherwise, we are done
+                    usingSmallTalk = smallTalk.GetChild(rootSmallTalk).GetId();
+                }//else, we are done
                 else
                 {
-                    usingSmallTalk = rootSmallTalk = -1;
+                    usingSmallTalk = -1;
                 }
             }
         }
@@ -2350,6 +2369,13 @@ public class MainController : MonoBehaviour
                 }
             }*/
 
+            //if this small talk has no children, we are done for now
+            if(target.QntChildren() == 0)
+            {
+                //since it is the answer, done
+                isSmallTalking = false;
+            }
+
             //if found it, we change the question to reflect the previous knowledge
             //update: here, we do not make questions again. We just dont call icebreakers
             if (fuck != null)
@@ -2367,7 +2393,7 @@ public class MainController : MonoBehaviour
                 {
                     SpeakYouFool(beforeText + target.GetQuestion());
                 }*/
-                BreakIce(beforeText);
+                //BreakIce(beforeText);
                 return;
             }//otherwise, just make the question
             else
@@ -2530,6 +2556,8 @@ public class MainController : MonoBehaviour
         using (readingLTM)
         {
             string line;
+            //aux vector just to build the tree up
+            Dictionary<int, SmallTalkClass> aux = new Dictionary<int, SmallTalkClass>();
             do
             {
                 line = readingLTM.ReadLine();
@@ -2549,11 +2577,19 @@ public class MainController : MonoBehaviour
                     //if parent is 0, is one of the primary ones
                     if (ibParent == 0)
                     {
-                        smallTalk.AddChild(new SmallTalkClass(ibId, ibQuestion, ibPolarity));
+                        SmallTalkClass newST = new SmallTalkClass(ibId, ibQuestion, ibPolarity);
+                        smallTalk.AddChild(newST);
+                        aux.Add(ibId, newST);
                     }//otherwise, it is one of the secondary ones. Need to first find the parent and, then, add
                     else
                     {
-                        smallTalk.FindSmallTalk(ibParent).AddChild(new SmallTalkClass(ibId, ibQuestion, ibPolarity));
+                        SmallTalkClass aaa;
+                        aux.TryGetValue(ibParent, out aaa);
+
+                        SmallTalkClass newST = new SmallTalkClass(ibId, ibQuestion, ibPolarity);
+                        aaa.AddChild(newST);
+                        aux.Add(ibId, newST);
+                        //smallTalk.FindSmallTalk(ibParent).AddChild(new SmallTalkClass(ibId, ibQuestion, ibPolarity));
                     }
                 }
             } while (line != null);

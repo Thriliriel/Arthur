@@ -73,6 +73,7 @@ public class SmallTalkClass
         else return child[index];
     }
 
+    //just go 2 lvls down
     public SmallTalkClass FindSmallTalk(int searchId)
     {
         SmallTalkClass foundIt = null;
@@ -80,30 +81,54 @@ public class SmallTalkClass
         if (id == searchId) foundIt = this;
         else
         {
-            foreach(SmallTalkClass chdn in child)
+            foreach(SmallTalkClass son in child)
             {
-                if (chdn.GetId() == searchId)
+                if(son.GetId() == searchId)
                 {
-                    foundIt = chdn;
+                    foundIt = son;
                     break;
                 }
-                //else, where its children also
                 else
                 {
-                    SmallTalkClass it = chdn;
-                    while (it.child.Count > 0)
+                    if (son.QntChildren() > 1)
                     {
-                        it = it.child[0];
-                        if (it.GetId() == searchId)
+                        if (son.GetChild(0).GetId() == searchId)
                         {
-                            foundIt = it;
+                            foundIt = son.GetChild(0);
                             break;
                         }
-                    }
-
-                    if(foundIt != null)
-                    {
-                        break;
+                        else if (son.GetChild(1).GetId() == searchId)
+                        {
+                            foundIt = son.GetChild(1);
+                            break;
+                        }
+                        else
+                        {
+                            if (son.GetChild(0).QntChildren() > 1)
+                            {
+                                if (son.GetChild(0).GetChild(0).GetId() == searchId)
+                                {
+                                    foundIt = son.GetChild(0).GetChild(0);
+                                    break;
+                                }
+                                else if (son.GetChild(0).GetChild(1).GetId() == searchId)
+                                {
+                                    foundIt = son.GetChild(0).GetChild(1);
+                                    break;
+                                }
+                            }else if (son.GetChild(1).QntChildren() > 1) {
+                                if (son.GetChild(1).GetChild(0).GetId() == searchId)
+                                {
+                                    foundIt = son.GetChild(1).GetChild(0);
+                                    break;
+                                }
+                                else if (son.GetChild(1).GetChild(1).GetId() == searchId)
+                                {
+                                    foundIt = son.GetChild(1).GetChild(1);
+                                    break;
+                                }
+                            }
+                        }
                     }
                 }
             }
