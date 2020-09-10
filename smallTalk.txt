@@ -16,7 +16,10 @@
 2;I am glad you are fine! I am feeling good too.;true;1
 3;I am sorry to hear that! Hope you get better soon.;false;1
 4;Do you like movies?;true;0
-5;Nice, i also like them! What is your favorite movie?;true;4
-6;It is a nice movie indeed.;true;5
+5;Nice, i also like them! What kind of movies do you like?;true;4
+6;Great taste.;true;5
 7;Oh, i understand.;false;5
 8;I see. Anything else you would to talk about?;false;4
+9;Do you like music?;true;0
+10;Cool, I always listen to music.;true;9
+11;OH I see, maybe you should try when you are at home.;false;9

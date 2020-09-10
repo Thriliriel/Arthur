@@ -1667,7 +1667,7 @@ public class MainController : MonoBehaviour
 
                         //if activation drops below 0.2, loses a bit weight also
                         //update: if has max weight, memory node is permanent
-                        if (mem.activation < 0.2f && mem.weight < 1)
+                        if (mem.activation < 0.2f && mem.weight < 0.9)
                         {
                             mem.weight = Mathf.Log(mem.weight + 1);
                         }
@@ -1837,7 +1837,7 @@ public class MainController : MonoBehaviour
         //update: memory nodes with weight 1 are considered permanent
         foreach (MemoryClass memC in agentLongTermMemory)
         {
-            if (memC.activation < 0.2f && memC.weight < 1)
+            if (memC.activation < 0.2f && memC.weight < 0.9)
             {
                 memC.weight = Mathf.Log(memC.weight + 1);
             }
@@ -2626,6 +2626,31 @@ public class MainController : MonoBehaviour
     //Web Service for Face Recognition
     private IEnumerator RecognitionWebService()
     {
+        if (!File.Exists("camImage.png"))
+        {
+            //save image
+            Texture txtr = cam.GetComponent<ViewCam>().GetComponent<MeshRenderer>().materials[0].mainTexture;
+            Texture2D image = new Texture2D(txtr.width, txtr.height, TextureFormat.RGB24, false);
+
+            RenderTexture rt = new RenderTexture(txtr.width, txtr.height, 0);
+            RenderTexture.active = rt;
+            // Copy your texture ref to the render texture
+            Graphics.Blit(txtr, rt);
+
+            Destroy(rt);
+
+            image.ReadPixels(new Rect(0, 0, txtr.width, txtr.height), 0, 0);
+            image.Apply();
+
+            byte[] _bytes = image.EncodeToPNG();
+            //Debug.Log(_bytes);
+            FileStream newImage = File.Create("camImage.png");
+            newImage.Close();
+            File.WriteAllBytes("camImage.png", _bytes);
+
+            Destroy(image);
+        }
+
         UnityWebRequest www = new UnityWebRequest(webServicePath + "recognize", "POST");
 
         //convert image to string

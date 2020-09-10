@@ -315,22 +315,34 @@ namespace Affdex
             else
                 rootPath = Path.Combine(Application.dataPath, "Affdex");
 
-            rootPath = Path.Combine(rootPath, "Plugins");
+            //rootPath = Path.Combine(rootPath, "Plugins");
+            //windows only
+            rootPath += "/Plugins";
 
             Debug.Log("Detector.Initialize: Starting affdex SDK using (" + Application.platform + ") Platform");
+            //Debug.LogError(rootPath);
 
             //use Application.platform to determine platform
             if (RuntimePlatform.WindowsEditor == Application.platform || RuntimePlatform.WindowsPlayer == Application.platform)
             {
                 if (IntPtr.Size == 8 && RuntimePlatform.WindowsEditor == Application.platform)
                 {
-                    rootPath = Path.Combine(rootPath, "x86_64");
+                    //rootPath = Path.Combine(rootPath, "x86_64");
+                    //windows only
+                    rootPath += "/x86_64";
                 }
                 else if (RuntimePlatform.WindowsEditor == Application.platform)
                 {
-                    rootPath = Path.Combine(rootPath, "x86");
+                    //rootPath = Path.Combine(rootPath, "x86");
+                    //windows only
+                    rootPath += "/x86";
                 }
-                LoadNativeDll(Path.Combine(rootPath, "affdex-native.dll"));
+                rootPath += "/x86_64";
+                //LoadNativeDll(Path.Combine(rootPath, "affdex-native.dll"));
+                //windows only
+                //Debug.LogError(rootPath + "/affdex-native.dll");
+                LoadNativeDll(rootPath + "/affdex-native.dll");
+
                 nativePlatform = gameObject.AddComponent<WindowsNativePlatform>();
             }
             else if (RuntimePlatform.OSXEditor == Application.platform || RuntimePlatform.OSXPlayer == Application.platform)
