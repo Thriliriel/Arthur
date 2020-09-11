@@ -337,6 +337,9 @@ public class MainController : MonoBehaviour
 
         //start the idle timer with the seconds now
         idleTimer = Time.time;
+
+        //just testing...
+        StartCoroutine(CreateMemoryNodeWebService("Demonio", "Demon", "age:31,ocupation:'teacher'"));
     }
 
     private void OnDestroy()
@@ -2712,6 +2715,42 @@ public class MainController : MonoBehaviour
 
         //try to find again
         StartCoroutine(RecognitionWebService());
+    }
+
+    //Web Service for create node in memory
+    private IEnumerator CreateMemoryNodeWebService(string node, string typeNode = "", string label = "")
+    {
+        UnityWebRequest www = new UnityWebRequest(webServicePath + "neo4jTransaction", "POST");
+        string jason = "{\"typeTransaction\" : [\"createNode\"], \"node\" : [\"" + node + "\"], \"typeNode\" : [\"" + typeNode + "\"], \"label\" : [\"" + label + "\"]}";
+        //UnityEngine.Debug.Log(jason);
+        byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(jason);
+        //byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes("\"typeTransaction\" : [\"createNode\"]");
+        www.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
+        www.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+
+        www.SetRequestHeader("Content-Type", "application/json");
+
+        using (www)
+        {
+            yield return www.SendWebRequest();
+
+            if (www.isNetworkError || www.isHttpError)
+            {
+                UnityEngine.Debug.Log(www.error);
+            }
+            else
+            {
+                //UnityEngine.Debug.Log("Received 0: " + www.downloadHandler.text);
+                string[] aux = www.downloadHandler.text.Split(':');
+                //UnityEngine.Debug.Log("Received 0.1: " + aux[2]);
+                aux[0] = aux[2].Replace("}}", "");
+                aux[0] = aux[0].Replace("\"", "");
+                //UnityEngine.Debug.Log("Received 1: " + aux[0]);
+                int idReturned = Int32.Parse(aux[0]);
+                UnityEngine.Debug.Log("Received 2: " + idReturned);
+                //WriteTokens(www.downloadHandler.text);
+            }
+        }
     }
 
     private void WriteTokens(string webServiceResponse)
