@@ -148,6 +148,12 @@ public class MainController : MonoBehaviour
     //how much time should Arthur wait?
     public float waitForSeconds;
 
+    //temp memories to keep for general events later
+    private int qntTempNodes = 0;
+    private Dictionary<int,string> tempNodes;
+    private string tempTypeEvent;
+    private string tempRelationship;
+
     private void Awake()
     {
         //if arthur cannot speak, deactivate the game Object
@@ -163,6 +169,7 @@ public class MainController : MonoBehaviour
         positiveAnswer = new Dictionary<int, string>();
         negativeAnswer = new Dictionary<int, string>();
         influencer = new Dictionary<int, string>();
+        tempNodes = new Dictionary<int, string>();
 
         eyes = GameObject.FindGameObjectsWithTag("Eye");
 
@@ -339,7 +346,7 @@ public class MainController : MonoBehaviour
         idleTimer = Time.time;
 
         //just testing...
-        StartCoroutine(CreateMemoryNodeWebService("Demonio", "Demon", "age:31,ocupation:'teacher'"));
+        //StartCoroutine(CreateMemoryNodeWebService("Demonio", "Demon", "age:31,ocupation:'teacher'"));
     }
 
     private void OnDestroy()
@@ -570,6 +577,44 @@ public class MainController : MonoBehaviour
             if(Time.time - idleTimer > waitForSeconds)
             {
                 SmallTalking();
+            }
+
+            //if we have temp nodes, need to create general event for it
+            if(tempNodes.Count > 0 && tempNodes.Count == qntTempNodes)
+            {
+                //create a new general event
+                string infoEvent = "interaction";
+                if(tempTypeEvent == "meet new person")
+                {
+                    infoEvent = "i met " + personName;
+                }else if (tempTypeEvent == "learn thing")
+                {
+                    infoEvent = "i learned something";
+                }
+
+                //connect nodes for event and create relationship on the database
+                List<int> connectNodes = new List<int>();
+                List<string> twoByTwo = new List<string>();
+                foreach (KeyValuePair<int, string> cn in tempNodes)
+                {
+                    connectNodes.Add(cn.Key);
+                    twoByTwo.Add(cn.Value);
+
+                    if(twoByTwo.Count == 2)
+                    {
+                        StartCoroutine(CreateRelatioshipNodesWebService(twoByTwo[0], twoByTwo[1], tempRelationship));
+                        twoByTwo.RemoveAt(0);
+                    }
+                }
+
+                AddGeneralEvent(tempTypeEvent, infoEvent, connectNodes);
+
+                connectNodes.Clear();
+
+                //reset it
+                tempTypeEvent = tempRelationship = "";
+                qntTempNodes = -1;
+                tempNodes.Clear();
             }
         }
     }
@@ -1321,23 +1366,18 @@ public class MainController : MonoBehaviour
         File.Copy("camImage.png", "AutobiographicalStorage/Images/" + namePerson + ".png");
         StartCoroutine(SavePersonWebService());
 
-        //create a new autobiographical storage for the person name, into the STM
-        int idMemoryName = AddToSTM(0, namePerson, 1);
+        //save on Neo4j
+        //on temp, we have to find 2 information later
+        qntTempNodes = 2;
+        string label = "name:'"+namePerson+"',activation:1,weight:0.9,nodeType:'text'";
+        StartCoroutine(CreateMemoryNodeWebService(namePerson, "Person", label, 0.9f));
 
-        //create a new autobiographical storage for the person image, into the STM
-        int idImagePerson = AddToSTM(1, "Python/face_recognition-master/Data/" + namePerson + ".png", 1);
+        label = "name:'AutobiographicalStorage/Images/" + namePerson + ".png',activation:1,weight:0.9,nodeType:'image'";
+        StartCoroutine(CreateMemoryNodeWebService("myself", "Image", label, 0.9f));
 
-        List<int> connectNodes = new List<int>();
-        connectNodes.Add(idMemoryName);
-        connectNodes.Add(idImagePerson);
-
-        //connect them both
-        ConnectMemoryNodes(connectNodes);
-
-        //create a new general event
-        AddGeneralEvent("meet new person", "i met " + personName, connectNodes);
-
-        connectNodes.Clear();
+        //type of the event, to save later
+        tempTypeEvent = "meet new person";
+        tempRelationship = "HAS_PHOTO";
 
         isKnowingNewPeople = false;
 
@@ -1418,7 +1458,7 @@ public class MainController : MonoBehaviour
     }
 
     //add to stm and return the memory ID
-    private int AddToSTM(int informationType, string information, float weight = 0.1f)
+    private int AddToSTM(int informationType, string information, float weight = 0.1f, int nodeId = -1)
     {
         //first, checks if the memory already exists
         int ind = 0;
@@ -1497,7 +1537,14 @@ public class MainController : MonoBehaviour
             MemoryClass newMemory = null;
             if (ind == 0)
             {
-                ind = GenerateID();
+                if (nodeId > -1)
+                {
+                    ind = nodeId;
+                }
+                else
+                {
+                    ind = GenerateID();
+                }
                 newMemory = new MemoryClass(System.DateTime.Now, informationType, information, ind, weight);
                 agentShortTermMemory.Insert(0, newMemory);
             }//else, it already exists in the LTM or in the STM.
@@ -2718,7 +2765,7 @@ public class MainController : MonoBehaviour
     }
 
     //Web Service for create node in memory
-    private IEnumerator CreateMemoryNodeWebService(string node, string typeNode = "", string label = "")
+    private IEnumerator CreateMemoryNodeWebService(string node, string typeNode = "", string label = "", float weight = 0.1f)
     {
         UnityWebRequest www = new UnityWebRequest(webServicePath + "neo4jTransaction", "POST");
         string jason = "{\"typeTransaction\" : [\"createNode\"], \"node\" : [\"" + node + "\"], \"typeNode\" : [\"" + typeNode + "\"], \"label\" : [\"" + label + "\"]}";
@@ -2748,7 +2795,42 @@ public class MainController : MonoBehaviour
                 //UnityEngine.Debug.Log("Received 1: " + aux[0]);
                 int idReturned = Int32.Parse(aux[0]);
                 UnityEngine.Debug.Log("Received 2: " + idReturned);
-                //WriteTokens(www.downloadHandler.text);
+
+                //add in STM
+                int infoType = 0;
+                if (typeNode == "Image") infoType = 1;
+
+                AddToSTM(infoType, node, weight, idReturned);
+
+                //add this on temp
+                tempNodes.Add(idReturned, node);
+            }
+        }
+    }
+
+    private IEnumerator CreateRelatioshipNodesWebService(string node, string node2, string relationship = "")
+    {
+        UnityWebRequest www = new UnityWebRequest(webServicePath + "neo4jTransaction", "POST");
+        string jason = "{\"typeTransaction\" : [\"addRelationship\"], \"node\" : [\"" + node + "\"], \"node2\" : [\"" + node2 + "\"], \"relationship\" : [\"" + relationship + "\"]}";
+        //UnityEngine.Debug.Log(jason);
+        byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(jason);
+        //byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes("\"typeTransaction\" : [\"createNode\"]");
+        www.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
+        www.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+
+        www.SetRequestHeader("Content-Type", "application/json");
+
+        using (www)
+        {
+            yield return www.SendWebRequest();
+
+            if (www.isNetworkError || www.isHttpError)
+            {
+                UnityEngine.Debug.Log(www.error);
+            }
+            else
+            {
+                UnityEngine.Debug.Log("Relationship: " + www.downloadHandler.text);
             }
         }
     }
