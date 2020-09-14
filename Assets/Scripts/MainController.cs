@@ -594,11 +594,11 @@ public class MainController : MonoBehaviour
 
                 //connect nodes for event and create relationship on the database
                 List<int> connectNodes = new List<int>();
-                List<string> twoByTwo = new List<string>();
+                List<int> twoByTwo = new List<int>();
                 foreach (KeyValuePair<int, string> cn in tempNodes)
                 {
                     connectNodes.Add(cn.Key);
-                    twoByTwo.Add(cn.Value);
+                    twoByTwo.Add(cn.Key);
 
                     if(twoByTwo.Count == 2)
                     {
@@ -898,6 +898,26 @@ public class MainController : MonoBehaviour
         writingResult.Close();
     }
 
+    //save ice breakers on memory
+    private void SaveIceBreaker(Dictionary<string, string> tokens, string informationEvent)
+    {
+        //depending on the ice breaker, we just add info in the person
+        if (tokens.ContainsKey("old"))
+        {
+            foreach (KeyValuePair<string, string> txt in tokens)
+            {
+                if(txt.Key != personName && txt.Key != "old")
+                {
+                    StartCoroutine(UpdateMemoryNodeWebService(personName, "age", txt.Key));
+                }
+            }   
+        }
+
+        //iceBreakers.FindIcebreaker(usingIceBreaker)
+        //string label = "name:'" + namePerson + "',activation:1,weight:0.9,nodeType:'text'";
+        //StartCoroutine(CreateMemoryNodeWebService(namePerson, "Person", label, 0.9f));
+    }
+
     //save a new memory node and return the tokens
     private void SaveMemoryNode(Dictionary<string, string> tokens, string informationEvent)
     {
@@ -908,82 +928,96 @@ public class MainController : MonoBehaviour
 
         if (isBreakingIce)
         {
-            typeEvent = "learn thing";
-            weight = 0.9f;
+            SaveIceBreaker(tokens, informationEvent);
         }
-
-        //for each information, save it in memory
-        foreach (KeyValuePair<string, string> txt in tokens)
+        else
         {
-            //strip the "'"
-            int thisID = AddToSTM(0, txt.Key, weight);
-            connectNodes.Add(thisID);
-        }
 
-        //if we have a second level icebreaker, we need to find the general event to add info into it
-        //UPDATE: deactivate it, because the answers of the questions get mixed
-        /*GeneralEvent fuck = null;
-        if (rootIceBreaker != -1)
-        {
-            foreach (GeneralEvent geez in agentGeneralEvents)
+            //for create general event later
+            qntTempNodes = tokens.Count;
+            //type of the event, to save later
+            tempTypeEvent = "meet new person";
+            tempRelationship = "HAS_PHOTO";
+
+            //for each information, save it in memory
+            foreach (KeyValuePair<string, string> txt in tokens)
             {
-                //for each memory node which compounds this general event
-                foreach (MemoryClass node in geez.nodes)
+                //strip the "'"
+                //int thisID = AddToSTM(0, txt.Key, weight);
+                //connectNodes.Add(thisID);
+                //save on Neo4j
+                //on temp, we have to find 2 information later
+                
+                
+                //string label = "name:'" + namePerson + "',activation:1,weight:0.9,nodeType:'text'";
+                //StartCoroutine(CreateMemoryNodeWebService(namePerson, "Person", label, 0.9f));
+            }
+
+            //if we have a second level icebreaker, we need to find the general event to add info into it
+            //UPDATE: deactivate it, because the answers of the questions get mixed
+            /*GeneralEvent fuck = null;
+            if (rootIceBreaker != -1)
+            {
+                foreach (GeneralEvent geez in agentGeneralEvents)
                 {
-                    //if it exists, ++
-                    if (node.information.Contains(iceBreakers.FindIcebreaker(usingIceBreaker).GetType()))
+                    //for each memory node which compounds this general event
+                    foreach (MemoryClass node in geez.nodes)
                     {
-                        //found it!
-                        fuck = geez;
-                        break;
+                        //if it exists, ++
+                        if (node.information.Contains(iceBreakers.FindIcebreaker(usingIceBreaker).GetType()))
+                        {
+                            //found it!
+                            fuck = geez;
+                            break;
+                        }
                     }
                 }
-            }
-        }*/
+            }*/
 
-        GeneralEvent fuck = null;
-        if (fuck == null)
-        {
-            //create a new general event
-            AddGeneralEvent(typeEvent, informationEvent.Trim(), connectNodes);
-
-            //now, we connect the memories
-            ConnectMemoryNodes(connectNodes);
-        }
-        //deactivated for now
-        /*else
-        {
-            foreach(MemoryClass nd in fuck.nodes)
+            GeneralEvent fuck = null;
+            if (fuck == null)
             {
-                //see if it already exists
-                if (connectNodes.Contains(nd.informationID))
-                {
-                    //take this out of connectnodes, since it already exists
-                    connectNodes.Remove(nd.informationID);
-                    //break;
-                }
-            }
+                //create a new general event
+                AddGeneralEvent(typeEvent, informationEvent.Trim(), connectNodes);
 
-            //now, we add the remaining connectnodes
-            if (connectNodes.Count > 0)
+                //now, we connect the memories
+                ConnectMemoryNodes(connectNodes);
+            }
+            //deactivated for now
+            /*else
             {
-                foreach (MemoryClass mc in agentShortTermMemory)
+                foreach(MemoryClass nd in fuck.nodes)
                 {
-                    if (connectNodes.Contains(mc.informationID))
+                    //see if it already exists
+                    if (connectNodes.Contains(nd.informationID))
                     {
-                        fuck.nodes.Add(mc);
+                        //take this out of connectnodes, since it already exists
+                        connectNodes.Remove(nd.informationID);
+                        //break;
                     }
                 }
-            }
 
-            //and if it should be final, add it to know later
-            if (iceBreakers.FindIcebreaker(rootIceBreaker).GetType().Contains("final"))
-            {
-                fuck.information += " final";
-            }
-        }*/
+                //now, we add the remaining connectnodes
+                if (connectNodes.Count > 0)
+                {
+                    foreach (MemoryClass mc in agentShortTermMemory)
+                    {
+                        if (connectNodes.Contains(mc.informationID))
+                        {
+                            fuck.nodes.Add(mc);
+                        }
+                    }
+                }
 
-        connectNodes.Clear();
+                //and if it should be final, add it to know later
+                if (iceBreakers.FindIcebreaker(rootIceBreaker).GetType().Contains("final"))
+                {
+                    fuck.information += " final";
+                }
+            }*/
+
+            connectNodes.Clear();
+        }
     }
 
     //get the tokens from the file
@@ -1372,7 +1406,7 @@ public class MainController : MonoBehaviour
         string label = "name:'"+namePerson+"',activation:1,weight:0.9,nodeType:'text'";
         StartCoroutine(CreateMemoryNodeWebService(namePerson, "Person", label, 0.9f));
 
-        label = "name:'AutobiographicalStorage/Images/" + namePerson + ".png',activation:1,weight:0.9,nodeType:'image'";
+        label = "name:'myself',image:'AutobiographicalStorage/Images/" + namePerson + ".png',activation:1,weight:0.9,nodeType:'image'";
         StartCoroutine(CreateMemoryNodeWebService("myself", "Image", label, 0.9f));
 
         //type of the event, to save later
@@ -2808,10 +2842,38 @@ public class MainController : MonoBehaviour
         }
     }
 
-    private IEnumerator CreateRelatioshipNodesWebService(string node, string node2, string relationship = "")
+    //Web Service for update node in memory
+    private IEnumerator UpdateMemoryNodeWebService(string node, string nodeKey = "", string nodeValue = "")
     {
         UnityWebRequest www = new UnityWebRequest(webServicePath + "neo4jTransaction", "POST");
-        string jason = "{\"typeTransaction\" : [\"addRelationship\"], \"node\" : [\"" + node + "\"], \"node2\" : [\"" + node2 + "\"], \"relationship\" : [\"" + relationship + "\"]}";
+        string jason = "{\"typeTransaction\" : [\"updateNode\"], \"node\" : [\"" + node + "\"], \"nodeKey\" : [\"" + nodeKey + "\"], \"nodeValue\" : [\"" + nodeValue + "\"]}";
+        //UnityEngine.Debug.Log(jason);
+        byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(jason);
+        //byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes("\"typeTransaction\" : [\"createNode\"]");
+        www.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
+        www.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+
+        www.SetRequestHeader("Content-Type", "application/json");
+
+        using (www)
+        {
+            yield return www.SendWebRequest();
+
+            if (www.isNetworkError || www.isHttpError)
+            {
+                UnityEngine.Debug.Log(www.error);
+            }
+            else
+            {
+                UnityEngine.Debug.Log("Received: " + www.downloadHandler.text);
+            }
+        }
+    }
+
+    private IEnumerator CreateRelatioshipNodesWebService(int node, int node2, string relationship = "")
+    {
+        UnityWebRequest www = new UnityWebRequest(webServicePath + "neo4jTransaction", "POST");
+        string jason = "{\"typeTransaction\" : [\"addRelationship\"], \"node\" : [" + node + "], \"node2\" : [" + node2 + "], \"relationship\" : [\"" + relationship + "\"]}";
         //UnityEngine.Debug.Log(jason);
         byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(jason);
         //byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes("\"typeTransaction\" : [\"createNode\"]");
