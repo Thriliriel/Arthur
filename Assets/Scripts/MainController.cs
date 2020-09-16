@@ -352,7 +352,7 @@ public class MainController : MonoBehaviour
     private void OnDestroy()
     {
         //save LTM as it is
-        SaveLTM();
+        //SaveLTM();
 
         //save general events
         SaveGeneralEvents();
@@ -595,6 +595,7 @@ public class MainController : MonoBehaviour
                 //connect nodes for event and create relationship on the database
                 List<int> connectNodes = new List<int>();
                 List<int> twoByTwo = new List<int>();
+
                 foreach (KeyValuePair<int, string> cn in tempNodes)
                 {
                     connectNodes.Add(cn.Key);
@@ -603,7 +604,16 @@ public class MainController : MonoBehaviour
                     if(twoByTwo.Count == 2)
                     {
                         StartCoroutine(CreateRelatioshipNodesWebService(twoByTwo[0], twoByTwo[1], tempRelationship));
-                        twoByTwo.RemoveAt(0);
+
+                        //if it is children, the pairing is a bit different, since they all connect with the person
+                        if (tempRelationship == "HAS_CHILD")
+                        {
+                            twoByTwo.RemoveAt(1);
+                        }
+                        else
+                        {
+                            twoByTwo.RemoveAt(0);
+                        }
                     }
                 }
 
@@ -911,6 +921,136 @@ public class MainController : MonoBehaviour
                     StartCoroutine(UpdateMemoryNodeWebService(personName, "age", txt.Key));
                 }
             }   
+        }else if (tokens.ContainsKey("study"))
+        {
+            foreach (KeyValuePair<string, string> txt in tokens)
+            {
+                if (txt.Key != personName && txt.Key != "study")
+                {
+                    StartCoroutine(UpdateMemoryNodeWebService(personName, "study", txt.Key));
+                }
+            }
+        }
+        else if (tokens.ContainsKey("work"))
+        {
+            foreach (KeyValuePair<string, string> txt in tokens)
+            {
+                if (txt.Key != personName && txt.Key != "work")
+                {
+                    StartCoroutine(UpdateMemoryNodeWebService(personName, "work", txt.Key));
+                }
+            }
+        }
+        else if (tokens.ContainsKey("children"))
+        {
+            foreach (KeyValuePair<string, string> txt in tokens)
+            {
+                if (txt.Key != personName && txt.Key != "children")
+                {
+                    StartCoroutine(UpdateMemoryNodeWebService(personName, "children", txt.Key));
+                }
+            }
+        }
+        else if (tokens.ContainsKey("study course"))
+        {
+            //"create" the person as well, just to get id back
+            StartCoroutine(CreateMemoryNodeWebService(personName, "Person", "", 0.9f));
+
+            string course = "";
+            foreach (KeyValuePair<string, string> txt in tokens)
+            {
+                if (txt.Key != personName && txt.Key != "study course")
+                {
+                    if(course == "")
+                    {
+                        course = txt.Key;
+                    }
+                    else
+                    {
+                        course += "_" + txt.Key;
+                    }
+                }
+            }
+
+            //type of the event, to save later
+            tempTypeEvent = "learn thing";
+            tempRelationship = "IS_STUDYING";
+            qntTempNodes = 2;
+
+            //create this node
+            string label = "name:'" + course + "',activation:1,weight:0.9,nodeType:'text'";
+            StartCoroutine(CreateMemoryNodeWebService(course, "Course", label, 0.9f));
+
+            //create the relationship between the person and the course
+            //StartCoroutine(CreateRelatioshipNodesWebService(personName, course, "IS_STUDYING"));
+        }
+        else if (tokens.ContainsKey("work job"))
+        {
+            //"create" the person as well, just to get id back
+            StartCoroutine(CreateMemoryNodeWebService(personName, "Person", "", 0.9f));
+
+            string job = "";
+            foreach (KeyValuePair<string, string> txt in tokens)
+            {
+                if (txt.Key != personName && txt.Key != "work job")
+                {
+                    if (job == "")
+                    {
+                        job = txt.Key;
+                    }
+                    else
+                    {
+                        job += "_" + txt.Key;
+                    }
+                }
+            }
+
+            //type of the event, to save later
+            tempTypeEvent = "learn thing";
+            tempRelationship = "IS_WORKING";
+            qntTempNodes = 2;
+
+            //create this node
+            string label = "name:'" + job + "',activation:1,weight:0.9,nodeType:'text'";
+            StartCoroutine(CreateMemoryNodeWebService(job, "Job", label, 0.9f));
+
+            //create the relationship between the person and the course
+            //StartCoroutine(CreateRelatioshipNodesWebService(personName, job, "IS_WORKING"));
+        }
+        else if (tokens.ContainsKey("children quantity"))
+        {
+            foreach (KeyValuePair<string, string> txt in tokens)
+            {
+                if (txt.Key != personName && txt.Key != "children quantity")
+                {
+                    StartCoroutine(UpdateMemoryNodeWebService(personName, "qntChildren", txt.Key));
+                }
+            }
+        }
+        else if (tokens.ContainsKey("children names"))
+        {
+            //"create" the person as well, just to get id back
+            StartCoroutine(CreateMemoryNodeWebService(personName, "Person", "", 0.9f));
+
+            int qntChild = 0;
+            foreach (KeyValuePair<string, string> txt in tokens)
+            {
+                if (txt.Key != personName && txt.Key != "children names")
+                {
+                    string label = "name:'" + txt.Key + "',activation:1,weight:0.9,nodeType:'text'";
+                    StartCoroutine(CreateMemoryNodeWebService(txt.Key, "Person", label, 0.9f));
+                    qntChild++;
+                    qntChild++;
+
+                    //create the relationship between the person and the child
+                    //StartCoroutine(CreateRelatioshipNodesWebService(personName, txt.Key, "HAS_CHILD"));
+                }
+            }
+
+            //type of the event, to save later
+            tempTypeEvent = "learn thing";
+            tempRelationship = "HAS_CHILD";
+            qntTempNodes = qntChild+1;
         }
 
         //iceBreakers.FindIcebreaker(usingIceBreaker)
@@ -932,7 +1072,6 @@ public class MainController : MonoBehaviour
         }
         else
         {
-
             //for create general event later
             qntTempNodes = tokens.Count;
             //type of the event, to save later
@@ -1162,7 +1301,7 @@ public class MainController : MonoBehaviour
                 marioEmotion = emotion = "happiness";
 
             string emoAnim = marioEmotion.Substring(0, 1).ToUpper() + marioEmotion.Substring(1) + "_A";
-            UnityEngine.Debug.Log(emoAnim);
+            //UnityEngine.Debug.Log(emoAnim);
 
             mariano.GetComponent<CharacterCTRL>().PlayAnimation(emoAnim);
         }
@@ -1763,7 +1902,7 @@ public class MainController : MonoBehaviour
 
     //save text LTM file
     //rem = true -> save just complete information
-    private void SaveLTM(bool rem = false)
+    /*private void SaveLTM(bool rem = false)
     {
         //save LTM as it is
         StreamWriter writingLTM;
@@ -1813,7 +1952,7 @@ public class MainController : MonoBehaviour
             }
         }
         writingLTM.Close();
-    }
+    }*/
 
     //save general events file
     private void SaveGeneralEvents()
@@ -1999,7 +2138,7 @@ public class MainController : MonoBehaviour
 
         //delete information from LTM.
         //Basically, we save the new LTM file with just complete information.
-        SaveLTM();
+        //SaveLTM();
 
         //clean LTM
         //agentLongTermMemory.Clear();
@@ -2801,8 +2940,11 @@ public class MainController : MonoBehaviour
     //Web Service for create node in memory
     private IEnumerator CreateMemoryNodeWebService(string node, string typeNode = "", string label = "", float weight = 0.1f)
     {
+        string jason = "";
         UnityWebRequest www = new UnityWebRequest(webServicePath + "neo4jTransaction", "POST");
-        string jason = "{\"typeTransaction\" : [\"createNode\"], \"node\" : [\"" + node + "\"], \"typeNode\" : [\"" + typeNode + "\"], \"label\" : [\"" + label + "\"]}";
+        
+        jason = "{\"typeTransaction\" : [\"createNode\"], \"node\" : [\"" + node + "\"], \"typeNode\" : [\"" + typeNode + "\"], \"label\" : [\"" + label + "\"]}";
+        
         //UnityEngine.Debug.Log(jason);
         byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(jason);
         //byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes("\"typeTransaction\" : [\"createNode\"]");
