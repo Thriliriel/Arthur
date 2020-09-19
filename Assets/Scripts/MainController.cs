@@ -212,7 +212,7 @@ public class MainController : MonoBehaviour
         emotions = aux.ToArray()[1];*/
 
         //what we have on textLTM, load into auxiliary LTM
-        StreamReader readingLTM = new StreamReader("AutobiographicalStorage/textLTM.txt", System.Text.Encoding.Default);
+        /*StreamReader readingLTM = new StreamReader("AutobiographicalStorage/textLTM.txt", System.Text.Encoding.Default);
         using (readingLTM)
         {
             string line;
@@ -234,10 +234,13 @@ public class MainController : MonoBehaviour
                 }
             } while (line != null);
         }
-        readingLTM.Close();
+        readingLTM.Close();*/
+        //load from the database
+        string match = "match(n) return n";
+        StartCoroutine(MatchWebService(match));
 
         //we also load the general events
-        readingLTM = new StreamReader("AutobiographicalStorage/generalEvents.txt", System.Text.Encoding.Default);
+        StreamReader readingLTM = new StreamReader("AutobiographicalStorage/generalEvents.txt", System.Text.Encoding.Default);
         using (readingLTM)
         {
             string line;
@@ -3035,6 +3038,84 @@ public class MainController : MonoBehaviour
             else
             {
                 UnityEngine.Debug.Log("Relationship: " + www.downloadHandler.text);
+            }
+        }
+    }
+
+    //Web Service for match (select)
+    private IEnumerator MatchWebService(string match)
+    {
+        UnityWebRequest www = new UnityWebRequest(webServicePath + "neo4jTransaction", "POST");
+        string jason = "{\"typeTransaction\" : [\"matchNode\"], \"match\" : [\"" + match + "\"]}";
+        //UnityEngine.Debug.Log(jason);
+        byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(jason);
+        //byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes("\"typeTransaction\" : [\"createNode\"]");
+        www.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
+        www.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+
+        www.SetRequestHeader("Content-Type", "application/json");
+
+        using (www)
+        {
+            yield return www.SendWebRequest();
+
+            if (www.isNetworkError || www.isHttpError)
+            {
+                UnityEngine.Debug.Log(www.error);
+            }
+            else
+            {
+                //UnityEngine.Debug.Log("Match: " + www.downloadHandler.text);
+
+                string temp;
+                temp = www.downloadHandler.text.Replace("}}}", "?");
+                string[] temp2 = temp.Split('?');
+
+                foreach(string part in temp2)
+                {
+                    string part2 = part.Replace("\"", "");
+                    part2 = part2.Replace("\\n\\:", "?");
+                    string[] ohFuck = part2.Split('?');
+                    string[] ohFuck2 = ohFuck[1].Split(',');
+
+                    //create memory node
+                    MemoryClass newMem = new MemoryClass();
+
+                    foreach (string really in ohFuck2)
+                    {
+                        string aff = really.Replace("{", "");
+                        aff = aff.Replace("}", "");
+                        string[] itens = aff.Split(':');
+                        //UnityEngine.Debug.Log("Match 1: " + itens[0]);
+                        //UnityEngine.Debug.Log("Match 2: " + itens[1]);
+                        itens[0] = itens[0].Substring(1, itens[0].Length - 2);
+                        //itens[1] = itens[1].Substring(1, itens[1].Length - 2);
+                        //UnityEngine.Debug.Log("Match 2: " + itens[0]);
+
+                        switch (itens[0])
+                        {
+                            case "name":
+                                newMem.information = itens[1].Substring(1, itens[1].Length - 2);
+                                break;
+                            case "activation":
+                                newMem.activation = float.Parse(itens[1]);
+                                break;
+                            case "weight":
+                                newMem.weight = float.Parse(itens[1]);
+                                break;
+                            case "type":
+                                itens[1] = itens[1].Substring(1, itens[1].Length - 2);
+                                if (itens[1] == "text")
+                                    newMem.informationType = 0;
+                                else if (itens[1] == "image")
+                                    newMem.informationType = 1;
+                                break;
+                        }
+                    }
+
+                    //LTM - everything
+                    agentLongTermMemory.Add(newMem);
+                }
             }
         }
     }
