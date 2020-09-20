@@ -3073,6 +3073,12 @@ public class MainController : MonoBehaviour
 
                 foreach(string part in temp2)
                 {
+                    //if has no comma, doesnt matter
+                    if (!part.Contains(","))
+                    {
+                        continue;
+                    }
+
                     string part2 = part.Replace("\"", "");
                     part2 = part2.Replace("\\n\\:", "?");
                     string[] ohFuck = part2.Split('?');
@@ -3110,12 +3116,30 @@ public class MainController : MonoBehaviour
                                 else if (itens[1] == "image")
                                     newMem.informationType = 1;
                                 break;
+                            default:
+                                if(itens[1][0] == '\\')
+                                {
+                                    itens[1] = itens[1].Substring(1, itens[1].Length - 2);
+                                }
+                                newMem.properties.Add(itens[0], itens[1]);
+                                break;
                         }
                     }
 
                     //LTM - everything
                     agentLongTermMemory.Add(newMem);
                 }
+
+                //just to see it...
+                /*foreach(MemoryClass mc in agentLongTermMemory)
+                {
+                    UnityEngine.Debug.LogError(": " + mc.information + " - ");
+
+                    foreach(KeyValuePair<string, string> pair in mc.properties)
+                    {
+                        UnityEngine.Debug.LogError(": " + pair.Key + " - " + pair.Value);
+                    }
+                }*/
             }
         }
     }

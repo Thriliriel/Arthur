@@ -18,10 +18,15 @@ public class MemoryClass
     public float activation;
     //weight (importance) of the memory [0,1]
     public float weight;
+    //properties of the node
+    public Dictionary<string, string> properties;
     //connected nodes
     public List<MemoryClass> nodes;
 
-    public MemoryClass() { }
+    public MemoryClass() {
+        nodes = new List<MemoryClass>();
+        properties = new Dictionary<string, string>();
+    }
 
     public MemoryClass(System.DateTime newMT, int newInformationType, string newInformation, int newInformationID)
     {
