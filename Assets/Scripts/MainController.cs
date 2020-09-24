@@ -153,6 +153,8 @@ public class MainController : MonoBehaviour
     private Dictionary<int,string> tempNodes;
     private string tempTypeEvent;
     private string tempRelationship;
+    private int arthurIdDatabase = 0;
+    private bool arthurLearnsSomething = false;
 
     private void Awake()
     {
@@ -237,7 +239,7 @@ public class MainController : MonoBehaviour
         readingLTM.Close();*/
         //load from the database
         string match = "match(n) return n";
-        StartCoroutine(MatchWebService(match));
+        StartCoroutine(MatchWebService(match, true));
 
         //we also load the general events
         StreamReader readingLTM = new StreamReader("AutobiographicalStorage/generalEvents.txt", System.Text.Encoding.Default);
@@ -457,7 +459,7 @@ public class MainController : MonoBehaviour
                             string unknoun = "";
 
                             //check if the found event has the Noun or proper noun on it
-                            //if it does not, it means Mario is not yet familiar with such term
+                            //if it does not, it means Arthur is not yet familiar with such term
                             //so, we ask the user if he wants to give more details.
                             List<string> nouns = new List<string>();
                             foreach (KeyValuePair<string, string> tt in tokens)
@@ -597,6 +599,8 @@ public class MainController : MonoBehaviour
 
                 //connect nodes for event and create relationship on the database
                 List<int> connectNodes = new List<int>();
+                //just the text ids
+                List<int> textInfo = new List<int>();
                 List<int> twoByTwo = new List<int>();
 
                 foreach (KeyValuePair<int, string> cn in tempNodes)
@@ -604,7 +608,12 @@ public class MainController : MonoBehaviour
                     connectNodes.Add(cn.Key);
                     twoByTwo.Add(cn.Key);
 
-                    if(twoByTwo.Count == 2)
+                    if (!cn.Value.Contains("myself") && !cn.Value.Contains("thing"))
+                    {
+                        textInfo.Add(cn.Key);
+                    }
+
+                    if (twoByTwo.Count == 2)
                     {
                         StartCoroutine(CreateRelatioshipNodesWebService(twoByTwo[0], twoByTwo[1], tempRelationship));
 
@@ -620,6 +629,22 @@ public class MainController : MonoBehaviour
                     }
                 }
 
+                //if he is learning something, we create relationship between the text and Arthur
+                if (arthurLearnsSomething)
+                {
+                    foreach(int ite in textInfo)
+                    {
+                        StartCoroutine(CreateRelatioshipNodesWebService(arthurIdDatabase, ite, "KNOWS"));
+                    }
+                }//else, if Arthur is meeting someone new, needs to create this relationship
+                else if(tempTypeEvent == "meet new person")
+                {
+                    foreach (int ite in textInfo)
+                    {
+                        StartCoroutine(CreateRelatioshipNodesWebService(arthurIdDatabase, ite, "MET"));
+                    }
+                }
+
                 AddGeneralEvent(tempTypeEvent, infoEvent, connectNodes);
 
                 connectNodes.Clear();
@@ -628,6 +653,7 @@ public class MainController : MonoBehaviour
                 tempTypeEvent = tempRelationship = "";
                 qntTempNodes = -1;
                 tempNodes.Clear();
+                arthurLearnsSomething = false;
             }
         }
     }
@@ -1043,7 +1069,6 @@ public class MainController : MonoBehaviour
                     string label = "name:'" + txt.Key + "',activation:1,weight:0.9,nodeType:'text'";
                     StartCoroutine(CreateMemoryNodeWebService(txt.Key, "Person", label, 0.9f));
                     qntChild++;
-                    qntChild++;
 
                     //create the relationship between the person and the child
                     //StartCoroutine(CreateRelatioshipNodesWebService(personName, txt.Key, "HAS_CHILD"));
@@ -1067,7 +1092,7 @@ public class MainController : MonoBehaviour
         //list to keep memory IDS inserted, so we can connect them later
         List<int> connectNodes = new List<int>();
         string typeEvent = "interaction";
-        float weight = 0.1f;
+        float weight = 0.5f;
 
         if (isBreakingIce)
         {
@@ -1089,10 +1114,16 @@ public class MainController : MonoBehaviour
                 //connectNodes.Add(thisID);
                 //save on Neo4j
                 //on temp, we have to find 2 information later
+
+                //if is verb, relationship
+                if(txt.Value == "VB")
+                {
+                    tempRelationship = txt.Key.ToUpper();
+                    continue;
+                }
                 
-                
-                //string label = "name:'" + namePerson + "',activation:1,weight:0.9,nodeType:'text'";
-                //StartCoroutine(CreateMemoryNodeWebService(namePerson, "Person", label, 0.9f));
+                string label = "name:'" + txt.Key + "',activation:1,weight:"+weight+",nodeType:'text'";
+                StartCoroutine(CreateMemoryNodeWebService(txt.Key, "Interaction", label, weight));
             }
 
             //if we have a second level icebreaker, we need to find the general event to add info into it
@@ -2250,12 +2281,26 @@ public class MainController : MonoBehaviour
         cam.GetComponent<ViewCam>().StartSaveImageCoRo("AutobiographicalStorage/Images/" + importantNoun + ".png");
 
         //create the memory
-        int newId = AddToSTM(0, importantNoun, 1);
+        //int newId = AddToSTM(0, importantNoun, 1);
 
         //create a new autobiographical storage for the thing image
-        int newIdImage = AddToSTM(1, "AutobiographicalStorage/Images/" + importantNoun + ".png", 1);
+        //int newIdImage = AddToSTM(1, "AutobiographicalStorage/Images/" + importantNoun + ".png", 1);
 
-        List<int> connectNodes = new List<int>();
+        //save on Neo4j
+        //on temp, we have to find 2 information later
+        qntTempNodes = 2;
+        string label = "name:'" + importantNoun + "',activation:1,weight:0.9,nodeType:'text'";
+        StartCoroutine(CreateMemoryNodeWebService(importantNoun, "Thing", label, 0.9f));
+
+        label = "name:'thing',image:'AutobiographicalStorage/Images/" + importantNoun + ".png',activation:1,weight:0.9,nodeType:'image'";
+        StartCoroutine(CreateMemoryNodeWebService("thing", "Image", label, 0.9f));
+
+        //type of the event, to save later
+        tempTypeEvent = "learn thing";
+        tempRelationship = "HAS_PHOTO";
+        arthurLearnsSomething = true;
+
+        /*List<int> connectNodes = new List<int>();
         connectNodes.Add(newId);
         connectNodes.Add(newIdImage);
 
@@ -2263,7 +2308,7 @@ public class MainController : MonoBehaviour
         ConnectMemoryNodes(connectNodes);
 
         //create a new general event
-        AddGeneralEvent("learn thing", "i learned what a " + importantNoun + " is", connectNodes);
+        AddGeneralEvent("learn thing", "i learned what a " + importantNoun + " is", connectNodes);*/
 
         //reset
         isYesNoQuestion = false;
@@ -2412,14 +2457,26 @@ public class MainController : MonoBehaviour
             IceBreakingTreeClass target = iceBreakers.FindIcebreaker(usingIceBreaker);
 
             //so, lets try to find some general event
-            GeneralEvent fuck = null;
+            MemoryClass fuck = null;
 
-            foreach (GeneralEvent geez in agentGeneralEvents)
+            /*foreach (GeneralEvent geez in agentGeneralEvents)
             {
                 //if it exists, ding!
                 if (geez.information.Contains(personName) && geez.information.Contains(target.GetType()))
                 {
                     fuck = geez;
+                    break;
+                }
+            }*/
+
+            foreach(MemoryClass mc in agentLongTermMemory)
+            {
+                //if it exists, ding!
+                string targetType = target.GetType();
+                if (targetType == "old") targetType = "age";
+                if (mc.information.Contains(personName) && mc.properties.ContainsKey(targetType))
+                {
+                    fuck = mc;
                     break;
                 }
             }
@@ -3043,7 +3100,7 @@ public class MainController : MonoBehaviour
     }
 
     //Web Service for match (select)
-    private IEnumerator MatchWebService(string match)
+    private IEnumerator MatchWebService(string match, bool addOnLTM = false)
     {
         UnityWebRequest www = new UnityWebRequest(webServicePath + "neo4jTransaction", "POST");
         string jason = "{\"typeTransaction\" : [\"matchNode\"], \"match\" : [\"" + match + "\"]}";
@@ -3102,6 +3159,7 @@ public class MainController : MonoBehaviour
                         {
                             case "name":
                                 newMem.information = itens[1].Substring(1, itens[1].Length - 2);
+
                                 break;
                             case "activation":
                                 newMem.activation = float.Parse(itens[1]);
@@ -3127,7 +3185,10 @@ public class MainController : MonoBehaviour
                     }
 
                     //LTM - everything
-                    agentLongTermMemory.Add(newMem);
+                    if (addOnLTM)
+                    {
+                        agentLongTermMemory.Add(newMem);
+                    }
                 }
 
                 //just to see it...
