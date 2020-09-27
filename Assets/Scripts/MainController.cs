@@ -352,6 +352,12 @@ public class MainController : MonoBehaviour
 
         //just testing...
         //StartCoroutine(CreateMemoryNodeWebService("Demonio", "Demon", "age:31,ocupation:'teacher'"));
+        /*Dictionary<string,string> test = new Dictionary<string, string>();
+        test.Add("Knob", "NNP");
+        test.Add("cellphone", "NN");
+        test.Add("potato", "NN");
+        test.Add("knows", "VB");
+        GenerativeRetrieval(test);*/
     }
 
     private void OnDestroy()
@@ -455,88 +461,9 @@ public class MainController : MonoBehaviour
                         }//else, if it is breaking the ice or small talking, dont need to try to recover memory neither. Just save the information later and try to keep going                 
                         else if (!isBreakingIce && !isSmallTalking)
                         {
-                            GeneralEvent foundIt = GenerativeRetrieval(tokens);
-                            string unknoun = "";
-
-                            //check if the found event has the Noun or proper noun on it
-                            //if it does not, it means Arthur is not yet familiar with such term
-                            //so, we ask the user if he wants to give more details.
-                            List<string> nouns = new List<string>();
-                            foreach (KeyValuePair<string, string> tt in tokens)
-                            {
-                                if (tt.Value == "NN" || tt.Value == "NNP")
-                                {
-                                    nouns.Add(tt.Key);
-                                }
-                            }
-
-                            if (nouns.Count > 0)
-                            {
-                                foreach (string nn in nouns)
-                                {
-                                    int recor = 0;
-
-                                    if (foundIt != null)
-                                    {
-                                        foreach (MemoryClass memC in foundIt.nodes)
-                                        {
-                                            if (memC.information == nn)
-                                            {
-                                                recor++;
-                                            }
-                                        }
-                                    }
-
-                                    //if recor is still 0, it means we found no occurrences of this noun in the event.
-                                    if (recor == 0)
-                                    {
-                                        unknoun = nn;
-                                        break;
-                                    }
-                                }
-                            }
-
-                            if (foundIt != null)
-                            {
-                                //do not save this memory, since it already exists somehow
-                                saveNewMemoryNode = false;
-
-                                //if it has an "unknoun", deal with it
-                                if (unknoun != "")
-                                {
-                                    DealUnknown(unknoun);
-                                }
-                                else
-                                {
-                                    //UnityEngine.Debug.Log(foundIt.information);
-                                    //do something with the retrieved memory
-                                    DealWithIt(foundIt, tokens);
-
-                                    //change the face of Mario according emotion of the event
-                                    SetEmotion(foundIt.emotion);
-                                }
-                            }
-                            else
-                            {
-                                if (unknoun != "")
-                                {
-                                    DealUnknown(unknoun);
-
-                                    //do not save this memory
-                                    saveNewMemoryNode = false;
-                                }
-                                else
-                                {
-
-                                    //request for chat.
-                                    string txt = "";
-                                    foreach (KeyValuePair<string, string> tt in tokens)
-                                    {
-                                        txt += tt.Key + " ";
-                                    }
-                                    StartCoroutine(GetRequest("https://acobot-brainshop-ai-v1.p.rapidapi.com/get?bid=178&key=sX5A2PcYZbsN5EY6&uid=mashape&msg=" + txt));
-                                }
-                            }
+                            //this is tricky :D
+                            saveNewMemoryNode = false;
+                            GenerativeRetrieval(tokens);
                         }
                     }
 
@@ -555,6 +482,7 @@ public class MainController : MonoBehaviour
                         }
 
                         //save it
+                        //HERE!!! MAYBE THIS SAVENEWMEMORYNODE IS NOT UPDATED YET, BECAUSE OF THE MATCH
                         if (saveNewMemoryNode)
                             SaveMemoryNode(tokens, informationEvent);
 
@@ -2179,7 +2107,8 @@ public class MainController : MonoBehaviour
     }
 
     //retrieve a memory based on cues
-    private GeneralEvent GenerativeRetrieval(Dictionary<string, string> cues)
+    //deactivated for now
+    /*private GeneralEvent GenerativeRetrieval(Dictionary<string, string> cues)
     {
         GeneralEvent eventFound = new GeneralEvent();
 
@@ -2224,6 +2153,36 @@ public class MainController : MonoBehaviour
         {
             return null;
         }
+    }*/
+
+    //new generative retrieval, based on the graph memory
+    void GenerativeRetrieval(Dictionary<string, string> cues)
+    {
+        string match = "MATCH (n) WHERE ";
+
+        //for each cue
+        foreach(KeyValuePair<string, string> cue in cues)
+        {
+            //if it is a noun or proper noun, we search
+            if(cue.Value == "NN" || cue.Value == "NNP")
+            {
+                //if it is the first, ok.
+                if (match == "MATCH (n) WHERE ")
+                {
+                    match += "n.name='" + cue.Key + "'";
+                }//otherwise, need the comma to separate
+                else
+                {
+                    match += " OR n.name='" + cue.Key + "'";
+                }
+            }
+        }
+
+        //done, add the return on the match
+        match += " return n";
+
+        //UnityEngine.Debug.LogWarning(match);
+        StartCoroutine(MatchWebService(match, false, cues));
     }
 
     /*public void FollowFace(Vector3 point)
@@ -3100,7 +3059,7 @@ public class MainController : MonoBehaviour
     }
 
     //Web Service for match (select)
-    private IEnumerator MatchWebService(string match, bool addOnLTM = false)
+    private IEnumerator MatchWebService(string match, bool addOnLTM = false, Dictionary<string,string> tokens = null)
     {
         UnityWebRequest www = new UnityWebRequest(webServicePath + "neo4jTransaction", "POST");
         string jason = "{\"typeTransaction\" : [\"matchNode\"], \"match\" : [\"" + match + "\"]}";
@@ -3124,83 +3083,257 @@ public class MainController : MonoBehaviour
             {
                 //UnityEngine.Debug.Log("Match: " + www.downloadHandler.text);
 
-                string temp;
-                temp = www.downloadHandler.text.Replace("}}}", "?");
-                string[] temp2 = temp.Split('?');
-
-                foreach(string part in temp2)
+                //loading all from database
+                if (addOnLTM)
                 {
-                    //if has no comma, doesnt matter
-                    if (!part.Contains(","))
-                    {
-                        continue;
-                    }
+                    MatchesToLTM(www.downloadHandler.text);
+                }//else, just normal match
+                else
+                {
+                    MatchesFromRetrieval(www.downloadHandler.text, tokens);
+                }
+            }
+        }
+    }
 
-                    string part2 = part.Replace("\"", "");
-                    part2 = part2.Replace("\\n\\:", "?");
-                    string[] ohFuck = part2.Split('?');
-                    string[] ohFuck2 = ohFuck[1].Split(',');
+    //get all matches and place in the LTM
+    private void MatchesToLTM(string results)
+    {
+        string temp;
+        temp = results.Replace("}}}", "?");
+        string[] temp2 = temp.Split('?');
 
-                    //create memory node
-                    MemoryClass newMem = new MemoryClass();
+        foreach (string part in temp2)
+        {
+            //if has no comma, doesnt matter
+            if (!part.Contains(","))
+            {
+                continue;
+            }
 
-                    foreach (string really in ohFuck2)
-                    {
-                        string aff = really.Replace("{", "");
-                        aff = aff.Replace("}", "");
-                        string[] itens = aff.Split(':');
-                        //UnityEngine.Debug.Log("Match 1: " + itens[0]);
-                        //UnityEngine.Debug.Log("Match 2: " + itens[1]);
-                        itens[0] = itens[0].Substring(1, itens[0].Length - 2);
-                        //itens[1] = itens[1].Substring(1, itens[1].Length - 2);
-                        //UnityEngine.Debug.Log("Match 2: " + itens[0]);
+            string part2 = part.Replace("\"", "");
+            part2 = part2.Replace("\\n\\:", "?");
+            string[] ohFuck = part2.Split('?');
+            string[] ohFuck2 = ohFuck[1].Split(',');
 
-                        switch (itens[0])
+            //create memory node
+            MemoryClass newMem = new MemoryClass();
+
+            foreach (string really in ohFuck2)
+            {
+                string aff = really.Replace("{", "");
+                aff = aff.Replace("}", "");
+                string[] itens = aff.Split(':');
+                //UnityEngine.Debug.Log("Match 1: " + itens[0]);
+                //UnityEngine.Debug.Log("Match 2: " + itens[1]);
+                itens[0] = itens[0].Substring(1, itens[0].Length - 2);
+                //itens[1] = itens[1].Substring(1, itens[1].Length - 2);
+                //UnityEngine.Debug.Log("Match 2: " + itens[0]);
+
+                switch (itens[0])
+                {
+                    case "name":
+                        newMem.information = itens[1].Substring(1, itens[1].Length - 2);
+
+                        break;
+                    case "activation":
+                        newMem.activation = float.Parse(itens[1]);
+                        break;
+                    case "weight":
+                        newMem.weight = float.Parse(itens[1]);
+                        break;
+                    case "type":
+                        itens[1] = itens[1].Substring(1, itens[1].Length - 2);
+                        if (itens[1] == "text")
+                            newMem.informationType = 0;
+                        else if (itens[1] == "image")
+                            newMem.informationType = 1;
+                        break;
+                    default:
+                        if (itens[1][0] == '\\')
                         {
-                            case "name":
-                                newMem.information = itens[1].Substring(1, itens[1].Length - 2);
-
-                                break;
-                            case "activation":
-                                newMem.activation = float.Parse(itens[1]);
-                                break;
-                            case "weight":
-                                newMem.weight = float.Parse(itens[1]);
-                                break;
-                            case "type":
-                                itens[1] = itens[1].Substring(1, itens[1].Length - 2);
-                                if (itens[1] == "text")
-                                    newMem.informationType = 0;
-                                else if (itens[1] == "image")
-                                    newMem.informationType = 1;
-                                break;
-                            default:
-                                if(itens[1][0] == '\\')
-                                {
-                                    itens[1] = itens[1].Substring(1, itens[1].Length - 2);
-                                }
-                                newMem.properties.Add(itens[0], itens[1]);
-                                break;
+                            itens[1] = itens[1].Substring(1, itens[1].Length - 2);
                         }
-                    }
+                        newMem.properties.Add(itens[0], itens[1]);
+                        break;
+                }
+            }
+            
+            agentLongTermMemory.Add(newMem);
+        }
+    }
 
-                    //LTM - everything
-                    if (addOnLTM)
+    //matches from generative retrieval
+    private void MatchesFromRetrieval(string results, Dictionary<string, string> tokens)
+    {
+        string temp;
+        temp = results.Replace("}}}", "?");
+        string[] temp2 = temp.Split('?');
+        //UnityEngine.Debug.LogWarning(temp2);
+
+        Dictionary<string,string> found = new Dictionary<string, string>();
+        foreach (string part in temp2)
+        {
+            //if has no comma, doesnt matter
+            if (!part.Contains(","))
+            {
+                continue;
+            }
+
+            string part2 = part.Replace("\"", "");
+            part2 = part2.Replace("\\n\\:", "?");
+            string[] ohFuck = part2.Split('?');
+            string[] ohFuck2 = ohFuck[1].Split(',');
+
+            string node = "";
+            string info = "";
+            foreach (string really in ohFuck2)
+            {
+                string aff = really.Replace("{", "");
+                aff = aff.Replace("}", "");
+                string[] itens = aff.Split(':');
+                //UnityEngine.Debug.Log("Match 1: " + itens[0]);
+                //UnityEngine.Debug.Log("Match 2: " + itens[1]);
+                itens[0] = itens[0].Substring(1, itens[0].Length - 2);
+                //itens[1] = itens[1].Substring(1, itens[1].Length - 2);
+                //UnityEngine.Debug.Log("Match 2: " + itens[0]);
+
+                switch (itens[0])
+                {
+                    case "name":
+                        node = itens[1].Substring(1, itens[1].Length - 2);
+                        break;
+                    case "activation":
+                        if(info == "")
+                        {
+                            info = "activation:"+ float.Parse(itens[1]);
+                        }
+                        else
+                        {
+                            info += ",activation:" + float.Parse(itens[1]);
+                        }
+                        break;
+                    case "weight":
+                        if (info == "")
+                        {
+                            info = "weight:" + float.Parse(itens[1]);
+                        }
+                        else
+                        {
+                            info += ",weight:" + float.Parse(itens[1]);
+                        }
+                        break;
+                    case "type":
+                        if (info == "")
+                        {
+                            info = "type:" + itens[1].Substring(1, itens[1].Length - 2);
+                        }
+                        else
+                        {
+                            info += ",type:" + itens[1].Substring(1, itens[1].Length - 2);
+                        }
+                        break;
+                    default:
+                        if (itens[1][0] == '\\')
+                        {
+                            itens[1] = itens[1].Substring(1, itens[1].Length - 2);
+                        }
+
+                        if (info == "")
+                        {
+                            info = itens[0] + ":" + itens[1];
+                        }
+                        else
+                        {
+                            info += "," + itens[0] + ":" + itens[1];
+                        }
+                        break;
+                }
+            }
+
+            //create a list with the stuff
+            found.Add(node, info);
+        }
+
+        //now we deal with what was remembered
+        string unknoun = "";
+
+        //check if the found event has the Noun or proper noun on it
+        //if it does not, it means Arthur is not yet familiar with such term
+        //so, we ask the user if he wants to give more details.
+        List<string> nouns = new List<string>();
+        foreach (KeyValuePair<string, string> tt in tokens)
+        {
+            if (tt.Value == "NN" || tt.Value == "NNP")
+            {
+                nouns.Add(tt.Key);
+            }
+        }
+
+        if (nouns.Count > 0)
+        {
+            foreach (string nn in nouns)
+            {
+                int recor = 0;
+
+                if (found.Count > 0)
+                {
+                    if (found.ContainsKey(nn))
                     {
-                        agentLongTermMemory.Add(newMem);
+                        recor++;
                     }
                 }
 
-                //just to see it...
-                /*foreach(MemoryClass mc in agentLongTermMemory)
+                //if recor is still 0, it means we found no occurrences of this noun in the event.
+                if (recor == 0)
                 {
-                    UnityEngine.Debug.LogError(": " + mc.information + " - ");
+                    unknoun = nn;
+                    break;
+                }
+            }
+        }
 
-                    foreach(KeyValuePair<string, string> pair in mc.properties)
-                    {
-                        UnityEngine.Debug.LogError(": " + pair.Key + " - " + pair.Value);
-                    }
-                }*/
+        if (found.Count > 0)
+        {
+            //do not save this memory, since it already exists somehow
+            saveNewMemoryNode = false;
+
+            //if it has an "unknoun", deal with it
+            if (unknoun != "")
+            {
+                DealUnknown(unknoun);
+            }
+            else
+            {
+                //UnityEngine.Debug.Log(foundIt.information);
+                //do something with the retrieved memory
+                //DealWithIt(foundIt, tokens);
+                UnityEngine.Debug.Log("POTATO!!!!");
+
+                //change the face of Mario according emotion of the event
+                //NEED TO SEE IT, NOT TREATING GENERAL EVENTS YET
+                //SetEmotion(foundIt.emotion);
+            }
+        }
+        else
+        {
+            if (unknoun != "")
+            {
+                DealUnknown(unknoun);
+
+                //do not save this memory
+                saveNewMemoryNode = false;
+            }
+            else
+            {
+
+                //request for chat.
+                string txt = "";
+                foreach (KeyValuePair<string, string> tt in tokens)
+                {
+                    txt += tt.Key + " ";
+                }
+                StartCoroutine(GetRequest("https://acobot-brainshop-ai-v1.p.rapidapi.com/get?bid=178&key=sX5A2PcYZbsN5EY6&uid=mashape&msg=" + txt));
             }
         }
     }
