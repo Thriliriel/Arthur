@@ -422,7 +422,7 @@ public class MainController : MonoBehaviour
                 foundEmotion = indx;
 
                 //change emotion for empathy
-                SetEmotion(foundEmotion);
+                //SetEmotion(foundEmotion);
             }
 
             //ChangeFaceName();
@@ -583,6 +583,11 @@ public class MainController : MonoBehaviour
                 tempNodes.Clear();
                 arthurLearnsSomething = false;
             }
+
+            //emotion based on last polarity answer
+            if (lastPolarity < 0) SetEmotion("sadness");
+            else if (lastPolarity > 0) SetEmotion("joy");
+            else SetEmotion("neutral");
         }
     }
 
@@ -817,6 +822,65 @@ public class MainController : MonoBehaviour
                 UnityEngine.Debug.LogWarning("General Type not found!");
                 break;
         }
+    }
+
+    //deal version without event
+    private void DealWithIt(Dictionary<string, string> retrieved, Dictionary<string, string> tokens)
+    {
+        string answer = "";
+
+        //depending on the verbs used, we give an answer
+        //if tokens have "know", arthur is being asked if he knows something
+        if (tokens.ContainsKey("know"))
+        {
+            answer = "Yeah, i know a ";
+            foreach (KeyValuePair<string, string> ret in retrieved)
+            {
+                if (ret.Key != "Arthur" && ret.Key != personName)
+                {
+                    answer += ret.Key + " ";
+                }
+            }
+
+            //if found nothing, it may be a question about the person or arthur
+            if (answer == "Yeah, i know a ")
+            {
+                if (retrieved.ContainsKey(personName))
+                {
+                    answer = "Yeah, i know " + personName;
+                }else if (retrieved.ContainsKey("Arthur"))
+                {
+                    answer = "Of course i know myself! Duh!!";
+                }
+            }
+
+            //if found nothing, he does not know it
+            if (answer == "Yeah, i know a ")
+            {
+                answer = "No, i do not know it";
+            }
+        }//if tokens have "meet", arthur is being asked if he met someone (know as well, but already got it)
+        //seems like "meet" is not a good verb for NLTK... will keep it here anyway...
+        else if (tokens.ContainsKey("meet"))
+        {
+            if (retrieved.ContainsKey(personName))
+            {
+                answer = "Yeah, i already met " + personName;
+            }
+            else if (retrieved.ContainsKey("Arthur"))
+            {
+                answer = "Of course i met myself! Duh!!";
+            }
+        }//else, just show what he found
+        else
+        {
+            foreach (KeyValuePair<string, string> ret in retrieved)
+            {
+                answer += ret.Key + " ";
+            }
+        }
+
+        SpeakYouFool(answer);
     }
 
     //take an action depending the emotion
@@ -1293,6 +1357,7 @@ public class MainController : MonoBehaviour
         //replace occurences of "you" for "Arthur"
         textSend = textSend.Replace(" you ", " Arthur ");
         textSend = textSend.Replace(" you?", " Arthur ");
+        textSend = textSend.Replace(" yourself?", " Arthur ");
 
         //replace occurences of "me" for personName
         textSend = textSend.Replace(" me ", " "+ personName +" ");
@@ -2158,30 +2223,96 @@ public class MainController : MonoBehaviour
     //new generative retrieval, based on the graph memory
     void GenerativeRetrieval(Dictionary<string, string> cues)
     {
-        string match = "MATCH (n) WHERE ";
-
-        //for each cue
-        foreach(KeyValuePair<string, string> cue in cues)
+        string match = "";
+        string whoIsIt = "";
+        
+        List<string> verbs = new List<string>();
+        List<string> nouns = new List<string>();
+        foreach (KeyValuePair<string,string> cu in cues)
         {
-            //if it is a noun or proper noun, we search
-            if(cue.Value == "NN" || cue.Value == "NNP")
+            if(cu.Value == "VB" || cu.Value == "VBP")
+            {
+                verbs.Add(cu.Key);
+            }else if (cu.Value == "NN" || cu.Value == "NNP")
+            {
+                nouns.Add(cu.Key);
+
+                if (cu.Key == "Arthur" || cu.Key == personName) whoIsIt = cu.Key;
+            }
+        }
+
+        //if we have verbs on the sentence, we try to use them for the relationships
+        if (verbs.Count > 0)
+        {
+            match = "MATCH ";
+            char letter = 'a';
+
+            foreach(string vb in verbs)
+            {
+                string useVerb = vb.ToUpper();
+                if (useVerb == "KNOW") useVerb = "KNOWS";
+
+                if (letter == 'a')
+                {
+                    foreach(string nn in nouns)
+                    {
+                        if(nn != "Arthur" && nn != personName)
+                        {
+                            match += "({name:'"+whoIsIt+"'})-[:" + useVerb + "]->(" + letter + " {name:'"+nn+"'})";
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (string nn in nouns)
+                    {
+                        if (nn != "Arthur" && nn != personName)
+                        {
+                            match += ", ({name:'" + whoIsIt + "'})-[:" + useVerb + "]->(" + letter + " {name:'" + nn + "'})";
+                        }
+                    }
+                }
+
+                letter++;
+            }
+
+            match += " return ";
+            do
+            {
+                letter--;
+                if(letter != 'a')
+                {
+                    match += letter + ",";
+                }
+                else
+                {
+                    match += letter;
+                }
+            } while (letter != 'a');
+        }//else, just find it all
+        else
+        {
+            match = "MATCH (n) WHERE ";
+
+            //for each cue
+            foreach (string cue in nouns)
             {
                 //if it is the first, ok.
                 if (match == "MATCH (n) WHERE ")
                 {
-                    match += "n.name='" + cue.Key + "'";
+                    match += "n.name='" + cue + "'";
                 }//otherwise, need the comma to separate
                 else
                 {
-                    match += " OR n.name='" + cue.Key + "'";
+                    match += " OR n.name='" + cue + "'";
                 }
             }
+
+            //done, add the return on the match
+            match += " return n";
         }
 
-        //done, add the return on the match
-        match += " return n";
-
-        //UnityEngine.Debug.LogWarning(match);
+        UnityEngine.Debug.LogWarning(match);
         StartCoroutine(MatchWebService(match, false, cues));
     }
 
@@ -3182,11 +3313,17 @@ public class MainController : MonoBehaviour
 
             string part2 = part.Replace("\"", "");
             part2 = part2.Replace("\\n\\:", "?");
+            part2 = part2.Replace("\\a\\:", "?");
+            part2 = part2.Replace("\\b\\:", "?");
+            part2 = part2.Replace("\\c\\:", "?");
+            part2 = part2.Replace("\\d\\:", "?");
+            part2 = part2.Replace("\\e\\:", "?");
             string[] ohFuck = part2.Split('?');
             string[] ohFuck2 = ohFuck[1].Split(',');
 
             string node = "";
             string info = "";
+
             foreach (string really in ohFuck2)
             {
                 string aff = really.Replace("{", "");
@@ -3270,7 +3407,13 @@ public class MainController : MonoBehaviour
             }
         }
 
-        if (nouns.Count > 0)
+        //if nothing, need to learn
+        if (found.Count == 0)
+        {
+            unknoun = nouns[nouns.Count - 1];
+        }
+
+        /*if (nouns.Count > 0)
         {
             foreach (string nn in nouns)
             {
@@ -3285,13 +3428,14 @@ public class MainController : MonoBehaviour
                 }
 
                 //if recor is still 0, it means we found no occurrences of this noun in the event.
+                //DEACTIVATE FOR NOW, MAYBE THIS IS NOT THE BEST PLACE WITHOUT GENERAL EVENTS
                 if (recor == 0)
                 {
                     unknoun = nn;
                     break;
                 }
             }
-        }
+        }*/
 
         if (found.Count > 0)
         {
@@ -3307,10 +3451,9 @@ public class MainController : MonoBehaviour
             {
                 //UnityEngine.Debug.Log(foundIt.information);
                 //do something with the retrieved memory
-                //DealWithIt(foundIt, tokens);
-                UnityEngine.Debug.Log("POTATO!!!!");
+                DealWithIt(found, tokens);
 
-                //change the face of Mario according emotion of the event
+                //change the face of Arthur according emotion of the event
                 //NEED TO SEE IT, NOT TREATING GENERAL EVENTS YET
                 //SetEmotion(foundIt.emotion);
             }
