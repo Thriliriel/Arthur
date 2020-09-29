@@ -829,9 +829,115 @@ public class MainController : MonoBehaviour
     {
         string answer = "";
 
+        //first, we check questions about icebreakers
+        //about age
+        if (tokens.ContainsKey("old") || tokens.ContainsKey("age"))
+        {
+            foreach (KeyValuePair<string, string> ret in retrieved)
+            {
+                //we assume there is only one
+                string banana = ret.Value.Replace("age:", "?");
+                string[] info = banana.Split('?');
+                //if does not have age, we can do nothing about it =)
+                if (info.Length == 1)
+                {
+                    answer = "I do not know, sorry";
+                }
+                else
+                {
+                    info = info[1].Split(',');
+                    answer = info[0] + " years old";
+                }
+                break;
+            }
+        } //about study
+        else if (tokens.ContainsKey("study"))
+        {
+            string studyWhat = "";
+            foreach (KeyValuePair<string, string> ret in retrieved)
+            {
+                string banana = ret.Value.Replace("study:", "?");
+                string[] info = banana.Split('?');
+                //yes or no
+                if (info.Length == 2)
+                {
+                    info = info[1].Split(',');
+                    answer = info[0];
+                }//else, it is what he/she studies
+                else
+                {
+                    studyWhat = ret.Key;
+                }
+            }
+
+            if (answer == "")
+            {
+                answer = "I do not know, sorry";
+            }
+            else
+            {
+                answer += " " + studyWhat;
+            }
+        }//work
+        else if (tokens.ContainsKey("work") || tokens.ContainsKey("job"))
+        {
+            string workWhat = "";
+            foreach (KeyValuePair<string, string> ret in retrieved)
+            {
+                string banana = ret.Value.Replace("work:", "?");
+                string[] info = banana.Split('?');
+                //yes or no
+                if (info.Length == 2)
+                {
+                    info = info[1].Split(',');
+                    answer = info[0];
+                }//else, it is what he/she studies
+                else
+                {
+                    workWhat = ret.Key;
+                }
+            }
+
+            if (answer == "")
+            {
+                answer = "I do not know, sorry";
+            }
+            else
+            {
+                answer += " " + workWhat;
+            }
+        }//children
+        else if (tokens.ContainsKey("child") || tokens.ContainsKey("children"))
+        {
+            string kids = "";
+            foreach (KeyValuePair<string, string> ret in retrieved)
+            {
+                string banana = ret.Value.Replace("children:", "?");
+                string[] info = banana.Split('?');
+                //yes or no
+                if (info.Length == 2)
+                {
+                    info = info[1].Split(',');
+                    answer = info[0];
+                }//else, it is what he/she studies
+                else
+                {
+                    kids += ret.Key + " ";
+                }
+            }
+
+            if (answer == "")
+            {
+                answer = "I do not know, sorry";
+            }
+            else
+            {
+                answer += " " + kids;
+            }
+        }
         //depending on the verbs used, we give an answer
         //if tokens have "know", arthur is being asked if he knows something
-        if (tokens.ContainsKey("know"))
+        else if (tokens.ContainsKey("know"))
         {
             answer = "Yeah, i know a ";
             foreach (KeyValuePair<string, string> ret in retrieved)
@@ -2230,7 +2336,16 @@ public class MainController : MonoBehaviour
         List<string> nouns = new List<string>();
         foreach (KeyValuePair<string,string> cu in cues)
         {
-            if(cu.Value == "VB" || cu.Value == "VBP")
+            //first of all: since NLTK understands some verbs as nouns, lets make a work around for the icebreakers ones
+            if(cu.Key == "work" || cu.Key == "works" || cu.Key == "working" || cu.Key == "study" || cu.Key == "studies" || cu.Key == "studying")
+            {
+                verbs.Add(cu.Key);
+            }//if verb is "have" and children is involved, add
+            else if(cu.Key == "have" && (cues.ContainsKey("children") || cues.ContainsKey("kids") || cues.ContainsKey("child")))
+            {
+                verbs.Add("HAS_CHILD");
+            }
+            else if(cu.Value == "VB" || cu.Value == "VBP")
             {
                 verbs.Add(cu.Key);
             }else if (cu.Value == "NN" || cu.Value == "NNP")
@@ -2251,7 +2366,10 @@ public class MainController : MonoBehaviour
             {
                 string useVerb = vb.ToUpper();
                 if (useVerb == "KNOW") useVerb = "KNOWS";
+                if (useVerb == "STUDY") useVerb = "IS_STUDYING";
+                if (useVerb == "WORK") useVerb = "IS_WORKING";
 
+                int added = 0;
                 if (letter == 'a')
                 {
                     foreach(string nn in nouns)
@@ -2259,6 +2377,7 @@ public class MainController : MonoBehaviour
                         if(nn != "Arthur" && nn != personName)
                         {
                             match += "({name:'"+whoIsIt+"'})-[:" + useVerb + "]->(" + letter + " {name:'"+nn+"'})";
+                            added++;
                         }
                     }
                 }
@@ -2269,8 +2388,15 @@ public class MainController : MonoBehaviour
                         if (nn != "Arthur" && nn != personName)
                         {
                             match += ", ({name:'" + whoIsIt + "'})-[:" + useVerb + "]->(" + letter + " {name:'" + nn + "'})";
+                            added++;
                         }
                     }
+                }
+
+                //if did not added anything, but has nouns, it means just have Arthur or the person
+                if (added == 0 && nouns.Count > 0)
+                {
+                    match += "("+letter+" {name:'" + whoIsIt + "'})-[:" + useVerb + "]->(" + ++letter + ")";
                 }
 
                 letter++;
@@ -3298,7 +3424,13 @@ public class MainController : MonoBehaviour
     private void MatchesFromRetrieval(string results, Dictionary<string, string> tokens)
     {
         string temp;
-        temp = results.Replace("}}}", "?");
+        //temp = results.Replace("}}}", "?");
+        temp = results.Replace("\"", "");
+        temp = temp.Replace("\\a\\:", "?");
+        temp = temp.Replace("\\b\\:", "?");
+        temp = temp.Replace("\\c\\:", "?");
+        temp = temp.Replace("\\d\\:", "?");
+        temp = temp.Replace("\\n\\:", "?");
         string[] temp2 = temp.Split('?');
         //UnityEngine.Debug.LogWarning(temp2);
 
@@ -3311,15 +3443,15 @@ public class MainController : MonoBehaviour
                 continue;
             }
 
-            string part2 = part.Replace("\"", "");
+            /*string part2 = part.Replace("\"", "");
             part2 = part2.Replace("\\n\\:", "?");
             part2 = part2.Replace("\\a\\:", "?");
             part2 = part2.Replace("\\b\\:", "?");
             part2 = part2.Replace("\\c\\:", "?");
             part2 = part2.Replace("\\d\\:", "?");
             part2 = part2.Replace("\\e\\:", "?");
-            string[] ohFuck = part2.Split('?');
-            string[] ohFuck2 = ohFuck[1].Split(',');
+            string[] ohFuck = part2.Split('?');*/
+            string[] ohFuck2 = part.Split(',');
 
             string node = "";
             string info = "";
@@ -3331,6 +3463,7 @@ public class MainController : MonoBehaviour
                 string[] itens = aff.Split(':');
                 //UnityEngine.Debug.Log("Match 1: " + itens[0]);
                 //UnityEngine.Debug.Log("Match 2: " + itens[1]);
+                if (itens[0] == "") continue;
                 itens[0] = itens[0].Substring(1, itens[0].Length - 2);
                 //itens[1] = itens[1].Substring(1, itens[1].Length - 2);
                 //UnityEngine.Debug.Log("Match 2: " + itens[0]);
@@ -3389,7 +3522,10 @@ public class MainController : MonoBehaviour
             }
 
             //create a list with the stuff
-            found.Add(node, info);
+            if (!found.ContainsKey(node))
+            {
+                found.Add(node, info);
+            }
         }
 
         //now we deal with what was remembered
