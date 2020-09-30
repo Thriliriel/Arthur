@@ -525,6 +525,31 @@ public class MainController : MonoBehaviour
                     infoEvent = "i learned something";
                 }
 
+                //if we have Arthur or personName, we make it be the first node
+                if (tempNodes.ContainsValue("Arthur") || tempNodes.ContainsValue(personName))
+                {
+                    Dictionary<int, string> temp = new Dictionary<int, string>();
+
+                    foreach (KeyValuePair<int, string> cn in tempNodes)
+                    {
+                        if(cn.Value == "Arthur" || cn.Value == personName)
+                        {
+                            temp.Add(cn.Key, cn.Value);
+                            break;
+                        }
+                    }
+                    foreach (KeyValuePair<int, string> cn in tempNodes)
+                    {
+                        if (cn.Value != "Arthur" && cn.Value != personName)
+                        {
+                            temp.Add(cn.Key, cn.Value);
+                            break;
+                        }
+                    }
+
+                    tempNodes = temp;
+                }
+
                 //connect nodes for event and create relationship on the database
                 List<int> connectNodes = new List<int>();
                 //just the text ids
@@ -836,7 +861,7 @@ public class MainController : MonoBehaviour
             foreach (KeyValuePair<string, string> ret in retrieved)
             {
                 //we assume there is only one
-                string banana = ret.Value.Replace("age:", "?");
+                string banana = ret.Value.Replace(",age:", "?");
                 string[] info = banana.Split('?');
                 //if does not have age, we can do nothing about it =)
                 if (info.Length == 1)
@@ -965,6 +990,35 @@ public class MainController : MonoBehaviour
             {
                 answer = "No, i do not know it";
             }
+            else
+            {
+                //if has image, show it to the user
+                string imagePath = "";
+                foreach (KeyValuePair<string, string> ret in retrieved)
+                {
+                    if (ret.Value.Contains("image"))
+                    {
+                        string temp = ret.Value.Replace("image:", "?");
+                        string[] pato = temp.Split('?');
+                        pato = pato[1].Split(',');
+                        imagePath = pato[0];
+                    }
+                }
+                if (imagePath != "")
+                {
+                    //say it also
+                    answer += ". Here it is!";
+
+                    var bytes = System.IO.File.ReadAllBytes(imagePath);
+                    var tex = new Texture2D(1, 1);
+                    tex.LoadImage(bytes);
+                    randomImage.GetComponent<MeshRenderer>().material.mainTexture = tex;
+
+                    //show
+                    randomImage.SetActive(true);
+                    riTarget.SetActive(true);
+                }
+            }
         }//if tokens have "meet", arthur is being asked if he met someone (know as well, but already got it)
         //seems like "meet" is not a good verb for NLTK... will keep it here anyway...
         else if (tokens.ContainsKey("meet"))
@@ -976,6 +1030,33 @@ public class MainController : MonoBehaviour
             else if (retrieved.ContainsKey("Arthur"))
             {
                 answer = "Of course i met myself! Duh!!";
+            }
+
+            //if has image, show it to the user
+            string imagePath = "";
+            foreach (KeyValuePair<string, string> ret in retrieved)
+            {
+                if (ret.Value.Contains("image"))
+                {
+                    string temp = ret.Value.Replace("image:", "?");
+                    string[] pato = temp.Split('?');
+                    pato = pato[1].Split(',');
+                    imagePath = pato[0];
+                }
+            }
+            if (imagePath != "")
+            {
+                //say it also
+                answer += ". Here it is!";
+
+                var bytes = System.IO.File.ReadAllBytes(imagePath);
+                var tex = new Texture2D(1, 1);
+                tex.LoadImage(bytes);
+                randomImage.GetComponent<MeshRenderer>().material.mainTexture = tex;
+
+                //show
+                randomImage.SetActive(true);
+                riTarget.SetActive(true);
             }
         }//else, just show what he found
         else
@@ -1075,6 +1156,21 @@ public class MainController : MonoBehaviour
                 if (txt.Key != personName && txt.Key != "children")
                 {
                     StartCoroutine(UpdateMemoryNodeWebService(personName, "children", txt.Key));
+
+                    //if answer is no, add the NoChildren node
+                    if (lastPolarity < 0)
+                    {
+                        //"create" the person as well, just to get id back
+                        StartCoroutine(CreateMemoryNodeWebService(personName, "Person", "", 0.9f));
+
+                        string label = "name:'NoChildren',activation:1,weight:0.9,nodeType:'text',lastEmotion:'" + foundEmotion + "'";
+                        StartCoroutine(CreateMemoryNodeWebService("NoChildren", "Person", label, 0.9f));
+
+                        //type of the event, to save later
+                        tempTypeEvent = "learn thing";
+                        tempRelationship = "HAS_CHILD";
+                        qntTempNodes = 2;
+                    }
                 }
             }
         }
@@ -1105,7 +1201,7 @@ public class MainController : MonoBehaviour
             qntTempNodes = 2;
 
             //create this node
-            string label = "name:'" + course + "',activation:1,weight:0.9,nodeType:'text'";
+            string label = "name:'" + course + "',activation:1,weight:0.9,nodeType:'text',lastEmotion:'" + foundEmotion + "'";
             StartCoroutine(CreateMemoryNodeWebService(course, "Course", label, 0.9f));
 
             //create the relationship between the person and the course
@@ -1138,7 +1234,7 @@ public class MainController : MonoBehaviour
             qntTempNodes = 2;
 
             //create this node
-            string label = "name:'" + job + "',activation:1,weight:0.9,nodeType:'text'";
+            string label = "name:'" + job + "',activation:1,weight:0.9,nodeType:'text',lastEmotion:'" + foundEmotion + "'";
             StartCoroutine(CreateMemoryNodeWebService(job, "Job", label, 0.9f));
 
             //create the relationship between the person and the course
@@ -1164,7 +1260,7 @@ public class MainController : MonoBehaviour
             {
                 if (txt.Key != personName && txt.Key != "children names")
                 {
-                    string label = "name:'" + txt.Key + "',activation:1,weight:0.9,nodeType:'text'";
+                    string label = "name:'" + txt.Key + "',activation:1,weight:0.9,nodeType:'text',lastEmotion:'" + foundEmotion + "'";
                     StartCoroutine(CreateMemoryNodeWebService(txt.Key, "Person", label, 0.9f));
                     qntChild++;
 
@@ -1176,7 +1272,18 @@ public class MainController : MonoBehaviour
             //type of the event, to save later
             tempTypeEvent = "learn thing";
             tempRelationship = "HAS_CHILD";
-            qntTempNodes = qntChild+1;
+
+            //if qntChild is 0, we create a node with "NoChildren"
+            if (qntChild == 0)
+            {
+                string label = "name:'NoChildren',activation:1,weight:0.9,nodeType:'text',lastEmotion:'" + foundEmotion + "'";
+                StartCoroutine(CreateMemoryNodeWebService("NoChildren", "Person", label, 0.9f));
+                qntTempNodes = 2;
+            }
+            else
+            {
+                qntTempNodes = qntChild + 1;
+            }
         }
 
         //iceBreakers.FindIcebreaker(usingIceBreaker)
@@ -1220,7 +1327,7 @@ public class MainController : MonoBehaviour
                     continue;
                 }
                 
-                string label = "name:'" + txt.Key + "',activation:1,weight:"+weight+",nodeType:'text'";
+                string label = "name:'" + txt.Key + "',activation:1,weight:"+weight+ ",nodeType:'text',lastEmotion:'" + foundEmotion + "'";
                 StartCoroutine(CreateMemoryNodeWebService(txt.Key, "Interaction", label, weight));
             }
 
@@ -1675,10 +1782,10 @@ public class MainController : MonoBehaviour
         //save on Neo4j
         //on temp, we have to find 2 information later
         qntTempNodes = 2;
-        string label = "name:'"+namePerson+"',activation:1,weight:0.9,nodeType:'text'";
+        string label = "name:'"+namePerson+ "',activation:1,weight:0.9,nodeType:'text',lastEmotion:'"+foundEmotion+ "',image:'AutobiographicalStorage/Images/" + namePerson + ".png'";
         StartCoroutine(CreateMemoryNodeWebService(namePerson, "Person", label, 0.9f));
 
-        label = "name:'myself',image:'AutobiographicalStorage/Images/" + namePerson + ".png',activation:1,weight:0.9,nodeType:'image'";
+        label = "name:'myself',image:'AutobiographicalStorage/Images/" + namePerson + ".png',activation:1,weight:0.9,nodeType:'image',lastEmotion:'" + foundEmotion + "'";
         StartCoroutine(CreateMemoryNodeWebService("myself", "Image", label, 0.9f));
 
         //type of the event, to save later
@@ -2352,9 +2459,12 @@ public class MainController : MonoBehaviour
             {
                 nouns.Add(cu.Key);
 
-                if (cu.Key == "Arthur" || cu.Key == personName) whoIsIt = cu.Key;
+                //if (cu.Key == personName) whoIsIt = cu.Key;
+                /*else*/ if (cu.Key == "Arthur") whoIsIt = cu.Key;
             }
         }
+
+        if (whoIsIt == "" && cues.ContainsKey(personName)) whoIsIt = personName;
 
         //if we have verbs on the sentence, we try to use them for the relationships
         if (verbs.Count > 0)
@@ -2368,6 +2478,12 @@ public class MainController : MonoBehaviour
                 if (useVerb == "KNOW") useVerb = "KNOWS";
                 if (useVerb == "STUDY") useVerb = "IS_STUDYING";
                 if (useVerb == "WORK") useVerb = "IS_WORKING";
+
+                //if using verb KNOWS, maybe it is more like MET
+                if(nouns.Contains("Arthur") && nouns.Contains(personName))
+                {
+                    useVerb = "MET";
+                }
 
                 int added = 0;
                 if (letter == 'a')
@@ -2505,10 +2621,10 @@ public class MainController : MonoBehaviour
         //save on Neo4j
         //on temp, we have to find 2 information later
         qntTempNodes = 2;
-        string label = "name:'" + importantNoun + "',activation:1,weight:0.9,nodeType:'text'";
+        string label = "name:'" + importantNoun + "',activation:1,weight:0.9,nodeType:'text',lastEmotion:'" + foundEmotion + "',image:'AutobiographicalStorage/Images/" + importantNoun + ".png'";
         StartCoroutine(CreateMemoryNodeWebService(importantNoun, "Thing", label, 0.9f));
 
-        label = "name:'thing',image:'AutobiographicalStorage/Images/" + importantNoun + ".png',activation:1,weight:0.9,nodeType:'image'";
+        label = "name:'thing',image:'AutobiographicalStorage/Images/" + importantNoun + ".png',activation:1,weight:0.9,nodeType:'image',lastEmotion:'" + foundEmotion + "'";
         StartCoroutine(CreateMemoryNodeWebService("thing", "Image", label, 0.9f));
 
         //type of the event, to save later
