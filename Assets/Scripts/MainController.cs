@@ -39,7 +39,7 @@ public class MainController : MonoBehaviour
     //long term memory, with the node information
     public List<MemoryClass> agentLongTermMemory;
     //general events
-    public List<GeneralEvent> agentGeneralEvents;
+    //public List<GeneralEvent> agentGeneralEvents;
 
     //is agent sleeping?
     public bool isSleeping;
@@ -204,7 +204,7 @@ public class MainController : MonoBehaviour
         peopleGreeted = new List<string>();
         agentShortTermMemory = new List<MemoryClass>();
         agentLongTermMemory = new List<MemoryClass>();
-        agentGeneralEvents = new List<GeneralEvent>();
+        //agentGeneralEvents = new List<GeneralEvent>();
         memorySpan = new TimeSpan(0, 0, 15);
         //rehearseMemorySpan = new TimeSpan(0, 0, 2);
 
@@ -242,7 +242,7 @@ public class MainController : MonoBehaviour
         StartCoroutine(MatchWebService(match, true));
 
         //we also load the general events
-        StreamReader readingLTM = new StreamReader("AutobiographicalStorage/generalEvents.txt", System.Text.Encoding.Default);
+        /*StreamReader readingLTM = new StreamReader("AutobiographicalStorage/generalEvents.txt", System.Text.Encoding.Default);
         using (readingLTM)
         {
             string line;
@@ -282,7 +282,7 @@ public class MainController : MonoBehaviour
                 }
             } while (line != null);
         }
-        readingLTM.Close();
+        readingLTM.Close();*/
 
         //read the next ID from the file
         StreamReader sr = new StreamReader("nextId.txt", System.Text.Encoding.Default);
@@ -366,7 +366,7 @@ public class MainController : MonoBehaviour
         //SaveLTM();
 
         //save general events
-        SaveGeneralEvents();
+        //SaveGeneralEvents();
 
         //save next ID
         StreamWriter textToToken = new StreamWriter("nextId.txt");
@@ -598,7 +598,7 @@ public class MainController : MonoBehaviour
                     }
                 }
 
-                AddGeneralEvent(tempTypeEvent, infoEvent, connectNodes);
+                //AddGeneralEvent(tempTypeEvent, infoEvent, connectNodes);
 
                 connectNodes.Clear();
 
@@ -685,7 +685,7 @@ public class MainController : MonoBehaviour
     }
 
     //deal with the retrieved memory
-    private void DealWithIt(GeneralEvent retrieved, Dictionary<string, string> tokens)
+    /*private void DealWithIt(GeneralEvent retrieved, Dictionary<string, string> tokens)
     {
         string responseText = "";
 
@@ -847,7 +847,7 @@ public class MainController : MonoBehaviour
                 UnityEngine.Debug.LogWarning("General Type not found!");
                 break;
         }
-    }
+    }*/
 
     //deal version without event
     private void DealWithIt(Dictionary<string, string> retrieved, Dictionary<string, string> tokens)
@@ -1002,6 +1002,7 @@ public class MainController : MonoBehaviour
                         string[] pato = temp.Split('?');
                         pato = pato[1].Split(',');
                         imagePath = pato[0];
+                        break;
                     }
                 }
                 if (imagePath != "")
@@ -1352,7 +1353,7 @@ public class MainController : MonoBehaviour
                 }
             }*/
 
-            GeneralEvent fuck = null;
+            /*GeneralEvent fuck = null;
             if (fuck == null)
             {
                 //create a new general event
@@ -1360,7 +1361,7 @@ public class MainController : MonoBehaviour
 
                 //now, we connect the memories
                 ConnectMemoryNodes(connectNodes);
-            }
+            }*/
             //deactivated for now
             /*else
             {
@@ -1717,7 +1718,7 @@ public class MainController : MonoBehaviour
                 if (!talaaaaa)
                 {
                     //search the general event where the agent met this person
-                    foreach (GeneralEvent ges in agentGeneralEvents)
+                    /*foreach (GeneralEvent ges in agentGeneralEvents)
                     {
                         if (ges.eventType == "meet new person" && ges.information.Contains(personName))
                         {
@@ -1734,7 +1735,7 @@ public class MainController : MonoBehaviour
 
                             break;
                         }
-                    }
+                    }*/
                 }
 
                 //if the agent still did not greeted this motherfucker, howdy mate!
@@ -1986,7 +1987,7 @@ public class MainController : MonoBehaviour
     }
 
     //add a new general event and return its id
-    private int AddGeneralEvent(string typeEvent, string informationEvent, List<int> connectNodes)
+    /*private int AddGeneralEvent(string typeEvent, string informationEvent, List<int> connectNodes)
     {
         //if the memory already contains this general event, or something similar, do not add
         int ind = -1;
@@ -2001,7 +2002,7 @@ public class MainController : MonoBehaviour
                 {
                     qntNodes++;
                 }
-            }*/
+            }*
 
             if (informationEvent == agentGeneralEvents[i].information)
             {
@@ -2058,7 +2059,7 @@ public class MainController : MonoBehaviour
         agentGeneralEvents.Add(ge);
 
         return geId;
-    }
+    }*/
 
     //every second, we update the short term memory of the agent
     private IEnumerator ControlSTM()
@@ -2195,7 +2196,7 @@ public class MainController : MonoBehaviour
     }*/
 
     //save general events file
-    private void SaveGeneralEvents()
+    /*private void SaveGeneralEvents()
     {
         //save general events as it is
         StreamWriter writingGE;
@@ -2220,7 +2221,7 @@ public class MainController : MonoBehaviour
             writingGE.Write("\n");
         }
         writingGE.Close();
-    }
+    }*/
 
     public void SleepAgent()
     {
@@ -2316,7 +2317,7 @@ public class MainController : MonoBehaviour
                 int memId = agentLongTermMemory[i].informationID;
 
                 //check general events with this ID
-                for (int z = 0; z < agentGeneralEvents.Count; z++)
+                /*for (int z = 0; z < agentGeneralEvents.Count; z++)
                 {
                     for (int j = 0; j < agentGeneralEvents[z].nodes.Count; j++)
                     {
@@ -2327,7 +2328,7 @@ public class MainController : MonoBehaviour
                             break;
                         }
                     }
-                }
+                }*/
 
                 //remove the memory itself
                 agentLongTermMemory.RemoveAt(i);
@@ -2337,7 +2338,7 @@ public class MainController : MonoBehaviour
         }
 
         //now, lets check if the nodes in the General Events still exist. Otherwise, kill them!
-        foreach (GeneralEvent ge in agentGeneralEvents)
+        /*foreach (GeneralEvent ge in agentGeneralEvents)
         {
             int nodesCount = ge.nodes.Count;
             for (int y = 0; y < nodesCount; y++)
@@ -2374,7 +2375,7 @@ public class MainController : MonoBehaviour
         }
 
         //save general events
-        SaveGeneralEvents();
+        SaveGeneralEvents();*/
 
         //delete information from LTM.
         //Basically, we save the new LTM file with just complete information.
@@ -2486,6 +2487,7 @@ public class MainController : MonoBehaviour
                 }
 
                 int added = 0;
+                
                 if (letter == 'a')
                 {
                     foreach(string nn in nouns)
@@ -2512,7 +2514,15 @@ public class MainController : MonoBehaviour
                 //if did not added anything, but has nouns, it means just have Arthur or the person
                 if (added == 0 && nouns.Count > 0)
                 {
-                    match += "("+letter+" {name:'" + whoIsIt + "'})-[:" + useVerb + "]->(" + ++letter + ")";
+                    //if we have only Arthur as noun, it is a question about him
+                    if (nouns.Contains("Arthur") && nouns.Count == 1)
+                    {
+                        match += "(" + letter + " {name:'" + whoIsIt + "'})";
+                    }
+                    else
+                    {
+                        match += "(" + letter + " {name:'" + whoIsIt + "'})-[:" + useVerb + "]->(" + ++letter + ")";
+                    }
                 }
 
                 letter++;
