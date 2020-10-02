@@ -2269,7 +2269,7 @@ public class MainController : MonoBehaviour
     }
 
     //consolidate memory on REM sleep
-    private void MemoryREM()
+    /*private void MemoryREM()
     {
         //first idea: all incomplete information from the LTM, cleaning both memories
 
@@ -2328,7 +2328,7 @@ public class MainController : MonoBehaviour
                             break;
                         }
                     }
-                }*/
+                }*
 
                 //remove the memory itself
                 agentLongTermMemory.RemoveAt(i);
@@ -2375,7 +2375,7 @@ public class MainController : MonoBehaviour
         }
 
         //save general events
-        SaveGeneralEvents();*/
+        SaveGeneralEvents();*
 
         //delete information from LTM.
         //Basically, we save the new LTM file with just complete information.
@@ -2383,59 +2383,132 @@ public class MainController : MonoBehaviour
 
         //clean LTM
         //agentLongTermMemory.Clear();
+    }*/
+
+    //consolidate memory on REM sleep (Graph mode)
+    private void MemoryREM()
+    {
+        StartCoroutine(ConsolidationWebService());
+    }
+
+    IEnumerator ConsolidationWebService()
+    {
+        UnityWebRequest www = new UnityWebRequest(webServicePath + "neo4jTransaction", "POST");
+        string jason = "{\"typeTransaction\" : [\"matchNode\"], \"match\" : [\"match (n) return n.name,n.weight,n.activation\"]}";
+        //UnityEngine.Debug.Log(jason);
+        byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(jason);
+        //byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes("\"typeTransaction\" : [\"createNode\"]");
+        www.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
+        www.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+
+        www.SetRequestHeader("Content-Type", "application/json");
+
+        using (www)
+        {
+            yield return www.SendWebRequest();
+
+            if (www.isNetworkError || www.isHttpError)
+            {
+                UnityEngine.Debug.Log(www.error);
+            }
+            else
+            {
+                //UnityEngine.Debug.Log("Match: " + www.downloadHandler.text);
+
+                string temp = www.downloadHandler.text.Replace("\"", "");
+                temp = temp.Replace("\\n.name\\:", "?");
+                temp = temp.Replace("}", "");
+                //UnityEngine.Debug.Log("oi: " + temp);
+                string[] temp2 = temp.Split('?');
+                foreach(string tmp in temp2)
+                {
+                    if (!tmp.Contains(",")) continue;
+
+                    string node;
+                    float nodeAcv, nodeWeight;
+                    //UnityEngine.Debug.Log("-: " + tmp);
+                    string[] sprt = tmp.Split(',');
+
+                    node = sprt[0].Replace("\\", "");
+
+                    string[] inf = sprt[1].Split(':');
+                    nodeWeight = float.Parse(inf[1]);
+
+                    inf = sprt[2].Split(':');
+                    nodeAcv = float.Parse(inf[1]);
+
+                    //UnityEngine.Debug.Log("ID: " + node + " - Weight: " + nodeWeight + " - Activation: " + nodeAcv);
+
+                    if (nodeAcv < 0.2f && nodeWeight < 0.9)
+                    {
+                        nodeWeight = Mathf.Log(nodeWeight + 1);
+
+                        //if the weight is too low, remove
+                        if(nodeWeight < weightThreshold)
+                        {
+                            StartCoroutine(DeleteMemoryNodeWebService(node));
+                        }//else, just update info
+                        else
+                        {
+                            StartCoroutine(UpdateMemoryNodeWebService(node, "weight", nodeWeight.ToString()));
+                        }
+                    }
+                }
+            }
+        }
     }
 
     //retrieve a memory based on cues
     //deactivated for now
-    /*private GeneralEvent GenerativeRetrieval(Dictionary<string, string> cues)
+/*private GeneralEvent GenerativeRetrieval(Dictionary<string, string> cues)
+{
+    GeneralEvent eventFound = new GeneralEvent();
+
+    //we find the general event which has the most cues compounding its memory nodes
+    //BUT... select the general event is a bit trickier, since it can exist many events with the same memory information.
+    //so, we select the event which has the most cues
+    int maxCues = 0;
+    foreach (GeneralEvent geez in agentGeneralEvents)
     {
-        GeneralEvent eventFound = new GeneralEvent();
-
-        //we find the general event which has the most cues compounding its memory nodes
-        //BUT... select the general event is a bit trickier, since it can exist many events with the same memory information.
-        //so, we select the event which has the most cues
-        int maxCues = 0;
-        foreach (GeneralEvent geez in agentGeneralEvents)
+        //for each general event, we count the cues found
+        int eventCues = 0;
+        //for each memory node which compounds this general event
+        foreach (MemoryClass node in geez.nodes)
         {
-            //for each general event, we count the cues found
-            int eventCues = 0;
-            //for each memory node which compounds this general event
-            foreach (MemoryClass node in geez.nodes)
+            //if it exists, ++
+            if (cues.ContainsKey(node.information))
             {
-                //if it exists, ++
-                if (cues.ContainsKey(node.information))
-                {
-                    eventCues++;
-                }
-            }
-
-            //if it is higher than the max cues, select this general event
-            if (eventCues > maxCues)
-            {
-                maxCues = eventCues;
-                eventFound = geez;
+                eventCues++;
             }
         }
 
-        //if maxCues changed, we found an event
-        if (maxCues > 0)
+        //if it is higher than the max cues, select this general event
+        if (eventCues > maxCues)
         {
-            //add the nodes back to the STM
-            foreach (MemoryClass mem in eventFound.nodes)
-            {
-                AddToSTM(mem.informationType, mem.information, mem.weight);
-            }
-
-            return eventFound;
-        }//else, nothing was found
-        else
-        {
-            return null;
+            maxCues = eventCues;
+            eventFound = geez;
         }
-    }*/
+    }
 
-    //new generative retrieval, based on the graph memory
-    void GenerativeRetrieval(Dictionary<string, string> cues)
+    //if maxCues changed, we found an event
+    if (maxCues > 0)
+    {
+        //add the nodes back to the STM
+        foreach (MemoryClass mem in eventFound.nodes)
+        {
+            AddToSTM(mem.informationType, mem.information, mem.weight);
+        }
+
+        return eventFound;
+    }//else, nothing was found
+    else
+    {
+        return null;
+    }
+}*/
+
+//new generative retrieval, based on the graph memory
+void GenerativeRetrieval(Dictionary<string, string> cues)
     {
         string match = "";
         string whoIsIt = "";
@@ -3391,6 +3464,34 @@ public class MainController : MonoBehaviour
     {
         UnityWebRequest www = new UnityWebRequest(webServicePath + "neo4jTransaction", "POST");
         string jason = "{\"typeTransaction\" : [\"updateNode\"], \"node\" : [\"" + node + "\"], \"nodeKey\" : [\"" + nodeKey + "\"], \"nodeValue\" : [\"" + nodeValue + "\"]}";
+        //UnityEngine.Debug.Log(jason);
+        byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(jason);
+        //byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes("\"typeTransaction\" : [\"createNode\"]");
+        www.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
+        www.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+
+        www.SetRequestHeader("Content-Type", "application/json");
+
+        using (www)
+        {
+            yield return www.SendWebRequest();
+
+            if (www.isNetworkError || www.isHttpError)
+            {
+                UnityEngine.Debug.Log(www.error);
+            }
+            else
+            {
+                UnityEngine.Debug.Log("Received: " + www.downloadHandler.text);
+            }
+        }
+    }
+
+    //Web Service for delete node in memory
+    private IEnumerator DeleteMemoryNodeWebService(string node)
+    {
+        UnityWebRequest www = new UnityWebRequest(webServicePath + "neo4jTransaction", "POST");
+        string jason = "{\"typeTransaction\" : [\"deleteNode\"], \"node\" : [\"" + node + "\"]}";
         //UnityEngine.Debug.Log(jason);
         byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(jason);
         //byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes("\"typeTransaction\" : [\"createNode\"]");
