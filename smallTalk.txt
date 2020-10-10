@@ -1,25 +1,42 @@
-########################################
-#This file maintains all the small talks Arthur can use during the interaction
-#
-#File structure:
-#Each line is an small talk
-#
-#Example:
-#ID;Sentence;Polarity(True=Positive,False=Negative);ParentID
-#1;How are you feeling today?;true;0
-#2;I am glad you are fine! I am feeling good too.;true;1
-#
-#The ParentID informs to which other small talk the small talk in question is related with. In the example above, the small talk 2 has parent as 1, thus, it is child of the small talk 1. Therefore, small talk 2 is only been used depending the answer given for small talk 1. 
-########################################
-
-1;How are you feeling today?;true;0
-2;I am glad you are fine! I am feeling good too.;true;1
-3;I am sorry to hear that! Hope you get better soon.;false;1
-4;Do you like movies?;true;0
-5;Nice, i also like them! What kind of movies do you like?;true;4
-6;Great taste.;true;5
-7;Oh, i understand.;false;5
-8;I see. Anything else you would to talk about?;false;4
-9;Do you like music?;true;0
-10;Cool, I always listen to music.;true;9
-11;OH I see, maybe you should try when you are at home.;false;9
+$ música
+[ gosto_musical
+# 0;  "Me diz uma coisa, você gosta de ouvir música ?"; 0; False; -1;
+# 1; "Hum, talvez você tenha descoberto o seu estilo, posso te recomendar algumas músicas ?"; -1; False; 0;
+# 2; "Legal! Costuma ouvir música com frequência ?"; 1; False; 0;
+# 3; "Puxa, tudo bem. Não está gostando muito do assunto ?"; -1; False; 1; 
+# 4; "Eu costumo ouvir música pop, talvez devesse experimentar Justin Bieber."; 0; True; 1;
+# 5; "Vamos lá.. eu te recomendo ouvir Broken Crown do 'Mumford and Sons', 'Fuego' do Alok.."; 1; True; 1;
+# 6; "Te recomendo ouvir, é muito bom!"; -1; True; 2;
+# 7; "Eu também! Melhor momento do dia é ouvir música no café da manhã!"; 1; True; 2;
+# 8; "Sem problema, vamos conversar outra coisa."; -1; True; 3;
+# 9; "Eu não vivo sem ouvir minhas música, talvez devesse procurar por algumas."; 1; True; 3;
+]
+[ banda_favorita
+# 0; Qual sua banda favorita?; 0; False; -1;
+# 1; Humm, não conheço, a minha é System of a Down, conhece ?; 0; False; 0;
+# 2; Adoro ouvir as músicas deles, você sabia que o vocalista tem uma carreira solo ?; 1; False; 1;
+# 3; É muito legal, depois da nossa conversa coloca no Youtube para ouvir umas músicas deles; -1; True; 1;
+# 4; Sempre recomendo ouvir, adoro o Serj Tankian!; 1; True; 2;
+# 5; Escuta a música 'Lie lie lie' dele, o nome do vocalista é Serj Tankian.; -1; True; 2;
+]
+$ cinema
+[ gosto_cinemal
+# 0;  "Me diz uma coisa, você gosta de ouvir cinema?"; 0; False; -1;
+# 1; "Hum, talvez você tenha descoberto o seu filme, posso te recomendar algum ator ?"; -1; False; 0;
+# 2; "Legal! Costuma ouvir cinema com frequência ?"; 1; False; 0;
+# 3; "Puxa, tudo bem. Não está gostando muito do assunto ?"; -1; False; 1; 
+# 4; "Eu costumo ouvir cinema pop, talvez devesse experimentar Vingadores."; 0; True; 1;
+# 5; "Vamos lá.. eu te recomendo assistir AHHHH.."; 1; True; 1;
+# 6; "Te recomendo ouvir, é muito bom!"; -1; True; 2;
+# 7; "Eu também! Melhor momento do dia é ouvir música no café da manhã!"; 1; True; 2;
+# 8; "Sem problema, vamos conversar outra coisa."; -1; True; 3;
+# 9; "Eu não vivo sem ouvir minhas música, talvez devesse procurar por algumas."; 1; True; 3;
+]
+[ cinema_favorito
+# 0; Qual sua banda favorita?; 0; False; -1;
+# 1; Humm, não conheço, a minha é System of a Down, conhece ?; 0; False; 0;
+# 2; Adoro ouvir as músicas deles, você sabia que o vocalista tem uma carreira solo ?; 1; False; 1;
+# 3; É muito legal, depois da nossa conversa coloca no Youtube para ouvir umas músicas deles; -1; True; 1;
+# 4; Sempre recomendo ouvir, adoro o Serj Tankian!; 1; True; 2;
+# 5; Escuta a música 'Lie lie lie' dele, o nome do vocalista é Serj Tankian.; -1; True; 2;
+]

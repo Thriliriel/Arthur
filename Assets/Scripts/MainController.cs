@@ -120,13 +120,17 @@ public class MainController : MonoBehaviour
     public int rootIceBreaker;
 
     //smallTalk stuff
-    private SmallTalkClass smallTalk;
+    //private SmallTalkClass smallTalk;
     //is small talking?
-    public bool isSmallTalking;
+    /*public bool isSmallTalking;
     //id of the actual small talk
     public int usingSmallTalk;
     //id of the actual root smallTalk, if it is going down the tree
-    public int rootSmallTalk;
+    public int rootSmallTalk;*/
+    private List<TopicGraph> topics;
+    private TopicGraph currentTopic;
+    //list with all dialogs/topics in memory
+    private List<string> dialogsInMemory;
 
     //has the face recognition already returned?
     //private bool isFaceReco;
@@ -185,13 +189,21 @@ public class MainController : MonoBehaviour
         LoadIceBreakersAndStuff();
 
         //set the small talks
-        usingSmallTalk = rootSmallTalk = -1;
+        /*usingSmallTalk = rootSmallTalk = -1;
         //first element is just the pointer to the root questions
-        smallTalk = new SmallTalkClass(0, "", false);
-        usingSmallTalk = 0;
+        //smallTalk = new SmallTalkClass(0, "", false);
+        usingSmallTalk = 0;*/
+        topics = new List<TopicGraph>();
+        dialogsInMemory = new List<string>();
+
+        LoadSmallTalk();
+        PickTopic();
+
+        //load small talks from the memory
+        LoadMemoryDialogs();
 
         //load the small talks from the file
-        LoadSmallTalk();
+        //LoadSmallTalk();
 
         //hide zzz
         zzz.SetActive(false);
@@ -459,7 +471,7 @@ public class MainController : MonoBehaviour
                         {
                             DealYesNo();
                         }//else, if it is breaking the ice or small talking, dont need to try to recover memory neither. Just save the information later and try to keep going                 
-                        else if (!isBreakingIce && !isSmallTalking)
+                        else if (!isBreakingIce && !currentTopic.IsDialoging())
                         {
                             //this is tricky :D
                             saveNewMemoryNode = false;
@@ -491,7 +503,7 @@ public class MainController : MonoBehaviour
                         {
                             BreakIce();
                         }//else, if it is just small talking, get the answer
-                        else if (isSmallTalking)
+                        else if (currentTopic.IsDialoging())
                         {
                             SmallTalking();
                         }
@@ -506,7 +518,7 @@ public class MainController : MonoBehaviour
             }
 
             //if it is not breaking ice or already small talking, check the idle timer for a small talk
-            if(!isBreakingIce && !isSmallTalking)
+            if(!isBreakingIce && !currentTopic.IsDialoging())
             if(Time.time - idleTimer > waitForSeconds)
             {
                 SmallTalking();
@@ -1292,24 +1304,45 @@ public class MainController : MonoBehaviour
         //StartCoroutine(CreateMemoryNodeWebService(namePerson, "Person", label, 0.9f));
     }
 
+    private void SaveSmallTalk(Dictionary<string, string> tokens)
+    {
+        //first, we need to save this topic and dialog
+        //for create relationship later
+        qntTempNodes = 2; //topic and dialog to connect
+        //type of the event, to save later
+        tempTypeEvent = "";
+        tempRelationship = "HAS_DIALOG";
+
+        //save topic
+        string label = "name:'" + currentTopic.GetId() + "',activation:1,weight:0.8,nodeType:'text'";
+        StartCoroutine(CreateMemoryNodeWebService(currentTopic.GetId(), "Topic", label, 0.8f));
+
+        //save dialog
+        label = "name:'Dialog" + currentTopic.GetCurrentDialog().GetId().ToString() + "',activation:1,weight:0.8,nodeType:'text'";//text:'"+ currentTopic.GetCurrentDialog() + "'
+        StartCoroutine(CreateMemoryNodeWebService("Dialog"+currentTopic.GetCurrentDialog().GetId().ToString(), "Dialog", label, 0.8f));
+    }
+
     //save a new memory node and return the tokens
     private void SaveMemoryNode(Dictionary<string, string> tokens, string informationEvent)
     {
         //list to keep memory IDS inserted, so we can connect them later
         List<int> connectNodes = new List<int>();
-        string typeEvent = "interaction";
+        //string typeEvent = "interaction";
         float weight = 0.5f;
 
         if (isBreakingIce)
         {
             SaveIceBreaker(tokens, informationEvent);
+        }else if (currentTopic.IsDialoging())
+        {
+            SaveSmallTalk(tokens);
         }
         else
         {
             //for create general event later
             qntTempNodes = tokens.Count;
             //type of the event, to save later
-            tempTypeEvent = "meet new person";
+            tempTypeEvent = "";
             tempRelationship = "HAS_PHOTO";
 
             //for each information, save it in memory
@@ -2937,7 +2970,7 @@ void GenerativeRetrieval(Dictionary<string, string> cues)
     }
 
     //find next small talk
-    private void SmallTalking(string beforeText = "")
+    /*private void SmallTalking(string beforeText = "")
     {
         //it is over already
         if (usingSmallTalk == -1) return;
@@ -3031,7 +3064,7 @@ void GenerativeRetrieval(Dictionary<string, string> cues)
                     {
                         usingSmallTalk = rootSmallTalk = -1;
                     }
-                }*/
+                }*
             }//else, we reached a leaf. Go back to root and get next
             else
             {
@@ -3065,7 +3098,7 @@ void GenerativeRetrieval(Dictionary<string, string> cues)
                     fuck = geez;
                     break;
                 }
-            }*/
+            }*
 
             //if this small talk has no children, we are done for now
             if(target.QntChildren() == 0)
@@ -3090,7 +3123,7 @@ void GenerativeRetrieval(Dictionary<string, string> cues)
                 else
                 {
                     SpeakYouFool(beforeText + target.GetQuestion());
-                }*/
+                }*
                 //BreakIce(beforeText);
                 return;
             }//otherwise, just make the question
@@ -3108,10 +3141,39 @@ void GenerativeRetrieval(Dictionary<string, string> cues)
             else
             {
                 SpeakYouFool("Thanks! Anything else you would like to talk about?");
-            }*/
+            }*
 
             isSmallTalking = false;
         }
+    }*/
+
+    //new small talking
+    private void PickTopic()
+    {
+        if (topics.Count == 0) return;
+        var rnd = new System.Random(DateTime.Now.Millisecond);
+        int index = rnd.Next(0, topics.Count);
+        currentTopic = topics[index];
+        topics.Remove(currentTopic);
+    }
+
+    private void SmallTalking(string beforeText = "")
+    {
+        string ct;
+        idleTimer = Time.time;
+        saveNewMemoryNode = false;
+
+        if (!currentTopic.IsDialoging()) //sort new dialog
+        {
+            if (!currentTopic.isDialogsAvailable()) PickTopic(); //there isnt available dialogs in current topic
+
+            currentTopic.StartNewDialog();
+        }
+
+        ct = currentTopic.RunDialog(lastPolarity);
+
+        if(ct != null)
+            SpeakYouFool(ct);
     }
 
     //hide the random image
@@ -3246,7 +3308,7 @@ void GenerativeRetrieval(Dictionary<string, string> cues)
         readingLTM.Close();
     }
 
-    private void LoadSmallTalk()
+    /*private void LoadSmallTalk()
     {
         string smallTalkFile = "smallTalk.txt";
 
@@ -3293,6 +3355,109 @@ void GenerativeRetrieval(Dictionary<string, string> cues)
             } while (line != null);
         }
         readingLTM.Close();
+    }*/
+
+    //new parser
+    public void LoadSmallTalk()
+    {
+        string smallTalkFile = "smallTalk.txt";
+
+        StreamReader readingLTM = new StreamReader(smallTalkFile, System.Text.Encoding.Default);
+        using (readingLTM)
+        {
+            string line;
+            //Dictionary<int, Node> aux = new Dictionary<int, Node>();
+            topics = new List<TopicGraph>();
+            TopicGraph currentTopic = null;
+            DialogGraph currentDialog = null;
+
+            do
+            {
+
+                line = readingLTM.ReadLine();
+                if (line == "" || line == null) continue;
+                line = line.Trim();
+                char command = line[0];
+                line = (line.Substring(1, line.Length - 1)).Trim();
+
+                //new topic
+                if (command.Equals('$'))
+                {
+                    currentTopic = new TopicGraph(line);
+                    topics.Add(currentTopic);
+                }
+                //new dialog
+                else if (command.Equals('['))
+                {
+                    currentDialog = new DialogGraph(line);
+                }
+                //dialog
+                else if (command.Equals('#'))
+                {
+
+                    //id, conteúdo, polaridade, éfolha, nodo pai
+                    string[] data = line.Split(';');
+                    currentDialog.AddNode(int.Parse(data[0]), data[1].Trim(), double.Parse(data[2]), bool.Parse(data[3].Trim()), int.Parse(data[4]));
+                }
+                //close dialog (insert on topic)
+                else if (command.Equals(']'))
+                {
+                    currentDialog.CloseInsertion();
+                    currentTopic.InsertDialog(currentDialog.GetDescription(), currentDialog);
+                }
+
+            } while (line != null);
+        }
+
+        if (topics.Count >= 1)
+        {
+            UnityEngine.Debug.Log("leu os small talks");
+        }
+
+        readingLTM.Close();
+    }
+
+    //load small talks saved in memory
+    private void LoadMemoryDialogs()
+    {
+
+    }
+
+    private IEnumerator MatchTopicsDialogs()
+    {
+        UnityWebRequest www = new UnityWebRequest(webServicePath + "neo4jTransaction", "POST");
+        string jason = "{\"typeTransaction\" : [\"matchNode\"], \"match\" : [\"" + match + "\"]}";
+        //UnityEngine.Debug.Log(jason);
+        byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(jason);
+        //byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes("\"typeTransaction\" : [\"createNode\"]");
+        www.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
+        www.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+
+        www.SetRequestHeader("Content-Type", "application/json");
+
+        using (www)
+        {
+            yield return www.SendWebRequest();
+
+            if (www.isNetworkError || www.isHttpError)
+            {
+                UnityEngine.Debug.Log(www.error);
+            }
+            else
+            {
+                //UnityEngine.Debug.Log("Match: " + www.downloadHandler.text);
+
+                //loading all from database
+                if (addOnLTM)
+                {
+                    MatchesToLTM(www.downloadHandler.text);
+                }//else, just normal match
+                else
+                {
+                    MatchesFromRetrieval(www.downloadHandler.text, tokens);
+                }
+            }
+        }
     }
 
     //Web Service for Tokenization
