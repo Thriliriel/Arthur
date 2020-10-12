@@ -98,13 +98,13 @@ public class DialogGraph
 
     //Update current node
     public void NextContent(double response){
-        Debug.Log(response);
+        //Debug.Log(response);
         /* response value between -1 and 1 */
         List<double> tmp = currentNode.GetPolarization();
         int nodeIndex = 0;
         double closestDist = tmp[0];
             
-            //get the closest distance between response and polarization´s vector
+        //get the closest distance between response and polarization´s vector
         for(int i = 0; i < tmp.Count; i++){
             double dist = Math.Abs(tmp[i] - response);
             if(dist < closestDist || (dist == closestDist && tmp[i] > tmp[nodeIndex]))
@@ -116,11 +116,7 @@ public class DialogGraph
         }
 
         currentNode = currentNode.GetSons()[nodeIndex];
-        ReadCurrentNode();
-            
-        
-
-        
+        ReadCurrentNode();        
     }
 
     public bool dialogIsOver()

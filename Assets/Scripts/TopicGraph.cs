@@ -12,7 +12,7 @@ public class TopicGraph
 {
 
     protected string _identificator;
-    protected Dictionary<string, DialogGraph> dialogNodes;
+    public Dictionary<string, DialogGraph> dialogNodes;
     protected List<DialogGraph> dialogs; //using to pick a random dialog ( remove it after graph implementation )
     protected bool _isDialoging;
     
@@ -34,9 +34,20 @@ public class TopicGraph
 
     //run get next dialog node
     //if its over, finish dialog to sort another one
-    public string RunDialog(double p){
+    public string RunDialog(double p, List<string> memoryDialogs){
 
-        currentDialog.NextContent(p);
+        if(p != 0)
+            currentDialog.NextContent(p);
+
+        //check if already used
+        while (memoryDialogs.Contains(currentDialog.GetDescription() + currentDialog.GetId().ToString()))
+        {
+            //get next
+            currentDialog.NextContent(p);
+
+            //check leaf, if so break
+            if (currentDialog.dialogIsOver()) break;
+        }
 
         if (currentDialog.dialogIsOver()) { EndDialog(); return null; }
 
@@ -47,9 +58,11 @@ public class TopicGraph
     //search for other dialog routine
     public void StartNewDialog(){
         currentDialog = GetDialog();
-        ChangeState();
-        currentDialog.StartDialog();
-        
+        if (currentDialog != null)
+        {
+            ChangeState();
+            currentDialog.StartDialog();
+        }
     }
 
     //internal function to finish a dialog

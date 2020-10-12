@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 using UnityEngine.Networking;
 using UnityEngine;
 using UnityEngine.UI;
-
+using System.Text;
+using System.Globalization;
 
 public class MainController : MonoBehaviour
 {
@@ -128,9 +129,13 @@ public class MainController : MonoBehaviour
     //id of the actual root smallTalk, if it is going down the tree
     public int rootSmallTalk;*/
     private List<TopicGraph> topics;
+    private List<TopicGraph> topicsFinal;
     private TopicGraph currentTopic;
     //list with all dialogs/topics in memory
     private List<string> dialogsInMemory;
+    //to save in memory
+    private int qntTempDialogs = 0;
+    private Dictionary<int, string> tempDialogs;
 
     //has the face recognition already returned?
     //private bool isFaceReco;
@@ -176,6 +181,7 @@ public class MainController : MonoBehaviour
         negativeAnswer = new Dictionary<int, string>();
         influencer = new Dictionary<int, string>();
         tempNodes = new Dictionary<int, string>();
+        tempDialogs = new Dictionary<int, string>();
 
         eyes = GameObject.FindGameObjectsWithTag("Eye");
 
@@ -194,13 +200,20 @@ public class MainController : MonoBehaviour
         //smallTalk = new SmallTalkClass(0, "", false);
         usingSmallTalk = 0;*/
         topics = new List<TopicGraph>();
+        topicsFinal = new List<TopicGraph>();
         dialogsInMemory = new List<string>();
 
         LoadSmallTalk();
-        PickTopic();
+
+        foreach(TopicGraph tg in topics)
+        {
+            topicsFinal.Add(tg);
+        }
 
         //load small talks from the memory
         LoadMemoryDialogs();
+
+        PickTopic();
 
         //load the small talks from the file
         //LoadSmallTalk();
@@ -524,7 +537,7 @@ public class MainController : MonoBehaviour
                 SmallTalking();
             }
 
-            //if we have temp nodes, need to create general event for it
+            //if we have temp nodes, need to create relationships for it
             if(tempNodes.Count > 0 && tempNodes.Count == qntTempNodes)
             {
                 //create a new general event
@@ -619,6 +632,70 @@ public class MainController : MonoBehaviour
                 qntTempNodes = -1;
                 tempNodes.Clear();
                 arthurLearnsSomething = false;
+            }
+
+            //if we have tempDialogs, need to create relationship for it
+            if (tempDialogs.Count > 0 && tempDialogs.Count == qntTempDialogs)
+            {
+                //if we have a topic description, we make it be the first node
+                string stuff = "";
+                foreach (TopicGraph tg in topicsFinal)
+                {
+                    foreach (KeyValuePair<string, DialogGraph> dn in tg.dialogNodes)
+                    {
+                        if (tempDialogs.ContainsValue(dn.Key))
+                        {
+                            stuff = dn.Key;
+                            break;
+                        }
+                    }
+                }
+                if (stuff != "")
+                {
+                    Dictionary<int, string> temp = new Dictionary<int, string>();
+
+                    foreach (KeyValuePair<int, string> cn in tempDialogs)
+                    {
+                        if (cn.Value == stuff)
+                        {
+                            temp.Add(cn.Key, cn.Value);
+                            break;
+                        }
+                    }
+                    foreach (KeyValuePair<int, string> cn in tempDialogs)
+                    {
+                        if (cn.Value != stuff)
+                        {
+                            temp.Add(cn.Key, cn.Value);
+                            break;
+                        }
+                    }
+
+                    tempDialogs = temp;
+                }
+
+                //connect nodes for event and create relationship on the database
+                List<int> connectNodes = new List<int>();
+                //just the text ids
+                List<int> twoByTwo = new List<int>();
+
+                foreach (KeyValuePair<int, string> cn in tempDialogs)
+                {
+                    connectNodes.Add(cn.Key);
+                    twoByTwo.Add(cn.Key);
+
+                    if (twoByTwo.Count == 2)
+                    {
+                        StartCoroutine(CreateRelatioshipNodesWebService(twoByTwo[0], twoByTwo[1], "HAS_DIALOG"));
+                        twoByTwo.RemoveAt(0);
+                    }
+                }
+
+                connectNodes.Clear();
+
+                //reset it
+                qntTempDialogs = -1;
+                tempDialogs.Clear();
             }
 
             //emotion based on last polarity answer
@@ -1306,20 +1383,47 @@ public class MainController : MonoBehaviour
 
     private void SaveSmallTalk(Dictionary<string, string> tokens)
     {
+        //just to be sure, clear it
+        tempDialogs.Clear();
+
         //first, we need to save this topic and dialog
         //for create relationship later
-        qntTempNodes = 2; //topic and dialog to connect
+        qntTempDialogs = 2; //topic and dialog to connect
         //type of the event, to save later
-        tempTypeEvent = "";
-        tempRelationship = "HAS_DIALOG";
 
-        //save topic
-        string label = "name:'" + currentTopic.GetId() + "',activation:1,weight:0.8,nodeType:'text'";
-        StartCoroutine(CreateMemoryNodeWebService(currentTopic.GetId(), "Topic", label, 0.8f));
+        //save topic dialog description
+        string label = "name:'" + currentTopic.GetCurrentDialog().GetDescription() + "',activation:1,weight:0.8,nodeType:'text'";
+        StartCoroutine(CreateMemoryNodeWebService(currentTopic.GetCurrentDialog().GetDescription(), "Topic", label, 0.8f));
 
         //save dialog
-        label = "name:'Dialog" + currentTopic.GetCurrentDialog().GetId().ToString() + "',activation:1,weight:0.8,nodeType:'text'";//text:'"+ currentTopic.GetCurrentDialog() + "'
+        label = "name:'Dialog" + currentTopic.GetCurrentDialog().GetId().ToString() + "',activation:1,weight:0.8,nodeType:'text',topic:'"+ currentTopic.GetCurrentDialog().GetDescription() + "'";//text:'"+ currentTopic.GetCurrentDialog() + "'
         StartCoroutine(CreateMemoryNodeWebService("Dialog"+currentTopic.GetCurrentDialog().GetId().ToString(), "Dialog", label, 0.8f));
+
+        //now, save the answer
+        //for create general event later
+        qntTempNodes = tokens.Count + 1;
+        //type of the event, to save later
+        tempTypeEvent = "";
+        tempRelationship = "KNOWS";
+        float weight = 0.8f;
+
+        //"create" the person as well, just to get id back
+        StartCoroutine(CreateMemoryNodeWebService(personName, "Person", "", 0.9f));
+
+        //for each information, save it in memory
+        foreach (KeyValuePair<string, string> txt in tokens)
+        {
+            //if is verb, relationship
+            if (txt.Value == "VB")
+            {
+                tempRelationship = txt.Key.ToUpper();
+                qntTempNodes--;
+                continue;
+            }
+
+            label = "name:'" + txt.Key + "',activation:1,weight:" + weight + ",nodeType:'text',lastEmotion:'" + foundEmotion + "'";
+            StartCoroutine(CreateMemoryNodeWebService(txt.Key, "SmallTalk", label, weight));
+        }
     }
 
     //save a new memory node and return the tokens
@@ -1358,6 +1462,7 @@ public class MainController : MonoBehaviour
                 if(txt.Value == "VB")
                 {
                     tempRelationship = txt.Key.ToUpper();
+                    qntTempNodes--;
                     continue;
                 }
                 
@@ -3159,18 +3264,30 @@ void GenerativeRetrieval(Dictionary<string, string> cues)
 
     private void SmallTalking(string beforeText = "")
     {
+        //if topics is empty, we are done
+        if (topics.Count == 0 && !currentTopic.isDialogsAvailable()) return;
+
         string ct;
         idleTimer = Time.time;
         saveNewMemoryNode = false;
+        bool first = false;
 
         if (!currentTopic.IsDialoging()) //sort new dialog
         {
             if (!currentTopic.isDialogsAvailable()) PickTopic(); //there isnt available dialogs in current topic
 
             currentTopic.StartNewDialog();
+            first = true;
         }
 
-        ct = currentTopic.RunDialog(lastPolarity);
+        if (first)
+        {
+            ct = currentTopic.RunDialog(0, dialogsInMemory);
+        }
+        else
+        {
+            ct = currentTopic.RunDialog(lastPolarity, dialogsInMemory);
+        }
 
         if(ct != null)
             SpeakYouFool(ct);
@@ -3420,11 +3537,12 @@ void GenerativeRetrieval(Dictionary<string, string> cues)
     //load small talks saved in memory
     private void LoadMemoryDialogs()
     {
-
+        StartCoroutine(MatchTopicsDialogs());
     }
 
     private IEnumerator MatchTopicsDialogs()
     {
+        string match = "match (a:Topic)-[]->(b:Dialog) return a,b";
         UnityWebRequest www = new UnityWebRequest(webServicePath + "neo4jTransaction", "POST");
         string jason = "{\"typeTransaction\" : [\"matchNode\"], \"match\" : [\"" + match + "\"]}";
         //UnityEngine.Debug.Log(jason);
@@ -3445,16 +3563,52 @@ void GenerativeRetrieval(Dictionary<string, string> cues)
             }
             else
             {
-                //UnityEngine.Debug.Log("Match: " + www.downloadHandler.text);
+                UnityEngine.Debug.Log("Match: " + www.downloadHandler.text);
+                string batata = www.downloadHandler.text.Replace("\\", "");
+                batata = batata.Replace("\"", "");
+                batata = batata.Replace("}}}", "?");
+                batata = batata.Replace("}", "");
+                batata = batata.Replace("{", "");
+                string[] info = batata.Split('?');
 
-                //loading all from database
-                if (addOnLTM)
+                foreach(string inf in info)
                 {
-                    MatchesToLTM(www.downloadHandler.text);
-                }//else, just normal match
-                else
-                {
-                    MatchesFromRetrieval(www.downloadHandler.text, tokens);
+                    if (!inf.Contains("a:")) continue;
+                    //UnityEngine.Debug.Log("Match: " + inf);
+
+                    string nameToAdd = "";
+
+                    string treat = inf.Replace("a:", "?");
+                    string[] top = treat.Split('?');
+                    treat = top[1].Replace("b:", "?");
+                    //dia has both topic dialog description [0] and dialog [1]
+                    string[] dia = treat.Split('?');
+                    //UnityEngine.Debug.Log("Match: " + dia[0] + " - " + dia[1]);
+
+                    string[] final = dia[0].Split(',');
+                    foreach(string fin in final)
+                    {
+                        if (fin.Contains("name:"))
+                        {
+                            string[] jumanji = fin.Split(':');
+                            nameToAdd += jumanji[1];
+                            break;
+                        }
+                    }
+
+                    final = dia[1].Split(',');
+                    foreach (string fin in final)
+                    {
+                        if (fin.Contains("name:"))
+                        {
+                            string[] jumanji = fin.Split(':');
+                            jumanji[1] = jumanji[1].Replace("Dialog", "");
+                            nameToAdd += jumanji[1];
+                            break;
+                        }
+                    }
+
+                    dialogsInMemory.Add(nameToAdd);
                 }
             }
         }
@@ -3618,8 +3772,15 @@ void GenerativeRetrieval(Dictionary<string, string> cues)
 
                 AddToSTM(infoType, node, weight, idReturned);
 
-                //add this on temp
-                tempNodes.Add(idReturned, node);
+                //add this on temp and dialogs stuff
+                if(typeNode == "Topic" || typeNode == "Dialog")
+                {
+                    tempDialogs.Add(idReturned, node);
+                }
+                else
+                {
+                    tempNodes.Add(idReturned, node);
+                }
             }
         }
     }
