@@ -464,8 +464,58 @@ public class MainController : MonoBehaviour
                 //if it has tokens, we try to make a generative retrieval
                 if (tokens != null)
                 {
+                    //change some tokens, if exists
+                    if (tokens.ContainsKey("you"))
+                    {
+                        tokens.Remove("you");
+                        tokens.Add("Arthur", "NNP");
+                    }
+                    if (tokens.ContainsKey("yourself"))
+                    {
+                        tokens.Remove("yourself");
+                        tokens.Add("Arthur", "NNP");
+                    }
+                    if (tokens.ContainsKey("i"))
+                    {
+                        tokens.Remove("i");
+                        tokens.Add(personName, "NNP");
+                    }
+                    if (tokens.ContainsKey("me"))
+                    {
+                        tokens.Remove("me");
+                        tokens.Add(personName, "NNP");
+                    }
+                    if (tokens.ContainsKey("myself"))
+                    {
+                        tokens.Remove("myself");
+                        tokens.Add(personName, "NNP");
+                    }
+
+                    if (!isGettingInformation && isKnowingNewPeople)
+                    {
+                        SaveNewPerson(tokens);
+                        isUsingMemory = false;
+                    }
+                    //if it is a yes/no question, save the text, because the tokenizer excludes such words. Therefore, we do not need to tokenize
+                    else if (isYesNoQuestion)
+                    {
+                        foreach (KeyValuePair<string, string> tt in tokens)
+                        {
+                            if(tt.Key.ToLower() == "yes" || tt.Key.ToLower() == "no")
+                            {
+                                yesNoAnswer = tt.Key.ToLower();
+                                break;
+                            }
+                        }
+                        
+                        DealYesNo();
+
+                        //do not save memory of this
+                        saveNewMemoryNode = false;
+                        isUsingMemory = false;
+                    }
                     //if not using memory, just send it to the chatbot and whatever...
-                    if (!isUsingMemory)
+                    else if (!isUsingMemory)
                     {
                         //request for chat.
                         string txt = "";
@@ -475,21 +525,11 @@ public class MainController : MonoBehaviour
                         }
                         StartCoroutine(GetRequest("https://acobot-brainshop-ai-v1.p.rapidapi.com/get?bid=178&key=sX5A2PcYZbsN5EY6&uid=mashape&msg=" + txt));
                     }
-                    else
+                    else if (!isBreakingIce && !currentTopic.IsDialoging())
                     {
-
-                        //if the user is answering a yes/no question, we dont need to save or retrieve memory
-                        //IT SHOULD NEVER ENTER HERE, BECAUSE WE TREAT IT IN THE SENDREQUEST. BUT, JUST TO BE SURE...
-                        if (isYesNoQuestion)
-                        {
-                            DealYesNo();
-                        }//else, if it is breaking the ice or small talking, dont need to try to recover memory neither. Just save the information later and try to keep going                 
-                        else if (!isBreakingIce && !currentTopic.IsDialoging())
-                        {
-                            //this is tricky :D
-                            saveNewMemoryNode = false;
-                            GenerativeRetrieval(tokens);
-                        }
+                        //this is tricky :D
+                        saveNewMemoryNode = false;
+                        GenerativeRetrieval(tokens);
                     }
 
                     //is using memory, go on
@@ -540,16 +580,6 @@ public class MainController : MonoBehaviour
             //if we have temp nodes, need to create relationships for it
             if(tempNodes.Count > 0 && tempNodes.Count == qntTempNodes)
             {
-                //create a new general event
-                string infoEvent = "interaction";
-                if(tempTypeEvent == "meet new person")
-                {
-                    infoEvent = "i met " + personName;
-                }else if (tempTypeEvent == "learn thing")
-                {
-                    infoEvent = "i learned something";
-                }
-
                 //if we have Arthur or personName, we make it be the first node
                 if (tempNodes.ContainsValue("Arthur") || tempNodes.ContainsValue(personName))
                 {
@@ -1413,16 +1443,32 @@ public class MainController : MonoBehaviour
         //for each information, save it in memory
         foreach (KeyValuePair<string, string> txt in tokens)
         {
+            string nodeTag = "SmallTalk";
+
             //if is verb, relationship
-            if (txt.Value == "VB")
+            if (txt.Value == "VB" || txt.Value == "VBP")
             {
                 tempRelationship = txt.Key.ToUpper();
                 qntTempNodes--;
                 continue;
             }
 
-            label = "name:'" + txt.Key + "',activation:1,weight:" + weight + ",nodeType:'text',lastEmotion:'" + foundEmotion + "'";
-            StartCoroutine(CreateMemoryNodeWebService(txt.Key, "SmallTalk", label, weight));
+            //if it is NNP, we save with Person tag
+            if(txt.Value == "NNP")
+            {
+                nodeTag = "Person";
+            }
+
+            //if it is Arthur or the person, just get it
+            if (txt.Key == "Arthur" || txt.Key == personName)
+            {
+                StartCoroutine(CreateMemoryNodeWebService(txt.Key, "Person", "", 0.9f));
+            }
+            else
+            {
+                label = "name:'" + txt.Key + "',activation:1,weight:" + weight + ",nodeType:'text',lastEmotion:'" + foundEmotion + "'";
+                StartCoroutine(CreateMemoryNodeWebService(txt.Key, nodeTag, label, weight));
+            }
         }
     }
 
@@ -1459,7 +1505,7 @@ public class MainController : MonoBehaviour
                 //on temp, we have to find 2 information later
 
                 //if is verb, relationship
-                if(txt.Value == "VB")
+                if(txt.Value == "VB" || txt.Value == "VBP")
                 {
                     tempRelationship = txt.Key.ToUpper();
                     qntTempNodes--;
@@ -1706,8 +1752,13 @@ public class MainController : MonoBehaviour
         //reset the idle timer
         idleTimer = Time.time;
 
+        //UPDATE: we always tokenize now, and treat things in the update
+        //UPDATE: now we send a request to our webservice, through a json
+        StartCoroutine(TokenizationWebService(textSend));
+
         //replace occurences of "you" for "Arthur"
-        textSend = textSend.Replace(" you ", " Arthur ");
+        //UPDATE: IT IS BETTER TO REPLACE IT LATER, SO THE VERBS ARE CLASSIFIED IN A BETTER WAY
+        /*textSend = textSend.Replace(" you ", " Arthur ");
         textSend = textSend.Replace(" you?", " Arthur ");
         textSend = textSend.Replace(" yourself?", " Arthur ");
 
@@ -1715,9 +1766,9 @@ public class MainController : MonoBehaviour
         textSend = textSend.Replace(" me ", " "+ personName +" ");
         textSend = textSend.Replace(" me?", " " + personName + " ");
         textSend = textSend.Replace(" i ", " " + personName + " ");
-        textSend = textSend.Replace(" i?", " " + personName + " ");
+        textSend = textSend.Replace(" i?", " " + personName + " ");*/
 
-        if (!isGettingInformation && isKnowingNewPeople)
+        /*if (!isGettingInformation && isKnowingNewPeople)
         {
             SaveNewPerson(textSend);
         }
@@ -1737,41 +1788,12 @@ public class MainController : MonoBehaviour
             //to do so, we save the text in the textToToken file. The tokenization routine will deal with the rest
             /*StreamWriter textToToken = new StreamWriter("textToToken.txt");
             textToToken.WriteLine(textSend);
-            textToToken.Close();*/
+            textToToken.Close();*
 
             //UPDATE: now we send a request to our webservice, through a json
             StartCoroutine(TokenizationWebService(textSend));
-        }
-        //WE CAN HAVE SOME PROBLEM HERE, WHEN SAVING NEW FELLA, DOES NOT NEED TO TOKENIZE IT
-        //if it is meeting a new person, we can save it here already
-
-
-        //we do nothing else here, since the tokenization is going to happen on the requester, and we need the response of it to keep going
+        }*/
     }
-
-    /*public void SendRequestChat()
-    {
-        string textSend = inputText.GetComponent<InputField>().text;
-        inputText.GetComponent<InputField>().text = "";
-
-        //just try to get information if agent is not getting/delivering specific information
-        if (!isGettingInformation && !isKnowingNewPeople)
-        {
-            //save in memory
-            //first, tokenizate it and remove stop words
-            //change information on file
-            StreamWriter textToToken = new StreamWriter("textToToken.txt");
-            textToToken.WriteLine(textSend);
-            textToToken.Close();
-            //UnityEngine.Debug.Break();
-
-            // A correct website page.
-            StartCoroutine(GetRequest("https://acobot-brainshop-ai-v1.p.rapidapi.com/get?bid=178&key=sX5A2PcYZbsN5EY6&uid=mashape&msg=" + textSend));
-        }else if (!isGettingInformation && isKnowingNewPeople)
-        {
-            SaveNewPerson(textSend);
-        }
-    }*/
 
     IEnumerator GetRequest(string uri)
     {
@@ -1897,7 +1919,7 @@ public class MainController : MonoBehaviour
     }
 
     //save the new person known
-    private void SaveNewPerson(string namePerson)
+    private void SaveNewPerson(Dictionary<string,string> tokens)
     {
         //reset the result file
         StreamWriter writingResult;
@@ -1905,42 +1927,64 @@ public class MainController : MonoBehaviour
         writingResult.Write("");
         writingResult.Close();
 
-        personName = namePerson.Trim();
-        //already know it, do not need to greet
-        peopleGreeted.Add(personName);
+        //people can answer with more than just the name (My name is Knob). So, lets treat this
+        string namePerson = "";
 
-        //copy the camFile to the Data directory, saving with person name
-        //it is going to serve both for face recognition and autobiographical storage for images
-        //File.Copy("camImage.png", "Python/face_recognition-master/Data/"+personName+".png");
-        if (File.Exists("AutobiographicalStorage/Images/" + namePerson + ".png"))
-            File.Delete("AutobiographicalStorage/Images/" + namePerson + ".png");
+        foreach(KeyValuePair<string, string> tt in tokens)
+        {
+            //find the NNP
+            if(tt.Value == "NNP")
+            {
+                if (namePerson == "")
+                {
+                    namePerson += tt.Key;
+                }
+                else
+                {
+                    namePerson += " " + tt.Key;
+                }
+            }
+        }
 
-        File.Copy("camImage.png", "AutobiographicalStorage/Images/" + namePerson + ".png");
-        StartCoroutine(SavePersonWebService());
+        if (namePerson != "")
+        {
+            personName = namePerson.Trim();
+            //already know it, do not need to greet
+            peopleGreeted.Add(personName);
 
-        //save on Neo4j
-        //on temp, we have to find 2 information later
-        qntTempNodes = 2;
-        string label = "name:'"+namePerson+ "',activation:1,weight:0.9,nodeType:'text',lastEmotion:'"+foundEmotion+ "',image:'AutobiographicalStorage/Images/" + namePerson + ".png'";
-        StartCoroutine(CreateMemoryNodeWebService(namePerson, "Person", label, 0.9f));
+            //copy the camFile to the Data directory, saving with person name
+            //it is going to serve both for face recognition and autobiographical storage for images
+            //File.Copy("camImage.png", "Python/face_recognition-master/Data/"+personName+".png");
+            if (File.Exists("AutobiographicalStorage/Images/" + namePerson + ".png"))
+                File.Delete("AutobiographicalStorage/Images/" + namePerson + ".png");
 
-        label = "name:'myself',image:'AutobiographicalStorage/Images/" + namePerson + ".png',activation:1,weight:0.9,nodeType:'image',lastEmotion:'" + foundEmotion + "'";
-        StartCoroutine(CreateMemoryNodeWebService("myself", "Image", label, 0.9f));
+            File.Copy("camImage.png", "AutobiographicalStorage/Images/" + namePerson + ".png");
+            StartCoroutine(SavePersonWebService());
 
-        //type of the event, to save later
-        tempTypeEvent = "meet new person";
-        tempRelationship = "HAS_PHOTO";
+            //save on Neo4j
+            //on temp, we have to find 2 information later
+            qntTempNodes = 2;
+            string label = "name:'" + namePerson + "',activation:1,weight:0.9,nodeType:'text',lastEmotion:'" + foundEmotion + "',image:'AutobiographicalStorage/Images/" + namePerson + ".png'";
+            StartCoroutine(CreateMemoryNodeWebService(namePerson, "Person", label, 0.9f));
 
-        isKnowingNewPeople = false;
+            label = "name:'myself',image:'AutobiographicalStorage/Images/" + namePerson + ".png',activation:1,weight:0.9,nodeType:'image',lastEmotion:'" + foundEmotion + "'";
+            StartCoroutine(CreateMemoryNodeWebService("myself", "Image", label, 0.9f));
 
-        //do not need to greet it right now
-        peopleGreeted.Add(personName);
+            //type of the event, to save later
+            tempTypeEvent = "meet new person";
+            tempRelationship = "HAS_PHOTO";
 
-        saveNewMemoryNode = false;
+            isKnowingNewPeople = false;
 
-        //now that they know each other, lets start to break the ice!
-        isBreakingIce = true;
-        BreakIce();
+            //do not need to greet it right now
+            peopleGreeted.Add(personName);
+
+            saveNewMemoryNode = false;
+
+            //now that they know each other, lets start to break the ice!
+            isBreakingIce = true;
+            BreakIce();
+        }
     }
 
     //meet someone new
@@ -2666,6 +2710,7 @@ void GenerativeRetrieval(Dictionary<string, string> cues)
             }
             else if(cu.Value == "VB" || cu.Value == "VBP")
             {
+                if(cu.Key.ToLower() != "do" && cu.Key.ToLower() != "does" && cu.Key.ToLower() != "are" && cu.Key.ToLower() != "were" && cu.Key.ToLower() != "was" && cu.Key.ToLower() != "am" && cu.Key.ToLower() != "be")
                 verbs.Add(cu.Key);
             }else if (cu.Value == "NN" || cu.Value == "NNP")
             {
@@ -4195,8 +4240,8 @@ void GenerativeRetrieval(Dictionary<string, string> cues)
         }
         //end formatting
 
-        //UnityEngine.Debug.Log(tokens[0]);
-        //UnityEngine.Debug.Log(tknType[0]);
+        UnityEngine.Debug.Log(tokens[0]);
+        UnityEngine.Debug.Log(tknType[0]);
 
         //write the file
         StreamWriter sr = File.CreateText("resultToken.txt");

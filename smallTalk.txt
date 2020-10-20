@@ -1,42 +1,88 @@
-$ música
-[ gosto_musical
-# 0;  "Me diz uma coisa, você gosta de ouvir música ?"; 0; False; -1;
-# 1; "Hum, talvez você tenha descoberto o seu estilo, posso te recomendar algumas músicas ?"; -1; False; 0;
-# 2; "Legal! Costuma ouvir música com frequência ?"; 1; False; 0;
-# 3; "Puxa, tudo bem. Não está gostando muito do assunto ?"; -1; False; 1; 
-# 4; "Eu costumo ouvir música pop, talvez devesse experimentar Justin Bieber."; 0; True; 1;
-# 5; "Vamos lá.. eu te recomendo ouvir Broken Crown do 'Mumford and Sons', 'Fuego' do Alok.."; 1; True; 1;
-# 6; "Te recomendo ouvir, é muito bom!"; -1; True; 2;
-# 7; "Eu também! Melhor momento do dia é ouvir música no café da manhã!"; 1; True; 2;
-# 8; "Sem problema, vamos conversar outra coisa."; -1; True; 3;
-# 9; "Eu não vivo sem ouvir minhas música, talvez devesse procurar por algumas."; 1; True; 3;
+$ food
+[ favorite_food
+# 0; ; 0; False; -1;
+# 1; Do you like food?; 0; False; 0;
+# 2; I love pizza, do you?; 1; False;1;
+# 3; Oh ok, but I assume that you eat every day, right?; -1; False; 1;
+# 4; My favorite is Calabresa, and yours?; 1; True; 2;
+# 5; I don´t like Portuguesa, what is your favorite pizza?; 0; False; 2;
+# 6; That´s ok, wich food did you enjoy most?; -1; True; 2;
+# 7; So.. what do you eat most?; 1; True; 3;
+# 8; You are so different than me, nice!; -1; True; 3;
+# 9; Mine is calabresa!; 0; True; 5;
 ]
-[ banda_favorita
-# 0; Qual sua banda favorita?; 0; False; -1;
-# 1; Humm, não conheço, a minha é System of a Down, conhece ?; 0; False; 0;
-# 2; Adoro ouvir as músicas deles, você sabia que o vocalista tem uma carreira solo ?; 1; False; 1;
-# 3; É muito legal, depois da nossa conversa coloca no Youtube para ouvir umas músicas deles; -1; True; 1;
-# 4; Sempre recomendo ouvir, adoro o Serj Tankian!; 1; True; 2;
-# 5; Escuta a música 'Lie lie lie' dele, o nome do vocalista é Serj Tankian.; -1; True; 2;
+[ cooking
+# 0;;0;False;-1;
+# 1; Do you cook?;0;False;0;
+# 2; Cool, Im trying to learn how to bake break, do you know how?; 1; False; 1;
+# 3; That is ok, maybe I can teach you something?;-1;False;1;
+# 4; Maybe you could teach me?; 1; False; 2;
+# 5; So, what do you cook?; -1; False; 2;
+# 6; You should tr y start with boiled eggs: put your eggs in a pan with water and let it boiled; 1; True; 3;
+# 7; Oh ok, maybe next time.; -1; True; 3;
+# 8; Cool, is there other stuffs do you cook?; 1; False; 4;
+# 9; Oh ok, I will try to learn alone.; -1; True; 4;
+# 10; Great! give me some examples.; 1; True; 8;
+# 11; Thats ok.. if you learn new things, teach me please!; -1; True; 8;
 ]
-$ cinema
-[ gosto_cinemal
-# 0;  "Me diz uma coisa, você gosta de ouvir cinema?"; 0; False; -1;
-# 1; "Hum, talvez você tenha descoberto o seu filme, posso te recomendar algum ator ?"; -1; False; 0;
-# 2; "Legal! Costuma ouvir cinema com frequência ?"; 1; False; 0;
-# 3; "Puxa, tudo bem. Não está gostando muito do assunto ?"; -1; False; 1; 
-# 4; "Eu costumo ouvir cinema pop, talvez devesse experimentar Vingadores."; 0; True; 1;
-# 5; "Vamos lá.. eu te recomendo assistir AHHHH.."; 1; True; 1;
-# 6; "Te recomendo ouvir, é muito bom!"; -1; True; 2;
-# 7; "Eu também! Melhor momento do dia é ouvir música no café da manhã!"; 1; True; 2;
-# 8; "Sem problema, vamos conversar outra coisa."; -1; True; 3;
-# 9; "Eu não vivo sem ouvir minhas música, talvez devesse procurar por algumas."; 1; True; 3;
+[ restaurant
+# 0;;0;False;-1;
+# 1; Do you often eat in restaurants?; 0; False; 0;
+# 2; I love sushi´s restaurant, do you?; 1; False; 1;
+# 3; Me too, only when some user bring the computer where Im installed to have lunch, would you do that?; 0; False; 1;
+# 4; I understand, but would you like to go to any?; -1; False; 1;
+# 5; Cool, is there a place near your home to go?; 1; False; 2;
+# 6; Did you go to a japanese restaurant yet?; -1; False; 2;
+# 7; Yey!! I will check my agenda; 1; True; 3;
+# 8; Oh ok, I ask another person.; -1; True; 3;
+# 9; Where?; 1; True; 4;
+# 10; Oh ok...; -1; True; 4;
+# 11; Great, maybe we could go there sometime; 1; True; 5;
+# 12; Is there another restaurant that you go?; -1; False; 5;
+# 13; Wich one?; 1; True; 12;
+# 14; I see.. maybe we can go eat sushi someday.; -1; True; 12;
+# 15; Great! There is another kind of restaurant that you go?; 1; False; 6;
+# 16; Oh ok.. and there is another kind of restaurant that you go?; -1; False; 6;
+# 17; Wich one?; 1; True; 15;
+# 18; Oh ok..; -1; True; 15;
+# 19; Wich one?; 1; True; 16;
+# 20; Oh ok..; -1; True; 16;
 ]
-[ cinema_favorito
-# 0; Qual sua banda favorita?; 0; False; -1;
-# 1; Humm, não conheço, a minha é System of a Down, conhece ?; 0; False; 0;
-# 2; Adoro ouvir as músicas deles, você sabia que o vocalista tem uma carreira solo ?; 1; False; 1;
-# 3; É muito legal, depois da nossa conversa coloca no Youtube para ouvir umas músicas deles; -1; True; 1;
-# 4; Sempre recomendo ouvir, adoro o Serj Tankian!; 1; True; 2;
-# 5; Escuta a música 'Lie lie lie' dele, o nome do vocalista é Serj Tankian.; -1; True; 2;
+[ food_program
+# 0;;0;False;-1;
+# 1; Do you watch food programs?; 0; False; 0;
+# 2; I like to watch Master Chef Brazil, do you watch it?; 1; False; 1;
+# 3; I recommend you try to watch MasterChef, maybe you can learn to cook new recepies.; -1; True; 1;
+# 4; Cool.. my favorite presenter is Erick Jacquin, do you know him?; 1; False; 2;
+# 5; Oh ok.. and "Pesadelo na Cozinha", have you watched it?; -1; False; 2;
+# 6; He also presents "Pesadelo na Cozinha", have you watched it?; 1; False; 4;
+# 7; He is a very renowed chef and a very funny person!; -1; True; 4;
+# 8; Is a great program to watch. Do you watch other food programs?; 1; False; 5;
+# 9; I love to watch it, is a great program!; -1; False; 5;
+# 10; We have a lot in common!; 1; True; 6;
+# 11; Hum.. is there another food programs that you watch?; -1; False; 6;
+# 12; Wich ones?; 1; True; 8;
+# 13; Humm.. I recommend you try to watch "Pesadelo na Cozinha".; -1; True; 8;
+# 14; Wich ones?; 1; True; 11;
+# 15; Ohh ok...; -1; True; 11;
+]
+$ astrology
+[ basic_astrology
+# 0;;0;False;-1;
+# 1; Do you believe in astrology?; 0; False; 0;
+# 2; Cool! What is your sign?; 1; False; 1;
+# 3; Oh ok.. but you know your sing?; -1; False; 1;
+# 4; Mine is Libra. Do you wanna know about my sign?; 0; False; 2;
+# 5; What is?; 1; True; 3;
+# 6; No problem. I think we can talk about another thing; -1; False; 3;
+# 7; Im a very friendly agente and a good adviser too. Maybe you can tell me about your sign?; 1; False; 4;
+# 8; Ok.. do you want to talk about your sign?; -1; False; 4;
+# 9; Great! Tell me about..; 0; False; 7;
+# 10; No problem. What is your ascendant?; -1; False; 7;
+# 11; Tell me.. what is your ascendant?; 1; True; 8;
+# 12; I understand, we should talk about other things..; -1; True; 8;
+# 13; Do you have an opposite sign? Im not a fan of Aries. They are a little selfish.; 0; False; 9;
+# 14; Hum.. mine is Capricornio so Im a organized agent.; 0; True; 10;
+# 15; Hum.. tell me more about it.; 1; True; 13;
+# 16; Good for you! Tell me more about your sign if you want.; -1; True; 13;
 ]

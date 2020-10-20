@@ -36,8 +36,8 @@ public class TopicGraph
     //if its over, finish dialog to sort another one
     public string RunDialog(double p, List<string> memoryDialogs){
 
-        if(p != 0)
-            currentDialog.NextContent(p);
+        //if(p != 0)
+        currentDialog.NextContent(p);
 
         //check if already used
         while (memoryDialogs.Contains(currentDialog.GetDescription() + currentDialog.GetId().ToString()))
@@ -49,7 +49,7 @@ public class TopicGraph
             if (currentDialog.dialogIsOver()) break;
         }
 
-        if (currentDialog.dialogIsOver()) { EndDialog(); return null; }
+        if (currentDialog.dialogIsOver()) { EndDialog(); /*return null;*/ }
 
         return currentDialog.GetContent();            
 
@@ -68,7 +68,7 @@ public class TopicGraph
     //internal function to finish a dialog
     private void EndDialog(){
         dialogs.Remove(currentDialog);
-        currentDialog= null;
+        //currentDialog= null;
         ChangeState();
     }
 
