@@ -115,7 +115,7 @@ namespace Affdex
             }
             lib = NativeMethods.LoadLibrary (filename);
             if (lib == IntPtr.Zero) {
-                Debug.LogError ("Failed to load native library!");
+                Debug.LogWarning ("Failed to load native library!");
                 return false;
             }
             return true;

@@ -165,6 +165,9 @@ public class MainController : MonoBehaviour
     private int arthurIdDatabase = 0;
     private bool arthurLearnsSomething = false;
 
+    //can finish it all?
+    private bool canDestroy = false;
+
     private void Awake()
     {
         //if arthur cannot speak, deactivate the game Object
@@ -1429,19 +1432,64 @@ public class MainController : MonoBehaviour
         label = "name:'Dialog" + currentTopic.GetCurrentDialog().GetId().ToString() + "',activation:1,weight:0.8,nodeType:'text',topic:'"+ currentTopic.GetCurrentDialog().GetDescription() + "'";//text:'"+ currentTopic.GetCurrentDialog() + "'
         StartCoroutine(CreateMemoryNodeWebService("Dialog"+currentTopic.GetCurrentDialog().GetId().ToString(), "Dialog", label, 0.8f));
 
+        //if we have 2 or more NNP in sequence, we understand it is a compound name (ex: Sonata Artica)
+        Dictionary<string, string> newTokens = new Dictionary<string, string>();
+        string merging = "";
+
+        foreach(KeyValuePair<string,string> tt in tokens)
+        {
+            //if it is a NNP
+            if (tt.Value == "NNP")
+            {
+                if(merging == "")
+                {
+                    merging += tt.Key;
+                }
+                else
+                {
+                    merging += "_" + tt.Key;
+                }
+            }//otherwise, we can check if we have something to add
+            else
+            {
+                if(merging != "")
+                {
+                    newTokens.Add(merging, "NNP");
+                    newTokens.Add(tt.Key, tt.Value);
+                }
+                else
+                {
+                    newTokens.Add(tt.Key, tt.Value);
+                }
+
+                merging = "";
+            }
+        }
+
+        //if last word(s) are NNP, we still need to add it
+        if(merging != "")
+        {
+            newTokens.Add(merging, "NNP");
+            merging = "";
+        }
+
         //now, save the answer
         //for create general event later
-        qntTempNodes = tokens.Count + 1;
+        qntTempNodes = newTokens.Count;
         //type of the event, to save later
         tempTypeEvent = "";
         tempRelationship = "KNOWS";
         float weight = 0.8f;
 
-        //"create" the person as well, just to get id back
-        StartCoroutine(CreateMemoryNodeWebService(personName, "Person", "", 0.9f));
+        //"create" the person as well, just to get id back, if it is not already in the sentence
+        if (!newTokens.ContainsKey(personName))
+        {
+            StartCoroutine(CreateMemoryNodeWebService(personName, "Person", "", 0.9f));
+            qntTempNodes++;
+        }
 
         //for each information, save it in memory
-        foreach (KeyValuePair<string, string> txt in tokens)
+        foreach (KeyValuePair<string, string> txt in newTokens)
         {
             string nodeTag = "SmallTalk";
 
@@ -1941,7 +1989,7 @@ public class MainController : MonoBehaviour
                 }
                 else
                 {
-                    namePerson += " " + tt.Key;
+                    namePerson += "_" + tt.Key;
                 }
             }
         }
@@ -2592,6 +2640,7 @@ public class MainController : MonoBehaviour
             if (www.isNetworkError || www.isHttpError)
             {
                 UnityEngine.Debug.Log(www.error);
+                canDestroy = true;
             }
             else
             {
@@ -2636,6 +2685,8 @@ public class MainController : MonoBehaviour
                         }
                     }
                 }
+
+                canDestroy = true;
             }
         }
     }
