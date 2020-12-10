@@ -105,7 +105,7 @@
     <Compile Include="Assets\Anima2D\Scripts\SpriteMeshInstance.cs" />
     <Compile Include="Assets\Scripts\Calibration.cs" />
     <Compile Include="Assets\Scripts\CharacterCTRL.cs" />
-    <Compile Include="Assets\Scripts\DialogGraph.cs" />
+    <Compile Include="Assets\Scripts\Dialog.cs" />
     <Compile Include="Assets\Scripts\DictationScript.cs" />
     <Compile Include="Assets\Scripts\EyeCTRL.cs" />
     <Compile Include="Assets\Scripts\GeneralEventClass.cs" />
@@ -116,7 +116,7 @@
     <Compile Include="Assets\Scripts\MicrophoneController.cs" />
     <Compile Include="Assets\Scripts\RunAbleThread.cs" />
     <Compile Include="Assets\Scripts\SpeakerController.cs" />
-    <Compile Include="Assets\Scripts\TopicGraph.cs" />
+    <Compile Include="Assets\Scripts\Topic.cs" />
     <None Include="Assets\StreamingAssets\affdex-data-3\haarcascade\haarcascade_frontalface_alt2.xml" />
     <None Include="Assets\Anima2D\Readme.txt" />
     <None Include="Assets\Anima2D\Examples\Shaders\VertexLitOneDirectional.shader" />

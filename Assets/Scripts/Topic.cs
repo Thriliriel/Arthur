@@ -8,50 +8,48 @@ using UnityEngine;
     propose: Manage dialogs about a commun topic
     info:    Keep DialogsGraph vector, runs Dialogs elements and manages when it has to change element
 */
-public class TopicGraph
+public class Topic
 {
 
     protected string _identificator;
-    public Dictionary<string, DialogGraph> dialogNodes;
-    protected List<DialogGraph> dialogs; //using to pick a random dialog ( remove it after graph implementation )
-    protected bool _isDialoging;
+    public List<Dialog> dialogs; //using to pick a random dialog 
+    protected bool busy; //dialog is running
     
-    DialogGraph currentDialog;
-    const int debugLevel = -1;
+    Dialog currentDialog;
     
-    //PRIMEIRA VERSÃO: gera Nodos e vai removendo de forma aleatório em um vetor
-    public TopicGraph(string id /*closed dialogs*/)
+    public Topic(string id)
     {
-        if(debugLevel >= 0)
-            Debug.Log("ok, im here");
         
         _identificator = id;
-        dialogNodes = new Dictionary<string, DialogGraph>();
-        dialogs = new List<DialogGraph>();
-        _isDialoging = false;
+        dialogs = new List<Dialog>();
+        busy = false;
 
     }
 
     //run get next dialog node
     //if its over, finish dialog to sort another one
-    public string RunDialog(double p, List<string> memoryDialogs){
+    public string RunDialog(double p, List<string> memoryDialogs) {
 
-        //if(p != 0)
-        currentDialog.NextContent(p);
+        if (p != 0) { 
+            currentDialog.NextSentence(p);
+        }
+
+        //if it is root
+        if (currentDialog.GetId() == 0) currentDialog.NextSentence(p);
 
         //check if already used
         while (memoryDialogs.Contains(currentDialog.GetDescription() + currentDialog.GetId().ToString()))
         {
             //get next
-            currentDialog.NextContent(p);
+            currentDialog.NextSentence(p);
 
             //check leaf, if so break
-            if (currentDialog.dialogIsOver()) break;
+            if (currentDialog.DialogIsOver()) break;
         }
 
-        if (currentDialog.dialogIsOver()) { EndDialog(); /*return null;*/ }
+        if (currentDialog.DialogIsOver()) { CloseDialog(); return null; }
 
-        return currentDialog.GetContent();            
+        return currentDialog.GetSentence();            
 
     }
 
@@ -66,15 +64,15 @@ public class TopicGraph
     }
 
     //internal function to finish a dialog
-    private void EndDialog(){
+    private void CloseDialog(){
         dialogs.Remove(currentDialog);
-        //currentDialog= null;
+        currentDialog= null;
         ChangeState();
     }
 
     // choose new dialog
     // obs: next version it woundn´t be random dialog
-    private DialogGraph GetDialog()
+    private Dialog GetDialog()
     {
         if(dialogs.Count == 0)
             return null;
@@ -82,46 +80,43 @@ public class TopicGraph
         var rnd = new System.Random(DateTime.Now.Millisecond);
         int index = rnd.Next(0, dialogs.Count);
         
-        DialogGraph d = dialogs[index];
+        Dialog d = dialogs[index];
         dialogs.Remove(d);
         return d;
     }
 
-    //finish a dialog or start one
     private void ChangeState(){
-        _isDialoging = !_isDialoging;
+        busy = !busy;
+    }
+
+    //Current dialog relevant information to save in Arthur´s memory
+    public string[] GetCDInfo(){
+        string[] info =  new string[4];
+        Tuple<string, string> memData = currentDialog.GetMemoryData();
+        info[0] = currentDialog.GetId().ToString(); //from node
+        info[1] = memData.Item1;    //from node
+        info[2] = memData.Item2;   //from node
+        info[3] = currentDialog.GetDescription();   //from dialog - repeat for every node at the same dialog
+        return info;
     }
 
     //for verification if a dialog is happening
-    public bool IsDialoging(){ return _isDialoging; }
-    public bool isDialogsAvailable(){ return dialogs.Count != 0; }
-
-    // Add new dialog
+    public bool IsDialoging(){ return busy; }
+    public bool IsDialogsAvailable(){
+        if (dialogs.Count != 0) return true;
+        else if (dialogs.Count == 0 && !currentDialog.currentNode.IsLeaf()) return true;
+        else return false;
+    }
+    public string GetId() { return _identificator; }
+    public int GetLengthDialogs() { return dialogs.Count; }
+    public Dialog GetCurrentDialog() { return currentDialog; }
     
-    public void InsertDialog(string dialogKey, DialogGraph d){
-        dialogNodes.Add(dialogKey, d); 
+    // Add new dialog
+    public void InsertDialog(string dialogKey, Dialog d){
         dialogs.Add(d);
     }
     
 
-    /* Functions to run on Start Function */
-
-    // Move node dialogs to a list to be used
-    // List receives only dialogs not used with the user
-    // ** this function is used just in random version
-    void MoveDialogsToPile(){
-        foreach (KeyValuePair<string, DialogGraph> item in dialogNodes){
-            /* Search on Arthur´s memory if the dialog is available -> if item e CLOSED: faz nada*/
-            dialogs.Add(item.Value);
-        }
-    }
-
-    
-    public string GetId() { return _identificator; }
-    public int GetLengthDialogs() { return dialogs.Count; }
-
-    public DialogGraph GetCurrentDialog() { return currentDialog; }
-    
 }
 
 /*

@@ -17,11 +17,10 @@ public class MainController : MonoBehaviour
     public int framesToConsider;
 
     private GameObject[] eyes;
-    //array with the last framesToConsider frames read
-    //public List<string> foundNames;
     //array with the last framesToConsider emotions found
     public List<string> foundEmotions;
     public string personName;
+    public int personId;
 
     //input text to chat and the chat itself
     public GameObject inputText;
@@ -34,13 +33,12 @@ public class MainController : MonoBehaviour
 
     //agent memory
     //following George Miller definition, each person is able to keep 7 pieces of information in memory at each time, varying more or less 2
-    public List<MemoryClass> agentShortTermMemory;
+    public Dictionary<int,MemoryClass> agentShortTermMemory;
     private TimeSpan memorySpan;
-    //private TimeSpan rehearseMemorySpan;
     //long term memory, with the node information
-    public List<MemoryClass> agentLongTermMemory;
+    public Dictionary<int,MemoryClass> agentLongTermMemory;
     //general events
-    //public List<GeneralEvent> agentGeneralEvents;
+    public Dictionary<int,GeneralEvent> agentGeneralEvents;
 
     //is agent sleeping?
     public bool isSleeping;
@@ -84,14 +82,6 @@ public class MainController : MonoBehaviour
     public GameObject randomImage;
     public GameObject riTarget;
 
-    //vars to communicate with python
-    /*private ProcessStartInfo psi;
-    private string script;
-    private List<string> args;
-    private string errors;
-    private string results;
-    private Process process;*/
-
     //emotion
     //private string[] emotions;
 
@@ -121,27 +111,18 @@ public class MainController : MonoBehaviour
     public int rootIceBreaker;
 
     //smallTalk stuff
-    //private SmallTalkClass smallTalk;
-    //is small talking?
-    /*public bool isSmallTalking;
-    //id of the actual small talk
-    public int usingSmallTalk;
-    //id of the actual root smallTalk, if it is going down the tree
-    public int rootSmallTalk;*/
-    private List<TopicGraph> topics;
-    private List<TopicGraph> topicsFinal;
-    private TopicGraph currentTopic;
+    private List<Topic> topics;
+    private List<Topic> topicsFinal;
+    private Topic currentTopic;
     //list with all dialogs/topics in memory
     private List<string> dialogsInMemory;
     //to save in memory
-    private int qntTempDialogs = 0;
-    private Dictionary<int, string> tempDialogs;
-
-    //has the face recognition already returned?
-    //private bool isFaceReco;
+    //private int qntTempDialogs = 0;
+    //private Dictionary<int, string> tempDialogs;
 
     //next ID for memory
-    private int nextId;
+    private int nextEskId;
+    private int nextEpisodeId;
 
     //mariano
     public GameObject mariano;
@@ -158,11 +139,11 @@ public class MainController : MonoBehaviour
     public float waitForSeconds;
 
     //temp memories to keep for general events later
-    private int qntTempNodes = 0;
+    /*private int qntTempNodes = 0;
     private Dictionary<int,string> tempNodes;
     private string tempTypeEvent;
     private string tempRelationship;
-    private int arthurIdDatabase = 0;
+    private int arthurIdDatabase = 0;*/
     private bool arthurLearnsSomething = false;
 
     //can finish it all?
@@ -183,8 +164,8 @@ public class MainController : MonoBehaviour
         positiveAnswer = new Dictionary<int, string>();
         negativeAnswer = new Dictionary<int, string>();
         influencer = new Dictionary<int, string>();
-        tempNodes = new Dictionary<int, string>();
-        tempDialogs = new Dictionary<int, string>();
+        //tempNodes = new Dictionary<int, string>();
+        //tempDialogs = new Dictionary<int, string>();
 
         eyes = GameObject.FindGameObjectsWithTag("Eye");
 
@@ -198,17 +179,13 @@ public class MainController : MonoBehaviour
         LoadIceBreakersAndStuff();
 
         //set the small talks
-        /*usingSmallTalk = rootSmallTalk = -1;
-        //first element is just the pointer to the root questions
-        //smallTalk = new SmallTalkClass(0, "", false);
-        usingSmallTalk = 0;*/
-        topics = new List<TopicGraph>();
-        topicsFinal = new List<TopicGraph>();
+        topics = new List<Topic>();
+        topicsFinal = new List<Topic>();
         dialogsInMemory = new List<string>();
 
         LoadSmallTalk();
 
-        foreach(TopicGraph tg in topics)
+        foreach(Topic tg in topics)
         {
             topicsFinal.Add(tg);
         }
@@ -217,9 +194,6 @@ public class MainController : MonoBehaviour
         LoadMemoryDialogs();
 
         PickTopic();
-
-        //load the small talks from the file
-        //LoadSmallTalk();
 
         //hide zzz
         zzz.SetActive(false);
@@ -230,134 +204,31 @@ public class MainController : MonoBehaviour
         //foundNames = new List<string>();
         foundEmotions = new List<string>();
         peopleGreeted = new List<string>();
-        agentShortTermMemory = new List<MemoryClass>();
-        agentLongTermMemory = new List<MemoryClass>();
-        //agentGeneralEvents = new List<GeneralEvent>();
+        agentShortTermMemory = new Dictionary<int, MemoryClass>();
+        agentLongTermMemory = new Dictionary<int, MemoryClass>();
+        agentGeneralEvents = new Dictionary<int, GeneralEvent>();
         memorySpan = new TimeSpan(0, 0, 15);
-        //rehearseMemorySpan = new TimeSpan(0, 0, 2);
-
-        //emotion stuff from will
-        /*List<string[]> aux = EmotionScript(); //bad slow guy!!
-        //string[] actionScript = aux.ToArray()[0];
-        emotions = aux.ToArray()[1];*/
 
         //what we have on textLTM, load into auxiliary LTM
-        /*StreamReader readingLTM = new StreamReader("AutobiographicalStorage/textLTM.txt", System.Text.Encoding.Default);
-        using (readingLTM)
-        {
-            string line;
-            do
-            {
-                line = readingLTM.ReadLine();
+        LoadEpisodicMemory();
 
-                if (line != "" && line != null)
-                {
-                    //memory time;person;emotion
-                    string[] info = line.Split(';');
-
-                    MemoryClass newMem = new MemoryClass(System.DateTime.Now, System.Convert.ToInt32(info[3]), info[2],
-                        System.Convert.ToInt32(info[1]), System.Convert.ToSingle(info[5]));
-                    newMem.activation = System.Convert.ToSingle(info[4]);
-
-                    //LTM - everything
-                    agentLongTermMemory.Add(newMem);
-                }
-            } while (line != null);
-        }
-        readingLTM.Close();*/
         //load from the database
-        string match = "match(n) return n";
-        StartCoroutine(MatchWebService(match, true));
-
-        //we also load the general events
-        /*StreamReader readingLTM = new StreamReader("AutobiographicalStorage/generalEvents.txt", System.Text.Encoding.Default);
-        using (readingLTM)
-        {
-            string line;
-            do
-            {
-                line = readingLTM.ReadLine();
-
-                if (line != "" && line != null)
-                {
-                    //memory time;person;emotion
-                    string[] info = line.Split(';');
-
-                    GeneralEvent newGe = new GeneralEvent(System.DateTime.Parse(info[0]), info[3], info[2],
-                        System.Convert.ToInt32(info[1]), info[4]);
-
-                    //polarity
-                    newGe.polarity = float.Parse(info[5]);
-
-                    //if has nodes...
-                    if (info.Length > 6)
-                    {
-                        for (int i = 6; i < info.Length; i++)
-                        {
-                            int newId = System.Convert.ToInt32(info[i]);
-                            foreach (MemoryClass mc in agentLongTermMemory)
-                            {
-                                if (mc.informationID == newId)
-                                {
-                                    newGe.nodes.Add(mc);
-                                    break;
-                                }
-                            }
-                        }
-                    }
-
-                    agentGeneralEvents.Add(newGe);
-                }
-            } while (line != null);
-        }
-        readingLTM.Close();*/
+        //string match = "match(n) return n";
+        //StartCoroutine(MatchWebService(match, true));
 
         //read the next ID from the file
+        //first line: ESK Ids. Second line: Episode Ids
         StreamReader sr = new StreamReader("nextId.txt", System.Text.Encoding.Default);
-        string textFile = sr.ReadToEnd();
+        string textFile = sr.ReadLine();
+        nextEskId = int.Parse(textFile.Trim());
+        textFile = sr.ReadLine();
+        nextEpisodeId = int.Parse(textFile.Trim());
         sr.Close();
-        nextId = System.Convert.ToInt32(textFile.Trim());
     }
-
-    //method to execute the python batch
-    /*static void ExecuteCommand(string command, string args)
-    {
-        var processInfo = new ProcessStartInfo("cmd.exe", "/c " + command);
-        processInfo.CreateNoWindow = true;
-        processInfo.UseShellExecute = false;
-        processInfo.RedirectStandardError = true;
-        processInfo.RedirectStandardOutput = true;
-
-        var process = Process.Start(processInfo);
-
-        /*process.OutputDataReceived += (object sender, DataReceivedEventArgs e) =>
-            UnityEngine.Debug.LogError("D>" + e.Data);
-        process.BeginOutputReadLine();
-
-        process.ErrorDataReceived += (object sender, DataReceivedEventArgs e) =>
-            UnityEngine.Debug.LogError("E>" + e.Data);
-        process.BeginErrorReadLine();
-
-        process.WaitForExit();
-
-        //Console.WriteLine("ExitCode: {0}", process.ExitCode);
-        process.Close();*
-    }*/
 
     // Start is called before the first frame update
     void Start()
     {
-        /*SmallTalkClass teste = smallTalk.FindSmallTalk(6);
-        try
-        {
-            UnityEngine.Debug.Log(teste.Getsentence());
-        }
-        catch
-        {
-            UnityEngine.Debug.Log("Erroouuuu");
-        }
-        UnityEngine.Debug.Break();*/
-
         //reset the result file
         StreamWriter writingResult;
         writingResult = File.CreateText("result.txt");
@@ -374,31 +245,20 @@ public class MainController : MonoBehaviour
         StartCoroutine(ChangeFaceName());
 
         //SetEmotion("disgust");
+        SetEmotion("joy");
 
         //start the idle timer with the seconds now
         idleTimer = Time.time;
-
-        //just testing...
-        //StartCoroutine(CreateMemoryNodeWebService("Demonio", "Demon", "age:31,ocupation:'teacher'"));
-        /*Dictionary<string,string> test = new Dictionary<string, string>();
-        test.Add("Knob", "NNP");
-        test.Add("cellphone", "NN");
-        test.Add("potato", "NN");
-        test.Add("knows", "VB");
-        GenerativeRetrieval(test);*/
     }
 
     private void OnDestroy()
     {
         //save LTM as it is
-        //SaveLTM();
-
-        //save general events
-        //SaveGeneralEvents();
+        SaveEpisodic();
 
         //save next ID
         StreamWriter textToToken = new StreamWriter("nextId.txt");
-        textToToken.WriteLine(nextId);
+        textToToken.WriteLine(nextEskId+"\n"+nextEpisodeId);
         textToToken.Close();
 
         //consolidate memory
@@ -411,14 +271,7 @@ public class MainController : MonoBehaviour
         //just update if it is awake
         if (!isSleeping)
         {
-            //for each eye, generate a saccade behavior
-            /*float saccadeMag = CalculateSaccade();
-            float direction = UnityEngine.Random.Range(0f, 100f);
-
-            foreach (GameObject eye in eyes)
-            {
-                eye.GetComponent<EyeController>().SaccadeBehavior(saccadeMag, direction, true);
-            }*/
+            isUsingMemory = true;
 
             //check the predominant emotion
             if (foundEmotions.Count > 0)
@@ -449,7 +302,7 @@ public class MainController : MonoBehaviour
 
                 foundEmotion = indx;
 
-                //change emotion for empathy
+                //change emotion for empathy (deactivated for now)
                 //SetEmotion(foundEmotion);
             }
 
@@ -468,12 +321,12 @@ public class MainController : MonoBehaviour
                 if (tokens != null)
                 {
                     //change some tokens, if exists
-                    if (tokens.ContainsKey("you"))
+                    if (tokens.ContainsKey("you") && !tokens.ContainsKey("Arthur"))
                     {
                         tokens.Remove("you");
                         tokens.Add("Arthur", "NNP");
                     }
-                    if (tokens.ContainsKey("yourself"))
+                    if (tokens.ContainsKey("yourself") && !tokens.ContainsKey("Arthur"))
                     {
                         tokens.Remove("yourself");
                         tokens.Add("Arthur", "NNP");
@@ -532,7 +385,11 @@ public class MainController : MonoBehaviour
                     {
                         //this is tricky :D
                         saveNewMemoryNode = false;
-                        GenerativeRetrieval(tokens);
+                        GeneralEvent foundIt = GenerativeRetrieval(tokens);
+                        if (foundIt != null)
+                        {
+                            DealWithIt(foundIt, tokens);
+                        }
                     }
 
                     //is using memory, go on
@@ -550,7 +407,6 @@ public class MainController : MonoBehaviour
                         }
 
                         //save it
-                        //HERE!!! MAYBE THIS SAVENEWMEMORYNODE IS NOT UPDATED YET, BECAUSE OF THE MATCH
                         if (saveNewMemoryNode)
                             SaveMemoryNode(tokens, informationEvent);
 
@@ -580,162 +436,218 @@ public class MainController : MonoBehaviour
                 SmallTalking();
             }
 
-            //if we have temp nodes, need to create relationships for it
-            if(tempNodes.Count > 0 && tempNodes.Count == qntTempNodes)
-            {
-                //if we have Arthur or personName, we make it be the first node
-                if (tempNodes.ContainsValue("Arthur") || tempNodes.ContainsValue(personName))
-                {
-                    Dictionary<int, string> temp = new Dictionary<int, string>();
+            ////if we have temp nodes, need to create relationships for it
+            //if(tempNodes.Count > 0 && tempNodes.Count == qntTempNodes)
+            //{
+            //    //if we have Arthur or personName, we make it be the first node
+            //    if (tempNodes.ContainsValue("Arthur") || tempNodes.ContainsValue(personName))
+            //    {
+            //        Dictionary<int, string> temp = new Dictionary<int, string>();
 
-                    foreach (KeyValuePair<int, string> cn in tempNodes)
-                    {
-                        if(cn.Value == "Arthur" || cn.Value == personName)
-                        {
-                            temp.Add(cn.Key, cn.Value);
-                            break;
-                        }
-                    }
-                    foreach (KeyValuePair<int, string> cn in tempNodes)
-                    {
-                        if (cn.Value != "Arthur" && cn.Value != personName)
-                        {
-                            temp.Add(cn.Key, cn.Value);
-                            break;
-                        }
-                    }
+            //        foreach (KeyValuePair<int, string> cn in tempNodes)
+            //        {
+            //            if(cn.Value == "Arthur" || cn.Value == personName)
+            //            {
+            //                temp.Add(cn.Key, cn.Value);
+            //                break;
+            //            }
+            //        }
+            //        foreach (KeyValuePair<int, string> cn in tempNodes)
+            //        {
+            //            if (cn.Value != "Arthur" && cn.Value != personName)
+            //            {
+            //                temp.Add(cn.Key, cn.Value);
+            //                break;
+            //            }
+            //        }
 
-                    tempNodes = temp;
-                }
+            //        tempNodes = temp;
+            //    }
 
-                //connect nodes for event and create relationship on the database
-                List<int> connectNodes = new List<int>();
-                //just the text ids
-                List<int> textInfo = new List<int>();
-                List<int> twoByTwo = new List<int>();
+            //    //connect nodes for event and create relationship on the database
+            //    List<int> connectNodes = new List<int>();
+            //    //just the text ids
+            //    List<int> textInfo = new List<int>();
+            //    List<int> twoByTwo = new List<int>();
 
-                foreach (KeyValuePair<int, string> cn in tempNodes)
-                {
-                    connectNodes.Add(cn.Key);
-                    twoByTwo.Add(cn.Key);
+            //    foreach (KeyValuePair<int, string> cn in tempNodes)
+            //    {
+            //        connectNodes.Add(cn.Key);
+            //        twoByTwo.Add(cn.Key);
 
-                    if (!cn.Value.Contains("myself") && !cn.Value.Contains("thing"))
-                    {
-                        textInfo.Add(cn.Key);
-                    }
+            //        if (!cn.Value.Contains("myself") && !cn.Value.Contains("thing"))
+            //        {
+            //            textInfo.Add(cn.Key);
+            //        }
 
-                    if (twoByTwo.Count == 2)
-                    {
-                        StartCoroutine(CreateRelatioshipNodesWebService(twoByTwo[0], twoByTwo[1], tempRelationship));
+            //        if (twoByTwo.Count == 2)
+            //        {
+            //            StartCoroutine(CreateRelatioshipNodesWebService(twoByTwo[0], twoByTwo[1], tempRelationship));
 
-                        //if it is children, the pairing is a bit different, since they all connect with the person
-                        if (tempRelationship == "HAS_CHILD")
-                        {
-                            twoByTwo.RemoveAt(1);
-                        }
-                        else
-                        {
-                            twoByTwo.RemoveAt(0);
-                        }
-                    }
-                }
+            //            //if it is children, the pairing is a bit different, since they all connect with the person
+            //            if (tempRelationship == "HAS_CHILD")
+            //            {
+            //                twoByTwo.RemoveAt(1);
+            //            }
+            //            else
+            //            {
+            //                twoByTwo.RemoveAt(0);
+            //            }
+            //        }
+            //    }
 
-                //if he is learning something, we create relationship between the text and Arthur
-                if (arthurLearnsSomething)
-                {
-                    foreach(int ite in textInfo)
-                    {
-                        StartCoroutine(CreateRelatioshipNodesWebService(arthurIdDatabase, ite, "KNOWS"));
-                    }
-                }//else, if Arthur is meeting someone new, needs to create this relationship
-                else if(tempTypeEvent == "meet new person")
-                {
-                    foreach (int ite in textInfo)
-                    {
-                        StartCoroutine(CreateRelatioshipNodesWebService(arthurIdDatabase, ite, "MET"));
-                    }
-                }
+            //    //if he is learning something, we create relationship between the text and Arthur
+            //    if (arthurLearnsSomething)
+            //    {
+            //        foreach(int ite in textInfo)
+            //        {
+            //            StartCoroutine(CreateRelatioshipNodesWebService(arthurIdDatabase, ite, "KNOWS"));
+            //        }
+            //    }//else, if Arthur is meeting someone new, needs to create this relationship
+            //    else if(tempTypeEvent == "meet new person")
+            //    {
+            //        foreach (int ite in textInfo)
+            //        {
+            //            StartCoroutine(CreateRelatioshipNodesWebService(arthurIdDatabase, ite, "MET"));
+            //        }
+            //    }
 
-                //AddGeneralEvent(tempTypeEvent, infoEvent, connectNodes);
+            //    //AddGeneralEvent(tempTypeEvent, infoEvent, connectNodes);
 
-                connectNodes.Clear();
+            //    connectNodes.Clear();
 
-                //reset it
-                tempTypeEvent = tempRelationship = "";
-                qntTempNodes = -1;
-                tempNodes.Clear();
-                arthurLearnsSomething = false;
-            }
+            //    //reset it
+            //    tempTypeEvent = tempRelationship = "";
+            //    qntTempNodes = -1;
+            //    tempNodes.Clear();
+            //    arthurLearnsSomething = false;
+            //}
 
-            //if we have tempDialogs, need to create relationship for it
-            if (tempDialogs.Count > 0 && tempDialogs.Count == qntTempDialogs)
-            {
-                //if we have a topic description, we make it be the first node
-                string stuff = "";
-                foreach (TopicGraph tg in topicsFinal)
-                {
-                    foreach (KeyValuePair<string, DialogGraph> dn in tg.dialogNodes)
-                    {
-                        if (tempDialogs.ContainsValue(dn.Key))
-                        {
-                            stuff = dn.Key;
-                            break;
-                        }
-                    }
-                }
-                if (stuff != "")
-                {
-                    Dictionary<int, string> temp = new Dictionary<int, string>();
+            ////if we have tempDialogs, need to create relationship for it
+            //if (tempDialogs.Count > 0 && tempDialogs.Count == qntTempDialogs)
+            //{
+            //    //if we have a topic description, we make it be the first node
+            //    string stuff = "";
+            //    foreach (Topic tg in topicsFinal)
+            //    {
+            //        foreach (Dialog dn in tg.dialogs)
+            //        {
+            //            if (tempDialogs.ContainsValue(dn.GetDescription()))
+            //            {
+            //                stuff = dn.GetDescription();
+            //                break;
+            //            }
+            //        }
+            //    }
+            //    if (stuff != "")
+            //    {
+            //        Dictionary<int, string> temp = new Dictionary<int, string>();
 
-                    foreach (KeyValuePair<int, string> cn in tempDialogs)
-                    {
-                        if (cn.Value == stuff)
-                        {
-                            temp.Add(cn.Key, cn.Value);
-                            break;
-                        }
-                    }
-                    foreach (KeyValuePair<int, string> cn in tempDialogs)
-                    {
-                        if (cn.Value != stuff)
-                        {
-                            temp.Add(cn.Key, cn.Value);
-                            break;
-                        }
-                    }
+            //        foreach (KeyValuePair<int, string> cn in tempDialogs)
+            //        {
+            //            if (cn.Value == stuff)
+            //            {
+            //                temp.Add(cn.Key, cn.Value);
+            //                break;
+            //            }
+            //        }
+            //        foreach (KeyValuePair<int, string> cn in tempDialogs)
+            //        {
+            //            if (cn.Value != stuff)
+            //            {
+            //                temp.Add(cn.Key, cn.Value);
+            //                break;
+            //            }
+            //        }
 
-                    tempDialogs = temp;
-                }
+            //        tempDialogs = temp;
+            //    }
 
-                //connect nodes for event and create relationship on the database
-                List<int> connectNodes = new List<int>();
-                //just the text ids
-                List<int> twoByTwo = new List<int>();
+            //    //connect nodes for event and create relationship on the database
+            //    List<int> connectNodes = new List<int>();
+            //    //just the text ids
+            //    List<int> twoByTwo = new List<int>();
 
-                foreach (KeyValuePair<int, string> cn in tempDialogs)
-                {
-                    connectNodes.Add(cn.Key);
-                    twoByTwo.Add(cn.Key);
+            //    foreach (KeyValuePair<int, string> cn in tempDialogs)
+            //    {
+            //        connectNodes.Add(cn.Key);
+            //        twoByTwo.Add(cn.Key);
 
-                    if (twoByTwo.Count == 2)
-                    {
-                        StartCoroutine(CreateRelatioshipNodesWebService(twoByTwo[0], twoByTwo[1], "HAS_DIALOG"));
-                        twoByTwo.RemoveAt(0);
-                    }
-                }
+            //        if (twoByTwo.Count == 2)
+            //        {
+            //            StartCoroutine(CreateRelatioshipNodesWebService(twoByTwo[0], twoByTwo[1], "HAS_DIALOG"));
+            //            twoByTwo.RemoveAt(0);
+            //        }
+            //    }
 
-                connectNodes.Clear();
+            //    connectNodes.Clear();
 
-                //reset it
-                qntTempDialogs = -1;
-                tempDialogs.Clear();
-            }
+            //    //reset it
+            //    qntTempDialogs = -1;
+            //    tempDialogs.Clear();
+            //}
 
             //emotion based on last polarity answer
-            if (lastPolarity < 0) SetEmotion("sadness");
+            /*if (lastPolarity < 0) SetEmotion("sadness");
             else if (lastPolarity > 0) SetEmotion("joy");
-            else SetEmotion("neutral");
+            else SetEmotion("neutral");*/
         }
+    }
+
+    //Load Episodic memory
+    private void LoadEpisodicMemory()
+    {
+        StreamReader readingLTM = new StreamReader("AutobiographicalStorage/episodicMemory.txt", System.Text.Encoding.Default);
+        //the file stores both info, divided by "%%%"
+        bool readingESK = true;
+        using (readingLTM)
+        {
+            string line;
+            do
+            {
+                line = readingLTM.ReadLine();
+
+                //when we read the dividing sequence "%%%", episodes start
+                if(line == "%%%")
+                {
+                    readingESK = false;
+                    continue;
+                }
+
+                if (line != "" && line != null)
+                {
+                    string[] info = line.Split(';');
+                    int ide = System.Convert.ToInt32(info[0]);
+
+                    //while it is reading ESK
+                    if (readingESK)
+                    {
+                        //id;memory timestamp;information;5W1H class;Activation;Weight
+                        MemoryClass newMem = new MemoryClass(System.DateTime.Parse(info[1]), info[3], info[2], ide, float.Parse(info[5]));
+                        //newMem.activation = System.Convert.ToSingle(info[4]);
+
+                        //LTM - everything
+                        agentLongTermMemory.Add(ide, newMem);
+                    }//else, it is episodes
+                    else
+                    {
+                        //id;memory timestamp;information;nodes
+                        GeneralEvent newGen = new GeneralEvent(System.DateTime.Parse(info[1]), info[2], ide);
+
+                        //add the associated nodes of this episode
+                        string[] memNodes = info[3].Split('_');
+                        foreach(string nod in memNodes)
+                        {
+                            newGen.nodes.Add(agentLongTermMemory[int.Parse(nod)]);
+                        }
+
+                        //add
+                        agentGeneralEvents.Add(ide, newGen);
+                    }
+                }
+            } while (line != null);
+        }
+        readingLTM.Close();
     }
 
     //Agent says something
@@ -752,17 +664,19 @@ public class MainController : MonoBehaviour
     }
 
     //deals with unknown information
-    private void DealUnknown(string unknoun)
+    private string DealUnknown(string unknoun)
     {
         //asks the user if it wants to give more details about this subject
         string responseText = "I see. I do not know " + unknoun + ", would you like to show me a picture?";
-        SpeakYouFool(responseText);
+        //SpeakYouFool(responseText);
 
         //yes/no question
         isYesNoQuestion = true;
 
         //keep it, so we know later what are we refering of
         importantNoun = unknoun;
+
+        return responseText;
     }
 
     //deal with yes/no question
@@ -807,172 +721,95 @@ public class MainController : MonoBehaviour
     }
 
     //deal with the retrieved memory
-    /*private void DealWithIt(GeneralEvent retrieved, Dictionary<string, string> tokens)
+    private void DealWithIt(GeneralEvent retrieved, Dictionary<string, string> tokens)
     {
         string responseText = "";
 
-        //depending the type of the event, do something different
-        switch (retrieved.eventType)
+        //by default, we get the episode itself
+        responseText += retrieved.information;
+
+        //some things we can try to infer, like Icebreakers
+        //lets divide the nodes by the type
+        List<MemoryClass> person = new List<MemoryClass>();
+        List<MemoryClass> location = new List<MemoryClass>();
+        List<MemoryClass> time = new List<MemoryClass>();
+        List<MemoryClass> activity = new List<MemoryClass>();
+        List<MemoryClass> emotion = new List<MemoryClass>();
+        List<MemoryClass> imagery = new List<MemoryClass>();
+        foreach (MemoryClass mem in retrieved.nodes)
         {
-            case "recognizes person":
-            case "meet new person":
-                //get the person name using the memory nodes
-                string personName = "";
-                foreach (MemoryClass nd in retrieved.nodes)
-                {
-                    //if it is text
-                    if (nd.informationType == 0)
-                    {
-                        personName = nd.information;
-                        break;
-                    }
-                }
-
-                //if the answer is about Arthur himself, lets make it more personal =)
-                if (personName == "Arthur")
-                {
-                    responseText = "Of course i know myself! Duh!!";
-                }
-                else
-                {
-                    responseText = "Yes, i already know " + personName;
-
-                    //depending the emotion found for the event
-                    responseText += ". It seemed " + EmotionMemoryPicker(retrieved.emotion) + " when we first met!";
-                }
-
-                //talk motherfucker!
-                SpeakYouFool(responseText);
-
-                break;
-            case "learn thing":
-                //get the noun
-                string nummy = "";
-                foreach (KeyValuePair<string, string> tks in tokens)
-                {
-                    if (tks.Value == "NN" || tks.Value == "NNP")
-                    {
-                        nummy = tks.Key;
-                        break;
-                    }
-                }
-
-                //if the agent is recovering a learning memory, it can be of something random (like an object) or something about someone.
-                //if it is about someone, answer the question
-                //otherwise, tell and show
-                //how do we know? if nummy has a MET general event, it is a person
-                bool met = false;
-                foreach (GeneralEvent ge in agentGeneralEvents)
-                {
-                    if (ge.eventType == "meet new person")
-                    {
-                        foreach (MemoryClass mk in ge.nodes)
-                        {
-                            if (mk.information == nummy)
-                            {
-                                met = true;
-                                break;
-                            }
-                        }
-                    }
-
-                    if (met) break;
-                }
-
-                if (met)
-                {
-                    //if it is something about Arthur, lets make it more personal
-                    if (tokens.ContainsKey("Arthur"))
-                    {
-                        if (tokens.ContainsKey("old"))
-                        {
-                            responseText = "I am ";
-
-                            foreach (MemoryClass mk in retrieved.nodes)
-                            {
-                                if (!tokens.ContainsKey(mk.information))
-                                {
-                                    responseText += mk.information + " ";
-                                }
-                            }
-
-                            responseText += "year old!";
-                        }else if (tokens.ContainsKey("study"))
-                        {
-                            responseText = "No, i do not study";
-                        }
-                        else if (tokens.ContainsKey("work"))
-                        {
-                            responseText = "No, i do not work";
-                        }
-                        else if (tokens.ContainsKey("children"))
-                        {
-                            responseText = "I have no children";
-                        }
-                    }
-                    else
-                    {
-                        //get all information about this person
-                        foreach (MemoryClass mk in retrieved.nodes)
-                        {
-                            if (!tokens.ContainsKey(mk.information))
-                            {
-                                responseText += mk.information + " ";
-                            }
-                        }
-                    }
-                    
-                    responseText = responseText.Trim();
-                }
-                else
-                {
-                    responseText = "Yeah, i know a " + nummy + "!";
-
-                    //get the image
-                    string imagePath = "";
-                    foreach (MemoryClass mc in retrieved.nodes)
-                    {
-                        if (mc.informationType == 1)
-                        {
-                            imagePath = mc.information;
-                            break;
-                        }
-                    }
-
-                    //if has image, show it to the user
-                    if (imagePath != "")
-                    {
-                        //say it also
-                        responseText += " Here is one!";
-
-                        var bytes = System.IO.File.ReadAllBytes(imagePath);
-                        var tex = new Texture2D(1, 1);
-                        tex.LoadImage(bytes);
-                        randomImage.GetComponent<MeshRenderer>().material.mainTexture = tex;
-
-                        //show
-                        randomImage.SetActive(true);
-                        riTarget.SetActive(true);
-                    }
-                }
-
-                SpeakYouFool(responseText);
-
-                break;
-            case "interaction":
-                responseText = "Men working, come back later...";
-
-                SpeakYouFool(responseText);
-
-                break;
-            default:
-                UnityEngine.Debug.LogWarning("General Type not found!");
-                break;
+            if (mem.informationType == "Person") person.Add(mem);
+            if (mem.informationType == "Location") location.Add(mem);
+            if (mem.informationType == "Time") time.Add(mem);
+            if (mem.informationType == "Activity") activity.Add(mem);
+            if (mem.informationType == "Emotion") emotion.Add(mem);
+            if (mem.informationType == "Imagery") imagery.Add(mem);
         }
-    }*/
+        //if we have activity
+        if(activity.Count > 0)
+        {
+            foreach (MemoryClass mem in activity)
+            {   
+                //if it is "born", we get the age
+                if(mem.information == "born" && time.Count > 0)
+                {
+                    responseText = (int.Parse(System.DateTime.Now.ToString("yyyy")) - int.Parse(time[0].information)) +" years old";
+                    break;
+                }//if it is meet, we also need to show the date, not the normal day (not "today", for example)
+                else if (mem.information == "meet" && time.Count > 0)
+                {
+                    responseText = "Yeah, we met at " + time[0].information;
+                    break;
+                }
+            }
+        }
+
+        //now, lets see if we have some new term
+        string unknoun = "";
+
+        //check if the found event has the Noun or proper noun on it
+        //if it does not, it means Arthur is not yet familiar with such term
+        //so, we ask the user if he wants to give more details.
+        List<string> nouns = new List<string>();
+        foreach (KeyValuePair<string, string> tt in tokens)
+        {
+            if (tt.Value == "NN" || tt.Value == "NNP")
+            {
+                nouns.Add(tt.Key);
+            }
+        }
+
+        //lets see if these nouns exist in the event
+        foreach (MemoryClass nds in retrieved.nodes)
+        {
+            if (nds.informationType == "Person")
+            {
+                if (nouns.Contains(nds.information))
+                    nouns.Remove(nds.information);
+            }
+        }
+
+        //if nothing, need to learn
+        if (nouns.Count > 0)
+        {
+            unknoun = nouns[nouns.Count - 1];
+        }
+
+        //do not save this memory, since it already exists somehow
+        saveNewMemoryNode = false;
+
+        //if it has an "unknoun", deal with it
+        string unk = ". ";
+        if (unknoun != "")
+        {
+            unk += DealUnknown(unknoun);
+        }
+
+        SpeakYouFool(responseText + unk);
+    }
 
     //deal version without event
-    private void DealWithIt(Dictionary<string, string> retrieved, Dictionary<string, string> tokens)
+    /*private void DealWithIt(Dictionary<string, string> retrieved, Dictionary<string, string> tokens)
     {
         string answer = "";
 
@@ -1221,7 +1058,7 @@ public class MainController : MonoBehaviour
         }
 
         return returningText;
-    }
+    }*/
 
     //reset token files
     private void ResetTokenFiles()
@@ -1242,34 +1079,68 @@ public class MainController : MonoBehaviour
     //save ice breakers on memory
     private void SaveIceBreaker(Dictionary<string, string> tokens, string informationEvent)
     {
+        float weight = 0.9f;
         //depending on the ice breaker, we just add info in the person
         if (tokens.ContainsKey("old"))
         {
+            string birth = "";
+            int thisID = -1;
             foreach (KeyValuePair<string, string> txt in tokens)
             {
                 if(txt.Key != personName && txt.Key != "old")
                 {
-                    StartCoroutine(UpdateMemoryNodeWebService(personName, "age", txt.Key));
+                    //StartCoroutine(UpdateMemoryNodeWebService(personName, "age", txt.Key));
+
+                    //since we are saving the Time aspect, just do some math to create a proper date
+                    int thisYear = int.Parse(System.DateTime.Now.ToString("yyyy"));
+                    int result = thisYear - int.Parse(txt.Key);
+                    birth = result.ToString();
+                    thisID = AddToSTM("Time", birth, weight);
                 }
-            }   
+            }
+
+            //save the episode with person, "born" and year
+            List<int> connectNodes = new List<int>();
+            connectNodes.Add(personId);
+            connectNodes.Add(5);
+            connectNodes.Add(thisID);
+            AddGeneralEvent(personName + " was born in " + birth + "-01-01", connectNodes);
         }else if (tokens.ContainsKey("study"))
         {
-            foreach (KeyValuePair<string, string> txt in tokens)
+            /*foreach (KeyValuePair<string, string> txt in tokens)
             {
                 if (txt.Key != personName && txt.Key != "study")
                 {
                     StartCoroutine(UpdateMemoryNodeWebService(personName, "study", txt.Key));
                 }
+            }*/
+            //here, we just need to get last polarity, because it is just study or not
+            //if it is negative, we can already save it. Otherwise, we just save when details are provided
+            if(lastPolarity < 0)
+            {
+                List<int> connectNodes = new List<int>();
+                connectNodes.Add(personId);
+                connectNodes.Add(7);
+                AddGeneralEvent(personName + " is not studying", connectNodes);
             }
         }
         else if (tokens.ContainsKey("work"))
         {
-            foreach (KeyValuePair<string, string> txt in tokens)
+            /*foreach (KeyValuePair<string, string> txt in tokens)
             {
                 if (txt.Key != personName && txt.Key != "work")
                 {
                     StartCoroutine(UpdateMemoryNodeWebService(personName, "work", txt.Key));
                 }
+            }*/
+            //here, we just need to get last polarity, because it is just study or not
+            //if it is negative, we can already save it. Otherwise, we just save when details are provided
+            if (lastPolarity < 0)
+            {
+                List<int> connectNodes = new List<int>();
+                connectNodes.Add(personId);
+                connectNodes.Add(6);
+                AddGeneralEvent(personName + " is not working", connectNodes);
             }
         }
         else if (tokens.ContainsKey("children"))
@@ -1278,30 +1149,19 @@ public class MainController : MonoBehaviour
             {
                 if (txt.Key != personName && txt.Key != "children")
                 {
-                    StartCoroutine(UpdateMemoryNodeWebService(personName, "children", txt.Key));
-
-                    //if answer is no, add the NoChildren node
+                    //if answer is no, so no!
                     if (lastPolarity < 0)
                     {
-                        //"create" the person as well, just to get id back
-                        StartCoroutine(CreateMemoryNodeWebService(personName, "Person", "", 0.9f));
-
-                        string label = "name:'NoChildren',activation:1,weight:0.9,nodeType:'text',lastEmotion:'" + foundEmotion + "'";
-                        StartCoroutine(CreateMemoryNodeWebService("NoChildren", "Person", label, 0.9f));
-
-                        //type of the event, to save later
-                        tempTypeEvent = "learn thing";
-                        tempRelationship = "HAS_CHILD";
-                        qntTempNodes = 2;
+                        List<int> connectNodes = new List<int>();
+                        connectNodes.Add(personId);
+                        connectNodes.Add(8);
+                        AddGeneralEvent(personName + " has no children", connectNodes);
                     }
                 }
             }
         }
         else if (tokens.ContainsKey("study course"))
         {
-            //"create" the person as well, just to get id back
-            StartCoroutine(CreateMemoryNodeWebService(personName, "Person", "", 0.9f));
-
             string course = "";
             foreach (KeyValuePair<string, string> txt in tokens)
             {
@@ -1318,23 +1178,16 @@ public class MainController : MonoBehaviour
                 }
             }
 
-            //type of the event, to save later
-            tempTypeEvent = "learn thing";
-            tempRelationship = "IS_STUDYING";
-            qntTempNodes = 2;
+            int thisID = AddToSTM("Activity", course, weight);
 
-            //create this node
-            string label = "name:'" + course + "',activation:1,weight:0.9,nodeType:'text',lastEmotion:'" + foundEmotion + "'";
-            StartCoroutine(CreateMemoryNodeWebService(course, "Course", label, 0.9f));
-
-            //create the relationship between the person and the course
-            //StartCoroutine(CreateRelatioshipNodesWebService(personName, course, "IS_STUDYING"));
+            List<int> connectNodes = new List<int>();
+            connectNodes.Add(personId);
+            connectNodes.Add(7);
+            connectNodes.Add(thisID);
+            AddGeneralEvent(personName + " is studying " + course, connectNodes);
         }
         else if (tokens.ContainsKey("work job"))
         {
-            //"create" the person as well, just to get id back
-            StartCoroutine(CreateMemoryNodeWebService(personName, "Person", "", 0.9f));
-
             string job = "";
             foreach (KeyValuePair<string, string> txt in tokens)
             {
@@ -1351,19 +1204,15 @@ public class MainController : MonoBehaviour
                 }
             }
 
-            //type of the event, to save later
-            tempTypeEvent = "learn thing";
-            tempRelationship = "IS_WORKING";
-            qntTempNodes = 2;
+            int thisID = AddToSTM("Activity", job, weight);
 
-            //create this node
-            string label = "name:'" + job + "',activation:1,weight:0.9,nodeType:'text',lastEmotion:'" + foundEmotion + "'";
-            StartCoroutine(CreateMemoryNodeWebService(job, "Job", label, 0.9f));
-
-            //create the relationship between the person and the course
-            //StartCoroutine(CreateRelatioshipNodesWebService(personName, job, "IS_WORKING"));
+            List<int> connectNodes = new List<int>();
+            connectNodes.Add(personId);
+            connectNodes.Add(6);
+            connectNodes.Add(thisID);
+            AddGeneralEvent(personName + " is working as " + job, connectNodes);
         }
-        else if (tokens.ContainsKey("children quantity"))
+        /*else if (tokens.ContainsKey("children quantity"))
         {
             foreach (KeyValuePair<string, string> txt in tokens)
             {
@@ -1372,65 +1221,55 @@ public class MainController : MonoBehaviour
                     StartCoroutine(UpdateMemoryNodeWebService(personName, "qntChildren", txt.Key));
                 }
             }
-        }
+        }*/
         else if (tokens.ContainsKey("children names"))
         {
-            //"create" the person as well, just to get id back
-            StartCoroutine(CreateMemoryNodeWebService(personName, "Person", "", 0.9f));
-
             int qntChild = 0;
+            List<int> connectNodes = new List<int>();
+            connectNodes.Add(personId);
+            connectNodes.Add(8);
+            string who = "";
             foreach (KeyValuePair<string, string> txt in tokens)
             {
-                if (txt.Key != personName && txt.Key != "children names")
+                if (txt.Key != personName && txt.Key != "children names" && txt.Key != "and")
                 {
-                    string label = "name:'" + txt.Key + "',activation:1,weight:0.9,nodeType:'text',lastEmotion:'" + foundEmotion + "'";
-                    StartCoroutine(CreateMemoryNodeWebService(txt.Key, "Person", label, 0.9f));
-                    qntChild++;
+                    int thisID = AddToSTM("Person", txt.Key, weight);
+                    connectNodes.Add(thisID);
 
-                    //create the relationship between the person and the child
-                    //StartCoroutine(CreateRelatioshipNodesWebService(personName, txt.Key, "HAS_CHILD"));
+                    if (who == "") who = txt.Key;
+                    else who += " and " + txt.Key;
+
+                    qntChild++;
                 }
             }
 
-            //type of the event, to save later
-            tempTypeEvent = "learn thing";
-            tempRelationship = "HAS_CHILD";
-
-            //if qntChild is 0, we create a node with "NoChildren"
-            if (qntChild == 0)
+            //if qntChild > 0, we save the children
+            if (qntChild > 0)
             {
-                string label = "name:'NoChildren',activation:1,weight:0.9,nodeType:'text',lastEmotion:'" + foundEmotion + "'";
-                StartCoroutine(CreateMemoryNodeWebService("NoChildren", "Person", label, 0.9f));
-                qntTempNodes = 2;
-            }
-            else
-            {
-                qntTempNodes = qntChild + 1;
+                AddGeneralEvent(personName + " has "+qntChild+" children: " + who, connectNodes);
             }
         }
-
-        //iceBreakers.FindIcebreaker(usingIceBreaker)
-        //string label = "name:'" + namePerson + "',activation:1,weight:0.9,nodeType:'text'";
-        //StartCoroutine(CreateMemoryNodeWebService(namePerson, "Person", label, 0.9f));
     }
 
     private void SaveSmallTalk(Dictionary<string, string> tokens)
     {
         //just to be sure, clear it
-        tempDialogs.Clear();
+        //tempDialogs.Clear();
 
         //first, we need to save this topic and dialog
         //for create relationship later
-        qntTempDialogs = 2; //topic and dialog to connect
+        //qntTempDialogs = 2; //topic and dialog to connect
         //type of the event, to save later
 
         //save topic dialog description
-        string label = "name:'" + currentTopic.GetCurrentDialog().GetDescription() + "',activation:1,weight:0.8,nodeType:'text'";
+        /*string label = "name:'" + currentTopic.GetCurrentDialog().GetDescription() + "',activation:1,weight:0.8,nodeType:'text'";
         StartCoroutine(CreateMemoryNodeWebService(currentTopic.GetCurrentDialog().GetDescription(), "Topic", label, 0.8f));
 
         //save dialog
         label = "name:'Dialog" + currentTopic.GetCurrentDialog().GetId().ToString() + "',activation:1,weight:0.8,nodeType:'text',topic:'"+ currentTopic.GetCurrentDialog().GetDescription() + "'";//text:'"+ currentTopic.GetCurrentDialog() + "'
         StartCoroutine(CreateMemoryNodeWebService("Dialog"+currentTopic.GetCurrentDialog().GetId().ToString(), "Dialog", label, 0.8f));
+        */
+        //NEED TO SEE ABOVE
 
         //if we have 2 or more NNP in sequence, we understand it is a compound name (ex: Sonata Artica)
         Dictionary<string, string> newTokens = new Dictionary<string, string>();
@@ -1475,49 +1314,97 @@ public class MainController : MonoBehaviour
 
         //now, save the answer
         //for create general event later
-        qntTempNodes = newTokens.Count;
+        //qntTempNodes = newTokens.Count;
         //type of the event, to save later
-        tempTypeEvent = "";
-        tempRelationship = "KNOWS";
+        //tempTypeEvent = "";
+        //tempRelationship = "KNOWS";
         float weight = 0.8f;
 
         //"create" the person as well, just to get id back, if it is not already in the sentence
-        if (!newTokens.ContainsKey(personName))
+        /*if (!newTokens.ContainsKey(personName))
         {
             StartCoroutine(CreateMemoryNodeWebService(personName, "Person", "", 0.9f));
             qntTempNodes++;
-        }
+        }*/
 
-        //for each information, save it in memory
-        foreach (KeyValuePair<string, string> txt in newTokens)
+        List<int> connectNodes = new List<int>();
+        string infor = personName;
+        //if the smalltalk has the information, we use it
+        Tuple<string, string> memData = currentTopic.GetCurrentDialog().GetMemoryData();
+        if (memData.Item1 != "")
         {
-            string nodeTag = "SmallTalk";
+            int thisID = AddToSTM("Activity", memData.Item1, weight);
+            connectNodes.Add(thisID);
+            infor += " " + memData.Item1;
 
-            //if is verb, relationship
-            if (txt.Value == "VB" || txt.Value == "VBP")
+            thisID = AddToSTM("Person", memData.Item2, weight);
+            connectNodes.Add(thisID);
+            infor += " " + memData.Item2;
+        }
+        else
+        {
+            //for each information, save it in memory
+            foreach (KeyValuePair<string, string> txt in newTokens)
             {
-                tempRelationship = txt.Key.ToUpper();
-                qntTempNodes--;
-                continue;
-            }
+                /*string nodeTag = "SmallTalk";
 
-            //if it is NNP, we save with Person tag
-            if(txt.Value == "NNP")
-            {
-                nodeTag = "Person";
-            }
+                //if is verb, relationship
+                if (txt.Value == "VB" || txt.Value == "VBP")
+                {
+                    tempRelationship = txt.Key.ToUpper();
+                    qntTempNodes--;
+                    continue;
+                }
 
-            //if it is Arthur or the person, just get it
-            if (txt.Key == "Arthur" || txt.Key == personName)
-            {
-                StartCoroutine(CreateMemoryNodeWebService(txt.Key, "Person", "", 0.9f));
-            }
-            else
-            {
-                label = "name:'" + txt.Key + "',activation:1,weight:" + weight + ",nodeType:'text',lastEmotion:'" + foundEmotion + "'";
-                StartCoroutine(CreateMemoryNodeWebService(txt.Key, nodeTag, label, weight));
+                //if it is NNP, we save with Person tag
+                if(txt.Value == "NNP")
+                {
+                    nodeTag = "Person";
+                }
+
+                //if it is Arthur or the person, just get it
+                if (txt.Key == "Arthur" || txt.Key == personName)
+                {
+                    StartCoroutine(CreateMemoryNodeWebService(txt.Key, "Person", "", 0.9f));
+                }
+                else
+                {
+                    label = "name:'" + txt.Key + "',activation:1,weight:" + weight + ",nodeType:'text',lastEmotion:'" + foundEmotion + "'";
+                    StartCoroutine(CreateMemoryNodeWebService(txt.Key, nodeTag, label, weight));
+                }*/
+
+                string fiveW = "";
+                //NEED TO SEE HOW TO DO IT YET. FOR NOW:
+                //if it is a noun/proper, people
+                if (txt.Value == "NN" || txt.Value == "NNP")
+                {
+                    fiveW = "Person";
+                }//else, if it is a verb, activity
+                else if (txt.Value == "VB" || txt.Value == "VBP")
+                {
+                    fiveW = "Activity";
+                }
+
+                //if fiveW is empty, no need to store
+                if (fiveW != "")
+                {
+                    //strip the "'"
+                    int thisID = AddToSTM(fiveW, txt.Key, weight);
+                    connectNodes.Add(thisID);
+
+                    infor += " " + txt.Key;
+                }
             }
         }
+
+        //create a new general event
+        if (connectNodes.Count > 0)
+        {
+            connectNodes.Add(personId);
+            AddGeneralEvent(infor.Trim(), connectNodes);
+        }
+
+        connectNodes.Clear();
     }
 
     //save a new memory node and return the tokens
@@ -1537,23 +1424,33 @@ public class MainController : MonoBehaviour
         }
         else
         {
-            //for create general event later
-            qntTempNodes = tokens.Count;
-            //type of the event, to save later
-            tempTypeEvent = "";
-            tempRelationship = "HAS_PHOTO";
-
             //for each information, save it in memory
             foreach (KeyValuePair<string, string> txt in tokens)
             {
-                //strip the "'"
-                //int thisID = AddToSTM(0, txt.Key, weight);
-                //connectNodes.Add(thisID);
+                string fiveW = "";
+                //NEED TO SEE HOW TO DO IT YET. FOR NOW:
+                //if it is a noun/proper, people
+                if (txt.Value == "NN" || txt.Value == "NNP")
+                {
+                    fiveW = "Person";
+                }//else, if it is a verb, activity
+                else if (txt.Value == "VB" || txt.Value == "VBP")
+                {
+                    fiveW = "Activity";
+                }
+
+                //if fiveW is empty, no need to store
+                if (fiveW != "")
+                {
+                    //strip the "'"
+                    int thisID = AddToSTM(fiveW, txt.Key, weight);
+                    connectNodes.Add(thisID);
+                }
                 //save on Neo4j
                 //on temp, we have to find 2 information later
 
                 //if is verb, relationship
-                if(txt.Value == "VB" || txt.Value == "VBP")
+                /*if(txt.Value == "VB" || txt.Value == "VBP")
                 {
                     tempRelationship = txt.Key.ToUpper();
                     qntTempNodes--;
@@ -1561,71 +1458,14 @@ public class MainController : MonoBehaviour
                 }
                 
                 string label = "name:'" + txt.Key + "',activation:1,weight:"+weight+ ",nodeType:'text',lastEmotion:'" + foundEmotion + "'";
-                StartCoroutine(CreateMemoryNodeWebService(txt.Key, "Interaction", label, weight));
+                StartCoroutine(CreateMemoryNodeWebService(txt.Key, "Interaction", label, weight));*/
             }
 
-            //if we have a second level icebreaker, we need to find the general event to add info into it
-            //UPDATE: deactivate it, because the answers of the questions get mixed
-            /*GeneralEvent fuck = null;
-            if (rootIceBreaker != -1)
+            //create a new general event
+            if (connectNodes.Count > 0)
             {
-                foreach (GeneralEvent geez in agentGeneralEvents)
-                {
-                    //for each memory node which compounds this general event
-                    foreach (MemoryClass node in geez.nodes)
-                    {
-                        //if it exists, ++
-                        if (node.information.Contains(iceBreakers.FindIcebreaker(usingIceBreaker).GetType()))
-                        {
-                            //found it!
-                            fuck = geez;
-                            break;
-                        }
-                    }
-                }
-            }*/
-
-            /*GeneralEvent fuck = null;
-            if (fuck == null)
-            {
-                //create a new general event
-                AddGeneralEvent(typeEvent, informationEvent.Trim(), connectNodes);
-
-                //now, we connect the memories
-                ConnectMemoryNodes(connectNodes);
-            }*/
-            //deactivated for now
-            /*else
-            {
-                foreach(MemoryClass nd in fuck.nodes)
-                {
-                    //see if it already exists
-                    if (connectNodes.Contains(nd.informationID))
-                    {
-                        //take this out of connectnodes, since it already exists
-                        connectNodes.Remove(nd.informationID);
-                        //break;
-                    }
-                }
-
-                //now, we add the remaining connectnodes
-                if (connectNodes.Count > 0)
-                {
-                    foreach (MemoryClass mc in agentShortTermMemory)
-                    {
-                        if (connectNodes.Contains(mc.informationID))
-                        {
-                            fuck.nodes.Add(mc);
-                        }
-                    }
-                }
-
-                //and if it should be final, add it to know later
-                if (iceBreakers.FindIcebreaker(rootIceBreaker).GetType().Contains("final"))
-                {
-                    fuck.information += " final";
-                }
-            }*/
+                AddGeneralEvent(informationEvent.Trim(), connectNodes);
+            }
 
             connectNodes.Clear();
         }
@@ -1692,16 +1532,13 @@ public class MainController : MonoBehaviour
         }
     }
 
-    //generate an unique ID
-    //TODO: THE TIME IS GETTING SAME SECONDS/MILISECONDS... =(
-    private int GenerateID()
+    private int GenerateEskID()
     {
-        //DateTime epochStart = new System.DateTime(2020, 12, 16, 8, 0, 0, System.DateTimeKind.Utc);
-        //int timestamp = System.Convert.ToInt32((System.DateTime.UtcNow - epochStart).TotalMilliseconds);
-        //UnityEngine.Debug.Log(timestamp);
-        //return timestamp;
-        //return UnityEngine.Random.Range(0, 100000);
-        return nextId++;
+        return nextEskId++;
+    }
+    private int GenerateEpisodeID()
+    {
+        return nextEpisodeId++;
     }
 
     /*EMOTION STUFF*/
@@ -1911,14 +1748,25 @@ public class MainController : MonoBehaviour
                 bool talaaaaa = false;
 
                 //if it already exists in memory, update it, because it is being rehearsed (just work for the name...)
-                foreach (MemoryClass mc in agentShortTermMemory)
+                foreach (KeyValuePair<int, MemoryClass> mc in agentShortTermMemory)
                 {
-                    if (mc.information.Contains(personName))
+                    if (mc.Value.information.Contains(personName))
                     {
                         talaaaaa = true;
 
-                        mc.weight = mc.activation = 1;
-                        mc.memoryTime = System.DateTime.Now;
+                        mc.Value.weight = mc.Value.activation = 1;
+                        mc.Value.memoryTime = System.DateTime.Now;
+                        personId = mc.Key;
+                        break;
+                    }
+                }
+
+                //if not found, trying to get ID from LTM
+                foreach (KeyValuePair<int, MemoryClass> mc in agentLongTermMemory)
+                {
+                    if (mc.Value.information.Contains(personName)) {
+                        personId = mc.Key;
+                        break;
                     }
                 }
 
@@ -2011,7 +1859,7 @@ public class MainController : MonoBehaviour
 
             //save on Neo4j
             //on temp, we have to find 2 information later
-            qntTempNodes = 2;
+            /*qntTempNodes = 2;
             string label = "name:'" + namePerson + "',activation:1,weight:0.9,nodeType:'text',lastEmotion:'" + foundEmotion + "',image:'AutobiographicalStorage/Images/" + namePerson + ".png'";
             StartCoroutine(CreateMemoryNodeWebService(namePerson, "Person", label, 0.9f));
 
@@ -2020,7 +1868,21 @@ public class MainController : MonoBehaviour
 
             //type of the event, to save later
             tempTypeEvent = "meet new person";
-            tempRelationship = "HAS_PHOTO";
+            tempRelationship = "HAS_PHOTO";*/
+
+            int thisID = AddToSTM("Person", namePerson, 0.9f);
+            List<int> connectNodes = new List<int>();
+            connectNodes.Add(thisID);
+            thisID = AddToSTM("Imagery", "AutobiographicalStorage/Images/" + namePerson + ".png", 0.9f);
+            connectNodes.Add(thisID);
+            connectNodes.Add(1);
+            connectNodes.Add(11);
+
+            //add this date as well
+            string thisYear = System.DateTime.Now.ToString("yyyy-MM-dd");
+            thisID = AddToSTM("Time", thisYear, 0.9f);
+            connectNodes.Add(thisID);
+            AddGeneralEvent("I met " + namePerson + " today", connectNodes);
 
             isKnowingNewPeople = false;
 
@@ -2076,46 +1938,28 @@ public class MainController : MonoBehaviour
         BreakIce(greetingText);
     }
 
-    //connect memory nodes
-    private void ConnectMemoryNodes(List<int> memoryIDs)
-    {
-        for (int i = 0; i < agentShortTermMemory.Count; i++)
-        {
-            if (memoryIDs.Contains(agentShortTermMemory[i].informationID))
-            {
-                for (int j = 0; j < agentShortTermMemory.Count; j++)
-                {
-                    if (memoryIDs.Contains(agentShortTermMemory[j].informationID) &&
-                        agentShortTermMemory[j].informationID != agentShortTermMemory[i].informationID)
-                    {
-                        agentShortTermMemory[i].nodes.Add(agentShortTermMemory[j]);
-                        continue;
-                    }
-                }
-            }
-        }
-    }
+    
 
-    private float CalculateSaccade()
+    /*private float CalculateSaccade()
     {
         return (-6.9f * Mathf.Log(UnityEngine.Random.Range(1, 15) / 15.7f));
-    }
+    }*/
 
     //add to stm and return the memory ID
-    private int AddToSTM(int informationType, string information, float weight = 0.1f, int nodeId = -1)
+    private int AddToSTM(string informationType, string information, float weight = 0.1f, int nodeId = -1)
     {
         //first, checks if the memory already exists
         int ind = 0;
         bool backToSTM = false;
 
-        foreach (MemoryClass st in agentShortTermMemory)
+        foreach (KeyValuePair<int, MemoryClass> st in agentShortTermMemory)
         {
-            if (st.information == information)
+            if (st.Value.information == information)
             {
-                ind = st.informationID;
+                ind = st.Value.informationID;
 
                 //since it already exists, the virtual agent is remembering it. Change the activation and weight
-                st.activation = st.weight = 1;
+                st.Value.activation = st.Value.weight = 1;
 
                 break;
             }
@@ -2124,14 +1968,14 @@ public class MainController : MonoBehaviour
         //if did not find it in STM, it may be in LTM. So, lets check
         if (ind == 0)
         {
-            foreach (MemoryClass st in agentLongTermMemory)
+            foreach (KeyValuePair<int,MemoryClass> st in agentLongTermMemory)
             {
-                if (st.information == information)
+                if (st.Value.information == information)
                 {
-                    ind = st.informationID;
+                    ind = st.Value.informationID;
 
                     //since it already exists, the virtual agent is remembering it. Change the activation and weight
-                    st.activation = st.weight = 1;
+                    st.Value.activation = st.Value.weight = 1;
 
                     //also, since it is remembering, it should be back to STM
                     backToSTM = true;
@@ -2157,22 +2001,22 @@ public class MainController : MonoBehaviour
                 //we delete the less important memory (weight)
                 int less = -1;
                 float minWeight = 1;
-                for (int i = 0; i < agentShortTermMemory.Count; i++)
+                foreach (KeyValuePair<int,MemoryClass> mc in agentShortTermMemory)
                 {
-                    if (agentShortTermMemory[i].weight < minWeight)
+                    if (mc.Value.weight < minWeight)
                     {
-                        minWeight = agentShortTermMemory[i].weight;
-                        less = i;
+                        minWeight = mc.Value.weight;
+                        less = mc.Value.informationID;
                     }
                 }
 
                 if (less != -1)
                 {
                     //transfer to the LTM
-                    agentLongTermMemory.Insert(0, agentShortTermMemory[less]);
+                    agentLongTermMemory.Add(agentShortTermMemory[less].informationID, agentShortTermMemory[less]);
 
                     //delete
-                    agentShortTermMemory.RemoveAt(less);
+                    agentShortTermMemory.Remove(less);
                 }
             }
 
@@ -2187,10 +2031,10 @@ public class MainController : MonoBehaviour
                 }
                 else
                 {
-                    ind = GenerateID();
+                    ind = GenerateEskID();
                 }
                 newMemory = new MemoryClass(System.DateTime.Now, informationType, information, ind, weight);
-                agentShortTermMemory.Insert(0, newMemory);
+                agentShortTermMemory.Add(ind, newMemory);
             }//else, it already exists in the LTM or in the STM.
             else
             {
@@ -2198,17 +2042,17 @@ public class MainController : MonoBehaviour
                 //otherwise, it is in the LTM. Bring it to the STM
                 if (backToSTM)
                 {
-                    foreach (MemoryClass ltm in agentLongTermMemory)
+                    foreach (KeyValuePair<int, MemoryClass> ltm in agentLongTermMemory)
                     {
-                        if (ltm.informationID == ind)
+                        if (ltm.Value.informationID == ind)
                         {
-                            newMemory = ltm;
+                            newMemory = ltm.Value;
                             newMemory.memoryTime = System.DateTime.Now;
                             break;
                         }
                     }
 
-                    agentShortTermMemory.Insert(0, newMemory);
+                    agentShortTermMemory.Add(ind, newMemory);
                 }
             }
         }
@@ -2217,13 +2061,13 @@ public class MainController : MonoBehaviour
     }
 
     //add a new general event and return its id
-    /*private int AddGeneralEvent(string typeEvent, string informationEvent, List<int> connectNodes)
+    private int AddGeneralEvent(string informationEvent, List<int> connectNodes)
     {
         //if the memory already contains this general event, or something similar, do not add
-        int ind = -1;
+        int ind = 0;
         //int qntNodes = 0;
         //int totalNodes = informationEvent.Split(' ').Length;
-        for (int i = 0; i < agentGeneralEvents.Count; i++)
+        foreach (KeyValuePair<int,GeneralEvent> ges in agentGeneralEvents)
         {
             /*qntNodes = 0;
             foreach(MemoryClass mg in agentGeneralEvents[i].nodes)
@@ -2232,28 +2076,28 @@ public class MainController : MonoBehaviour
                 {
                     qntNodes++;
                 }
-            }*
+            }*/
 
-            if (informationEvent == agentGeneralEvents[i].information)
+            if (informationEvent == ges.Value.information)
             {
-                ind = i;
+                ind = ges.Key;
                 break;
             }
         }
 
-        if (ind >= 0)
+        if (ind > 0)
         {
             //although we do not add a new general event, we can update the information
             agentGeneralEvents[ind].nodes.Clear();
-            agentGeneralEvents[ind].eventType = typeEvent;
+            //agentGeneralEvents[ind].eventType = typeEvent;
             agentGeneralEvents[ind].information = informationEvent;
-            agentGeneralEvents[ind].polarity = lastPolarity;
+            //agentGeneralEvents[ind].polarity = lastPolarity;
             //add the updated memory nodes on this event
-            foreach (MemoryClass mc in agentShortTermMemory)
+            foreach (KeyValuePair<int, MemoryClass> mc in agentShortTermMemory)
             {
-                if (connectNodes.Contains(mc.informationID) && !agentGeneralEvents[ind].nodes.Contains(mc))
+                if (connectNodes.Contains(mc.Value.informationID) && !agentGeneralEvents[ind].nodes.Contains(mc.Value))
                 {
-                    agentGeneralEvents[ind].nodes.Add(mc);
+                    agentGeneralEvents[ind].nodes.Add(mc.Value);
                 }
             }
 
@@ -2261,35 +2105,35 @@ public class MainController : MonoBehaviour
         }
 
         //create a new general event
-        int geId = GenerateID();
-        GeneralEvent ge = new GeneralEvent(System.DateTime.Now, typeEvent, informationEvent, geId, foundEmotion);
+        int geId = GenerateEpisodeID();
+        GeneralEvent ge = new GeneralEvent(System.DateTime.Now, informationEvent, geId);
 
         //set the polarity
-        ge.polarity = lastPolarity;
+        //ge.polarity = lastPolarity;
 
         //add the memory nodes on this event
-        foreach (MemoryClass mc in agentShortTermMemory)
+        foreach (KeyValuePair<int,MemoryClass> mc in agentShortTermMemory)
         {
-            if (connectNodes.Contains(mc.informationID) && !ge.nodes.Contains(mc))
+            if (connectNodes.Contains(mc.Value.informationID) && !ge.nodes.Contains(mc.Value))
             {
-                ge.nodes.Add(mc);
+                ge.nodes.Add(mc.Value);
             }
         }
 
         //add the memory nodes on this event
-        foreach (MemoryClass mc in agentLongTermMemory)
+        foreach (KeyValuePair<int, MemoryClass> mc in agentLongTermMemory)
         {
-            if (connectNodes.Contains(mc.informationID) && !ge.nodes.Contains(mc))
+            if (connectNodes.Contains(mc.Value.informationID) && !ge.nodes.Contains(mc.Value))
             {
-                ge.nodes.Add(mc);
+                ge.nodes.Add(mc.Value);
             }
         }
 
         //add to list
-        agentGeneralEvents.Add(ge);
+        agentGeneralEvents.Add(geId, ge);
 
         return geId;
-    }*/
+    }
 
     //every second, we update the short term memory of the agent
     private IEnumerator ControlSTM()
@@ -2302,17 +2146,17 @@ public class MainController : MonoBehaviour
             if (!isSleeping)
             {
                 //first, delete all old memories (15 seconds)
-                int maxMemories = agentShortTermMemory.Count;
-                for (int k = 0; k < maxMemories; k++)
+                List<int> idsToKill = new List<int>();
+                foreach (KeyValuePair<int, MemoryClass> stm in agentShortTermMemory)
                 {
                     //UnityEngine.Debug.Log(System.DateTime.Now - agentShortTermMemory[k].memoryTime);
-                    if (System.DateTime.Now - agentShortTermMemory[k].memoryTime >= memorySpan)
+                    if (System.DateTime.Now - stm.Value.memoryTime >= memorySpan)
                     {
                         //check if this memory does not already exists in long term
                         bool exists = false;
-                        foreach (MemoryClass lt in agentLongTermMemory)
+                        foreach (KeyValuePair<int, MemoryClass> lt in agentLongTermMemory)
                         {
-                            if (lt.information == agentShortTermMemory[k].information)
+                            if (lt.Value.information == stm.Value.information)
                             {
                                 exists = true;
                                 break;
@@ -2322,48 +2166,33 @@ public class MainController : MonoBehaviour
                         if (!exists)
                         {
                             //before delete, transfer to LTM
-                            agentLongTermMemory.Insert(0, agentShortTermMemory[k]);
+                            agentLongTermMemory.Add(stm.Value.informationID, stm.Value);
                         }
 
                         //byyyeeee
-                        agentShortTermMemory.RemoveAt(k);
-                        maxMemories--;
-                        k--;
+                        //agentShortTermMemory.Remove(stm.Key);
+                        idsToKill.Add(stm.Key);
                     }
                 }
-
-                //check if the list already contains the person
-                /*int ind = -1;
-                int i = 0;
-                foreach (MemoryClass mem in agentShortTermMemory)
-                {
-                    //UnityEngine.Debug.Log(agentShortTermMemory[i].person + " - " + faceName.GetComponent<Text>().text);
-                    if (agentShortTermMemory[i].information == faceName.GetComponent<Text>().text)
-                    {
-                        ind = i;
-                        break;
-                    }
-
-                    i++;
-                }*/
+                foreach(int kill in idsToKill) agentShortTermMemory.Remove(kill);
 
                 //memory decay
-                foreach (MemoryClass mem in agentShortTermMemory)
+                foreach (KeyValuePair<int, MemoryClass> mem in agentShortTermMemory)
                 {
-                    System.TimeSpan memTime = System.DateTime.Now - mem.memoryTime;
+                    System.TimeSpan memTime = System.DateTime.Now - mem.Value.memoryTime;
                     //UnityEngine.Debug.Log(memTime.Seconds);
 
                     if (memTime.Seconds > 1)
                     {
                         //exponential function for our interval, using log
-                        mem.activation = Mathf.Log(mem.activation + 1);
+                        mem.Value.activation = Mathf.Log(mem.Value.activation + 1);
                         //UnityEngine.Debug.Log(mem.activation);
 
                         //if activation drops below 0.2, loses a bit weight also
                         //update: if has max weight, memory node is permanent
-                        if (mem.activation < 0.2f && mem.weight < 0.9)
+                        if (mem.Value.activation < 0.2f && mem.Value.weight < 0.9)
                         {
-                            mem.weight = Mathf.Log(mem.weight + 1);
+                            mem.Value.weight = Mathf.Log(mem.Value.weight + 1);
                         }
                     }
                 }
@@ -2371,87 +2200,39 @@ public class MainController : MonoBehaviour
         }
     }
 
-    //save text LTM file
-    //rem = true -> save just complete information
-    /*private void SaveLTM(bool rem = false)
+    //save episodic memory file
+    private void SaveEpisodic()
     {
         //save LTM as it is
         StreamWriter writingLTM;
-        writingLTM = File.CreateText("AutobiographicalStorage/textLTM.txt");
-        //writingLTM = File.AppendText(Application.dataPath + "/AutobiographicalStorage/textLTM.txt");
+        writingLTM = File.CreateText("AutobiographicalStorage/episodicMemory.txt");
 
-        //we define a memory is being rehearsed if it was updated max 2 seconds ago.
-        foreach (MemoryClass mem in agentLongTermMemory)
+        //first, save the ESK
+        foreach (KeyValuePair<int, MemoryClass> mem in agentLongTermMemory)
         {
-            if (rem)
-            {
-                //just save if information is complete
-                if (!mem.information.Contains("_"))
-                {
-                    //Timestamp;ID;Information;Type;Activation;Weight;Node1;Node2;...
-                    writingLTM.Write(mem.memoryTime + ";" + mem.informationID.ToString() + ";" + mem.information.Trim() + ";"
-                        + mem.informationType.ToString() + ";" + mem.activation.ToString() + ";" + mem.weight.ToString());
-
-                    //if has nodes connected, save it also
-                    if (mem.nodes.Count > 0)
-                    {
-                        foreach (MemoryClass mc in mem.nodes)
-                        {
-                            writingLTM.Write(";" + mc.informationID);
-                        }
-                    }
-
-                    writingLTM.Write("\n");
-                }
-            }
-            else
-            {
-                //Timestamp;ID;Information;Type;Activation;Weight;Node1;Node2;...
-                writingLTM.Write(mem.memoryTime + ";" + mem.informationID.ToString() + ";" + mem.information.Trim() + ";"
-                    + mem.informationType.ToString() + ";" + mem.activation + ";" + mem.weight);
-
-                //if has nodes connected, save it also
-                if (mem.nodes.Count > 0)
-                {
-                    foreach (MemoryClass mc in mem.nodes)
-                    {
-                        writingLTM.Write(";" + mc.informationID);
-                    }
-                }
-
-                writingLTM.Write("\n");
-            }
+            //ID;Timestamp;Information;Type;Activation;Weight
+            writingLTM.WriteLine(mem.Key.ToString() + ";" + mem.Value.memoryTime + ";" + mem.Value.information.Trim() + ";"
+                + mem.Value.informationType.ToString() + ";" + mem.Value.activation.ToString() + ";" + mem.Value.weight.ToString());
         }
+
+        //second, we save the episodes
+        writingLTM.WriteLine("%%%");
+        foreach (KeyValuePair<int, GeneralEvent> mem in agentGeneralEvents)
+        {
+            //get the nodes first
+            string allNodes = "";
+            foreach(MemoryClass mc in mem.Value.nodes)
+            {
+                if (allNodes == "") allNodes = mc.informationID.ToString();
+                else allNodes += "_"+mc.informationID.ToString();
+            }
+
+            //ID;Timestamp;Information;Nodes
+            writingLTM.WriteLine(mem.Key.ToString() + ";" + mem.Value.eventTime + ";" + mem.Value.information.Trim() + ";" + allNodes);
+        }
+
         writingLTM.Close();
-    }*/
-
-    //save general events file
-    /*private void SaveGeneralEvents()
-    {
-        //save general events as it is
-        StreamWriter writingGE;
-        writingGE = File.CreateText("AutobiographicalStorage/generalEvents.txt");
-
-        //we define a memory is being rehearsed if it was updated max 2 seconds ago.
-        foreach (GeneralEvent ge in agentGeneralEvents)
-        {
-            //Timestamp;ID;Information;Type;Emotion;Polarity;Node1;Node2;...
-            writingGE.Write(ge.eventTime + ";" + ge.informationID.ToString() + ";" + ge.information.Trim() + ";"
-                + ge.eventType + ";" + ge.emotion + ";" + ge.polarity);
-
-            //if has nodes connected, save it also
-            if (ge.nodes.Count > 0)
-            {
-                foreach (MemoryClass mc in ge.nodes)
-                {
-                    writingGE.Write(";" + mc.informationID);
-                }
-            }
-
-            writingGE.Write("\n");
-        }
-        writingGE.Close();
-    }*/
+    }
 
     public void SleepAgent()
     {
@@ -2499,18 +2280,16 @@ public class MainController : MonoBehaviour
     }
 
     //consolidate memory on REM sleep
-    /*private void MemoryREM()
+    private void MemoryREM()
     {
-        //first idea: all incomplete information from the LTM, cleaning both memories
-
         //copy from STM to LTM
-        foreach (MemoryClass stm in agentShortTermMemory)
+        foreach (KeyValuePair<int,MemoryClass> stm in agentShortTermMemory)
         {
             //check if this memory does not already exists in long term
             bool exists = false;
-            foreach (MemoryClass lt in agentLongTermMemory)
+            foreach (KeyValuePair<int,MemoryClass> lt in agentLongTermMemory)
             {
-                if (lt.information == stm.information)
+                if (lt.Value.information == stm.Value.information)
                 {
                     exists = true;
                     break;
@@ -2520,7 +2299,7 @@ public class MainController : MonoBehaviour
             //if does not exist, copy
             if (!exists)
             {
-                agentLongTermMemory.Insert(0, stm);
+                agentLongTermMemory.Add(stm.Value.informationID, stm.Value);
             }
         }
 
@@ -2529,41 +2308,42 @@ public class MainController : MonoBehaviour
 
         //first: all memory nodes with low activation have their respective weights lowered
         //update: memory nodes with weight 1 are considered permanent
-        foreach (MemoryClass memC in agentLongTermMemory)
+        foreach (KeyValuePair<int,MemoryClass> memC in agentLongTermMemory)
         {
-            if (memC.activation < 0.2f && memC.weight < 0.9)
+            if (memC.Value.activation < 0.2f && memC.Value.weight < 0.9)
             {
-                memC.weight = Mathf.Log(memC.weight + 1);
+                memC.Value.weight = Mathf.Log(memC.Value.weight + 1);
             }
         }
 
         //all memory nodes with low weight are removed
-        int altCount = agentLongTermMemory.Count;
-        for (int i = 0; i < altCount; i++)
+        foreach (KeyValuePair<int, MemoryClass> memC in agentLongTermMemory)
         {
-            if (agentLongTermMemory[i].weight <= weightThreshold)
+            if (memC.Value.weight <= weightThreshold)
             {
                 //get its ID, so we can remove from general events also
-                int memId = agentLongTermMemory[i].informationID;
+                int memId = memC.Value.informationID;
 
                 //check general events with this ID
-                /*for (int z = 0; z < agentGeneralEvents.Count; z++)
+                foreach (KeyValuePair<int, GeneralEvent> ge in agentGeneralEvents)
                 {
-                    for (int j = 0; j < agentGeneralEvents[z].nodes.Count; j++)
+                    if (ge.Value.nodes.Contains(memC.Value))
                     {
-                        if (memId == agentGeneralEvents[z].nodes[j].informationID)
+                        int i = 0;
+                        foreach (MemoryClass nodis in ge.Value.nodes)
                         {
-                            agentGeneralEvents[z].nodes.RemoveAt(j);
-
-                            break;
-                        }
+                            if(nodis.informationID == memId)
+                            {
+                                ge.Value.nodes.RemoveAt(i);
+                                break;
+                            }
+                            i++;
+                        }   
                     }
-                }*
+                }
 
                 //remove the memory itself
-                agentLongTermMemory.RemoveAt(i);
-                altCount--;
-                i--;
+                agentLongTermMemory.Remove(memId);
             }
         }
 
@@ -2589,39 +2369,37 @@ public class MainController : MonoBehaviour
                     nodesCount--;
                 }
             }
-        }
+        }*/
 
         //after removing memories, check the general events which have no more nodes
-        int geCount = agentGeneralEvents.Count;
-        for (int z = 0; z < geCount; z++)
+        List<int> idesKill = new List<int>();
+        foreach (KeyValuePair<int, GeneralEvent> ge in agentGeneralEvents)
         {
             //if after we remove, there are no more nodes, the event itself is not important
-            if (agentGeneralEvents[z].nodes.Count == 0)
+            if (ge.Value.nodes.Count == 0)
             {
-                agentGeneralEvents.RemoveAt(z);
-                z--;
-                geCount--;
+                idesKill.Add(ge.Key);
             }
         }
-
-        //save general events
-        SaveGeneralEvents();*
+        foreach(int kill in idesKill) {
+            agentGeneralEvents.Remove(kill);
+        }
 
         //delete information from LTM.
         //Basically, we save the new LTM file with just complete information.
-        //SaveLTM();
+        SaveEpisodic();
 
         //clean LTM
-        //agentLongTermMemory.Clear();
-    }*/
-
-    //consolidate memory on REM sleep (Graph mode)
-    private void MemoryREM()
-    {
-        StartCoroutine(ConsolidationWebService());
+        agentLongTermMemory.Clear();
     }
 
-    IEnumerator ConsolidationWebService()
+    //consolidate memory on REM sleep (Graph mode)
+    /*private void MemoryREM()
+    {
+        StartCoroutine(ConsolidationWebService());
+    }*/
+
+    /*IEnumerator ConsolidationWebService()
     {
         UnityWebRequest www = new UnityWebRequest(webServicePath + "neo4jTransaction", "POST");
         string jason = "{\"typeTransaction\" : [\"matchNode\"], \"match\" : [\"match (n) return n.name,n.weight,n.activation\"]}";
@@ -2689,59 +2467,71 @@ public class MainController : MonoBehaviour
                 canDestroy = true;
             }
         }
-    }
+    }*/
 
     //retrieve a memory based on cues
     //deactivated for now
-/*private GeneralEvent GenerativeRetrieval(Dictionary<string, string> cues)
-{
-    GeneralEvent eventFound = new GeneralEvent();
-
-    //we find the general event which has the most cues compounding its memory nodes
-    //BUT... select the general event is a bit trickier, since it can exist many events with the same memory information.
-    //so, we select the event which has the most cues
-    int maxCues = 0;
-    foreach (GeneralEvent geez in agentGeneralEvents)
+    private GeneralEvent GenerativeRetrieval(Dictionary<string, string> cues)
     {
-        //for each general event, we count the cues found
-        int eventCues = 0;
-        //for each memory node which compounds this general event
-        foreach (MemoryClass node in geez.nodes)
+        GeneralEvent eventFound = new GeneralEvent();
+        Dictionary<string, string> auxCues = new Dictionary<string, string>();
+        foreach(KeyValuePair<string,string> cue in cues)
         {
-            //if it exists, ++
-            if (cues.ContainsKey(node.information))
+            if (cue.Key == "old" || cue.Key == "age") auxCues.Add("born", cue.Value);
+            else if (cue.Key == "working") auxCues.Add("work", cue.Value);
+            else if (cue.Key == "studying") auxCues.Add("study", cue.Value);
+            else if (cue.Key == "children" || cue.Key == "kids") auxCues.Add("has children", cue.Value);
+            else auxCues.Add(cue.Key, cue.Value);
+        }
+        cues = auxCues;
+        //auxCues.Clear();
+
+        //we find the general event which has the most cues compounding its memory nodes
+        //BUT... select the general event is a bit trickier, since it can exist many events with the same memory information.
+        //so, we select the event which has the most cues
+        int maxCues = 0;
+        foreach (KeyValuePair<int, GeneralEvent> geez in agentGeneralEvents)
+        {
+            //for each general event, we count the cues found
+            int eventCues = 0;
+            //for each memory node which compounds this general event
+            foreach (MemoryClass node in geez.Value.nodes)
             {
-                eventCues++;
+                //if it exists, ++
+                if (cues.ContainsKey(node.information))
+                {
+                    eventCues++;
+                }
+            }
+
+            //if it is higher than the max cues, select this general event
+            if (eventCues > maxCues)
+            {
+                maxCues = eventCues;
+                eventFound = geez.Value;
             }
         }
 
-        //if it is higher than the max cues, select this general event
-        if (eventCues > maxCues)
+        //if maxCues changed, we found an event
+        //MAYBE INSTEAD OF GETTING THE MAX CUES, WE TRY TO GET EXACT CUES, SO WE DO NOT GET A RANDOM EVENT EVERYTIME, EVEN WHEN IT IS SOMETHING NOT KNOWN
+        if (maxCues > 0)
         {
-            maxCues = eventCues;
-            eventFound = geez;
+            //add the nodes back to the STM
+            foreach (MemoryClass mem in eventFound.nodes)
+            {
+                AddToSTM(mem.informationType, mem.information, mem.weight);
+            }
+
+            return eventFound;
+        }//else, nothing was found
+        else
+        {
+            return null;
         }
     }
 
-    //if maxCues changed, we found an event
-    if (maxCues > 0)
-    {
-        //add the nodes back to the STM
-        foreach (MemoryClass mem in eventFound.nodes)
-        {
-            AddToSTM(mem.informationType, mem.information, mem.weight);
-        }
-
-        return eventFound;
-    }//else, nothing was found
-    else
-    {
-        return null;
-    }
-}*/
-
-//new generative retrieval, based on the graph memory
-void GenerativeRetrieval(Dictionary<string, string> cues)
+    //new generative retrieval, based on the graph memory
+    /*void GenerativeRetrieval(Dictionary<string, string> cues)
     {
         string match = "";
         string whoIsIt = "";
@@ -2768,7 +2558,7 @@ void GenerativeRetrieval(Dictionary<string, string> cues)
                 nouns.Add(cu.Key);
 
                 //if (cu.Key == personName) whoIsIt = cu.Key;
-                /*else*/ if (cu.Key == "Arthur") whoIsIt = cu.Key;
+                /*else* if (cu.Key == "Arthur") whoIsIt = cu.Key;
             }
         }
 
@@ -2873,7 +2663,7 @@ void GenerativeRetrieval(Dictionary<string, string> cues)
 
         UnityEngine.Debug.LogWarning(match);
         StartCoroutine(MatchWebService(match, false, cues));
-    }
+    }*/
 
     /*public void FollowFace(Vector3 point)
     {
@@ -2881,28 +2671,6 @@ void GenerativeRetrieval(Dictionary<string, string> cues)
         {
             eye.GetComponent<EyeController>().FollowFace(point);
         }
-    }*/
-
-    //NOT USING SO FAR...
-    /*private void DrawLine(Vector3 start, Vector3 end)
-    {
-        GameObject myLine = new GameObject();
-        myLine.transform.position = start;
-        myLine.AddComponent<LineRenderer>();
-        LineRenderer lr = myLine.GetComponent<LineRenderer>();
-        //lr.material = new Material(Shader.Find("Particles/Alpha Blended Premultiply"));
-        lr.startWidth = 0.01f;
-        lr.endWidth = 0.01f;
-        lr.SetPosition(0, start);
-        lr.SetPosition(1, end);
-    }
-
-    private void DrawRectangle(Vector3 firstVertex, Vector3 lastVertex)
-    {
-        DrawLine(firstVertex, new Vector3(lastVertex.x, firstVertex.y, lastVertex.z));
-        DrawLine(firstVertex, new Vector3(firstVertex.x, lastVertex.y, lastVertex.z));
-        DrawLine(lastVertex, new Vector3(lastVertex.x, firstVertex.y, lastVertex.z));
-        DrawLine(lastVertex, new Vector3(firstVertex.x, lastVertex.y, lastVertex.z));
     }*/
 
     //timer to take a picture
@@ -2930,14 +2698,15 @@ void GenerativeRetrieval(Dictionary<string, string> cues)
         cam.GetComponent<ViewCam>().StartSaveImageCoRo("AutobiographicalStorage/Images/" + importantNoun + ".png");
 
         //create the memory
-        //int newId = AddToSTM(0, importantNoun, 1);
+        //DONT KNOW WHERE TO FIT IT, SO USING PERSON
+        int newId = AddToSTM("Person", importantNoun, 1);
 
         //create a new autobiographical storage for the thing image
-        //int newIdImage = AddToSTM(1, "AutobiographicalStorage/Images/" + importantNoun + ".png", 1);
+        int newIdImage = AddToSTM("Imagery", "AutobiographicalStorage/Images/" + importantNoun + ".png", 1);
 
         //save on Neo4j
         //on temp, we have to find 2 information later
-        qntTempNodes = 2;
+        /*qntTempNodes = 2;
         string label = "name:'" + importantNoun + "',activation:1,weight:0.9,nodeType:'text',lastEmotion:'" + foundEmotion + "',image:'AutobiographicalStorage/Images/" + importantNoun + ".png'";
         StartCoroutine(CreateMemoryNodeWebService(importantNoun, "Thing", label, 0.9f));
 
@@ -2947,17 +2716,16 @@ void GenerativeRetrieval(Dictionary<string, string> cues)
         //type of the event, to save later
         tempTypeEvent = "learn thing";
         tempRelationship = "HAS_PHOTO";
-        arthurLearnsSomething = true;
+        arthurLearnsSomething = true;*/
 
-        /*List<int> connectNodes = new List<int>();
+        List<int> connectNodes = new List<int>();
         connectNodes.Add(newId);
         connectNodes.Add(newIdImage);
-
-        //connect them both
-        ConnectMemoryNodes(connectNodes);
+        connectNodes.Add(1);
+        connectNodes.Add(12);
 
         //create a new general event
-        AddGeneralEvent("learn thing", "i learned what a " + importantNoun + " is", connectNodes);*/
+        AddGeneralEvent("I learned what a " + importantNoun + " is", connectNodes);
 
         //reset
         isYesNoQuestion = false;
@@ -3105,27 +2873,21 @@ void GenerativeRetrieval(Dictionary<string, string> cues)
             //before we speak, we should check the memory to see if this questions was already answered before.
             IceBreakingTreeClass target = iceBreakers.FindIcebreaker(usingIceBreaker);
 
+            string targetType = target.GetType();
+            if (targetType == "old") targetType = "born";
+            if (targetType == "working") targetType = "job";
+            if (targetType == "study") targetType = "studying";
+
             //so, lets try to find some general event
-            MemoryClass fuck = null;
+            GeneralEvent fuck = null;
 
-            /*foreach (GeneralEvent geez in agentGeneralEvents)
+            foreach (KeyValuePair<int,GeneralEvent> geez in agentGeneralEvents)
             {
                 //if it exists, ding!
-                if (geez.information.Contains(personName) && geez.information.Contains(target.GetType()))
+                
+                if (geez.Value.information.Contains(personName) && geez.Value.information.Contains(targetType))
                 {
-                    fuck = geez;
-                    break;
-                }
-            }*/
-
-            foreach(MemoryClass mc in agentLongTermMemory)
-            {
-                //if it exists, ding!
-                string targetType = target.GetType();
-                if (targetType == "old") targetType = "age";
-                if (mc.information.Contains(personName) && mc.properties.ContainsKey(targetType))
-                {
-                    fuck = mc;
+                    fuck = geez.Value;
                     break;
                 }
             }
@@ -3170,184 +2932,6 @@ void GenerativeRetrieval(Dictionary<string, string> cues)
         }
     }
 
-    //find next small talk
-    /*private void SmallTalking(string beforeText = "")
-    {
-        //it is over already
-        if (usingSmallTalk == -1) return;
-
-        saveNewMemoryNode = false;
-        isSmallTalking = true;
-
-        //reset idle timer
-        idleTimer = Time.time;
-
-        SmallTalkClass actualST = smallTalk.FindSmallTalk(usingSmallTalk);
-
-        //just follow the tree
-        //if still not using any, get the first
-        if (usingSmallTalk == 0)
-        {
-            usingSmallTalk = smallTalk.GetChild(0).GetId();
-            //rootSmallTalk = smallTalk.GetChild(0).GetId();
-            rootSmallTalk = 0;
-        }
-        else
-        {
-            //we get the children which corresponds with the polarity of the user's answer
-            if (actualST.QntChildren() > 1)
-            {
-                if(actualST.GetPolarity() == true && lastPolarity > 0)
-                {
-                    if(actualST.GetChild(0).GetPolarity() == true)
-                    {
-                        //down the hill
-                        usingSmallTalk = actualST.GetChild(0).GetId();
-                    }else if (actualST.GetChild(1).GetPolarity() == true)
-                    {
-                        //down the hill
-                        usingSmallTalk = actualST.GetChild(1).GetId();
-                    }
-                }else
-                if (actualST.GetPolarity() == false && lastPolarity < 0)
-                {
-                    if (actualST.GetChild(0).GetPolarity() == false)
-                    {
-                        //down the hill
-                        usingSmallTalk = actualST.GetChild(0).GetId();
-                    }
-                    else if (actualST.GetChild(1).GetPolarity() == false)
-                    {
-                        //down the hill
-                        usingSmallTalk = actualST.GetChild(1).GetId();
-                    }
-                }else if (actualST.GetPolarity() == true && lastPolarity < 0)
-                {
-                    if (actualST.GetChild(0).GetPolarity() == false)
-                    {
-                        //down the hill
-                        usingSmallTalk = actualST.GetChild(0).GetId();
-                    }
-                    else if (actualST.GetChild(1).GetPolarity() == false)
-                    {
-                        //down the hill
-                        usingSmallTalk = actualST.GetChild(1).GetId();
-                    }
-                }
-                else
-                if (actualST.GetPolarity() == false && lastPolarity > 0)
-                {
-                    if (actualST.GetChild(0).GetPolarity() == true)
-                    {
-                        //down the hill
-                        usingSmallTalk = actualST.GetChild(0).GetId();
-                    }
-                    else if (actualST.GetChild(1).GetPolarity() == true)
-                    {
-                        //down the hill
-                        usingSmallTalk = actualST.GetChild(1).GetId();
-                    }
-                }
-                /*else
-                {
-                    //otherwise, we just get next
-                    int thisChild = actualST.CheckWhichChild();
-
-                    //next one
-                    thisChild++;
-
-                    //see if the parent has more children
-                    if (smallTalk.FindSmallTalk(rootSmallTalk).QntChildren() > thisChild)
-                    {
-                        usingSmallTalk = smallTalk.FindSmallTalk(rootSmallTalk).GetChild(thisChild).GetId();
-                    }//otherwise, we are done
-                    else
-                    {
-                        usingSmallTalk = rootSmallTalk = -1;
-                    }
-                }*
-            }//else, we reached a leaf. Go back to root and get next
-            else
-            {
-                rootSmallTalk++;
-                if(smallTalk.QntChildren() > rootSmallTalk)
-                {
-                    usingSmallTalk = smallTalk.GetChild(rootSmallTalk).GetId();
-                }//else, we are done
-                else
-                {
-                    usingSmallTalk = -1;
-                }
-            }
-        }
-
-        //if found some small talk to still use, small talk should not be empty
-        if (usingSmallTalk > 0)
-        {
-            //before we speak, we should check the memory to see if this questions was already answered before.
-            //DEACTIVATED SO FAR
-            SmallTalkClass target = smallTalk.FindSmallTalk(usingSmallTalk);
-
-            //so, lets try to find some general event
-            GeneralEvent fuck = null;
-
-            /*foreach (GeneralEvent geez in agentGeneralEvents)
-            {
-                //if it exists, ding!
-                if (geez.information.Contains(personName)) //&& geez.information.Contains(target.GetType()
-                {
-                    fuck = geez;
-                    break;
-                }
-            }*
-
-            //if this small talk has no children, we are done for now
-            if(target.QntChildren() == 0)
-            {
-                //since it is the answer, done
-                isSmallTalking = false;
-            }
-
-            //if found it, we change the question to reflect the previous knowledge
-            //update: here, we do not make questions again. We just dont call icebreakers
-            if (fuck != null)
-            {
-                //we check the polarity of the answer.
-                /*if (fuck.polarity > 0)
-                {
-                    SpeakYouFool(beforeText + positiveAnswer[target.GetId()]);
-                }
-                else if (fuck.polarity < 0)
-                {
-                    SpeakYouFool(beforeText + negativeAnswer[target.GetId()]);
-                }
-                else
-                {
-                    SpeakYouFool(beforeText + target.GetQuestion());
-                }*
-                //BreakIce(beforeText);
-                return;
-            }//otherwise, just make the question
-            else
-            {
-                SpeakYouFool(beforeText + target.Getsentence());
-            }
-        }//else, there is no more to talk about. Stop it
-        else
-        {
-            /*if (beforeText != "")
-            {
-                SpeakYouFool(beforeText);
-            }
-            else
-            {
-                SpeakYouFool("Thanks! Anything else you would like to talk about?");
-            }*
-
-            isSmallTalking = false;
-        }
-    }*/
-
     //new small talking
     private void PickTopic()
     {
@@ -3361,7 +2945,7 @@ void GenerativeRetrieval(Dictionary<string, string> cues)
     private void SmallTalking(string beforeText = "")
     {
         //if topics is empty, we are done
-        if (topics.Count == 0 && !currentTopic.isDialogsAvailable()) return;
+        if (topics.Count == 0 && !currentTopic.IsDialogsAvailable()) return;
 
         string ct;
         idleTimer = Time.time;
@@ -3370,7 +2954,7 @@ void GenerativeRetrieval(Dictionary<string, string> cues)
 
         if (!currentTopic.IsDialoging()) //sort new dialog
         {
-            if (!currentTopic.isDialogsAvailable()) PickTopic(); //there isnt available dialogs in current topic
+            if (!currentTopic.IsDialogsAvailable()) PickTopic(); //there isnt available dialogs in current topic
 
             currentTopic.StartNewDialog();
             first = true;
@@ -3385,8 +2969,10 @@ void GenerativeRetrieval(Dictionary<string, string> cues)
             ct = currentTopic.RunDialog(lastPolarity, dialogsInMemory);
         }
 
-        if(ct != null)
+        if (ct != null)
             SpeakYouFool(ct);
+
+        UnityEngine.Debug.Log(ct);
     }
 
     //hide the random image
@@ -3521,56 +3107,6 @@ void GenerativeRetrieval(Dictionary<string, string> cues)
         readingLTM.Close();
     }
 
-    /*private void LoadSmallTalk()
-    {
-        string smallTalkFile = "smallTalk.txt";
-
-        StreamReader readingLTM = new StreamReader(smallTalkFile, System.Text.Encoding.Default);
-        using (readingLTM)
-        {
-            string line;
-            //aux vector just to build the tree up
-            Dictionary<int, SmallTalkClass> aux = new Dictionary<int, SmallTalkClass>();
-            do
-            {
-                line = readingLTM.ReadLine();
-
-                if (line != "" && line != null)
-                {
-                    //skip comments
-                    if (line.Contains("#")) continue;
-
-                    //id;sentence;polarity;parent
-                    string[] info = line.Split(';');
-                    int ibId = int.Parse(info[0]);
-                    string ibQuestion = info[1];
-                    bool ibPolarity = bool.Parse(info[2]);
-                    int ibParent = int.Parse(info[3]);
-
-                    //if parent is 0, is one of the primary ones
-                    if (ibParent == 0)
-                    {
-                        SmallTalkClass newST = new SmallTalkClass(ibId, ibQuestion, ibPolarity);
-                        smallTalk.AddChild(newST);
-                        aux.Add(ibId, newST);
-                    }//otherwise, it is one of the secondary ones. Need to first find the parent and, then, add
-                    else
-                    {
-                        SmallTalkClass aaa;
-                        aux.TryGetValue(ibParent, out aaa);
-
-                        SmallTalkClass newST = new SmallTalkClass(ibId, ibQuestion, ibPolarity);
-                        aaa.AddChild(newST);
-                        aux.Add(ibId, newST);
-                        //smallTalk.FindSmallTalk(ibParent).AddChild(new SmallTalkClass(ibId, ibQuestion, ibPolarity));
-                    }
-                }
-            } while (line != null);
-        }
-        readingLTM.Close();
-    }*/
-
-    //new parser
     public void LoadSmallTalk()
     {
         string smallTalkFile = "smallTalk.txt";
@@ -3580,9 +3116,9 @@ void GenerativeRetrieval(Dictionary<string, string> cues)
         {
             string line;
             //Dictionary<int, Node> aux = new Dictionary<int, Node>();
-            topics = new List<TopicGraph>();
-            TopicGraph currentTopic = null;
-            DialogGraph currentDialog = null;
+            topics = new List<Topic>();
+            Topic currentTopic = null;
+            Dialog currentDialog = null;
 
             do
             {
@@ -3596,21 +3132,21 @@ void GenerativeRetrieval(Dictionary<string, string> cues)
                 //new topic
                 if (command.Equals('$'))
                 {
-                    currentTopic = new TopicGraph(line);
+                    currentTopic = new Topic(line);
                     topics.Add(currentTopic);
                 }
                 //new dialog
                 else if (command.Equals('['))
                 {
-                    currentDialog = new DialogGraph(line);
+                    currentDialog = new Dialog(line);
                 }
                 //dialog
                 else if (command.Equals('#'))
                 {
 
-                    //id, conteúdo, polaridade, éfolha, nodo pai
+                    //id, sentence, polarity, isLeaf, father id, memory edge, memory node value..
                     string[] data = line.Split(';');
-                    currentDialog.AddNode(int.Parse(data[0]), data[1].Trim(), double.Parse(data[2]), bool.Parse(data[3].Trim()), int.Parse(data[4]));
+                    currentDialog.AddNode(int.Parse(data[0]), data[1].Trim(), double.Parse(data[2]), bool.Parse(data[3].Trim()), int.Parse(data[4]), data[5].Trim(), data[6].Trim());
                 }
                 //close dialog (insert on topic)
                 else if (command.Equals(']'))
@@ -3633,10 +3169,10 @@ void GenerativeRetrieval(Dictionary<string, string> cues)
     //load small talks saved in memory
     private void LoadMemoryDialogs()
     {
-        StartCoroutine(MatchTopicsDialogs());
+        //StartCoroutine(MatchTopicsDialogs());
     }
 
-    private IEnumerator MatchTopicsDialogs()
+    /*private IEnumerator MatchTopicsDialogs()
     {
         string match = "match (a:Topic)-[]->(b:Dialog) return a,b";
         UnityWebRequest www = new UnityWebRequest(webServicePath + "neo4jTransaction", "POST");
@@ -3708,7 +3244,7 @@ void GenerativeRetrieval(Dictionary<string, string> cues)
                 }
             }
         }
-    }
+    }*/
 
     //Web Service for Tokenization
     private IEnumerator TokenizationWebService(string sentence)
@@ -3828,7 +3364,7 @@ void GenerativeRetrieval(Dictionary<string, string> cues)
     }
 
     //Web Service for create node in memory
-    private IEnumerator CreateMemoryNodeWebService(string node, string typeNode = "", string label = "", float weight = 0.1f)
+    /*private IEnumerator CreateMemoryNodeWebService(string node, string typeNode = "", string label = "", float weight = 0.1f)
     {
         string jason = "";
         UnityWebRequest www = new UnityWebRequest(webServicePath + "neo4jTransaction", "POST");
@@ -3863,8 +3399,7 @@ void GenerativeRetrieval(Dictionary<string, string> cues)
                 UnityEngine.Debug.Log("Received 2: " + idReturned);
 
                 //add in STM
-                int infoType = 0;
-                if (typeNode == "Image") infoType = 1;
+                string infoType = "";
 
                 AddToSTM(infoType, node, weight, idReturned);
 
@@ -3879,10 +3414,10 @@ void GenerativeRetrieval(Dictionary<string, string> cues)
                 }
             }
         }
-    }
+    }*/
 
     //Web Service for update node in memory
-    private IEnumerator UpdateMemoryNodeWebService(string node, string nodeKey = "", string nodeValue = "")
+    /*private IEnumerator UpdateMemoryNodeWebService(string node, string nodeKey = "", string nodeValue = "")
     {
         UnityWebRequest www = new UnityWebRequest(webServicePath + "neo4jTransaction", "POST");
         string jason = "{\"typeTransaction\" : [\"updateNode\"], \"node\" : [\"" + node + "\"], \"nodeKey\" : [\"" + nodeKey + "\"], \"nodeValue\" : [\"" + nodeValue + "\"]}";
@@ -3907,10 +3442,10 @@ void GenerativeRetrieval(Dictionary<string, string> cues)
                 UnityEngine.Debug.Log("Received: " + www.downloadHandler.text);
             }
         }
-    }
+    }*/
 
     //Web Service for delete node in memory
-    private IEnumerator DeleteMemoryNodeWebService(string node)
+    /*private IEnumerator DeleteMemoryNodeWebService(string node)
     {
         UnityWebRequest www = new UnityWebRequest(webServicePath + "neo4jTransaction", "POST");
         string jason = "{\"typeTransaction\" : [\"deleteNode\"], \"node\" : [\"" + node + "\"]}";
@@ -3935,9 +3470,9 @@ void GenerativeRetrieval(Dictionary<string, string> cues)
                 UnityEngine.Debug.Log("Received: " + www.downloadHandler.text);
             }
         }
-    }
+    }*/
 
-    private IEnumerator CreateRelatioshipNodesWebService(int node, int node2, string relationship = "")
+    /*private IEnumerator CreateRelatioshipNodesWebService(int node, int node2, string relationship = "")
     {
         UnityWebRequest www = new UnityWebRequest(webServicePath + "neo4jTransaction", "POST");
         string jason = "{\"typeTransaction\" : [\"addRelationship\"], \"node\" : [" + node + "], \"node2\" : [" + node2 + "], \"relationship\" : [\"" + relationship + "\"]}";
@@ -3962,10 +3497,10 @@ void GenerativeRetrieval(Dictionary<string, string> cues)
                 UnityEngine.Debug.Log("Relationship: " + www.downloadHandler.text);
             }
         }
-    }
+    }*/
 
     //Web Service for match (select)
-    private IEnumerator MatchWebService(string match, bool addOnLTM = false, Dictionary<string,string> tokens = null)
+    /*private IEnumerator MatchWebService(string match, bool addOnLTM = false, Dictionary<string,string> tokens = null)
     {
         UnityWebRequest www = new UnityWebRequest(webServicePath + "neo4jTransaction", "POST");
         string jason = "{\"typeTransaction\" : [\"matchNode\"], \"match\" : [\"" + match + "\"]}";
@@ -3992,7 +3527,7 @@ void GenerativeRetrieval(Dictionary<string, string> cues)
                 //loading all from database
                 if (addOnLTM)
                 {
-                    MatchesToLTM(www.downloadHandler.text);
+                    //MatchesToLTM(www.downloadHandler.text);
                 }//else, just normal match
                 else
                 {
@@ -4000,10 +3535,10 @@ void GenerativeRetrieval(Dictionary<string, string> cues)
                 }
             }
         }
-    }
+    }*/
 
     //get all matches and place in the LTM
-    private void MatchesToLTM(string results)
+    /*private void MatchesToLTM(string results)
     {
         string temp;
         temp = results.Replace("}}}", "?");
@@ -4067,10 +3602,10 @@ void GenerativeRetrieval(Dictionary<string, string> cues)
             
             agentLongTermMemory.Add(newMem);
         }
-    }
+    }*/
 
     //matches from generative retrieval
-    private void MatchesFromRetrieval(string results, Dictionary<string, string> tokens)
+    /*private void MatchesFromRetrieval(string results, Dictionary<string, string> tokens)
     {
         string temp;
         //temp = results.Replace("}}}", "?");
@@ -4099,7 +3634,7 @@ void GenerativeRetrieval(Dictionary<string, string> cues)
             part2 = part2.Replace("\\c\\:", "?");
             part2 = part2.Replace("\\d\\:", "?");
             part2 = part2.Replace("\\e\\:", "?");
-            string[] ohFuck = part2.Split('?');*/
+            string[] ohFuck = part2.Split('?');*
             string[] ohFuck2 = part.Split(',');
 
             string node = "";
@@ -4220,7 +3755,7 @@ void GenerativeRetrieval(Dictionary<string, string> cues)
                     break;
                 }
             }
-        }*/
+        }*
 
         if (found.Count > 0)
         {
@@ -4264,7 +3799,7 @@ void GenerativeRetrieval(Dictionary<string, string> cues)
                 StartCoroutine(GetRequest("https://acobot-brainshop-ai-v1.p.rapidapi.com/get?bid=178&key=sX5A2PcYZbsN5EY6&uid=mashape&msg=" + txt));
             }
         }
-    }
+    }*/
 
     private void WriteTokens(string webServiceResponse)
     {
@@ -4291,8 +3826,8 @@ void GenerativeRetrieval(Dictionary<string, string> cues)
         }
         //end formatting
 
-        UnityEngine.Debug.Log(tokens[0]);
-        UnityEngine.Debug.Log(tknType[0]);
+        //UnityEngine.Debug.Log(tokens[0]);
+        //UnityEngine.Debug.Log(tknType[0]);
 
         //write the file
         StreamWriter sr = File.CreateText("resultToken.txt");
@@ -4303,10 +3838,12 @@ void GenerativeRetrieval(Dictionary<string, string> cues)
             if (i == tokens.Length - 1)
             {
                 sr.WriteLine(tokens[i]);
+                UnityEngine.Debug.Log(tokens[i]);
             }
             else
             {
                 sr.WriteLine(tokens[i] + ";" + tknType[i]);
+                UnityEngine.Debug.Log(tknType[i]);
             }
         }
 
