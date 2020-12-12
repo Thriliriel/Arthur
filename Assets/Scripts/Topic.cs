@@ -30,6 +30,8 @@ public class Topic
     //if its over, finish dialog to sort another one
     public string RunDialog(double p, List<string> memoryDialogs) {
 
+        if (currentDialog.DialogIsOver()) { CloseDialog(); return null; }
+
         if (p != 0) { 
             currentDialog.NextSentence(p);
         }
@@ -46,8 +48,6 @@ public class Topic
             //check leaf, if so break
             if (currentDialog.DialogIsOver()) break;
         }
-
-        if (currentDialog.DialogIsOver()) { CloseDialog(); return null; }
 
         return currentDialog.GetSentence();            
 

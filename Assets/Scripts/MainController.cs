@@ -390,6 +390,15 @@ public class MainController : MonoBehaviour
                         {
                             DealWithIt(foundIt, tokens);
                         }
+                        else
+                        {
+                            //else, see if we have some new term to learn
+                            string unk = CheckNewTerm(foundIt, tokens);
+                            if(unk != "" && unk != ". ")
+                            {
+                                SpeakYouFool(unk);
+                            }
+                        }
                     }
 
                     //is using memory, go on
@@ -764,6 +773,31 @@ public class MainController : MonoBehaviour
             }
         }
 
+        //if has image, show it to the user
+        if (imagery.Count > 0)
+        {
+            string imagePath = imagery[0].information;
+            //say it also
+            responseText += ". Here it is!";
+
+            var bytes = System.IO.File.ReadAllBytes(imagePath);
+            var tex = new Texture2D(1, 1);
+            tex.LoadImage(bytes);
+            randomImage.GetComponent<MeshRenderer>().material.mainTexture = tex;
+
+            //show
+            randomImage.SetActive(true);
+            riTarget.SetActive(true);
+        }
+
+        //now, lets see if we have some new term
+        string unk = CheckNewTerm(retrieved, tokens);
+
+        SpeakYouFool(responseText + unk);
+    }
+
+    private string CheckNewTerm(GeneralEvent retrieved, Dictionary<string, string> tokens)
+    {
         //now, lets see if we have some new term
         string unknoun = "";
 
@@ -780,19 +814,29 @@ public class MainController : MonoBehaviour
         }
 
         //lets see if these nouns exist in the event
-        foreach (MemoryClass nds in retrieved.nodes)
+        if (retrieved != null)
         {
-            if (nds.informationType == "Person")
+            foreach (MemoryClass nds in retrieved.nodes)
             {
-                if (nouns.Contains(nds.information))
-                    nouns.Remove(nds.information);
+                if (nds.informationType == "Person")
+                {
+                    if (nouns.Contains(nds.information))
+                        nouns.Remove(nds.information);
+                }
             }
         }
 
         //if nothing, need to learn
         if (nouns.Count > 0)
         {
-            unknoun = nouns[nouns.Count - 1];
+            foreach(string nn in nouns)
+            {
+                if(nn != "Arthur" && nn != personName)
+                {
+                    unknoun = nn;
+                    break;
+                }
+            }
         }
 
         //do not save this memory, since it already exists somehow
@@ -805,7 +849,7 @@ public class MainController : MonoBehaviour
             unk += DealUnknown(unknoun);
         }
 
-        SpeakYouFool(responseText + unk);
+        return unk;
     }
 
     //deal version without event
@@ -2514,7 +2558,8 @@ public class MainController : MonoBehaviour
 
         //if maxCues changed, we found an event
         //MAYBE INSTEAD OF GETTING THE MAX CUES, WE TRY TO GET EXACT CUES, SO WE DO NOT GET A RANDOM EVENT EVERYTIME, EVEN WHEN IT IS SOMETHING NOT KNOWN
-        if (maxCues > 0)
+        //IDEA: instead of just checking if it is above 0, it has to have, at least, 50% of the cues found
+        if (maxCues >= (cues.Count/2))
         {
             //add the nodes back to the STM
             foreach (MemoryClass mem in eventFound.nodes)
