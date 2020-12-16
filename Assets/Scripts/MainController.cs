@@ -21,6 +21,7 @@ public class MainController : MonoBehaviour
     public List<string> foundEmotions;
     public string personName;
     public int personId;
+    public string agentName;
 
     //input text to chat and the chat itself
     public GameObject inputText;
@@ -144,10 +145,10 @@ public class MainController : MonoBehaviour
     private string tempTypeEvent;
     private string tempRelationship;
     private int arthurIdDatabase = 0;*/
-    private bool arthurLearnsSomething = false;
+    //private bool arthurLearnsSomething = false;
 
     //can finish it all?
-    private bool canDestroy = false;
+    //private bool canDestroy = false;
 
     private void Awake()
     {
@@ -272,6 +273,20 @@ public class MainController : MonoBehaviour
         if (!isSleeping)
         {
             isUsingMemory = true;
+
+            //check keyboard. When user types "Enter", go to chat or submit it
+            if (Input.GetButtonDown("Submit"))
+            {
+                //if the field is not focused, do it
+                if (inputText.GetComponent<InputField>().text == "")
+                {
+                    inputText.GetComponent<InputField>().ActivateInputField();
+                }//else, we submit the sentence
+                else
+                {
+                    SendRequestChat();
+                }
+            }
 
             //check the predominant emotion
             if (foundEmotions.Count > 0)
@@ -662,7 +677,7 @@ public class MainController : MonoBehaviour
     //Agent says something
     private void SpeakYouFool(string weirdThingToTalk)
     {
-        chatText.text = weirdThingToTalk;
+        chatText.text += agentName+": "+ weirdThingToTalk+"\n";
 
         //just speak if canSpeak is true
         if (canSpeak)
@@ -1377,6 +1392,8 @@ public class MainController : MonoBehaviour
         Tuple<string, string> memData = currentTopic.GetCurrentDialog().GetMemoryData();
         if (memData.Item1 != "")
         {
+            connectNodes.Add(personId);
+
             int thisID = AddToSTM("Activity", memData.Item1, weight);
             connectNodes.Add(thisID);
             infor += " " + memData.Item1;
@@ -1677,6 +1694,9 @@ public class MainController : MonoBehaviour
         //get the text and reset the input
         string textSend = inputText.GetComponent<InputField>().text;
         inputText.GetComponent<InputField>().text = "";
+
+        //put it in the general chat as well
+        chatText.text += personName + ": " + textSend + "\n";
 
         //reset the idle timer
         idleTimer = Time.time;
