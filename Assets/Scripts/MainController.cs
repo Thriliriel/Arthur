@@ -677,7 +677,7 @@ public class MainController : MonoBehaviour
     //Agent says something
     private void SpeakYouFool(string weirdThingToTalk)
     {
-        chatText.text += agentName+": "+ weirdThingToTalk+"\n";
+        chatText.text += "<b>"+agentName+"</b>: "+ weirdThingToTalk+"\n";
 
         //just speak if canSpeak is true
         if (canSpeak)
@@ -1696,7 +1696,7 @@ public class MainController : MonoBehaviour
         inputText.GetComponent<InputField>().text = "";
 
         //put it in the general chat as well
-        chatText.text += personName + ": " + textSend + "\n";
+        chatText.text += "<b>" + personName + "</b>: " + textSend + "\n";
 
         //reset the idle timer
         idleTimer = Time.time;

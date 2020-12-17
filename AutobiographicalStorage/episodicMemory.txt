@@ -1,37 +1,37 @@
-1;12/16/2020 4:43:51 PM;Arthur;Person;1;1
-2;12/16/2020 4:43:51 PM;AutobiographicalStorage/Images/Arthur.png;Imagery;1;1
-3;12/16/2020 4:43:51 PM;Brazil;Location;1;1
-4;12/16/2020 4:43:51 PM;2019;Time;1;1
-5;12/16/2020 5:55:28 PM;born;Activity;0.2343073;1
-6;12/16/2020 3:55:41 PM;work;Activity;1;1
-7;12/10/2020 2:24:31 PM;study;Activity;1;1
+1;12/17/2020 3:02:00 PM;Arthur;Person;1;1
+2;12/17/2020 3:02:06 PM;AutobiographicalStorage/Images/Arthur.png;Imagery;1;1
+3;12/17/2020 3:02:06 PM;Brazil;Location;1;1
+4;12/17/2020 3:02:06 PM;2019;Time;1;1
+5;12/17/2020 3:02:06 PM;born;Activity;1;1
+6;12/17/2020 3:02:00 PM;work;Activity;1;1
+7;12/17/2020 3:01:32 PM;study;Activity;1;1
 8;12/12/2020 2:23:53 PM;has children;Activity;1;1
 9;12/10/2020 3:02:06 PM;Joy;Emotion;1;1
-10;12/16/2020 3:55:41 PM;Sadness;Emotion;1;1
+10;12/17/2020 3:02:00 PM;Sadness;Emotion;1;1
 11;12/16/2020 2:35:44 PM;meet;Activity;1;1
-12;12/16/2020 3:57:21 PM;learn;Activity;1;1
-13;12/16/2020 5:55:40 PM;Knob;Person;1;1
+12;12/17/2020 2:05:38 PM;learn;Activity;1;1
+13;12/17/2020 3:14:52 PM;Knob;Person;1;1
 14;12/16/2020 2:35:44 PM;AutobiographicalStorage/Images/Knob.png;Imagery;1;1
 15;12/16/2020 2:35:44 PM;2020-12-02;Time;1;1
-16;12/16/2020 5:55:28 PM;1988;Time;0.2343073;1
-21;12/16/2020 3:55:22 PM;like;Activity;1;1
-22;12/16/2020 3:55:22 PM;food;Person;1;1
-23;12/16/2020 2:23:57 PM;love;Activity;1;1
-24;12/16/2020 2:23:57 PM;pizza;Person;1;1
+16;12/17/2020 3:00:04 PM;1988;Time;1;1
+21;12/17/2020 3:14:08 PM;like;Activity;0.3527925;1
+22;12/17/2020 3:14:08 PM;food;Person;0.3527925;1
+23;12/17/2020 3:14:39 PM;love;Activity;0.161122;1
+24;12/17/2020 3:14:39 PM;pizza;Person;0.161122;1
 25;12/16/2020 3:51:42 PM;mine;Person;1;1
 26;12/16/2020 3:51:42 PM;be;Activity;1;1
 27;12/16/2020 3:51:42 PM;Calabresa;Person;1;1
-28;12/10/2020 2:24:31 PM;computer_science;Activity;1;1
+28;12/17/2020 2:29:01 PM;computer_science;Activity;1;1
 29;12/16/2020 3:50:31 PM;teacher;Activity;1;1
 33;12/12/2020 2:23:53 PM;Amanda;Person;1;1
 34;12/12/2020 2:23:53 PM;Rick;Person;1;1
-36;12/16/2020 3:57:21 PM;AutobiographicalStorage/Images/cellphone.png;Imagery;1;1
-35;12/16/2020 3:57:21 PM;cellphone;Person;1;1
+36;12/17/2020 2:05:38 PM;AutobiographicalStorage/Images/cellphone.png;Imagery;1;1
+35;12/17/2020 2:05:38 PM;cellphone;Person;1;1
 %%%
 1;7/10/2019 10:00:00 PM;I was born at Brazil in 2019-08-10;1_2_3_4_5
-2;7/10/2019 10:00:00 PM;I have no job;1_2_6_10
-3;7/10/2019 10:00:00 PM;I am not studying;1_2_7_10
-4;7/10/2019 10:00:00 PM;I have no children;1_2_8_9
+2;7/10/2019 10:00:00 PM;I have no job;1_6_10
+3;7/10/2019 10:00:00 PM;I am not studying;1_7_10
+4;7/10/2019 10:00:00 PM;I have no children;1_8_9
 5;7/10/2019 10:00:00 PM;That is me!;1_2_9
 6;12/2/2020 8:05:25 PM;I met Knob today;13_14_15_1_11
 7;12/2/2020 9:20:53 PM;Knob was born in 1988-01-01;16_5_13
