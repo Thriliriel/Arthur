@@ -117,6 +117,7 @@ public class MainController : MonoBehaviour
     private Topic currentTopic;
     //list with all dialogs/topics in memory
     private List<string> dialogsInMemory;
+    private List<string> dialogsAnswersInMemory;
     //to save in memory
     //private int qntTempDialogs = 0;
     //private Dictionary<int, string> tempDialogs;
@@ -138,6 +139,8 @@ public class MainController : MonoBehaviour
     public float idleTimer;
     //how much time should Arthur wait?
     public float waitForSeconds;
+
+    public string lastInteraction;
 
     //temp memories to keep for general events later
     /*private int qntTempNodes = 0;
@@ -183,6 +186,7 @@ public class MainController : MonoBehaviour
         topics = new List<Topic>();
         topicsFinal = new List<Topic>();
         dialogsInMemory = new List<string>();
+        dialogsAnswersInMemory = new List<string>();
 
         LoadSmallTalk();
 
@@ -256,6 +260,9 @@ public class MainController : MonoBehaviour
     {
         //save LTM as it is
         SaveEpisodic();
+
+        //save used STs
+        SaveUsedST();
 
         //save next ID
         StreamWriter textToToken = new StreamWriter("nextId.txt");
@@ -1701,6 +1708,12 @@ public class MainController : MonoBehaviour
         //reset the idle timer
         idleTimer = Time.time;
 
+        lastInteraction = textSend;
+
+        //if the len is different, the user is answering a small talk. Save
+        if (dialogsAnswersInMemory.Count != dialogsInMemory.Count)
+            dialogsAnswersInMemory.Add(lastInteraction);
+
         //UPDATE: we always tokenize now, and treat things in the update
         //UPDATE: now we send a request to our webservice, through a json
         StartCoroutine(TokenizationWebService(textSend));
@@ -2341,6 +2354,31 @@ public class MainController : MonoBehaviour
     {
         //call the character animation to good morning sunshine
         mariano.GetComponent<CharacterCTRL>().PlayAnimation("wakywaky");
+    }
+
+    //save the used small talks
+    private void SaveUsedST()
+    {
+        //save LTM as it is
+        StreamWriter writingLTM = File.CreateText("AutobiographicalStorage/smallTalksUsed.txt");
+
+        //first, save the ESK
+        foreach(string dmem in dialogsInMemory)
+        {
+            //str with the used ones
+            writingLTM.WriteLine(dmem);
+        }
+        writingLTM.Close();
+
+        //also, save the file for Scherer
+        writingLTM = File.CreateText("AutobiographicalStorage/schererFile.txt");
+
+        for(int i = 0; i < dialogsInMemory.Count; i++)
+        {
+            //str with the used ones
+            writingLTM.WriteLine(dialogsInMemory[i] + "+" + dialogsAnswersInMemory[i]);
+        }
+        writingLTM.Close();
     }
 
     //consolidate memory on REM sleep
@@ -3035,7 +3073,14 @@ public class MainController : MonoBehaviour
         }
 
         if (ct != null)
-            SpeakYouFool(ct);
+        {
+            string digmem = currentTopic.GetId() + "-" + currentTopic.GetCurrentDialog().GetDescription() + "-" + currentTopic.GetCurrentDialog().GetId().ToString();
+            if (!dialogsInMemory.Contains(digmem))
+            {
+                dialogsInMemory.Add(digmem);
+                SpeakYouFool(ct);
+            }
+        }
 
         UnityEngine.Debug.Log(ct);
     }
@@ -3235,6 +3280,23 @@ public class MainController : MonoBehaviour
     private void LoadMemoryDialogs()
     {
         //StartCoroutine(MatchTopicsDialogs());
+
+        StreamReader readingLTM = new StreamReader("AutobiographicalStorage/smallTalksUsed.txt", System.Text.Encoding.Default);
+
+        using (readingLTM)
+        {
+            string line;
+            do
+            {
+                line = readingLTM.ReadLine();
+
+                if (line != "" && line != null)
+                {
+                    dialogsInMemory.Add(line);
+                }
+            } while (line != null);
+        }
+        readingLTM.Close();
     }
 
     /*private IEnumerator MatchTopicsDialogs()
