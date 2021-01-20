@@ -2376,7 +2376,8 @@ public class MainController : MonoBehaviour
         for(int i = 0; i < dialogsInMemory.Count; i++)
         {
             //str with the used ones
-            writingLTM.WriteLine(dialogsInMemory[i] + "+" + dialogsAnswersInMemory[i]);
+            string[] info = dialogsInMemory[i].Split('-');
+            writingLTM.WriteLine(info[2] + "+" + info[3] + "+" + dialogsAnswersInMemory[i]);
         }
         writingLTM.Close();
     }
@@ -3074,7 +3075,7 @@ public class MainController : MonoBehaviour
 
         if (ct != null)
         {
-            string digmem = currentTopic.GetId() + "-" + currentTopic.GetCurrentDialog().GetDescription() + "-" + currentTopic.GetCurrentDialog().GetId().ToString();
+            string digmem = currentTopic.GetId() + "-" + currentTopic.GetCurrentDialog().GetDescription() + "-" + currentTopic.GetCurrentDialog().GetId().ToString() + "-" + currentTopic.GetCurrentDialog().GetTreeLevel().ToString();
             if (!dialogsInMemory.Contains(digmem))
             {
                 dialogsInMemory.Add(digmem);
@@ -3229,6 +3230,8 @@ public class MainController : MonoBehaviour
             topics = new List<Topic>();
             Topic currentTopic = null;
             Dialog currentDialog = null;
+            int lastParent = -1;
+            int treeLevel = 0;
 
             do
             {
@@ -3254,9 +3257,19 @@ public class MainController : MonoBehaviour
                 else if (command.Equals('#'))
                 {
 
-                    //id, sentence, polarity, isLeaf, father id, memory edge, memory node value..
+                    //id, sentence, polarity, isLeaf, father id, memory edge, memory node value, tree level
                     string[] data = line.Split(';');
-                    currentDialog.AddNode(int.Parse(data[0]), data[1].Trim(), double.Parse(data[2]), bool.Parse(data[3].Trim()), int.Parse(data[4]), data[5].Trim(), data[6].Trim());
+
+                    int parentID = int.Parse(data[4]);
+
+                    //when the parent changes, the tree level changes as well
+                    if(parentID != lastParent)
+                    {
+                        lastParent = parentID;
+                        treeLevel++;
+                    }
+
+                    currentDialog.AddNode(int.Parse(data[0]), data[1].Trim(), double.Parse(data[2]), bool.Parse(data[3].Trim()), parentID, data[5].Trim(), data[6].Trim(), treeLevel);
                 }
                 //close dialog (insert on topic)
                 else if (command.Equals(']'))

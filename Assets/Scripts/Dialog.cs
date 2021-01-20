@@ -19,15 +19,17 @@ public class Dialog
         private List<Node> children;
         private List<double> polarization;
         private bool isLeaf;
+        private int treeLevel;
         
-        public Node(int id, string st, bool lf, string edge, string value){
+        public Node(int id, string st, bool lf, string edge, string value, int tl){
             identification = id;
             sentence = st;
             isLeaf = lf;
             memoryEdge = edge;
             memoryValue = value;
             children = new List<Node>();
-            polarization = new List<double>(); 
+            polarization = new List<double>();
+            treeLevel = tl;
         }
 
         public void AddChild(Node ch, double pol)
@@ -42,6 +44,7 @@ public class Dialog
         public string GetMemoryValue() { return memoryValue; }
         public List<Node> GetChildren(){ return children; }
         public List<double> GetPolarization(){ return polarization; }
+        public int GetTreeLevel() { return treeLevel; }
         public bool IsLeaf() { return isLeaf; }
         
     }
@@ -92,11 +95,12 @@ public class Dialog
     public int GetId(){ return currentNode.GetId();}
     public Tuple<string, string> GetMemoryData(){ return new Tuple<string, string>(currentNode.GetMemoryEdge(), currentNode.GetMemoryValue()); }
     public string GetDescription() { return _description; }
+    public int GetTreeLevel() { return currentNode.GetTreeLevel(); }
 
     //used to build de dialog
-    public void AddNode(int id, string content, double polarity, bool isLeaf, int fatherId, string memEdge, string memValue)
+    public void AddNode(int id, string content, double polarity, bool isLeaf, int fatherId, string memEdge, string memValue, int tl)
     {
-        Node newNode = new Node(id, content, isLeaf, memEdge, memValue);
+        Node newNode = new Node(id, content, isLeaf, memEdge, memValue, tl);
 
         if(id != 0)
         {
