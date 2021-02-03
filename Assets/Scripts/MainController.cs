@@ -142,6 +142,12 @@ public class MainController : MonoBehaviour
 
     public string lastInteraction;
 
+    //beliefs
+    //public List<BeliefClass> beliefs;
+
+    //is doing retrieval?
+    private bool isRetrievingMemory;
+
     //temp memories to keep for general events later
     /*private int qntTempNodes = 0;
     private Dictionary<int,string> tempNodes;
@@ -170,6 +176,7 @@ public class MainController : MonoBehaviour
         influencer = new Dictionary<int, string>();
         //tempNodes = new Dictionary<int, string>();
         //tempDialogs = new Dictionary<int, string>();
+        //beliefs = new List<BeliefClass>();
 
         eyes = GameObject.FindGameObjectsWithTag("Eye");
 
@@ -229,6 +236,9 @@ public class MainController : MonoBehaviour
         textFile = sr.ReadLine();
         nextEpisodeId = int.Parse(textFile.Trim());
         sr.Close();
+
+        //load Beliefs
+        //LoadBeliefs();
     }
 
     // Start is called before the first frame update
@@ -407,8 +417,16 @@ public class MainController : MonoBehaviour
                     {
                         //this is tricky :D
                         saveNewMemoryNode = false;
-                        GeneralEvent foundIt = GenerativeRetrieval(tokens);
-                        if (foundIt != null)
+                        GenerativeRetrieval(tokens);
+
+                        /*GeneralEvent foundIt = null;
+                        bool useIt = false;
+                        foreach(KeyValuePair<GeneralEvent,bool> ge in ahaaaa)
+                        {
+                            foundIt = ge.Key;
+                            useIt = ge.Value;
+                        }
+                        if (foundIt != null && useIt)
                         {
                             DealWithIt(foundIt, tokens);
                         }
@@ -419,8 +437,12 @@ public class MainController : MonoBehaviour
                             if(unk != "" && unk != ". ")
                             {
                                 SpeakYouFool(unk);
+                            }//else, dunno
+                            else
+                            {
+                                SpeakYouFool("Sorry, i do not know.");
                             }
-                        }
+                        }*/
                     }
 
                     //is using memory, go on
@@ -466,157 +488,6 @@ public class MainController : MonoBehaviour
             {
                 SmallTalking();
             }
-
-            ////if we have temp nodes, need to create relationships for it
-            //if(tempNodes.Count > 0 && tempNodes.Count == qntTempNodes)
-            //{
-            //    //if we have Arthur or personName, we make it be the first node
-            //    if (tempNodes.ContainsValue("Arthur") || tempNodes.ContainsValue(personName))
-            //    {
-            //        Dictionary<int, string> temp = new Dictionary<int, string>();
-
-            //        foreach (KeyValuePair<int, string> cn in tempNodes)
-            //        {
-            //            if(cn.Value == "Arthur" || cn.Value == personName)
-            //            {
-            //                temp.Add(cn.Key, cn.Value);
-            //                break;
-            //            }
-            //        }
-            //        foreach (KeyValuePair<int, string> cn in tempNodes)
-            //        {
-            //            if (cn.Value != "Arthur" && cn.Value != personName)
-            //            {
-            //                temp.Add(cn.Key, cn.Value);
-            //                break;
-            //            }
-            //        }
-
-            //        tempNodes = temp;
-            //    }
-
-            //    //connect nodes for event and create relationship on the database
-            //    List<int> connectNodes = new List<int>();
-            //    //just the text ids
-            //    List<int> textInfo = new List<int>();
-            //    List<int> twoByTwo = new List<int>();
-
-            //    foreach (KeyValuePair<int, string> cn in tempNodes)
-            //    {
-            //        connectNodes.Add(cn.Key);
-            //        twoByTwo.Add(cn.Key);
-
-            //        if (!cn.Value.Contains("myself") && !cn.Value.Contains("thing"))
-            //        {
-            //            textInfo.Add(cn.Key);
-            //        }
-
-            //        if (twoByTwo.Count == 2)
-            //        {
-            //            StartCoroutine(CreateRelatioshipNodesWebService(twoByTwo[0], twoByTwo[1], tempRelationship));
-
-            //            //if it is children, the pairing is a bit different, since they all connect with the person
-            //            if (tempRelationship == "HAS_CHILD")
-            //            {
-            //                twoByTwo.RemoveAt(1);
-            //            }
-            //            else
-            //            {
-            //                twoByTwo.RemoveAt(0);
-            //            }
-            //        }
-            //    }
-
-            //    //if he is learning something, we create relationship between the text and Arthur
-            //    if (arthurLearnsSomething)
-            //    {
-            //        foreach(int ite in textInfo)
-            //        {
-            //            StartCoroutine(CreateRelatioshipNodesWebService(arthurIdDatabase, ite, "KNOWS"));
-            //        }
-            //    }//else, if Arthur is meeting someone new, needs to create this relationship
-            //    else if(tempTypeEvent == "meet new person")
-            //    {
-            //        foreach (int ite in textInfo)
-            //        {
-            //            StartCoroutine(CreateRelatioshipNodesWebService(arthurIdDatabase, ite, "MET"));
-            //        }
-            //    }
-
-            //    //AddGeneralEvent(tempTypeEvent, infoEvent, connectNodes);
-
-            //    connectNodes.Clear();
-
-            //    //reset it
-            //    tempTypeEvent = tempRelationship = "";
-            //    qntTempNodes = -1;
-            //    tempNodes.Clear();
-            //    arthurLearnsSomething = false;
-            //}
-
-            ////if we have tempDialogs, need to create relationship for it
-            //if (tempDialogs.Count > 0 && tempDialogs.Count == qntTempDialogs)
-            //{
-            //    //if we have a topic description, we make it be the first node
-            //    string stuff = "";
-            //    foreach (Topic tg in topicsFinal)
-            //    {
-            //        foreach (Dialog dn in tg.dialogs)
-            //        {
-            //            if (tempDialogs.ContainsValue(dn.GetDescription()))
-            //            {
-            //                stuff = dn.GetDescription();
-            //                break;
-            //            }
-            //        }
-            //    }
-            //    if (stuff != "")
-            //    {
-            //        Dictionary<int, string> temp = new Dictionary<int, string>();
-
-            //        foreach (KeyValuePair<int, string> cn in tempDialogs)
-            //        {
-            //            if (cn.Value == stuff)
-            //            {
-            //                temp.Add(cn.Key, cn.Value);
-            //                break;
-            //            }
-            //        }
-            //        foreach (KeyValuePair<int, string> cn in tempDialogs)
-            //        {
-            //            if (cn.Value != stuff)
-            //            {
-            //                temp.Add(cn.Key, cn.Value);
-            //                break;
-            //            }
-            //        }
-
-            //        tempDialogs = temp;
-            //    }
-
-            //    //connect nodes for event and create relationship on the database
-            //    List<int> connectNodes = new List<int>();
-            //    //just the text ids
-            //    List<int> twoByTwo = new List<int>();
-
-            //    foreach (KeyValuePair<int, string> cn in tempDialogs)
-            //    {
-            //        connectNodes.Add(cn.Key);
-            //        twoByTwo.Add(cn.Key);
-
-            //        if (twoByTwo.Count == 2)
-            //        {
-            //            StartCoroutine(CreateRelatioshipNodesWebService(twoByTwo[0], twoByTwo[1], "HAS_DIALOG"));
-            //            twoByTwo.RemoveAt(0);
-            //        }
-            //    }
-
-            //    connectNodes.Clear();
-
-            //    //reset it
-            //    qntTempDialogs = -1;
-            //    tempDialogs.Clear();
-            //}
 
             //emotion based on last polarity answer
             /*if (lastPolarity < 0) SetEmotion("sadness");
@@ -2574,7 +2445,7 @@ public class MainController : MonoBehaviour
 
     //retrieve a memory based on cues
     //deactivated for now
-    private GeneralEvent GenerativeRetrieval(Dictionary<string, string> cues)
+    private void GenerativeRetrieval(Dictionary<string, string> cues)
     {
         GeneralEvent eventFound = new GeneralEvent();
         Dictionary<string, string> auxCues = new Dictionary<string, string>();
@@ -2585,53 +2456,44 @@ public class MainController : MonoBehaviour
             else if (cue.Key == "studying") auxCues.Add("study", cue.Value);
             else if (cue.Key == "children" || cue.Key == "kids") auxCues.Add("has children", cue.Value);
             else auxCues.Add(cue.Key, cue.Value);
+
+            //we can also try to infer some things. For example, if asks if has brother/sister, we can search for has children
+            if (cue.Key == "brother" || cue.Key == "sister" || cue.Key == "sibling" || cue.Key == "father" ||
+                cue.Key == "mother" || cue.Key == "parent") auxCues.Add("has children", cue.Value);
         }
         cues = auxCues;
         //auxCues.Clear();
 
-        //we find the general event which has the most cues compounding its memory nodes
-        //BUT... select the general event is a bit trickier, since it can exist many events with the same memory information.
-        //so, we select the event which has the most cues
-        int maxCues = 0;
-        foreach (KeyValuePair<int, GeneralEvent> geez in agentGeneralEvents)
+        //look for similar words
+        string textParam = "";
+        foreach(KeyValuePair<string,string> cue in cues)
         {
-            //for each general event, we count the cues found
-            int eventCues = 0;
-            //for each memory node which compounds this general event
-            foreach (MemoryClass node in geez.Value.nodes)
+            if (textParam == "") textParam = cue.Key;
+            else textParam += "-" + cue.Key;
+        }
+
+        //retrieving memory
+        isRetrievingMemory = true;
+
+        StartCoroutine(WordVecWebService(textParam, cues));
+
+        /*BeliefClass foundBelief = null;
+
+        //check if the beliefs have such cues
+        foreach(KeyValuePair<string,string> cue in cues)
+        {
+            foreach(BeliefClass bel in beliefs)
             {
-                //if it exists, ++
-                if (cues.ContainsKey(node.information))
+                foreach(BeliefClass bc in bel.GetBeliefConditions())
                 {
-                    eventCues++;
+                    if(bc.GetBeliefName() == cue.Key)
+                    {
+                        foundBelief = bel;
+                        break;
+                    }
                 }
             }
-
-            //if it is higher than the max cues, select this general event
-            if (eventCues > maxCues)
-            {
-                maxCues = eventCues;
-                eventFound = geez.Value;
-            }
-        }
-
-        //if maxCues changed, we found an event
-        //MAYBE INSTEAD OF GETTING THE MAX CUES, WE TRY TO GET EXACT CUES, SO WE DO NOT GET A RANDOM EVENT EVERYTIME, EVEN WHEN IT IS SOMETHING NOT KNOWN
-        //IDEA: instead of just checking if it is above 0, it has to have, at least, 50% of the cues found
-        if (maxCues >= (cues.Count/2))
-        {
-            //add the nodes back to the STM
-            foreach (MemoryClass mem in eventFound.nodes)
-            {
-                AddToSTM(mem.informationType, mem.information, mem.weight);
-            }
-
-            return eventFound;
-        }//else, nothing was found
-        else
-        {
-            return null;
-        }
+        }*/
     }
 
     //new generative retrieval, based on the graph memory
@@ -3263,6 +3125,7 @@ public class MainController : MonoBehaviour
                     int parentID = int.Parse(data[4]);
 
                     //when the parent changes, the tree level changes as well
+                    //here is the tricky part: even if parents are in the same level, the treeLevel updates, which is bad =/
                     if(parentID != lastParent)
                     {
                         lastParent = parentID;
@@ -3311,6 +3174,67 @@ public class MainController : MonoBehaviour
         }
         readingLTM.Close();
     }
+
+    //load beliefs
+    /*private void LoadBeliefs()
+    {
+        StreamReader readingLTM = new StreamReader("beliefs.txt", System.Text.Encoding.Default);
+
+        using (readingLTM)
+        {
+            string line;
+            do
+            {
+                line = readingLTM.ReadLine();
+
+                if (line != "" && line != null)
+                {
+                    //rules are in Prolog, so we parse it
+                    //Split by equality (:-)
+                    line = line.Replace(":-", "#");
+                    string[] info = line.Split('#');
+                    info[0] = info[0].Trim();
+                    info[1] = info[1].Trim();
+
+                    //0 -> function; 1 -> conditions
+                    //split by ( and ) to get the parameters and the name of the belief
+                    string[] param = info[0].Split('(');
+                    beliefs.Add(new BeliefClass(param[0]));
+                    int actualInd = beliefs.Count - 1;
+                    //now, parameters
+                    param = param[1].Split(')');
+                    param = param[0].Split(',');
+                    foreach(string pam in param)
+                    {
+                        beliefs[actualInd].AddBeliefParameter(pam);
+                    }
+
+                    //now, we get the conditions, which are in info[1], separated by ),
+                    info[1] = info[1].Replace("),", "@");
+                    info = info[1].Split('@');
+                    foreach(string con in info)
+                    {
+                        string cond = con.Trim();
+
+                        //foreach condition, we are going to have function(parameters)
+                        param = cond.Split('(');
+                        BeliefClass newBelief = new BeliefClass(param[0]);
+                        //now, parameters
+                        param[1] = param[1].Replace(")", "");
+                        param = param[1].Split(',');
+                        foreach (string pam in param)
+                        {
+                            newBelief.AddBeliefParameter(pam);
+                        }
+
+                        //add
+                        beliefs[actualInd].AddBeliefCondition(newBelief);
+                    }
+                }
+            } while (line != null);
+        }
+        readingLTM.Close();
+    }*/
 
     /*private IEnumerator MatchTopicsDialogs()
     {
@@ -3408,6 +3332,142 @@ public class MainController : MonoBehaviour
             {
                 //UnityEngine.Debug.Log("Received: " + www.downloadHandler.data);
                 WriteTokens(www.downloadHandler.text);
+            }
+        }
+    }
+
+    //Web Service for Word2Vec
+    private IEnumerator WordVecWebService(string sentence, Dictionary<string, string> cues)
+    {
+        UnityWebRequest www = new UnityWebRequest(webServicePath + "similarWords", "POST");
+        byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes("{\"text\" : [\"" + sentence + "\"]}");
+        www.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
+        www.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+
+        www.SetRequestHeader("Content-Type", "application/json");
+
+        using (www)
+        {
+            yield return www.SendWebRequest();
+
+            if (www.isNetworkError || www.isHttpError)
+            {
+                UnityEngine.Debug.Log(www.error);
+            }
+            else
+            {
+                UnityEngine.Debug.Log("Received: " + www.downloadHandler.data);
+                //WriteWordVec(www.downloadHandler.text);
+
+                //need to format it properly now
+                string info = www.downloadHandler.text.Replace("\"", "");
+                info = info.Replace(@"\", "");
+                info = info.Replace("},", "@");
+                string[] infoSplit = info.Split('@');
+
+                infoSplit[0] = infoSplit[0].Replace("{0:{", "");
+                infoSplit[1] = infoSplit[1].Replace("1:{", "");
+                infoSplit[1] = infoSplit[1].Replace("}}", "");
+
+                string[] tokens = infoSplit[0].Split(',');
+                string[] tknType = infoSplit[1].Split(',');
+
+                for(int h = 0; h < tokens.Length; h++)
+                {
+                    string[] gt = tokens[h].Split(':');
+                    tokens[h] = gt[1];
+                }
+                for (int h = 0; h < tknType.Length; h++)
+                {
+                    string[] gt = tknType[h].Split(':');
+                    tknType[h] = gt[1];
+                }
+
+                //organize cues with similars
+                Dictionary<string, string> newCues = new Dictionary<string, string>();
+
+                //each cue has 5 results. So, we take for each of them
+                int qntCue = 0;
+                foreach(KeyValuePair<string,string> cu in cues)
+                {
+                    newCues.Add(cu.Key, cu.Value);
+
+                    //we just actually use for NN
+                    if(cu.Value == "NN")
+                    {
+                        //5 of this cue
+                        for(int i = 0; i < 5; i++)
+                        {
+                            //ALSO, we just add if the similarity is over 60%
+                            if (float.Parse(tknType[5*qntCue+i]) > 0.6f)
+                            {
+                                newCues.Add(tokens[5 * qntCue + i], cu.Value);
+                            }
+                        }
+                    }
+                    qntCue++;
+                }
+
+                //we find the general event which has the most cues compounding its memory nodes
+                //BUT... select the general event is a bit trickier, since it can exist many events with the same memory information.
+                //so, we select the event which has the most cues
+                int maxCues = 0;
+                GeneralEvent eventFound = null;
+                foreach (KeyValuePair<int, GeneralEvent> geez in agentGeneralEvents)
+                {
+                    //for each general event, we count the cues found
+                    int eventCues = 0;
+                    bool aboutAgent = false;
+                    //for each memory node which compounds this general event
+                    foreach (MemoryClass node in geez.Value.nodes)
+                    {
+                        //if it exists, ++
+                        if (newCues.ContainsKey(node.information))
+                        {
+                            eventCues++;
+                        }
+
+                        //we try to avoid finding info about the agent itself
+                        if (node.information == agentName) aboutAgent = true;
+                    }
+
+                    //if it is higher than the max cues, select this general event
+                    if (eventCues > maxCues || (eventCues == maxCues && !aboutAgent))
+                    {
+                        maxCues = eventCues;
+                        eventFound = geez.Value;
+                    }
+                }
+
+                //if maxCues changed, we found an event
+                //MAYBE INSTEAD OF GETTING THE MAX CUES, WE TRY TO GET EXACT CUES, SO WE DO NOT GET A RANDOM EVENT EVERYTIME, EVEN WHEN IT IS SOMETHING NOT KNOWN
+                //IDEA: instead of just checking if it is above 0, it has to have, at least, 50% of the cues found
+                //if (maxCues >= (cues.Count/2))
+                if (maxCues > 0)
+                {
+                    //add the nodes back to the STM
+                    foreach (MemoryClass mem in eventFound.nodes)
+                    {
+                        AddToSTM(mem.informationType, mem.information, mem.weight);
+                    }
+
+                    DealWithIt(eventFound, newCues);
+                }//else, nothing was found
+                else
+                {
+                    //else, see if we have some new term to learn
+                    string unk = CheckNewTerm(eventFound, newCues);
+                    if (unk != "" && unk != ". ")
+                    {
+                        SpeakYouFool(unk);
+                    }//else, dunno
+                    else
+                    {
+                        SpeakYouFool("Sorry, i do not know.");
+                    }
+                }
+
+                isRetrievingMemory = false;
             }
         }
     }
@@ -3978,12 +4038,12 @@ public class MainController : MonoBehaviour
             if (i == tokens.Length - 1)
             {
                 sr.WriteLine(tokens[i]);
-                UnityEngine.Debug.Log(tokens[i]);
+                //UnityEngine.Debug.Log(tokens[i]);
             }
             else
             {
                 sr.WriteLine(tokens[i] + ";" + tknType[i]);
-                UnityEngine.Debug.Log(tknType[i]);
+                //UnityEngine.Debug.Log(tknType[i]);
             }
         }
 

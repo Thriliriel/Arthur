@@ -103,6 +103,7 @@
     <Compile Include="Assets\Anima2D\Scripts\SpriteMesh.cs" />
     <Compile Include="Assets\Anima2D\Scripts\SpriteMeshAnimation.cs" />
     <Compile Include="Assets\Anima2D\Scripts\SpriteMeshInstance.cs" />
+    <Compile Include="Assets\Scripts\BeliefClass.cs" />
     <Compile Include="Assets\Scripts\Calibration.cs" />
     <Compile Include="Assets\Scripts\CharacterCTRL.cs" />
     <Compile Include="Assets\Scripts\Dialog.cs" />

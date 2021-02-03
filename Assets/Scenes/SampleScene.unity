@@ -8766,7 +8766,7 @@ MonoBehaviour:
   mariano: {fileID: 568877340}
   webServicePath: 
   idleTimer: 0
-  waitForSeconds: 10
+  waitForSeconds: 30
   lastInteraction: 
 --- !u!4 &1328823187
 Transform:
