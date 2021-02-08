@@ -1,29 +1,40 @@
-1;2/3/2021 2:29:18 PM;Arthur;Person;0.6931472;1
-2;7/10/2019 10:00:00 PM;AutobiographicalStorage/Images/Arthur.png;Imagery;1;1
-3;7/10/2019 10:00:00 PM;Brazil;Location;1;1
-4;7/10/2019 10:00:00 PM;2019;Time;1;1
-5;7/10/2019 10:00:00 PM;born;Activity;1;1
-6;2/3/2021 2:29:18 PM;work;Activity;0.6931472;1
-7;2/3/2021 2:28:23 PM;study;Activity;0.1493867;1
-8;2/3/2021 2:29:00 PM;has children;Activity;0.1493867;1
+1;2/8/2021 3:31:38 PM;Arthur;Person;1;1
+2;2/8/2021 3:31:38 PM;AutobiographicalStorage/Images/Arthur.png;Imagery;1;1
+3;2/8/2021 3:31:38 PM;Brazil;Location;1;1
+4;2/8/2021 3:31:38 PM;2019;Time;1;1
+5;2/8/2021 3:35:38 PM;born;Activity;0.2343073;1
+6;2/6/2021 3:02:57 PM;work;Activity;1;1
+7;2/8/2021 3:35:44 PM;study;Activity;0.6931472;1
+8;2/8/2021 3:35:21 PM;has children;Activity;0.3527925;1
 9;7/10/2019 10:00:00 PM;Joy;Emotion;1;1
-10;2/3/2021 2:29:18 PM;Sadness;Emotion;0.6931472;1
-11;7/10/2019 10:00:00 PM;meet;Activity;1;1
+10;2/6/2021 3:17:06 PM;Sadness;Emotion;1;1
+11;2/6/2021 1:19:38 PM;meet;Activity;1;1
 12;7/10/2019 10:00:00 PM;learn;Activity;1;1
-13;2/3/2021 2:29:20 PM;Knob;Person;1;1
-14;2/3/2021 2:27:31 PM;AutobiographicalStorage/Images/Knob.png;Imagery;1;0.9
-15;2/3/2021 2:27:31 PM;2021-02-03;Time;1;0.9
-16;2/3/2021 2:28:07 PM;1989;Time;0.1392286;0.2557754
-17;2/3/2021 2:29:00 PM;Jack;Person;0.1493867;1
-18;2/3/2021 2:29:00 PM;Alice;Person;0.1493867;1
+20;2/8/2021 3:30:04 PM;AutobiographicalStorage/Images/Knob.png;Imagery;1;1
+21;2/6/2021 1:19:38 PM;2021-02-05;Time;1;1
+22;2/8/2021 3:35:38 PM;1989;Time;0.2343073;1
+23;2/8/2021 3:35:21 PM;Alice;Person;0.3527925;1
+24;2/8/2021 3:35:21 PM;Jack;Person;0.3527925;1
+19;2/8/2021 3:35:46 PM;Knob;Person;1;1
+29;2/5/2021 3:56:26 PM;Calabresa;Object;1;0.8
+28;2/8/2021 3:28:48 PM;pizza;Object;1;1
+27;2/8/2021 3:28:48 PM;love;Activity;1;1
+26;2/8/2021 3:29:55 PM;food;Object;1;1
+25;2/8/2021 3:29:55 PM;like;Activity;1;1
+39;2/8/2021 2:41:04 PM;play;Activity;1;1
+40;2/8/2021 2:41:04 PM;game;Object;1;1
 %%%
 1;7/10/2019 10:00:00 PM;I was born at Brazil in 2019-08-10;1_2_3_4_5
 2;7/10/2019 10:00:00 PM;I have no job;1_6_10
 3;7/10/2019 10:00:00 PM;I am not studying;1_7_10
 4;7/10/2019 10:00:00 PM;I have no children;1_8_9
 5;7/10/2019 10:00:00 PM;That is me!;1_2_9
-6;2/3/2021 2:27:31 PM;I met Knob today;13_14_15_1_11
-7;2/3/2021 2:28:07 PM;Knob was born in 1989-01-01;16_5_13
-8;2/3/2021 2:28:09 PM;Knob is not studying;7_13
-9;2/3/2021 2:28:10 PM;Knob is not working;6_13
-10;2/3/2021 2:28:18 PM;Knob has 2 children: Jack and Alice;17_18_8_13
+11;2/5/2021 3:55:31 PM;I met Knob today;19_20_21_1_11
+12;2/5/2021 3:55:34 PM;Knob was born in 1989-01-01;19_22_5
+13;2/5/2021 3:55:36 PM;Knob is not studying;19_7
+14;2/5/2021 3:55:37 PM;Knob is not working;19_6
+15;2/5/2021 3:55:45 PM;Knob has 2 children: Alice and Jack;19_23_24_8
+16;2/5/2021 3:56:18 PM;Knob like food;26_25_19
+17;2/5/2021 3:56:21 PM;Knob love pizza;28_27_19
+18;2/5/2021 3:56:26 PM;Knob Calabresa;29_19
+25;2/6/2021 3:17:00 PM;Knob love play game;19_27_39_40

@@ -415,8 +415,16 @@ public class MainController : MonoBehaviour
                     }
                     else if (!isBreakingIce && !currentTopic.IsDialoging())
                     {
-                        //this is tricky :D
-                        saveNewMemoryNode = false;
+                        //if it is a question, we do not save it. Otherwise, yeap
+                        saveNewMemoryNode = true;
+                        foreach (KeyValuePair<string, string> tt in tokens)
+                        {
+                            if (tt.Key == "?")
+                            {
+                                saveNewMemoryNode = false;
+                                break;
+                            }
+                        }
                         GenerativeRetrieval(tokens);
 
                         /*GeneralEvent foundIt = null;
@@ -638,6 +646,7 @@ public class MainController : MonoBehaviour
         List<MemoryClass> activity = new List<MemoryClass>();
         List<MemoryClass> emotion = new List<MemoryClass>();
         List<MemoryClass> imagery = new List<MemoryClass>();
+        List<MemoryClass> objects = new List<MemoryClass>();
         foreach (MemoryClass mem in retrieved.nodes)
         {
             if (mem.informationType == "Person") person.Add(mem);
@@ -646,6 +655,7 @@ public class MainController : MonoBehaviour
             if (mem.informationType == "Activity") activity.Add(mem);
             if (mem.informationType == "Emotion") emotion.Add(mem);
             if (mem.informationType == "Imagery") imagery.Add(mem);
+            if (mem.informationType == "Object") objects.Add(mem);
         }
         //if we have activity
         if(activity.Count > 0)
@@ -684,12 +694,13 @@ public class MainController : MonoBehaviour
         }
 
         //now, lets see if we have some new term
-        string unk = CheckNewTerm(retrieved, tokens);
+        //string unk = CheckNewTerm(retrieved, tokens);
 
-        SpeakYouFool(responseText + unk);
+        SpeakYouFool(responseText);// + unk
     }
 
-    private string CheckNewTerm(GeneralEvent retrieved, Dictionary<string, string> tokens)
+    //UPDATE: deactivated for now, since it implies to have only one "term" (for example, can have only one cellphone)
+    /*private string CheckNewTerm(GeneralEvent retrieved, Dictionary<string, string> tokens)
     {
         //now, lets see if we have some new term
         string unknoun = "";
@@ -711,7 +722,7 @@ public class MainController : MonoBehaviour
         {
             foreach (MemoryClass nds in retrieved.nodes)
             {
-                if (nds.informationType == "Person")
+                if (nds.informationType == "Person" || nds.informationType == "Object")
                 {
                     if (nouns.Contains(nds.information))
                         nouns.Remove(nds.information);
@@ -743,7 +754,7 @@ public class MainController : MonoBehaviour
         }
 
         return unk;
-    }
+    }*/
 
     //deal version without event
     /*private void DealWithIt(Dictionary<string, string> retrieved, Dictionary<string, string> tokens)
@@ -1276,7 +1287,7 @@ public class MainController : MonoBehaviour
             connectNodes.Add(thisID);
             infor += " " + memData.Item1;
 
-            thisID = AddToSTM("Person", memData.Item2, weight);
+            thisID = AddToSTM("Object", memData.Item2, weight);
             connectNodes.Add(thisID);
             infor += " " + memData.Item2;
         }
@@ -1313,12 +1324,17 @@ public class MainController : MonoBehaviour
                 }*/
 
                 string fiveW = "";
-                //NEED TO SEE HOW TO DO IT YET. FOR NOW:
-                //if it is a noun/proper, people
-                if (txt.Value == "NN" || txt.Value == "NNP")
+                //NEED TO SEE HOW TO TAKE THE NAMED ENTITIES
+                //if it is a proper noun, people
+                if (txt.Value == "NNP")
                 {
                     fiveW = "Person";
-                }//else, if it is a verb, activity
+                }//else, if it is a noun, object
+                else if (txt.Value == "NN")
+                {
+                    fiveW = "Object";
+                }
+                //else, if it is a verb, activity
                 else if (txt.Value == "VB" || txt.Value == "VBP")
                 {
                     fiveW = "Activity";
@@ -1364,14 +1380,19 @@ public class MainController : MonoBehaviour
         else
         {
             //for each information, save it in memory
+            string potato = "";
             foreach (KeyValuePair<string, string> txt in tokens)
             {
                 string fiveW = "";
                 //NEED TO SEE HOW TO DO IT YET. FOR NOW:
-                //if it is a noun/proper, people
-                if (txt.Value == "NN" || txt.Value == "NNP")
+                //if it is a proper noun, people
+                if (txt.Value == "NNP")
                 {
                     fiveW = "Person";
+                }//else, if it is a noun, object
+                else if (txt.Value == "NN")
+                {
+                    fiveW = "Object";
                 }//else, if it is a verb, activity
                 else if (txt.Value == "VB" || txt.Value == "VBP")
                 {
@@ -1384,6 +1405,8 @@ public class MainController : MonoBehaviour
                     //strip the "'"
                     int thisID = AddToSTM(fiveW, txt.Key, weight);
                     connectNodes.Add(thisID);
+                    if (potato == "") potato = txt.Key;
+                    else potato += " " + txt.Key;
                 }
                 //save on Neo4j
                 //on temp, we have to find 2 information later
@@ -1403,6 +1426,11 @@ public class MainController : MonoBehaviour
             //create a new general event
             if (connectNodes.Count > 0)
             {
+                if(informationEvent == "")
+                {
+                    informationEvent = potato;
+                }
+
                 AddGeneralEvent(informationEvent.Trim(), connectNodes);
             }
 
@@ -2230,27 +2258,30 @@ public class MainController : MonoBehaviour
     //save the used small talks
     private void SaveUsedST()
     {
-        //save LTM as it is
-        StreamWriter writingLTM = File.CreateText("AutobiographicalStorage/smallTalksUsed.txt");
-
-        //first, save the ESK
-        foreach(string dmem in dialogsInMemory)
+        if (dialogsInMemory.Count > 0)
         {
-            //str with the used ones
-            writingLTM.WriteLine(dmem);
-        }
-        writingLTM.Close();
+            //save LTM as it is
+            StreamWriter writingLTM = File.CreateText("AutobiographicalStorage/smallTalksUsed.txt");
 
-        //also, save the file for Scherer
-        writingLTM = File.CreateText("AutobiographicalStorage/schererFile.txt");
+            //first, save the ESK
+            foreach (string dmem in dialogsInMemory)
+            {
+                //str with the used ones
+                writingLTM.WriteLine(dmem);
+            }
+            writingLTM.Close();
 
-        for(int i = 0; i < dialogsInMemory.Count; i++)
-        {
-            //str with the used ones
-            string[] info = dialogsInMemory[i].Split('-');
-            writingLTM.WriteLine(info[2] + "+" + info[3] + "+" + dialogsAnswersInMemory[i]);
+            //also, save the file for Scherer
+            writingLTM = File.CreateText("AutobiographicalStorage/schererFile.txt");
+
+            for (int i = 0; i < dialogsInMemory.Count; i++)
+            {
+                //str with the used ones
+                string[] info = dialogsInMemory[i].Split('-');
+                writingLTM.WriteLine(info[2] + "+" + info[3] + "+" + dialogsAnswersInMemory[i]);
+            }
+            writingLTM.Close();
         }
-        writingLTM.Close();
     }
 
     //consolidate memory on REM sleep
@@ -2664,8 +2695,7 @@ public class MainController : MonoBehaviour
         cam.GetComponent<ViewCam>().StartSaveImageCoRo("AutobiographicalStorage/Images/" + importantNoun + ".png");
 
         //create the memory
-        //DONT KNOW WHERE TO FIT IT, SO USING PERSON
-        int newId = AddToSTM("Person", importantNoun, 1);
+        int newId = AddToSTM("Object", importantNoun, 1);
 
         //create a new autobiographical storage for the thing image
         int newIdImage = AddToSTM("Imagery", "AutobiographicalStorage/Images/" + importantNoun + ".png", 1);
@@ -3346,6 +3376,19 @@ public class MainController : MonoBehaviour
 
         www.SetRequestHeader("Content-Type", "application/json");
 
+        //before sending, lets see the nouns to guess the topic
+        List<string> topicSent = new List<string>();
+        foreach(KeyValuePair<string, string> cu in cues)
+        {
+            if(cu.Value == "NN")
+            {
+                topicSent.Add(cu.Key);
+            }else if(cu.Value == "NNP" && cu.Key != personName && cu.Key != agentName)
+            {
+                topicSent.Add(cu.Key);
+            }
+        }
+
         using (www)
         {
             yield return www.SendWebRequest();
@@ -3390,7 +3433,8 @@ public class MainController : MonoBehaviour
                 int qntCue = 0;
                 foreach(KeyValuePair<string,string> cu in cues)
                 {
-                    newCues.Add(cu.Key, cu.Value);
+                    if(!newCues.ContainsKey(cu.Key))
+                        newCues.Add(cu.Key, cu.Value);
 
                     //we just actually use for NN
                     if(cu.Value == "NN")
@@ -3401,7 +3445,8 @@ public class MainController : MonoBehaviour
                             //ALSO, we just add if the similarity is over 60%
                             if (float.Parse(tknType[5*qntCue+i]) > 0.6f)
                             {
-                                newCues.Add(tokens[5 * qntCue + i], cu.Value);
+                                if (!newCues.ContainsKey(tokens[5 * qntCue + i]))
+                                    newCues.Add(tokens[5 * qntCue + i], cu.Value);
                             }
                         }
                     }
@@ -3412,7 +3457,9 @@ public class MainController : MonoBehaviour
                 //BUT... select the general event is a bit trickier, since it can exist many events with the same memory information.
                 //so, we select the event which has the most cues
                 int maxCues = 0;
-                GeneralEvent eventFound = null;
+                //making a test: instead to find just one event, bring all events which have the same amount of cues, and we decide later which one to pick
+                //GeneralEvent eventFound = null;
+                List<GeneralEvent> eventFound = new List<GeneralEvent>();
                 foreach (KeyValuePair<int, GeneralEvent> geez in agentGeneralEvents)
                 {
                     //for each general event, we count the cues found
@@ -3428,14 +3475,27 @@ public class MainController : MonoBehaviour
                         }
 
                         //we try to avoid finding info about the agent itself
-                        if (node.information == agentName) aboutAgent = true;
+                        //if (node.information == agentName) aboutAgent = true;
                     }
 
                     //if it is higher than the max cues, select this general event
-                    if (eventCues > maxCues || (eventCues == maxCues && !aboutAgent))
+                    /*if (eventCues > maxCues || (eventCues == maxCues && !aboutAgent))
                     {
                         maxCues = eventCues;
                         eventFound = geez.Value;
+                    }*/
+                    //if it is higher than the max cues, add this general event
+                    if(eventCues > maxCues)
+                    {
+                        //reset it
+                        eventFound.Clear();
+
+                        maxCues = eventCues;
+                        eventFound.Add(geez.Value);
+                    }//if has the same amount, add
+                    else if(eventCues == maxCues)
+                    {
+                        eventFound.Add(geez.Value);
                     }
                 }
 
@@ -3445,26 +3505,43 @@ public class MainController : MonoBehaviour
                 //if (maxCues >= (cues.Count/2))
                 if (maxCues > 0)
                 {
+                    GeneralEvent theChosenOne = eventFound[0];
+                    //from the events found, we try to choose the one more aligned with the topic
+                    if(topicSent.Count > 0)
+                    {
+                        foreach(GeneralEvent cow in eventFound)
+                        {
+                            foreach (MemoryClass mem in cow.nodes)
+                            {
+                                if (topicSent.Contains(mem.information))
+                                {
+                                    theChosenOne = cow;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
                     //add the nodes back to the STM
-                    foreach (MemoryClass mem in eventFound.nodes)
+                    foreach (MemoryClass mem in theChosenOne.nodes)
                     {
                         AddToSTM(mem.informationType, mem.information, mem.weight);
                     }
 
-                    DealWithIt(eventFound, newCues);
+                    DealWithIt(theChosenOne, newCues);
                 }//else, nothing was found
                 else
                 {
                     //else, see if we have some new term to learn
-                    string unk = CheckNewTerm(eventFound, newCues);
+                    /*string unk = CheckNewTerm(eventFound, newCues);
                     if (unk != "" && unk != ". ")
                     {
                         SpeakYouFool(unk);
                     }//else, dunno
                     else
-                    {
+                    {*/
                         SpeakYouFool("Sorry, i do not know.");
-                    }
+                    //}
                 }
 
                 isRetrievingMemory = false;
@@ -4069,4 +4146,6 @@ public class MainController : MonoBehaviour
         sr.WriteLine(infoSplit[0].Split(':')[0]);
         sr.Close();
     }
+
+    //lets make some methods to check some innerent beliefs
 }
