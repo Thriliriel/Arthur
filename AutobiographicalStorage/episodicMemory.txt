@@ -2,19 +2,19 @@
 2;2/8/2021 3:31:38 PM;AutobiographicalStorage/Images/Arthur.png;Imagery;1;1
 3;2/8/2021 3:31:38 PM;Brazil;Location;1;1
 4;2/8/2021 3:31:38 PM;2019;Time;1;1
-5;2/8/2021 3:35:38 PM;born;Activity;0.2343073;1
+5;2/8/2021 3:35:38 PM;born;Activity;1;1
 6;2/6/2021 3:02:57 PM;work;Activity;1;1
-7;2/8/2021 3:35:44 PM;study;Activity;0.6931472;1
-8;2/8/2021 3:35:21 PM;has children;Activity;0.3527925;1
+7;2/8/2021 3:35:44 PM;study;Activity;1;1
+8;2/8/2021 3:35:21 PM;has children;Activity;1;1
 9;7/10/2019 10:00:00 PM;Joy;Emotion;1;1
 10;2/6/2021 3:17:06 PM;Sadness;Emotion;1;1
 11;2/6/2021 1:19:38 PM;meet;Activity;1;1
 12;7/10/2019 10:00:00 PM;learn;Activity;1;1
 20;2/8/2021 3:30:04 PM;AutobiographicalStorage/Images/Knob.png;Imagery;1;1
 21;2/6/2021 1:19:38 PM;2021-02-05;Time;1;1
-22;2/8/2021 3:35:38 PM;1989;Time;0.2343073;1
-23;2/8/2021 3:35:21 PM;Alice;Person;0.3527925;1
-24;2/8/2021 3:35:21 PM;Jack;Person;0.3527925;1
+22;2/8/2021 3:35:38 PM;1989;Time;1;1
+23;2/8/2021 3:35:21 PM;Alice;Person;1;1
+24;2/8/2021 3:35:21 PM;Jack;Person;1;1
 19;2/8/2021 3:35:46 PM;Knob;Person;1;1
 29;2/5/2021 3:56:26 PM;Calabresa;Object;1;0.8
 28;2/8/2021 3:28:48 PM;pizza;Object;1;1

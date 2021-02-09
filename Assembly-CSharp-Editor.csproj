@@ -404,6 +404,15 @@
     <Reference Include="Interop.SpeechLib">
       <HintPath>D:/Docs/UnityProjects/Arthur/Assets/Interop.SpeechLib.dll</HintPath>
     </Reference>
+    <Reference Include="DotNetZip">
+      <HintPath>D:/Docs/UnityProjects/Arthur/Assets/NuGet/Editor/DotNetZip.dll</HintPath>
+    </Reference>
+    <Reference Include="NugetForUnity">
+      <HintPath>D:/Docs/UnityProjects/Arthur/Assets/NuGet/Editor/NugetForUnity.dll</HintPath>
+    </Reference>
+    <Reference Include="CSProlog">
+      <HintPath>D:/Docs/UnityProjects/Arthur/Assets/Packages/CSProlog.6.0.0/lib/net35/CSProlog.dll</HintPath>
+    </Reference>
     <Reference Include="AsyncIO">
       <HintPath>D:/Docs/UnityProjects/Arthur/Assets/Plugins/AsyncIO.dll</HintPath>
     </Reference>

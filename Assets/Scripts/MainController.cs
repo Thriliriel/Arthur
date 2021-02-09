@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
+//using System.Diagnostics;
 using System.IO;
-using System.Threading.Tasks;
+//using System.Threading.Tasks;
 using UnityEngine.Networking;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Text;
-using System.Globalization;
+//using System.Text;
+//using System.Globalization;
+using Prolog;
 
 public class MainController : MonoBehaviour
 {
@@ -142,9 +143,6 @@ public class MainController : MonoBehaviour
 
     public string lastInteraction;
 
-    //beliefs
-    //public List<BeliefClass> beliefs;
-
     //is doing retrieval?
     private bool isRetrievingMemory;
 
@@ -158,6 +156,9 @@ public class MainController : MonoBehaviour
 
     //can finish it all?
     //private bool canDestroy = false;
+
+    //prolog var for beliefs
+    PrologEngine prolog;
 
     private void Awake()
     {
@@ -176,7 +177,6 @@ public class MainController : MonoBehaviour
         influencer = new Dictionary<int, string>();
         //tempNodes = new Dictionary<int, string>();
         //tempDialogs = new Dictionary<int, string>();
-        //beliefs = new List<BeliefClass>();
 
         eyes = GameObject.FindGameObjectsWithTag("Eye");
 
@@ -221,6 +221,9 @@ public class MainController : MonoBehaviour
         agentGeneralEvents = new Dictionary<int, GeneralEvent>();
         memorySpan = new TimeSpan(0, 0, 15);
 
+        //start the prolog
+        prolog = new PrologEngine(persistentCommandHistory: false);
+
         //what we have on textLTM, load into auxiliary LTM
         LoadEpisodicMemory();
 
@@ -237,8 +240,13 @@ public class MainController : MonoBehaviour
         nextEpisodeId = int.Parse(textFile.Trim());
         sr.Close();
 
-        //load Beliefs
-        //LoadBeliefs();
+        //load prolog beliefs
+        prolog.ConsultFromString("parent(paul, ana). parent(ana, norberto).");
+        LoadBeliefs();
+
+        // Question
+        PrologEngine.ISolution solution = prolog.GetFirstSolution(query: "sibling(paul,norberto).");
+        UnityEngine.Debug.Log(solution.ToString().Trim());
     }
 
     // Start is called before the first frame update
@@ -2507,24 +2515,6 @@ public class MainController : MonoBehaviour
         isRetrievingMemory = true;
 
         StartCoroutine(WordVecWebService(textParam, cues));
-
-        /*BeliefClass foundBelief = null;
-
-        //check if the beliefs have such cues
-        foreach(KeyValuePair<string,string> cue in cues)
-        {
-            foreach(BeliefClass bel in beliefs)
-            {
-                foreach(BeliefClass bc in bel.GetBeliefConditions())
-                {
-                    if(bc.GetBeliefName() == cue.Key)
-                    {
-                        foundBelief = bel;
-                        break;
-                    }
-                }
-            }
-        }*/
     }
 
     //new generative retrieval, based on the graph memory
@@ -3206,7 +3196,7 @@ public class MainController : MonoBehaviour
     }
 
     //load beliefs
-    /*private void LoadBeliefs()
+    private void LoadBeliefs()
     {
         StreamReader readingLTM = new StreamReader("beliefs.txt", System.Text.Encoding.Default);
 
@@ -3219,52 +3209,12 @@ public class MainController : MonoBehaviour
 
                 if (line != "" && line != null)
                 {
-                    //rules are in Prolog, so we parse it
-                    //Split by equality (:-)
-                    line = line.Replace(":-", "#");
-                    string[] info = line.Split('#');
-                    info[0] = info[0].Trim();
-                    info[1] = info[1].Trim();
-
-                    //0 -> function; 1 -> conditions
-                    //split by ( and ) to get the parameters and the name of the belief
-                    string[] param = info[0].Split('(');
-                    beliefs.Add(new BeliefClass(param[0]));
-                    int actualInd = beliefs.Count - 1;
-                    //now, parameters
-                    param = param[1].Split(')');
-                    param = param[0].Split(',');
-                    foreach(string pam in param)
-                    {
-                        beliefs[actualInd].AddBeliefParameter(pam);
-                    }
-
-                    //now, we get the conditions, which are in info[1], separated by ),
-                    info[1] = info[1].Replace("),", "@");
-                    info = info[1].Split('@');
-                    foreach(string con in info)
-                    {
-                        string cond = con.Trim();
-
-                        //foreach condition, we are going to have function(parameters)
-                        param = cond.Split('(');
-                        BeliefClass newBelief = new BeliefClass(param[0]);
-                        //now, parameters
-                        param[1] = param[1].Replace(")", "");
-                        param = param[1].Split(',');
-                        foreach (string pam in param)
-                        {
-                            newBelief.AddBeliefParameter(pam);
-                        }
-
-                        //add
-                        beliefs[actualInd].AddBeliefCondition(newBelief);
-                    }
+                    prolog.ConsultFromString(line + ".");
                 }
             } while (line != null);
         }
         readingLTM.Close();
-    }*/
+    }
 
     /*private IEnumerator MatchTopicsDialogs()
     {
@@ -4146,6 +4096,4 @@ public class MainController : MonoBehaviour
         sr.WriteLine(infoSplit[0].Split(':')[0]);
         sr.Close();
     }
-
-    //lets make some methods to check some innerent beliefs
 }
