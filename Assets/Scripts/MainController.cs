@@ -227,6 +227,9 @@ public class MainController : MonoBehaviour
         //what we have on textLTM, load into auxiliary LTM
         LoadEpisodicMemory();
 
+        //create the facts from the memory
+        CreateFactsFromMemory();
+
         //load from the database
         //string match = "match(n) return n";
         //StartCoroutine(MatchWebService(match, true));
@@ -241,12 +244,14 @@ public class MainController : MonoBehaviour
         sr.Close();
 
         //load prolog beliefs
-        prolog.ConsultFromString("parent(paul, ana). parent(ana, norberto).");
         LoadBeliefs();
 
         // Question
-        PrologEngine.ISolution solution = prolog.GetFirstSolution(query: "sibling(paul,norberto).");
-        UnityEngine.Debug.Log(solution.ToString().Trim());
+        /*PrologEngine.ISolution solution = prolog.GetFirstSolution(query: "sibling(jack,alice).");
+        UnityEngine.Debug.Log("Solution sibling: " + solution.ToString().Trim());
+
+        solution = prolog.GetFirstSolution(query: "love(knob,X).");
+        UnityEngine.Debug.Log("Solution love: " + solution.ToString().Trim());*/
     }
 
     // Start is called before the first frame update
@@ -1856,10 +1861,10 @@ public class MainController : MonoBehaviour
 
             int thisID = AddToSTM("Person", namePerson, 0.9f);
             List<int> connectNodes = new List<int>();
+            connectNodes.Add(1);
             connectNodes.Add(thisID);
             thisID = AddToSTM("Imagery", "AutobiographicalStorage/Images/" + namePerson + ".png", 0.9f);
             connectNodes.Add(thisID);
-            connectNodes.Add(1);
             connectNodes.Add(11);
 
             //add this date as well
@@ -3289,6 +3294,200 @@ public class MainController : MonoBehaviour
             }
         }
     }*/
+
+    //create prolog facts from memory
+    private void CreateFactsFromMemory()
+    {
+        //for each general event, we create one or more prolog facts
+        //we do not add directly because ConsultFromStrong does not allow to define same facts separately. So, we need to add it in the same command
+        Dictionary<string, string> facts = new Dictionary<string, string>();
+        foreach(KeyValuePair<int, GeneralEvent> ge in agentGeneralEvents)
+        {
+            //get all nodes separated by type
+            List<MemoryClass> person = new List<MemoryClass>();
+            List<MemoryClass> location = new List<MemoryClass>();
+            List<MemoryClass> time = new List<MemoryClass>();
+            List<MemoryClass> activity = new List<MemoryClass>();
+            List<MemoryClass> emotion = new List<MemoryClass>();
+            List<MemoryClass> imagery = new List<MemoryClass>();
+            List<MemoryClass> objects = new List<MemoryClass>();
+            foreach (MemoryClass mem in ge.Value.nodes)
+            {
+                if (mem.informationType == "Person") person.Add(mem);
+                if (mem.informationType == "Location") location.Add(mem);
+                if (mem.informationType == "Time") time.Add(mem);
+                if (mem.informationType == "Activity") activity.Add(mem);
+                if (mem.informationType == "Emotion") emotion.Add(mem);
+                if (mem.informationType == "Imagery") imagery.Add(mem);
+                if (mem.informationType == "Object") objects.Add(mem);
+            }
+
+            //we create the facts based on the activity (verb)
+            if(activity.Count > 0)
+            {
+                //START ICEBREAKERS AND MEETING
+                //if it is "born", we have a Time and a possible location
+                if(activity[0].information == "born")
+                {
+                    string born = "";
+                    if (time.Count > 0)
+                    {
+                        born += "born(" + person[0].information.ToLower() + ", " + time[0].information.ToLower() + "). ";
+                    }
+                    if (location.Count > 0)
+                    {
+                        born += "born(" + person[0].information.ToLower() + ", " + location[0].information.ToLower() + "). ";
+                    }
+
+                    //if it is empty, add. Otherwise, update
+                    if (facts.ContainsKey("born"))
+                    {
+                        facts["born"] += born;
+                    }
+                    else
+                    {
+                        facts.Add("born", born);
+                    }
+                }//else, if it is "meet", we have Arthur meeting someone with a date of the meeting (which is not needed, i believe)
+                else if (activity[0].information == "meet")
+                {
+                    string meet = "";
+                    
+                    if (person.Count > 1)
+                    {
+                        meet += "meet(" + person[0].information.ToLower() + ", " + person[1].information.ToLower() + "). ";
+                    }
+
+                    //if it is empty, add. Otherwise, update
+                    if (facts.ContainsKey("meet"))
+                    {
+                        facts["meet"] += meet;
+                    }
+                    else
+                    {
+                        facts.Add("meet", meet);
+                    }
+                }//else, if it is "study", someone is studying or not. If we have 2 activities, one of them is the study course.
+                else if (activity[0].information == "study")
+                {
+                    string study = "";
+
+                    if(activity.Count == 1)
+                    {
+                        study += "study(" + person[0].information.ToLower() + ", false). ";
+                    }else if (activity.Count == 2)
+                    {
+                        study += "study(" + person[0].information.ToLower() + ", " + activity[1].information.ToLower() + "). ";
+                    }
+
+                    //if it is empty, add. Otherwise, update
+                    if (facts.ContainsKey("study"))
+                    {
+                        facts["study"] += study;
+                    }
+                    else
+                    {
+                        facts.Add("study", study);
+                    }
+                }//else, if it is "work", someone is working or not. If we have 2 activities, one of them is the job.
+                else if (activity[0].information == "work")
+                {
+                    string work = "";
+
+                    if (activity.Count == 1)
+                    {
+                        work += "work(" + person[0].information.ToLower() + ", false). ";
+                    }
+                    else if (activity.Count == 2)
+                    {
+                        work += "work(" + person[0].information.ToLower() + ", " + activity[1].information.ToLower() + "). ";
+                    }
+
+                    //if it is empty, add. Otherwise, update
+                    if (facts.ContainsKey("work"))
+                    {
+                        facts["work"] += work;
+                    }
+                    else
+                    {
+                        facts.Add("work", work);
+                    }
+                }//else, if it is "has children", someone has children or not. If we have 2 or more person, it has children.
+                else if (activity[0].information == "has children")
+                {
+                    string children = "";
+
+                    if (person.Count == 1)
+                    {
+                        children += "parent(" + person[0].information.ToLower() + ", false). ";
+                    }
+                    else if (person.Count > 1)
+                    {
+                        for(int i = 1; i < person.Count; i++)
+                        {
+                            children += "parent(" + person[0].information.ToLower() + ", " + person[i].information.ToLower() + "). ";
+                        }
+                    }
+
+                    //if it is empty, add. Otherwise, update
+                    if (facts.ContainsKey("parent"))
+                    {
+                        facts["parent"] += children;
+                    }
+                    else
+                    {
+                        facts.Add("parent", children);
+                    }
+                }
+                //END ICEBREAKERS AND MEETING
+                //if not icebreaker, we use activities as rule and Person/Object as parameters
+                else
+                {
+                    List<string> paramer = new List<string>();
+                    foreach(MemoryClass prn in person)
+                    {
+                        paramer.Add(prn.information.ToLower());
+                    }
+                    foreach (MemoryClass obj in objects)
+                    {
+                        paramer.Add(obj.information.ToLower());
+                    }
+
+                    foreach (MemoryClass acs in activity)
+                    {
+                        string rule = "";
+
+                        if (paramer.Count == 2)
+                        {
+                            rule += acs.information + "(" + paramer[0] + ", " + paramer[1] + "). ";
+                        }else if(paramer.Count > 2)
+                        {
+                            for (int i = 1; i < paramer.Count; i++)
+                            {
+                                rule += acs.information + "(" + paramer[0] + ", " + paramer[i] + "). ";
+                            }
+                        }
+
+                        //if it is empty, add. Otherwise, update
+                        if (facts.ContainsKey(acs.information))
+                        {
+                            facts[acs.information] += rule;
+                        }
+                        else
+                        {
+                            facts.Add(acs.information, rule);
+                        }
+                    }
+                }
+            }
+        }
+
+        //now, for each fact, we add to Prolog
+        foreach(KeyValuePair<string,string> fct in facts)
+        {
+            prolog.ConsultFromString(fct.Value);
+        }
+    }
 
     //Web Service for Tokenization
     private IEnumerator TokenizationWebService(string sentence)
