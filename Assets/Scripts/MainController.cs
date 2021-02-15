@@ -159,6 +159,8 @@ public class MainController : MonoBehaviour
 
     //prolog var for beliefs
     PrologEngine prolog;
+    //list of statements to test
+    Dictionary<string, int> prologStatements;
 
     private void Awake()
     {
@@ -223,6 +225,7 @@ public class MainController : MonoBehaviour
 
         //start the prolog
         prolog = new PrologEngine(persistentCommandHistory: false);
+        prologStatements = new Dictionary<string, int>();
 
         //what we have on textLTM, load into auxiliary LTM
         LoadEpisodicMemory();
@@ -245,13 +248,6 @@ public class MainController : MonoBehaviour
 
         //load prolog beliefs
         LoadBeliefs();
-
-        // Question
-        /*PrologEngine.ISolution solution = prolog.GetFirstSolution(query: "sibling(jack,alice).");
-        UnityEngine.Debug.Log("Solution sibling: " + solution.ToString().Trim());
-
-        solution = prolog.GetFirstSolution(query: "love(knob,X).");
-        UnityEngine.Debug.Log("Solution love: " + solution.ToString().Trim());*/
     }
 
     // Start is called before the first frame update
@@ -2502,8 +2498,8 @@ public class MainController : MonoBehaviour
             else auxCues.Add(cue.Key, cue.Value);
 
             //we can also try to infer some things. For example, if asks if has brother/sister, we can search for has children
-            if (cue.Key == "brother" || cue.Key == "sister" || cue.Key == "sibling" || cue.Key == "father" ||
-                cue.Key == "mother" || cue.Key == "parent") auxCues.Add("has children", cue.Value);
+            /*if (cue.Key == "brother" || cue.Key == "sister" || cue.Key == "sibling" || cue.Key == "father" ||
+                cue.Key == "mother" || cue.Key == "parent") auxCues.Add("has children", cue.Value);*/
         }
         cues = auxCues;
         //auxCues.Clear();
@@ -2516,146 +2512,102 @@ public class MainController : MonoBehaviour
             else textParam += "-" + cue.Key;
         }
 
-        //retrieving memory
-        isRetrievingMemory = true;
-
-        StartCoroutine(WordVecWebService(textParam, cues));
-    }
-
-    //new generative retrieval, based on the graph memory
-    /*void GenerativeRetrieval(Dictionary<string, string> cues)
-    {
-        string match = "";
-        string whoIsIt = "";
-        
-        List<string> verbs = new List<string>();
-        List<string> nouns = new List<string>();
-        foreach (KeyValuePair<string,string> cu in cues)
+        //before sending, lets see the nouns for prolog
+        List<string> topicSent = new List<string>();
+        foreach (KeyValuePair<string, string> cu in cues)
         {
-            //first of all: since NLTK understands some verbs as nouns, lets make a work around for the icebreakers ones
-            if(cu.Key == "work" || cu.Key == "works" || cu.Key == "working" || cu.Key == "study" || cu.Key == "studies" || cu.Key == "studying")
+            if (cu.Value == "NN")
             {
-                verbs.Add(cu.Key);
-            }//if verb is "have" and children is involved, add
-            else if(cu.Key == "have" && (cues.ContainsKey("children") || cues.ContainsKey("kids") || cues.ContainsKey("child")))
-            {
-                verbs.Add("HAS_CHILD");
+                topicSent.Add(cu.Key);
             }
-            else if(cu.Value == "VB" || cu.Value == "VBP")
+            else if (cu.Value == "NNP" && cu.Key != personName && cu.Key != agentName)
             {
-                if(cu.Key.ToLower() != "do" && cu.Key.ToLower() != "does" && cu.Key.ToLower() != "are" && cu.Key.ToLower() != "were" && cu.Key.ToLower() != "was" && cu.Key.ToLower() != "am" && cu.Key.ToLower() != "be")
-                verbs.Add(cu.Key);
-            }else if (cu.Value == "NN" || cu.Value == "NNP")
-            {
-                nouns.Add(cu.Key);
-
-                //if (cu.Key == personName) whoIsIt = cu.Key;
-                /*else* if (cu.Key == "Arthur") whoIsIt = cu.Key;
+                topicSent.Add(cu.Key);
             }
         }
 
-        if (whoIsIt == "" && cues.ContainsKey(personName)) whoIsIt = personName;
-
-        //if we have verbs on the sentence, we try to use them for the relationships
-        if (verbs.Count > 0)
+        //now that we have the nouns, we can check the facts
+        bool foundProlog = false;
+        //if we find something, we can already answer, do not need to search the memory itself.
+        //TODO: get the facts in the file, so it is not "hardcoded"
+        if (topicSent.Count > 0)
         {
-            match = "MATCH ";
-            char letter = 'a';
+            PrologEngine.ISolution solution;
 
-            foreach(string vb in verbs)
+            foreach (KeyValuePair<string, int> stats in prologStatements)
             {
-                string useVerb = vb.ToUpper();
-                if (useVerb == "KNOW") useVerb = "KNOWS";
-                if (useVerb == "STUDY") useVerb = "IS_STUDYING";
-                if (useVerb == "WORK") useVerb = "IS_WORKING";
-
-                //if using verb KNOWS, maybe it is more like MET
-                if(nouns.Contains("Arthur") && nouns.Contains(personName))
+                string question = "";
+                if(topicSent.Count < stats.Value)
                 {
-                    useVerb = "MET";
-                }
+                    question = stats.Key + "(";
 
-                int added = 0;
-                
-                if (letter == 'a')
-                {
-                    foreach(string nn in nouns)
+                    for (int i = 0; i < topicSent.Count; i++)
                     {
-                        if(nn != "Arthur" && nn != personName)
+                        if (i == 0)
                         {
-                            match += "({name:'"+whoIsIt+"'})-[:" + useVerb + "]->(" + letter + " {name:'"+nn+"'})";
-                            added++;
+                            question += topicSent[i].ToLower();
+                        }
+                        else
+                        {
+                            question += "," + topicSent[i].ToLower();
                         }
                     }
+
+                    //if has more than one left, need to add eventually... too lazy now
+                    question += ",X).";
                 }
-                else
+                else if(topicSent.Count == stats.Value)
                 {
-                    foreach (string nn in nouns)
+                    question = stats.Key + "(";
+
+                    for(int i = 0; i < topicSent.Count; i++)
                     {
-                        if (nn != "Arthur" && nn != personName)
+                        if(i == 0)
                         {
-                            match += ", ({name:'" + whoIsIt + "'})-[:" + useVerb + "]->(" + letter + " {name:'" + nn + "'})";
-                            added++;
+                            question += topicSent[i].ToLower();
+                        }
+                        else
+                        {
+                            question += ","+topicSent[i].ToLower();
                         }
                     }
+
+                    question += ").";
                 }
 
-                //if did not added anything, but has nouns, it means just have Arthur or the person
-                if (added == 0 && nouns.Count > 0)
+                solution = prolog.GetFirstSolution(query: question);
+                //Debug.Log(stats.Key + ": " + solution.ToString().Trim());
+
+                if (solution.ToString().Trim() != "false")
                 {
-                    //if we have only Arthur as noun, it is a question about him
-                    if (nouns.Contains("Arthur") && nouns.Count == 1)
+                    //found it!
+                    foundProlog = true;
+
+                    if (solution.ToString().Trim() == "true")
                     {
-                        match += "(" + letter + " {name:'" + whoIsIt + "'})";
+                        //answer
+                        SpeakYouFool("Yeah, " + topicSent[0] + " and " + topicSent[1] + " are "+stats.Key+"!");
                     }
                     else
                     {
-                        match += "(" + letter + " {name:'" + whoIsIt + "'})-[:" + useVerb + "]->(" + ++letter + ")";
+                        string[] ans = solution.ToString().Trim().Split('=');
+                        SpeakYouFool("Yeah, " + topicSent[0] + " has a "+stats.Key+", " + System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(ans[1].Trim().ToLower()));
                     }
-                }
 
-                letter++;
-            }
-
-            match += " return ";
-            do
-            {
-                letter--;
-                if(letter != 'a')
-                {
-                    match += letter + ",";
-                }
-                else
-                {
-                    match += letter;
-                }
-            } while (letter != 'a');
-        }//else, just find it all
-        else
-        {
-            match = "MATCH (n) WHERE ";
-
-            //for each cue
-            foreach (string cue in nouns)
-            {
-                //if it is the first, ok.
-                if (match == "MATCH (n) WHERE ")
-                {
-                    match += "n.name='" + cue + "'";
-                }//otherwise, need the comma to separate
-                else
-                {
-                    match += " OR n.name='" + cue + "'";
+                    //found, byyye
+                    break;
                 }
             }
-
-            //done, add the return on the match
-            match += " return n";
         }
 
-        UnityEngine.Debug.LogWarning(match);
-        StartCoroutine(MatchWebService(match, false, cues));
-    }*/
+        if (!foundProlog)
+        {
+            //retrieving memory
+            isRetrievingMemory = true;
+
+            StartCoroutine(WordVecWebService(textParam, cues));
+        }
+    }
 
     /*public void FollowFace(Vector3 point)
     {
@@ -3215,6 +3167,14 @@ public class MainController : MonoBehaviour
                 if (line != "" && line != null)
                 {
                     prolog.ConsultFromString(line + ".");
+
+                    //get the statements
+                    string[] arrrr = line.Split(':');
+                    arrrr[0] = arrrr[0].Trim();
+                    arrrr = arrrr[0].Split('(');
+                    string state = arrrr[0];
+                    arrrr = arrrr[1].Split(',');
+                    prologStatements.Add(state, arrrr.Length);
                 }
             } while (line != null);
         }
@@ -3633,8 +3593,8 @@ public class MainController : MonoBehaviour
                         maxCues = eventCues;
                         eventFound = geez.Value;
                     }*/
-                    //if it is higher than the max cues, add this general event
-                    if(eventCues > maxCues)
+        //if it is higher than the max cues, add this general event
+        if (eventCues > maxCues)
                     {
                         //reset it
                         eventFound.Clear();
