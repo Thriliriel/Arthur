@@ -48,6 +48,8 @@ public class MainController : MonoBehaviour
     public GameObject zzz;
     //sleep button
     public GameObject sleepButton;
+    //voice button
+    public GameObject voiceButton;
 
     //can arthur speak?
     public bool canSpeak;
@@ -162,8 +164,40 @@ public class MainController : MonoBehaviour
     //list of statements to test
     Dictionary<string, int> prologStatements;
 
+    //chat mode xD
+    public bool chatMode;
+
+    //emotion text
+    public GameObject emotionText;
+
     private void Awake()
     {
+        //Arthur mode
+        StreamReader sr = new StreamReader("whichArthur.txt", System.Text.Encoding.Default);
+        string textFile = sr.ReadLine();
+        if (textFile == "0") chatMode = false;
+        else if (textFile == "1") chatMode = true;
+        personName = sr.ReadLine();
+        sr.Close();
+
+        //if Arthur is in chat mode, we can deactivate all graphical stuff
+        if (chatMode)
+        {
+            mariano.SetActive(false);
+            cam.SetActive(false);
+            sleepButton.SetActive(false);
+            voiceButton.SetActive(false);
+            emotionText.SetActive(false);
+            //chatText.GetComponent<RectTransform>().sizeDelta = new Vector2(700, 500);
+            GameObject.Find("Chat").GetComponent<RectTransform>().sizeDelta = new Vector2(700, 450);
+            GameObject.Find("Chat").GetComponent<RectTransform>().anchoredPosition = new Vector3(15, 50, 0);
+            inputText.GetComponent<RectTransform>().sizeDelta = new Vector2(620, 50);
+            inputText.GetComponent<RectTransform>().anchoredPosition = new Vector3(15, 0, 0);
+            GameObject.Find("Go").GetComponent<RectTransform>().sizeDelta = new Vector2(80, 50);
+            GameObject.Find("Go").GetComponent<RectTransform>().anchoredPosition = new Vector3(640, 0, 0);
+            canSpeak = false;
+        }
+
         //if arthur cannot speak, deactivate the game Object
         if (!canSpeak)
         {
@@ -180,7 +214,10 @@ public class MainController : MonoBehaviour
         //tempNodes = new Dictionary<int, string>();
         //tempDialogs = new Dictionary<int, string>();
 
-        eyes = GameObject.FindGameObjectsWithTag("Eye");
+        if (!chatMode)
+        {
+            eyes = GameObject.FindGameObjectsWithTag("Eye");
+        }
 
         //set the ice breakers
         rootIceBreaker = usingIceBreaker = -1;
@@ -239,8 +276,8 @@ public class MainController : MonoBehaviour
 
         //read the next ID from the file
         //first line: ESK Ids. Second line: Episode Ids
-        StreamReader sr = new StreamReader("nextId.txt", System.Text.Encoding.Default);
-        string textFile = sr.ReadLine();
+        sr = new StreamReader("nextId.txt", System.Text.Encoding.Default);
+        textFile = sr.ReadLine();
         nextEskId = int.Parse(textFile.Trim());
         textFile = sr.ReadLine();
         nextEpisodeId = int.Parse(textFile.Trim());
@@ -269,7 +306,7 @@ public class MainController : MonoBehaviour
         StartCoroutine(ChangeFaceName());
 
         //SetEmotion("disgust");
-        SetEmotion("joy");
+        //SetEmotion("joy");
 
         //start the idle timer with the seconds now
         idleTimer = Time.time;
@@ -685,8 +722,8 @@ public class MainController : MonoBehaviour
             }
         }
 
-        //if has image, show it to the user
-        if (imagery.Count > 0)
+        //if has image, and it is not chat, show it to the user
+        if (imagery.Count > 0 && !chatMode)
         {
             string imagePath = imagery[0].information;
             //say it also
@@ -1706,95 +1743,108 @@ public class MainController : MonoBehaviour
     //Change the face name found
     protected IEnumerator ChangeFaceName()
     {
-        while (true)
+        //if it is chat, just need to do it once
+        if (chatMode)
         {
             yield return new WaitForSeconds(1f);
 
-            //open file with result
-            StreamReader sr = new StreamReader("result.txt", System.Text.Encoding.Default);
-
-            string textFile = sr.ReadToEnd();
-
-            sr.Close();
-
-            if (textFile != "" && !textFile.Contains("false"))
+            isGettingInformation = true;
+            peopleGreeted.Add(personName);
+            GreetingTraveler(personName);
+        }
+        else
+        {
+            while (true)
             {
-                /*string[] info = textFile.Split('[');
-                info = info[1].Split(']');
-                info = info[0].Split(',');
-                info[0] = info[0].Replace("'", "");
-                info = info[0].Split(':');*/
+                yield return new WaitForSeconds(1f);
 
-                string info = textFile;
+                //open file with result
+                StreamReader sr = new StreamReader("result.txt", System.Text.Encoding.Default);
 
-                faceName.GetComponent<Text>().text = info;
-                personName = info = info.Trim();
+                string textFile = sr.ReadToEnd();
 
-                bool talaaaaa = false;
+                sr.Close();
 
-                //if it already exists in memory, update it, because it is being rehearsed (just work for the name...)
-                foreach (KeyValuePair<int, MemoryClass> mc in agentShortTermMemory)
+                if (textFile != "" && !textFile.Contains("false"))
                 {
-                    if (mc.Value.information.Contains(personName))
+                    /*string[] info = textFile.Split('[');
+                    info = info[1].Split(']');
+                    info = info[0].Split(',');
+                    info[0] = info[0].Replace("'", "");
+                    info = info[0].Split(':');*/
+
+                    string info = textFile;
+
+                    faceName.GetComponent<Text>().text = info;
+                    personName = info = info.Trim();
+
+                    bool talaaaaa = false;
+
+                    //if it already exists in memory, update it, because it is being rehearsed (just work for the name...)
+                    foreach (KeyValuePair<int, MemoryClass> mc in agentShortTermMemory)
                     {
-                        talaaaaa = true;
-
-                        mc.Value.weight = mc.Value.activation = 1;
-                        mc.Value.memoryTime = System.DateTime.Now;
-                        personId = mc.Key;
-                        break;
-                    }
-                }
-
-                //if not found, trying to get ID from LTM
-                foreach (KeyValuePair<int, MemoryClass> mc in agentLongTermMemory)
-                {
-                    if (mc.Value.information.Contains(personName)) {
-                        personId = mc.Key;
-                        break;
-                    }
-                }
-
-                //if the person already exists at LTM (and not at the STM), bring it to STM (just work for the name...)
-                if (!talaaaaa)
-                {
-                    //search the general event where the agent met this person
-                    /*foreach (GeneralEvent ges in agentGeneralEvents)
-                    {
-                        if (ges.eventType == "meet new person" && ges.information.Contains(personName))
+                        if (mc.Value.information.Contains(personName))
                         {
-                            foreach (MemoryClass mc in ges.nodes)
-                            {
-                                if (mc.information.Contains(personName))
-                                {
-                                    mc.weight = mc.activation = 1;
-                                    mc.memoryTime = System.DateTime.Now;
+                            talaaaaa = true;
 
-                                    AddToSTM(mc.informationType, mc.information, mc.weight);
-                                }
-                            }
-
+                            mc.Value.weight = mc.Value.activation = 1;
+                            mc.Value.memoryTime = System.DateTime.Now;
+                            personId = mc.Key;
                             break;
                         }
-                    }*/
-                }
+                    }
 
-                //if the agent still did not greeted this motherfucker, howdy mate!
-                if (!peopleGreeted.Contains(info))
+                    //if not found, trying to get ID from LTM
+                    foreach (KeyValuePair<int, MemoryClass> mc in agentLongTermMemory)
+                    {
+                        if (mc.Value.information.Contains(personName))
+                        {
+                            personId = mc.Key;
+                            break;
+                        }
+                    }
+
+                    //if the person already exists at LTM (and not at the STM), bring it to STM (just work for the name...)
+                    if (!talaaaaa)
+                    {
+                        //search the general event where the agent met this person
+                        /*foreach (GeneralEvent ges in agentGeneralEvents)
+                        {
+                            if (ges.eventType == "meet new person" && ges.information.Contains(personName))
+                            {
+                                foreach (MemoryClass mc in ges.nodes)
+                                {
+                                    if (mc.information.Contains(personName))
+                                    {
+                                        mc.weight = mc.activation = 1;
+                                        mc.memoryTime = System.DateTime.Now;
+
+                                        AddToSTM(mc.informationType, mc.information, mc.weight);
+                                    }
+                                }
+
+                                break;
+                            }
+                        }*/
+                    }
+
+                    //if the agent still did not greeted this motherfucker, howdy mate!
+                    if (!peopleGreeted.Contains(info))
+                    {
+                        isGettingInformation = true;
+                        peopleGreeted.Add(info);
+                        GreetingTraveler(info);
+                    }
+                }//else, if it is empty, did not find anyone. So, the agent can meet someone new!! How amazing!!!
+                 //UPDATE: just meet someone new IF did not see anyone yet (to avoid changing between person/not knowing)
+                else if (textFile.Contains("false") && !isKnowingNewPeople && faceName.GetComponent<Text>().text == "")
                 {
                     isGettingInformation = true;
-                    peopleGreeted.Add(info);
-                    GreetingTraveler(info);
+
+                    faceName.GetComponent<Text>().text = "";
+
+                    MeetNewPeople();
                 }
-            }//else, if it is empty, did not find anyone. So, the agent can meet someone new!! How amazing!!!
-            //UPDATE: just meet someone new IF did not see anyone yet (to avoid changing between person/not knowing)
-            else if (textFile.Contains("false") && !isKnowingNewPeople && faceName.GetComponent<Text>().text == "")
-            {
-                isGettingInformation = true;
-
-                faceName.GetComponent<Text>().text = "";
-
-                MeetNewPeople();
             }
         }
     }

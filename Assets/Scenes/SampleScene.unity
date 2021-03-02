@@ -369,7 +369,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 30}
-  m_SizeDelta: {x: 200, y: 210}
+  m_SizeDelta: {x: 231.08, y: 210}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &22643583
 MonoBehaviour:
@@ -8744,6 +8744,7 @@ MonoBehaviour:
   isSleeping: 0
   zzz: {fileID: 1867309382}
   sleepButton: {fileID: 1123646624}
+  voiceButton: {fileID: 1916813126}
   canSpeak: 1
   sc: {fileID: 908537108}
   isGettingInformation: 1
@@ -8768,6 +8769,8 @@ MonoBehaviour:
   idleTimer: 0
   waitForSeconds: 30
   lastInteraction: 
+  chatMode: 0
+  emotionText: {fileID: 615780898}
 --- !u!4 &1328823187
 Transform:
   m_ObjectHideFlags: 0
