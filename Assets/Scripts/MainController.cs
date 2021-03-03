@@ -285,6 +285,39 @@ public class MainController : MonoBehaviour
 
         //load prolog beliefs
         LoadBeliefs();
+
+        //also, see if this person already exists in memory, in the case of chat mode. If it does not, we need to add.
+        if (chatMode)
+        {
+            bool yup = false;
+            foreach(KeyValuePair<int, MemoryClass> ltm in agentLongTermMemory)
+            {
+                if(ltm.Value.information == personName)
+                {
+                    yup = true;
+                    break;
+                }
+            }
+
+            if (!yup)
+            {
+                int thisID = AddToSTM("Person", personName, 0.9f);
+                personId = thisID;
+                List<int> connectNodes = new List<int>();
+                connectNodes.Add(1);
+                connectNodes.Add(thisID);
+                //since it is chat mode, no image
+                //thisID = AddToSTM("Imagery", "AutobiographicalStorage/Images/" + namePerson + ".png", 0.9f);
+                //connectNodes.Add(thisID);
+                connectNodes.Add(11);
+
+                //add this date as well
+                string thisYear = System.DateTime.Now.ToString("yyyy-MM-dd");
+                thisID = AddToSTM("Time", thisYear, 0.9f);
+                connectNodes.Add(thisID);
+                AddGeneralEvent("I met " + personName + " today", connectNodes);
+            }
+        }
     }
 
     // Start is called before the first frame update
@@ -1906,6 +1939,7 @@ public class MainController : MonoBehaviour
             tempRelationship = "HAS_PHOTO";*/
 
             int thisID = AddToSTM("Person", namePerson, 0.9f);
+            personId = thisID;
             List<int> connectNodes = new List<int>();
             connectNodes.Add(1);
             connectNodes.Add(thisID);
