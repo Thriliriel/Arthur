@@ -11,6 +11,9 @@ using UnityEngine.UI;
 //using System.Globalization;
 using Prolog;
 
+using TopicCS;
+using DialogCS;
+
 public class MainController : MonoBehaviour
 {
     public GameObject faceName;
@@ -121,6 +124,7 @@ public class MainController : MonoBehaviour
     //list with all dialogs/topics in memory
     private List<string> dialogsInMemory;
     private List<string> dialogsAnswersInMemory;
+    Dictionary<string, List<Tuple<string, double>>> keywordsDataset;
     //to save in memory
     //private int qntTempDialogs = 0;
     //private Dictionary<int, string> tempDialogs;
@@ -180,6 +184,8 @@ public class MainController : MonoBehaviour
         personName = sr.ReadLine();
         sr.Close();
 
+        if (personName == null) personName = "";
+
         //if Arthur is in chat mode, we can deactivate all graphical stuff
         if (chatMode)
         {
@@ -234,6 +240,7 @@ public class MainController : MonoBehaviour
         dialogsInMemory = new List<string>();
         dialogsAnswersInMemory = new List<string>();
 
+        LoadKeywords();
         LoadSmallTalk();
 
         foreach(Topic tg in topics)
@@ -339,7 +346,7 @@ public class MainController : MonoBehaviour
         StartCoroutine(ChangeFaceName());
 
         //SetEmotion("disgust");
-        //SetEmotion("joy");
+        SetEmotion("joy");
 
         //start the idle timer with the seconds now
         idleTimer = Time.time;
@@ -350,9 +357,6 @@ public class MainController : MonoBehaviour
         //save LTM as it is
         SaveEpisodic();
 
-        //save used STs
-        SaveUsedST();
-
         //save next ID
         StreamWriter textToToken = new StreamWriter("nextId.txt");
         textToToken.WriteLine(nextEskId+"\n"+nextEpisodeId);
@@ -360,6 +364,9 @@ public class MainController : MonoBehaviour
 
         //consolidate memory
         MemoryREM();
+
+        //save used STs
+        SaveUsedST();
     }
 
     // Update is called once per frame
@@ -557,7 +564,12 @@ public class MainController : MonoBehaviour
                         }//else, if it is just small talking, get the answer
                         else if (currentTopic.IsDialoging())
                         {
-                            SmallTalking();
+                            List<string> asToki = new List<string>();
+                            foreach(KeyValuePair<string,string> tk in tokens)
+                            {
+                                asToki.Add(tk.Key);
+                            }
+                            SmallTalking(asToki);
                         }
                     }
                 }
@@ -573,7 +585,8 @@ public class MainController : MonoBehaviour
             if(!isBreakingIce && !currentTopic.IsDialoging())
             if(Time.time - idleTimer > waitForSeconds)
             {
-                SmallTalking();
+                List<string> asToki = new List<string>();
+                SmallTalking(asToki);
             }
 
             //emotion based on last polarity answer
@@ -1356,78 +1369,62 @@ public class MainController : MonoBehaviour
 
         List<int> connectNodes = new List<int>();
         string infor = personName;
-        //if the smalltalk has the information, we use it
-        Tuple<string, string> memData = currentTopic.GetCurrentDialog().GetMemoryData();
-        if (memData.Item1 != "")
+        
+        //for each information, save it in memory
+        foreach (KeyValuePair<string, string> txt in newTokens)
         {
-            connectNodes.Add(personId);
+            /*string nodeTag = "SmallTalk";
 
-            int thisID = AddToSTM("Activity", memData.Item1, weight);
-            connectNodes.Add(thisID);
-            infor += " " + memData.Item1;
-
-            thisID = AddToSTM("Object", memData.Item2, weight);
-            connectNodes.Add(thisID);
-            infor += " " + memData.Item2;
-        }
-        else
-        {
-            //for each information, save it in memory
-            foreach (KeyValuePair<string, string> txt in newTokens)
+            //if is verb, relationship
+            if (txt.Value == "VB" || txt.Value == "VBP")
             {
-                /*string nodeTag = "SmallTalk";
+                tempRelationship = txt.Key.ToUpper();
+                qntTempNodes--;
+                continue;
+            }
 
-                //if is verb, relationship
-                if (txt.Value == "VB" || txt.Value == "VBP")
-                {
-                    tempRelationship = txt.Key.ToUpper();
-                    qntTempNodes--;
-                    continue;
-                }
+            //if it is NNP, we save with Person tag
+            if(txt.Value == "NNP")
+            {
+                nodeTag = "Person";
+            }
 
-                //if it is NNP, we save with Person tag
-                if(txt.Value == "NNP")
-                {
-                    nodeTag = "Person";
-                }
+            //if it is Arthur or the person, just get it
+            if (txt.Key == "Arthur" || txt.Key == personName)
+            {
+                StartCoroutine(CreateMemoryNodeWebService(txt.Key, "Person", "", 0.9f));
+            }
+            else
+            {
+                label = "name:'" + txt.Key + "',activation:1,weight:" + weight + ",nodeType:'text',lastEmotion:'" + foundEmotion + "'";
+                StartCoroutine(CreateMemoryNodeWebService(txt.Key, nodeTag, label, weight));
+            }*/
 
-                //if it is Arthur or the person, just get it
-                if (txt.Key == "Arthur" || txt.Key == personName)
-                {
-                    StartCoroutine(CreateMemoryNodeWebService(txt.Key, "Person", "", 0.9f));
-                }
-                else
-                {
-                    label = "name:'" + txt.Key + "',activation:1,weight:" + weight + ",nodeType:'text',lastEmotion:'" + foundEmotion + "'";
-                    StartCoroutine(CreateMemoryNodeWebService(txt.Key, nodeTag, label, weight));
-                }*/
+            string fiveW = "";
+            //NEED TO SEE HOW TO TAKE THE NAMED ENTITIES
+            //if it is a proper noun, people
+            if (txt.Value == "NNP")
+            {
+                fiveW = "Person";
+            }//else, if it is a noun, object
+            else if (txt.Value == "NN")
+            {
+                fiveW = "Object";
+            }
+            //else, if it is a verb, activity
+            else if (txt.Value == "VB" || txt.Value == "VBP")
+            {
+                fiveW = "Activity";
+            }
 
-                string fiveW = "";
-                //NEED TO SEE HOW TO TAKE THE NAMED ENTITIES
-                //if it is a proper noun, people
-                if (txt.Value == "NNP")
-                {
-                    fiveW = "Person";
-                }//else, if it is a noun, object
-                else if (txt.Value == "NN")
-                {
-                    fiveW = "Object";
-                }
-                //else, if it is a verb, activity
-                else if (txt.Value == "VB" || txt.Value == "VBP")
-                {
-                    fiveW = "Activity";
-                }
+            //if fiveW is empty, no need to store
+            if (fiveW != "")
+            {
+                //strip the "'"
+                int thisID = AddToSTM(fiveW, txt.Key, weight);
+                connectNodes.Add(thisID);
 
-                //if fiveW is empty, no need to store
-                if (fiveW != "")
-                {
-                    //strip the "'"
-                    int thisID = AddToSTM(fiveW, txt.Key, weight);
-                    connectNodes.Add(thisID);
-
-                    infor += " " + txt.Key;
-                }
+                infor += " " + txt.Key;
             }
         }
 
@@ -2365,13 +2362,19 @@ public class MainController : MonoBehaviour
             writingLTM.Close();
 
             //also, save the file for Scherer
-            writingLTM = File.CreateText("AutobiographicalStorage/schererFile.txt");
+            writingLTM = File.CreateText("AutobiographicalStorage/historic.txt");
 
+            //format: FODff0101;Yes, I love food!;FODff0202;
+            //it means: dialog id -> answer -> next dialog
             for (int i = 0; i < dialogsInMemory.Count; i++)
             {
                 //str with the used ones
                 string[] info = dialogsInMemory[i].Split('-');
-                writingLTM.WriteLine(info[2] + "+" + info[3] + "+" + dialogsAnswersInMemory[i]);
+                if(i+1 < dialogsInMemory.Count)
+                {
+                    string[] info2 = dialogsInMemory[i+1].Split('-');
+                    writingLTM.WriteLine(info[2] + ";" + dialogsAnswersInMemory[i] + ";" + info2[2]);
+                }
             }
             writingLTM.Close();
         }
@@ -2969,10 +2972,14 @@ public class MainController : MonoBehaviour
         topics.Remove(currentTopic);
     }
 
-    private void SmallTalking(string beforeText = "")
+    private void SmallTalking(List<string> tokenizeSentence, string beforeText = "")
     {
         //if topics is empty, we are done
-        if (topics.Count == 0 && !currentTopic.IsDialogsAvailable()) return;
+        if (topics.Count == 0 && !currentTopic.IsDialogsAvailable() && currentTopic.GetCurrentDialog().DialogIsOver())
+        {
+            currentTopic.CloseDialog();
+            return;
+        }
 
         string ct;
         idleTimer = Time.time;
@@ -2989,16 +2996,16 @@ public class MainController : MonoBehaviour
 
         if (first)
         {
-            ct = currentTopic.RunDialog(0, dialogsInMemory);
+            ct = currentTopic.RunDialog(0, tokenizeSentence, dialogsInMemory);
         }
         else
         {
-            ct = currentTopic.RunDialog(lastPolarity, dialogsInMemory);
+            ct = currentTopic.RunDialog(lastPolarity, tokenizeSentence, dialogsInMemory);
         }
 
         if (ct != null)
         {
-            string digmem = currentTopic.GetId() + "-" + currentTopic.GetCurrentDialog().GetDescription() + "-" + currentTopic.GetCurrentDialog().GetId().ToString() + "-" + currentTopic.GetCurrentDialog().GetTreeLevel().ToString();
+            string digmem = currentTopic.GetId() + "-" + currentTopic.GetCurrentDialog().GetDescription() + "-" + currentTopic.GetCurrentDialog().GetId().ToString();
             if (!dialogsInMemory.Contains(digmem))
             {
                 dialogsInMemory.Add(digmem);
@@ -3006,7 +3013,7 @@ public class MainController : MonoBehaviour
             }
         }
 
-        UnityEngine.Debug.Log(ct);
+        Debug.Log(ct);
     }
 
     //hide the random image
@@ -3141,6 +3148,46 @@ public class MainController : MonoBehaviour
         readingLTM.Close();
     }
 
+    public void LoadKeywords()
+    {
+        string keywordsPath = "keywords.txt";
+
+        StreamReader keywordsFile = new StreamReader(keywordsPath, System.Text.Encoding.Default);
+
+        keywordsDataset = new Dictionary<string, List<Tuple<string, double>>>(); // node_id [(word, weight) ..]
+        using (keywordsFile)
+        {
+            string line;
+
+            do
+            {
+                line = keywordsFile.ReadLine();
+                if (line == "" || line == null) continue;
+                line = line.Trim();
+                string[] data = line.Split(' ');
+
+                string nodeId = data[0].Trim();
+                if (!keywordsDataset.ContainsKey(nodeId))
+                {
+                    keywordsDataset[nodeId] = new List<Tuple<string, double>>();
+                }
+                keywordsDataset[nodeId].Add(new Tuple<string, double>(data[1].Trim(), double.Parse(data[2].Trim())));
+
+            } while (line != null);
+        }
+        keywordsFile.Close();
+
+
+        foreach (KeyValuePair<string, List<Tuple<string, double>>> kd in keywordsDataset)
+        {
+            foreach (Tuple<string, double> kw in kd.Value)
+            {
+                Debug.Log(kd.Key + "  (" + kw.Item1 + ", " + kw.Item2 + ")");
+            }
+
+        }
+    }
+
     public void LoadSmallTalk()
     {
         string smallTalkFile = "smallTalk.txt";
@@ -3153,12 +3200,12 @@ public class MainController : MonoBehaviour
             topics = new List<Topic>();
             Topic currentTopic = null;
             Dialog currentDialog = null;
-            int lastParent = -1;
-            int treeLevel = 0;
+            //int lastParent = -1;
+            //int treeLevel = 0;
 
+            var dialogIds = new HashSet<string>();
             do
             {
-
                 line = readingLTM.ReadLine();
                 if (line == "" || line == null) continue;
                 line = line.Trim();
@@ -3180,36 +3227,51 @@ public class MainController : MonoBehaviour
                 else if (command.Equals('#'))
                 {
 
-                    //id, sentence, polarity, isLeaf, father id, memory edge, memory node value, tree level
+                    //id, sentence, polarity, isLeaf, father id, memory edge, memory node value..
                     string[] data = line.Split(';');
+                    string nodeId = data[0].Trim();
+                    string fatherId = data[2].Trim();
 
-                    int parentID = int.Parse(data[4]);
-
-                    //when the parent changes, the tree level changes as well
-                    //here is the tricky part: even if parents are in the same level, the treeLevel updates, which is bad =/
-                    if(parentID != lastParent)
+                    //currentDialog.AddNode(int.Parse(data[0]), data[1].Trim(), double.Parse(data[2]), bool.Parse(data[3].Trim()), int.Parse(data[4]), data[5].Trim(), data[6].Trim());
+                    //currentDialog.AddNode(int.Parse(data[0]), data[1].Trim(), double.Parse(data[2]), data[3].Replace(" ", "").Split(',') , int.Parse(data[4]), "c", "c");
+                    if (dialogIds.Contains(nodeId))
                     {
-                        lastParent = parentID;
-                        treeLevel++;
+                        throw new ArgumentException("PARSER ERROR: Node id already used (must be unique!): " + nodeId, nameof(nodeId));
                     }
 
-                    currentDialog.AddNode(int.Parse(data[0]), data[1].Trim(), double.Parse(data[2]), bool.Parse(data[3].Trim()), parentID, data[5].Trim(), data[6].Trim(), treeLevel);
+                    currentDialog.AddNode(nodeId, data[1].Trim(), fatherId);
+
+                    dialogIds.Add(nodeId);
+
+                    if (fatherId == "-1") continue; //raiz não tem pai para inserir keywords !!
+
+                    List<Tuple<string, double>> lst;
+                    if (keywordsDataset.TryGetValue(nodeId, out lst))
+                    {
+                        currentDialog.AddKeywords(nodeId, lst, fatherId);
+                    }
+                    else
+                    {
+                        throw new ArgumentException("PARSER ERROR: Node id not found: " + nodeId, nameof(nodeId));
+                    }
+
                 }
                 //close dialog (insert on topic)
                 else if (command.Equals(']'))
                 {
-                    currentDialog.CloseInsertion();
+                    //currentDialog.CloseInsertion();
                     currentTopic.InsertDialog(currentDialog.GetDescription(), currentDialog);
                 }
 
             } while (line != null);
         }
 
-        if (topics.Count >= 1)
+        /*if (topics.Count >= 1)
         {
             UnityEngine.Debug.Log("leu os small talks");
-        }
+        }*/
 
+        keywordsDataset.Clear();
         readingLTM.Close();
     }
 
