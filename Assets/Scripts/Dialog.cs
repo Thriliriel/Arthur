@@ -63,6 +63,7 @@ namespace DialogCS
         private string _description;
         private Node root;
         private Node currentNode;
+        private Node exitNode = new Node("None", "Im sorry but I had dificulty to understand what you said, lets talk about another thing."); //when Arthur dont know what to say
 
         Dictionary<string, Node> nodes;
 
@@ -124,7 +125,8 @@ namespace DialogCS
             }
 
             bool foundKey = nodes.TryGetValue(higherId, out currentNode);
-
+            
+            if(higherId == "") currentNode = exitNode; // VICTOR COMMENT: here you can choose a rule to take everytime arthur not find a node with higher ponctuation (maybe polarity)
             if (!foundKey) throw new ArgumentException("Next utterance not found, supose to be: " + higherId, nameof(higherId));
 
             ReadCurrentNode();
