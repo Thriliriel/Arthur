@@ -114,6 +114,7 @@
     <Compile Include="Assets\Scripts\MainController.cs" />
     <Compile Include="Assets\Scripts\MemoryClass.cs" />
     <Compile Include="Assets\Scripts\MicrophoneController.cs" />
+    <Compile Include="Assets\Scripts\PADClass.cs" />
     <Compile Include="Assets\Scripts\RunAbleThread.cs" />
     <Compile Include="Assets\Scripts\SpeakerController.cs" />
     <Compile Include="Assets\Scripts\Topic.cs" />

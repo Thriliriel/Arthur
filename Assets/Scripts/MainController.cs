@@ -174,6 +174,15 @@ public class MainController : MonoBehaviour
     //emotion text
     public GameObject emotionText;
 
+    //personality
+    public List<float> personality;
+
+    //PAD space
+    public PADClass pad;
+
+    //idle time to start boredom
+    public int gettingBoredAfter;
+
     private void Awake()
     {
         //Arthur mode
@@ -183,6 +192,10 @@ public class MainController : MonoBehaviour
         else if (textFile == "1") chatMode = true;
         personName = sr.ReadLine();
         sr.Close();
+
+        pad = new PADClass();
+
+        LoadPersonality();
 
         if (personName == null) personName = "";
 
@@ -587,6 +600,12 @@ public class MainController : MonoBehaviour
             {
                 List<string> asToki = new List<string>();
                 SmallTalking(asToki);
+            }
+
+            //if too much time idle, boring...
+            if (Time.time - idleTimer > gettingBoredAfter)
+            {
+                Boring();
             }
 
             //emotion based on last polarity answer
@@ -1682,6 +1701,9 @@ public class MainController : MonoBehaviour
 
         //reset the idle timer
         idleTimer = Time.time;
+
+        //reset boredom
+        pad.ResetBoredom();
 
         lastInteraction = textSend;
 
@@ -3327,80 +3349,6 @@ public class MainController : MonoBehaviour
         readingLTM.Close();
     }
 
-    /*private IEnumerator MatchTopicsDialogs()
-    {
-        string match = "match (a:Topic)-[]->(b:Dialog) return a,b";
-        UnityWebRequest www = new UnityWebRequest(webServicePath + "neo4jTransaction", "POST");
-        string jason = "{\"typeTransaction\" : [\"matchNode\"], \"match\" : [\"" + match + "\"]}";
-        //UnityEngine.Debug.Log(jason);
-        byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(jason);
-        //byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes("\"typeTransaction\" : [\"createNode\"]");
-        www.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
-        www.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
-
-        www.SetRequestHeader("Content-Type", "application/json");
-
-        using (www)
-        {
-            yield return www.SendWebRequest();
-
-            if (www.isNetworkError || www.isHttpError)
-            {
-                UnityEngine.Debug.Log(www.error);
-            }
-            else
-            {
-                UnityEngine.Debug.Log("Match: " + www.downloadHandler.text);
-                string batata = www.downloadHandler.text.Replace("\\", "");
-                batata = batata.Replace("\"", "");
-                batata = batata.Replace("}}}", "?");
-                batata = batata.Replace("}", "");
-                batata = batata.Replace("{", "");
-                string[] info = batata.Split('?');
-
-                foreach(string inf in info)
-                {
-                    if (!inf.Contains("a:")) continue;
-                    //UnityEngine.Debug.Log("Match: " + inf);
-
-                    string nameToAdd = "";
-
-                    string treat = inf.Replace("a:", "?");
-                    string[] top = treat.Split('?');
-                    treat = top[1].Replace("b:", "?");
-                    //dia has both topic dialog description [0] and dialog [1]
-                    string[] dia = treat.Split('?');
-                    //UnityEngine.Debug.Log("Match: " + dia[0] + " - " + dia[1]);
-
-                    string[] final = dia[0].Split(',');
-                    foreach(string fin in final)
-                    {
-                        if (fin.Contains("name:"))
-                        {
-                            string[] jumanji = fin.Split(':');
-                            nameToAdd += jumanji[1];
-                            break;
-                        }
-                    }
-
-                    final = dia[1].Split(',');
-                    foreach (string fin in final)
-                    {
-                        if (fin.Contains("name:"))
-                        {
-                            string[] jumanji = fin.Split(':');
-                            jumanji[1] = jumanji[1].Replace("Dialog", "");
-                            nameToAdd += jumanji[1];
-                            break;
-                        }
-                    }
-
-                    dialogsInMemory.Add(nameToAdd);
-                }
-            }
-        }
-    }*/
-
     //create prolog facts from memory
     private void CreateFactsFromMemory()
     {
@@ -3650,11 +3598,11 @@ public class MainController : MonoBehaviour
 
             if (www.isNetworkError || www.isHttpError)
             {
-                UnityEngine.Debug.Log(www.error);
+                Debug.Log(www.error);
             }
             else
             {
-                UnityEngine.Debug.Log("Received: " + www.downloadHandler.data);
+                Debug.Log("Received: " + www.downloadHandler.data);
                 //WriteWordVec(www.downloadHandler.text);
 
                 //need to format it properly now
@@ -3739,8 +3687,8 @@ public class MainController : MonoBehaviour
                         maxCues = eventCues;
                         eventFound = geez.Value;
                     }*/
-        //if it is higher than the max cues, add this general event
-        if (eventCues > maxCues)
+                    //if it is higher than the max cues, add this general event
+                    if (eventCues > maxCues)
                     {
                         //reset it
                         eventFound.Clear();
@@ -3895,444 +3843,6 @@ public class MainController : MonoBehaviour
         StartCoroutine(RecognitionWebService());
     }
 
-    //Web Service for create node in memory
-    /*private IEnumerator CreateMemoryNodeWebService(string node, string typeNode = "", string label = "", float weight = 0.1f)
-    {
-        string jason = "";
-        UnityWebRequest www = new UnityWebRequest(webServicePath + "neo4jTransaction", "POST");
-        
-        jason = "{\"typeTransaction\" : [\"createNode\"], \"node\" : [\"" + node + "\"], \"typeNode\" : [\"" + typeNode + "\"], \"label\" : [\"" + label + "\"]}";
-        
-        //UnityEngine.Debug.Log(jason);
-        byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(jason);
-        //byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes("\"typeTransaction\" : [\"createNode\"]");
-        www.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
-        www.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
-
-        www.SetRequestHeader("Content-Type", "application/json");
-
-        using (www)
-        {
-            yield return www.SendWebRequest();
-
-            if (www.isNetworkError || www.isHttpError)
-            {
-                UnityEngine.Debug.Log(www.error);
-            }
-            else
-            {
-                //UnityEngine.Debug.Log("Received 0: " + www.downloadHandler.text);
-                string[] aux = www.downloadHandler.text.Split(':');
-                //UnityEngine.Debug.Log("Received 0.1: " + aux[2]);
-                aux[0] = aux[2].Replace("}}", "");
-                aux[0] = aux[0].Replace("\"", "");
-                //UnityEngine.Debug.Log("Received 1: " + aux[0]);
-                int idReturned = Int32.Parse(aux[0]);
-                UnityEngine.Debug.Log("Received 2: " + idReturned);
-
-                //add in STM
-                string infoType = "";
-
-                AddToSTM(infoType, node, weight, idReturned);
-
-                //add this on temp and dialogs stuff
-                if(typeNode == "Topic" || typeNode == "Dialog")
-                {
-                    tempDialogs.Add(idReturned, node);
-                }
-                else
-                {
-                    tempNodes.Add(idReturned, node);
-                }
-            }
-        }
-    }*/
-
-    //Web Service for update node in memory
-    /*private IEnumerator UpdateMemoryNodeWebService(string node, string nodeKey = "", string nodeValue = "")
-    {
-        UnityWebRequest www = new UnityWebRequest(webServicePath + "neo4jTransaction", "POST");
-        string jason = "{\"typeTransaction\" : [\"updateNode\"], \"node\" : [\"" + node + "\"], \"nodeKey\" : [\"" + nodeKey + "\"], \"nodeValue\" : [\"" + nodeValue + "\"]}";
-        //UnityEngine.Debug.Log(jason);
-        byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(jason);
-        //byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes("\"typeTransaction\" : [\"createNode\"]");
-        www.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
-        www.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
-
-        www.SetRequestHeader("Content-Type", "application/json");
-
-        using (www)
-        {
-            yield return www.SendWebRequest();
-
-            if (www.isNetworkError || www.isHttpError)
-            {
-                UnityEngine.Debug.Log(www.error);
-            }
-            else
-            {
-                UnityEngine.Debug.Log("Received: " + www.downloadHandler.text);
-            }
-        }
-    }*/
-
-    //Web Service for delete node in memory
-    /*private IEnumerator DeleteMemoryNodeWebService(string node)
-    {
-        UnityWebRequest www = new UnityWebRequest(webServicePath + "neo4jTransaction", "POST");
-        string jason = "{\"typeTransaction\" : [\"deleteNode\"], \"node\" : [\"" + node + "\"]}";
-        //UnityEngine.Debug.Log(jason);
-        byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(jason);
-        //byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes("\"typeTransaction\" : [\"createNode\"]");
-        www.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
-        www.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
-
-        www.SetRequestHeader("Content-Type", "application/json");
-
-        using (www)
-        {
-            yield return www.SendWebRequest();
-
-            if (www.isNetworkError || www.isHttpError)
-            {
-                UnityEngine.Debug.Log(www.error);
-            }
-            else
-            {
-                UnityEngine.Debug.Log("Received: " + www.downloadHandler.text);
-            }
-        }
-    }*/
-
-    /*private IEnumerator CreateRelatioshipNodesWebService(int node, int node2, string relationship = "")
-    {
-        UnityWebRequest www = new UnityWebRequest(webServicePath + "neo4jTransaction", "POST");
-        string jason = "{\"typeTransaction\" : [\"addRelationship\"], \"node\" : [" + node + "], \"node2\" : [" + node2 + "], \"relationship\" : [\"" + relationship + "\"]}";
-        //UnityEngine.Debug.Log(jason);
-        byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(jason);
-        //byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes("\"typeTransaction\" : [\"createNode\"]");
-        www.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
-        www.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
-
-        www.SetRequestHeader("Content-Type", "application/json");
-
-        using (www)
-        {
-            yield return www.SendWebRequest();
-
-            if (www.isNetworkError || www.isHttpError)
-            {
-                UnityEngine.Debug.Log(www.error);
-            }
-            else
-            {
-                UnityEngine.Debug.Log("Relationship: " + www.downloadHandler.text);
-            }
-        }
-    }*/
-
-    //Web Service for match (select)
-    /*private IEnumerator MatchWebService(string match, bool addOnLTM = false, Dictionary<string,string> tokens = null)
-    {
-        UnityWebRequest www = new UnityWebRequest(webServicePath + "neo4jTransaction", "POST");
-        string jason = "{\"typeTransaction\" : [\"matchNode\"], \"match\" : [\"" + match + "\"]}";
-        //UnityEngine.Debug.Log(jason);
-        byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(jason);
-        //byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes("\"typeTransaction\" : [\"createNode\"]");
-        www.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
-        www.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
-
-        www.SetRequestHeader("Content-Type", "application/json");
-
-        using (www)
-        {
-            yield return www.SendWebRequest();
-
-            if (www.isNetworkError || www.isHttpError)
-            {
-                UnityEngine.Debug.Log(www.error);
-            }
-            else
-            {
-                //UnityEngine.Debug.Log("Match: " + www.downloadHandler.text);
-
-                //loading all from database
-                if (addOnLTM)
-                {
-                    //MatchesToLTM(www.downloadHandler.text);
-                }//else, just normal match
-                else
-                {
-                    MatchesFromRetrieval(www.downloadHandler.text, tokens);
-                }
-            }
-        }
-    }*/
-
-    //get all matches and place in the LTM
-    /*private void MatchesToLTM(string results)
-    {
-        string temp;
-        temp = results.Replace("}}}", "?");
-        string[] temp2 = temp.Split('?');
-
-        foreach (string part in temp2)
-        {
-            //if has no comma, doesnt matter
-            if (!part.Contains(","))
-            {
-                continue;
-            }
-
-            string part2 = part.Replace("\"", "");
-            part2 = part2.Replace("\\n\\:", "?");
-            string[] ohFuck = part2.Split('?');
-            string[] ohFuck2 = ohFuck[1].Split(',');
-
-            //create memory node
-            MemoryClass newMem = new MemoryClass();
-
-            foreach (string really in ohFuck2)
-            {
-                string aff = really.Replace("{", "");
-                aff = aff.Replace("}", "");
-                string[] itens = aff.Split(':');
-                //UnityEngine.Debug.Log("Match 1: " + itens[0]);
-                //UnityEngine.Debug.Log("Match 2: " + itens[1]);
-                itens[0] = itens[0].Substring(1, itens[0].Length - 2);
-                //itens[1] = itens[1].Substring(1, itens[1].Length - 2);
-                //UnityEngine.Debug.Log("Match 2: " + itens[0]);
-
-                switch (itens[0])
-                {
-                    case "name":
-                        newMem.information = itens[1].Substring(1, itens[1].Length - 2);
-
-                        break;
-                    case "activation":
-                        newMem.activation = float.Parse(itens[1]);
-                        break;
-                    case "weight":
-                        newMem.weight = float.Parse(itens[1]);
-                        break;
-                    case "type":
-                        itens[1] = itens[1].Substring(1, itens[1].Length - 2);
-                        if (itens[1] == "text")
-                            newMem.informationType = 0;
-                        else if (itens[1] == "image")
-                            newMem.informationType = 1;
-                        break;
-                    default:
-                        if (itens[1][0] == '\\')
-                        {
-                            itens[1] = itens[1].Substring(1, itens[1].Length - 2);
-                        }
-                        newMem.properties.Add(itens[0], itens[1]);
-                        break;
-                }
-            }
-            
-            agentLongTermMemory.Add(newMem);
-        }
-    }*/
-
-    //matches from generative retrieval
-    /*private void MatchesFromRetrieval(string results, Dictionary<string, string> tokens)
-    {
-        string temp;
-        //temp = results.Replace("}}}", "?");
-        temp = results.Replace("\"", "");
-        temp = temp.Replace("\\a\\:", "?");
-        temp = temp.Replace("\\b\\:", "?");
-        temp = temp.Replace("\\c\\:", "?");
-        temp = temp.Replace("\\d\\:", "?");
-        temp = temp.Replace("\\n\\:", "?");
-        string[] temp2 = temp.Split('?');
-        //UnityEngine.Debug.LogWarning(temp2);
-
-        Dictionary<string,string> found = new Dictionary<string, string>();
-        foreach (string part in temp2)
-        {
-            //if has no comma, doesnt matter
-            if (!part.Contains(","))
-            {
-                continue;
-            }
-
-            /*string part2 = part.Replace("\"", "");
-            part2 = part2.Replace("\\n\\:", "?");
-            part2 = part2.Replace("\\a\\:", "?");
-            part2 = part2.Replace("\\b\\:", "?");
-            part2 = part2.Replace("\\c\\:", "?");
-            part2 = part2.Replace("\\d\\:", "?");
-            part2 = part2.Replace("\\e\\:", "?");
-            string[] ohFuck = part2.Split('?');*
-            string[] ohFuck2 = part.Split(',');
-
-            string node = "";
-            string info = "";
-
-            foreach (string really in ohFuck2)
-            {
-                string aff = really.Replace("{", "");
-                aff = aff.Replace("}", "");
-                string[] itens = aff.Split(':');
-                //UnityEngine.Debug.Log("Match 1: " + itens[0]);
-                //UnityEngine.Debug.Log("Match 2: " + itens[1]);
-                if (itens[0] == "") continue;
-                itens[0] = itens[0].Substring(1, itens[0].Length - 2);
-                //itens[1] = itens[1].Substring(1, itens[1].Length - 2);
-                //UnityEngine.Debug.Log("Match 2: " + itens[0]);
-
-                switch (itens[0])
-                {
-                    case "name":
-                        node = itens[1].Substring(1, itens[1].Length - 2);
-                        break;
-                    case "activation":
-                        if(info == "")
-                        {
-                            info = "activation:"+ float.Parse(itens[1]);
-                        }
-                        else
-                        {
-                            info += ",activation:" + float.Parse(itens[1]);
-                        }
-                        break;
-                    case "weight":
-                        if (info == "")
-                        {
-                            info = "weight:" + float.Parse(itens[1]);
-                        }
-                        else
-                        {
-                            info += ",weight:" + float.Parse(itens[1]);
-                        }
-                        break;
-                    case "type":
-                        if (info == "")
-                        {
-                            info = "type:" + itens[1].Substring(1, itens[1].Length - 2);
-                        }
-                        else
-                        {
-                            info += ",type:" + itens[1].Substring(1, itens[1].Length - 2);
-                        }
-                        break;
-                    default:
-                        if (itens[1][0] == '\\')
-                        {
-                            itens[1] = itens[1].Substring(1, itens[1].Length - 2);
-                        }
-
-                        if (info == "")
-                        {
-                            info = itens[0] + ":" + itens[1];
-                        }
-                        else
-                        {
-                            info += "," + itens[0] + ":" + itens[1];
-                        }
-                        break;
-                }
-            }
-
-            //create a list with the stuff
-            if (!found.ContainsKey(node))
-            {
-                found.Add(node, info);
-            }
-        }
-
-        //now we deal with what was remembered
-        string unknoun = "";
-
-        //check if the found event has the Noun or proper noun on it
-        //if it does not, it means Arthur is not yet familiar with such term
-        //so, we ask the user if he wants to give more details.
-        List<string> nouns = new List<string>();
-        foreach (KeyValuePair<string, string> tt in tokens)
-        {
-            if (tt.Value == "NN" || tt.Value == "NNP")
-            {
-                nouns.Add(tt.Key);
-            }
-        }
-
-        //if nothing, need to learn
-        if (found.Count == 0)
-        {
-            unknoun = nouns[nouns.Count - 1];
-        }
-
-        /*if (nouns.Count > 0)
-        {
-            foreach (string nn in nouns)
-            {
-                int recor = 0;
-
-                if (found.Count > 0)
-                {
-                    if (found.ContainsKey(nn))
-                    {
-                        recor++;
-                    }
-                }
-
-                //if recor is still 0, it means we found no occurrences of this noun in the event.
-                //DEACTIVATE FOR NOW, MAYBE THIS IS NOT THE BEST PLACE WITHOUT GENERAL EVENTS
-                if (recor == 0)
-                {
-                    unknoun = nn;
-                    break;
-                }
-            }
-        }*
-
-        if (found.Count > 0)
-        {
-            //do not save this memory, since it already exists somehow
-            saveNewMemoryNode = false;
-
-            //if it has an "unknoun", deal with it
-            if (unknoun != "")
-            {
-                DealUnknown(unknoun);
-            }
-            else
-            {
-                //UnityEngine.Debug.Log(foundIt.information);
-                //do something with the retrieved memory
-                DealWithIt(found, tokens);
-
-                //change the face of Arthur according emotion of the event
-                //NEED TO SEE IT, NOT TREATING GENERAL EVENTS YET
-                //SetEmotion(foundIt.emotion);
-            }
-        }
-        else
-        {
-            if (unknoun != "")
-            {
-                DealUnknown(unknoun);
-
-                //do not save this memory
-                saveNewMemoryNode = false;
-            }
-            else
-            {
-
-                //request for chat.
-                string txt = "";
-                foreach (KeyValuePair<string, string> tt in tokens)
-                {
-                    txt += tt.Key + " ";
-                }
-                StartCoroutine(GetRequest("https://acobot-brainshop-ai-v1.p.rapidapi.com/get?bid=178&key=sX5A2PcYZbsN5EY6&uid=mashape&msg=" + txt));
-            }
-        }
-    }*/
-
     private void WriteTokens(string webServiceResponse)
     {
         //need to format it properly now
@@ -4400,5 +3910,75 @@ public class MainController : MonoBehaviour
         StreamWriter sr = File.CreateText("result.txt");
         sr.WriteLine(infoSplit[0].Split(':')[0]);
         sr.Close();
+    }
+
+    //Load Personality
+    private void LoadPersonality()
+    {
+        StreamReader readingLTM = new StreamReader("personality.txt", System.Text.Encoding.Default);
+        
+        using (readingLTM)
+        {
+            string line;
+            do
+            {
+                line = readingLTM.ReadLine();
+
+                if (line != "" && line != null)
+                {
+                    string[] info = line.Split(';');
+                    
+                    if(info.Length != 5)
+                    {
+                        Debug.LogError("File incomplete, fix it and try again!");
+                    }
+                    else
+                    {
+                        foreach(string inf in info)
+                        {
+                            personality.Add(float.Parse(inf));
+                        }
+                    }
+                }
+            } while (line != null);
+        }
+        readingLTM.Close();
+
+        //depending on the personality, we assign an initial PAD space
+        /*In the second condition (i.e. extrovert), she is assigned a controlled
+        extrovert personality as her PPAD at (80, 50, 100). These values are set
+        based on the characteristics of extroverted people given by McCrae
+        et al. [39], in which they are deemed to have a tendency towards positive emotion (P 80), are seeking excitement (A 50), 
+        and are assertive (D 100).*/
+        if(personality[2] >= 0.5f)
+        {
+            pad = new PADClass(0.8f, 0.5f, 1);
+
+            //if it has some N, it means it is a bit "paranoid".. so, lets reduce its dominance
+            if(personality[4] > 0.5f)
+            {
+                pad.SetDominance(0.5f);
+            }
+        }
+        /*In the third condition (i.e. introvert), the ECA is assigned a controlled introvert personality as her PPAD at (−80, 30, −100), based on
+        the characteristics of introvert people [39], which are characterized by
+        a tendency towards negative emotion (P −80), low excitement seeking
+        (A 30), and low assertiveness (D −100). */
+        else
+        {
+            pad = new PADClass(-0.8f, 0.3f, -1);
+
+            //if it has little N, it means it is not "paranoid".. so, lets raise its dominance
+            if (personality[4] > 0.5f)
+            {
+                pad.SetDominance(-0.5f);
+            }
+        }
+    }
+
+    //boring method
+    private void Boring()
+    {
+        pad.IncreaseBoredom(personality[0], personality[1], personality[3]);
     }
 }
