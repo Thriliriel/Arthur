@@ -193,10 +193,6 @@ public class MainController : MonoBehaviour
         personName = sr.ReadLine();
         sr.Close();
 
-        pad = new PADClass();
-
-        LoadPersonality();
-
         if (personName == null) personName = "";
 
         //if Arthur is in chat mode, we can deactivate all graphical stuff
@@ -343,6 +339,10 @@ public class MainController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        pad = new PADClass();
+
+        LoadPersonality();
+
         //reset the result file
         StreamWriter writingResult;
         writingResult = File.CreateText("result.txt");
@@ -359,7 +359,7 @@ public class MainController : MonoBehaviour
         StartCoroutine(ChangeFaceName());
 
         //SetEmotion("disgust");
-        SetEmotion("joy");
+        //SetEmotion("joy");
 
         //start the idle timer with the seconds now
         idleTimer = Time.time;
@@ -592,6 +592,12 @@ public class MainController : MonoBehaviour
 
                 //reset files
                 ResetTokenFiles();
+
+                //update PAD and emotion
+                UpdatePadEmotion();
+
+                //reset boredom
+                pad.ResetBoredom();
             }
 
             //if it is not breaking ice or already small talking, check the idle timer for a small talk
@@ -1669,7 +1675,7 @@ public class MainController : MonoBehaviour
         if (marioEmotion != "")
         {
             if (marioEmotion == "joy")
-                marioEmotion = emotion = "happiness";
+                marioEmotion = "happiness";
 
             string emoAnim = marioEmotion.Substring(0, 1).ToUpper() + marioEmotion.Substring(1) + "_A";
             //UnityEngine.Debug.Log(emoAnim);
@@ -1701,9 +1707,6 @@ public class MainController : MonoBehaviour
 
         //reset the idle timer
         idleTimer = Time.time;
-
-        //reset boredom
-        pad.ResetBoredom();
 
         lastInteraction = textSend;
 
@@ -3974,11 +3977,81 @@ public class MainController : MonoBehaviour
                 pad.SetDominance(-0.5f);
             }
         }
+
+        Debug.Log("Initial PAD: " + pad.GetPleasure() + " - " + pad.GetArousal() + " - " + pad.GetDominance());
+
+        string chosenEmo = FindPADEmotion();
+
+        SetEmotion(chosenEmo.ToLower());
     }
 
     //boring method
     private void Boring()
     {
         pad.IncreaseBoredom(personality[0], personality[1], personality[3]);
+    }
+
+    //update PAD and check emotion
+    private void UpdatePadEmotion()
+    {
+        pad.UpdatePAD(lastPolarity);
+
+        string chosenEmo = FindPADEmotion();
+
+        SetEmotion(chosenEmo.ToLower());
+    }
+
+    //find the closest emotion from PAD
+    private string FindPADEmotion()
+    {
+        string chosenEmo = "";
+
+        //to check possible new emotion, we check all pad emotions and the distance of PAD from them. We choose the closest.
+        float minDistance = -1;
+        foreach (KeyValuePair<string, Vector3> pe in pad.padEmotions)
+        {
+            float dist = Vector3.Distance(new Vector3(pad.GetPleasure(), pad.GetArousal(), pad.GetDominance()), pe.Value);
+            //if it is the first, just take it
+            if (minDistance == -1)
+            {
+                minDistance = dist;
+                chosenEmo = pe.Key;
+            }
+            else
+            {
+                //if distance is smaller, it is the new favorite
+                if (dist < minDistance)
+                {
+                    minDistance = dist;
+                    chosenEmo = pe.Key;
+                }
+            }
+        }
+
+        //anger, disgust, fear, happiness, sadness, surprise
+        Debug.Log("New Emo: " + chosenEmo);
+
+        if (chosenEmo == "Friendly" || chosenEmo == "Joyful" || chosenEmo == "Happy")
+        {
+            chosenEmo = "joy";
+        }
+        else if (chosenEmo == "Angry" || chosenEmo == "Enraged")
+        {
+            chosenEmo = "anger";
+        }
+        else if (chosenEmo == "Surprised")
+        {
+            chosenEmo = "surprise";
+        }
+        else if (chosenEmo == "Fearful")
+        {
+            chosenEmo = "fear";
+        }
+        else if (chosenEmo == "Depressed" || chosenEmo == "Sad" || chosenEmo == "Frustated")
+        {
+            chosenEmo = "sad";
+        }
+
+        return chosenEmo;
     }
 }
