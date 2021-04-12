@@ -21,8 +21,9 @@ public class MainController : MonoBehaviour
     public int framesToConsider;
 
     private GameObject[] eyes;
-    //array with the last framesToConsider emotions found
+    //array with the last framesToConsider emotions found, and respective valences
     public List<string> foundEmotions;
+    public float foundValence;
     public string personName;
     public int personId;
     public string agentName;
@@ -124,6 +125,8 @@ public class MainController : MonoBehaviour
     //list with all dialogs/topics in memory
     private List<string> dialogsInMemory;
     private List<string> dialogsAnswersInMemory;
+    //list with dialogs already used
+    private List<string> dialogsUsed;
     Dictionary<string, List<Tuple<string, double>>> keywordsDataset;
     //to save in memory
     //private int qntTempDialogs = 0;
@@ -248,6 +251,7 @@ public class MainController : MonoBehaviour
         topicsFinal = new List<Topic>();
         dialogsInMemory = new List<string>();
         dialogsAnswersInMemory = new List<string>();
+        dialogsUsed = new List<string>();
 
         LoadKeywords();
         LoadSmallTalk();
@@ -594,7 +598,7 @@ public class MainController : MonoBehaviour
                 ResetTokenFiles();
 
                 //update PAD and emotion
-                UpdatePadEmotion();
+                UpdatePadEmotion(lastPolarity);
 
                 //reset boredom
                 pad.ResetBoredom();
@@ -3021,16 +3025,21 @@ public class MainController : MonoBehaviour
 
         if (first)
         {
-            ct = currentTopic.RunDialog(0, tokenizeSentence, dialogsInMemory);
+            ct = currentTopic.RunDialog(0, tokenizeSentence, dialogsUsed);
         }
         else
         {
-            ct = currentTopic.RunDialog(lastPolarity, tokenizeSentence, dialogsInMemory);
+            ct = currentTopic.RunDialog(lastPolarity, tokenizeSentence, dialogsUsed);
         }
 
         if (ct != null)
         {
             string digmem = currentTopic.GetId() + "-" + currentTopic.GetCurrentDialog().GetDescription() + "-" + currentTopic.GetCurrentDialog().GetId().ToString();
+        
+            if (!dialogsUsed.Contains(digmem))
+            {
+                dialogsUsed.Add(digmem);
+            }
             if (!dialogsInMemory.Contains(digmem))
             {
                 dialogsInMemory.Add(digmem);
@@ -3316,7 +3325,7 @@ public class MainController : MonoBehaviour
 
                 if (line != "" && line != null)
                 {
-                    dialogsInMemory.Add(line);
+                    dialogsUsed.Add(line);
                 }
             } while (line != null);
         }
@@ -3992,9 +4001,9 @@ public class MainController : MonoBehaviour
     }
 
     //update PAD and check emotion
-    private void UpdatePadEmotion()
+    public void UpdatePadEmotion(float polarity)
     {
-        pad.UpdatePAD(lastPolarity);
+        pad.UpdatePAD(polarity);
 
         string chosenEmo = FindPADEmotion();
 
@@ -4047,9 +4056,9 @@ public class MainController : MonoBehaviour
         {
             chosenEmo = "fear";
         }
-        else if (chosenEmo == "Depressed" || chosenEmo == "Sad" || chosenEmo == "Frustated")
+        else if (chosenEmo == "Depressed" || chosenEmo == "Sad" || chosenEmo == "Frustrated")
         {
-            chosenEmo = "sad";
+            chosenEmo = "sadness";
         }
 
         return chosenEmo;

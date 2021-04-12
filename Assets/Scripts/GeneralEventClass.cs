@@ -15,7 +15,7 @@ public class GeneralEvent
     //what is the event itself (example, what is the interaction exactly?)
     public string information;
     //emotion of this event
-    //public string emotion;
+    public string emotion;
     //connected nodes, from memory
     public List<MemoryClass> nodes;
     //A positive polarity means that positive answers are expected ("i am good", "yes", and so on...)
@@ -30,7 +30,7 @@ public class GeneralEvent
         //eventType = newInformationType;
         information = newInformation;
         informationID = newInformationID;
-        //emotion = newEmotion;
+        emotion = newEmotion;
         nodes = new List<MemoryClass>();
     }
 

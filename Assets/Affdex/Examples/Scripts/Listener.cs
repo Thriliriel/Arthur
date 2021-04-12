@@ -33,6 +33,9 @@ public class Listener : ImageResultsListener
                 dfv.ShowFace(faces[0]);
             }
 
+            //Debug.Log("Valence: " + faces[0].Emotions[Affdex.Emotions.Valence].ToString());
+            mc.foundValence = faces[0].Emotions[Affdex.Emotions.Valence] / 100.0f;
+
             // Adjust font size to fit the selected platform.
             if ((Application.platform == RuntimePlatform.IPhonePlayer) ||
                 (Application.platform == RuntimePlatform.Android))
@@ -68,7 +71,9 @@ public class Listener : ImageResultsListener
                 }
             }
 
-            //add this emtion to the mc list
+            //add this emtion to the mc list, if it is not valence
+            if (chosenEmotion == "valence") yield break;
+
             //if list is full, take the oldest out
             if (mc.foundEmotions.Count >= mc.framesToConsider)
             {
@@ -108,10 +113,14 @@ public class Listener : ImageResultsListener
                 //textArea.text = chosenEmotion + " - " + maxEmotion.ToString();
                 textArea.text = chosenEmotion;
 
-                if (mc.foundEmotion != chosenEmotion)
+                //if it is different from the last emotion, we change. 
+                //Otherwise, we just update the PAD if all the 5 emotions of the list are the same
+                if (mc.foundEmotion != chosenEmotion || qntInList == mc.foundEmotions.Count)
                 {
                     //it changes the face. We do not want that now
                     //mc.SetEmotion(chosenEmotion);
+                    //update the PAD with the new emotion valence.
+                    mc.UpdatePadEmotion(mc.foundValence);
                 }
                 textArea.CrossFadeColor(Color.white, 0.2f, true, false);
             }
@@ -135,9 +144,4 @@ public class Listener : ImageResultsListener
         mc = GameObject.Find("MainController").GetComponent<MainController>();
         dfv = GameObject.FindObjectOfType<DebugFeatureViewer>();
     }
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 }
