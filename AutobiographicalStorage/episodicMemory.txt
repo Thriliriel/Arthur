@@ -1,8 +1,8 @@
-1;4/12/2021 9:14:15 AM;Arthur;Person;1;1
-2;4/12/2021 9:14:15 AM;AutobiographicalStorage/Images/Arthur.png;Imagery;1;1
-3;4/12/2021 9:14:15 AM;Brazil;Location;1;1
-4;4/12/2021 9:14:15 AM;2019;Time;1;1
-5;4/12/2021 9:14:15 AM;born;Activity;1;1
+1;7/10/2019 10:00:00 PM;Arthur;Person;1;1
+2;7/10/2019 10:00:00 PM;AutobiographicalStorage/Images/Arthur.png;Imagery;1;1
+3;7/10/2019 10:00:00 PM;Brazil;Location;1;1
+4;7/10/2019 10:00:00 PM;2019;Time;1;1
+5;7/10/2019 10:00:00 PM;born;Activity;1;1
 6;7/10/2019 10:00:00 PM;work;Activity;1;1
 7;7/10/2019 10:00:00 PM;study;Activity;1;1
 8;7/10/2019 10:00:00 PM;has children;Activity;1;1
@@ -11,31 +11,18 @@
 11;7/10/2019 10:00:00 PM;meet;Activity;1;1
 12;7/10/2019 10:00:00 PM;learn;Activity;1;1
 13;7/10/2019 10:00:00 PM;like;Activity;1;1
-14;4/12/2021 9:15:02 AM;love;Activity;1;1
+14;7/10/2019 10:00:00 PM;love;Activity;1;1
 15;7/10/2019 10:00:00 PM;food;Object;1;1
-16;4/12/2021 9:15:02 AM;pizza;Object;1;1
+16;7/10/2019 10:00:00 PM;pizza;Object;1;1
 17;7/10/2019 10:00:00 PM;calabresa;Object;1;1
 18;7/10/2019 10:00:00 PM;portuguesa;Object;1;1
-32;4/12/2021 9:13:29 AM;AutobiographicalStorage/Images/Knob.png;Imagery;1;0.2914627
-33;4/12/2021 9:13:29 AM;2021-04-12;Time;1;0.2914627
-34;4/12/2021 9:13:41 AM;1989;Time;1;0.2914627
-35;4/12/2021 9:13:53 AM;computer_science;Activity;1;0.2557754
-36;4/12/2021 9:15:09 AM;fry;Object;1;0.2462584
-31;4/12/2021 9:15:40 AM;Knob;Person;1;1
 %%%
-1;7/10/2019 10:00:00 PM;I was born at Brazil in 2019-08-10;1_2_3_4_5
-2;7/10/2019 10:00:00 PM;I have no job;1_6_10
-3;7/10/2019 10:00:00 PM;I am not studying;1_7_10
-4;7/10/2019 10:00:00 PM;I have no children;1_8_9
-5;7/10/2019 10:00:00 PM;That is me!;1_2_9
-6;7/10/2019 10:00:00 PM;I like food;1_13_15
-7;7/10/2019 10:00:00 PM;I love pizza;1_14_16
-8;7/10/2019 10:00:00 PM;My favorite pizza is calabresa;1_13_14_17
-9;7/10/2019 10:00:00 PM;I do not like portuguesa;1_13_18
-31;4/12/2021 9:13:29 AM;I met Knob today;31_32_33_1_11
-32;4/12/2021 9:13:41 AM;Knob was born in 1989-01-01;31_34_5
-33;4/12/2021 9:13:53 AM;Knob is studying computer_science;35_7_31
-34;4/12/2021 9:13:56 AM;Knob is not working;6_31
-35;4/12/2021 9:13:59 AM;Knob has no children;8_31
-36;4/12/2021 9:15:02 AM;Knob love pizza;31_16_14_31
-37;4/12/2021 9:15:09 AM;Knob fry;36_31
+1;7/10/2019 10:00:00 PM;agent;I was born at Brazil in 2019-08-10;1;1_2_3_4_5
+2;7/10/2019 10:00:00 PM;agent;I have no job;-1;1_6_10
+3;7/10/2019 10:00:00 PM;agent;I am not studying;-1;1_7_10
+4;7/10/2019 10:00:00 PM;agent;I have no children;-1;1_8_9
+5;7/10/2019 10:00:00 PM;agent;That is me!;1;1_2_9
+6;7/10/2019 10:00:00 PM;agent;I like food;1;1_13_15
+7;7/10/2019 10:00:00 PM;agent;I love pizza;1;1_14_16
+8;7/10/2019 10:00:00 PM;agent;My favorite pizza is calabresa;1;1_13_14_17
+9;7/10/2019 10:00:00 PM;agent;I do not like portuguesa;-1;1_13_18

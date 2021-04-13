@@ -112,6 +112,7 @@
     <Compile Include="Assets\Scripts\CharacterCTRL.cs" />
     <Compile Include="Assets\Scripts\PADClass.cs" />
     <Compile Include="Assets\Affdex\Plugins\Scripts\DebugFeatureViewer.cs" />
+    <Compile Include="Assets\EditorController.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Packages\CSProlog.6.0.0\lib\net35\CSProlog.xml" />

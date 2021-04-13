@@ -10,8 +10,8 @@ public class GeneralEvent
     public int informationID;
     //timestamp of the last remembrance
     public System.DateTime eventTime;
-    //type of event (example: know new person, interaction, etc)
-    //public string eventType;
+    //category of the event (belief, person or agent)
+    public string eventType;
     //what is the event itself (example, what is the interaction exactly?)
     public string information;
     //emotion of this event
@@ -19,7 +19,7 @@ public class GeneralEvent
     //connected nodes, from memory
     public List<MemoryClass> nodes;
     //A positive polarity means that positive answers are expected ("i am good", "yes", and so on...)
-    //public float polarity;
+    public float polarity;
 
     public GeneralEvent() { }
 
@@ -27,7 +27,7 @@ public class GeneralEvent
         string newEmotion)
     {
         eventTime = newMT;
-        //eventType = newInformationType;
+        eventType = newInformationType;
         information = newInformation;
         informationID = newInformationID;
         emotion = newEmotion;

@@ -335,7 +335,7 @@ public class MainController : MonoBehaviour
                 string thisYear = System.DateTime.Now.ToString("yyyy-MM-dd");
                 thisID = AddToSTM("Time", thisYear, 0.9f);
                 connectNodes.Add(thisID);
-                AddGeneralEvent("I met " + personName + " today", connectNodes);
+                AddGeneralEvent("I met " + personName + " today", connectNodes, "person");
             }
         }
     }
@@ -662,11 +662,12 @@ public class MainController : MonoBehaviour
                     }//else, it is episodes
                     else
                     {
-                        //id;memory timestamp;information;nodes
-                        GeneralEvent newGen = new GeneralEvent(System.DateTime.Parse(info[1]), info[2], ide);
+                        //id;memory timestamp;type;information;polarity;nodes
+                        GeneralEvent newGen = new GeneralEvent(System.DateTime.Parse(info[1]), info[2], info[3], ide, "");
+                        newGen.polarity = float.Parse(info[4]);
 
                         //add the associated nodes of this episode
-                        string[] memNodes = info[3].Split('_');
+                        string[] memNodes = info[5].Split('_');
                         foreach(string nod in memNodes)
                         {
                             newGen.nodes.Add(agentLongTermMemory[int.Parse(nod)]);
@@ -1173,7 +1174,7 @@ public class MainController : MonoBehaviour
             connectNodes.Add(personId);
             connectNodes.Add(5);
             connectNodes.Add(thisID);
-            AddGeneralEvent(personName + " was born in " + birth + "-01-01", connectNodes);
+            AddGeneralEvent(personName + " was born in " + birth + "-01-01", connectNodes, "person");
         }else if (tokens.ContainsKey("study"))
         {
             /*foreach (KeyValuePair<string, string> txt in tokens)
@@ -1190,7 +1191,7 @@ public class MainController : MonoBehaviour
                 List<int> connectNodes = new List<int>();
                 connectNodes.Add(personId);
                 connectNodes.Add(7);
-                AddGeneralEvent(personName + " is not studying", connectNodes);
+                AddGeneralEvent(personName + " is not studying", connectNodes, "person");
             }
         }
         else if (tokens.ContainsKey("work"))
@@ -1209,7 +1210,7 @@ public class MainController : MonoBehaviour
                 List<int> connectNodes = new List<int>();
                 connectNodes.Add(personId);
                 connectNodes.Add(6);
-                AddGeneralEvent(personName + " is not working", connectNodes);
+                AddGeneralEvent(personName + " is not working", connectNodes, "person");
             }
         }
         else if (tokens.ContainsKey("children"))
@@ -1224,7 +1225,7 @@ public class MainController : MonoBehaviour
                         List<int> connectNodes = new List<int>();
                         connectNodes.Add(personId);
                         connectNodes.Add(8);
-                        AddGeneralEvent(personName + " has no children", connectNodes);
+                        AddGeneralEvent(personName + " has no children", connectNodes, "person");
                     }
                 }
             }
@@ -1253,7 +1254,7 @@ public class MainController : MonoBehaviour
             connectNodes.Add(personId);
             connectNodes.Add(7);
             connectNodes.Add(thisID);
-            AddGeneralEvent(personName + " is studying " + course, connectNodes);
+            AddGeneralEvent(personName + " is studying " + course, connectNodes, "person");
         }
         else if (tokens.ContainsKey("work job"))
         {
@@ -1279,7 +1280,7 @@ public class MainController : MonoBehaviour
             connectNodes.Add(personId);
             connectNodes.Add(6);
             connectNodes.Add(thisID);
-            AddGeneralEvent(personName + " is working as " + job, connectNodes);
+            AddGeneralEvent(personName + " is working as " + job, connectNodes, "person");
         }
         /*else if (tokens.ContainsKey("children quantity"))
         {
@@ -1315,7 +1316,7 @@ public class MainController : MonoBehaviour
             //if qntChild > 0, we save the children
             if (qntChild > 0)
             {
-                AddGeneralEvent(personName + " has "+qntChild+" children: " + who, connectNodes);
+                AddGeneralEvent(personName + " has "+qntChild+" children: " + who, connectNodes, "person");
             }
         }
     }
@@ -1461,7 +1462,7 @@ public class MainController : MonoBehaviour
         if (connectNodes.Count > 0)
         {
             connectNodes.Add(personId);
-            AddGeneralEvent(infor.Trim(), connectNodes);
+            AddGeneralEvent(infor.Trim(), connectNodes, "person");
         }
 
         connectNodes.Clear();
@@ -1536,7 +1537,7 @@ public class MainController : MonoBehaviour
                     informationEvent = potato;
                 }
 
-                AddGeneralEvent(informationEvent.Trim(), connectNodes);
+                AddGeneralEvent(informationEvent.Trim(), connectNodes, "belief");
             }
 
             connectNodes.Clear();
@@ -1977,7 +1978,7 @@ public class MainController : MonoBehaviour
             string thisYear = System.DateTime.Now.ToString("yyyy-MM-dd");
             thisID = AddToSTM("Time", thisYear, 0.9f);
             connectNodes.Add(thisID);
-            AddGeneralEvent("I met " + namePerson + " today", connectNodes);
+            AddGeneralEvent("I met " + namePerson + " today", connectNodes, "person");
 
             isKnowingNewPeople = false;
 
@@ -2156,7 +2157,7 @@ public class MainController : MonoBehaviour
     }
 
     //add a new general event and return its id
-    private int AddGeneralEvent(string informationEvent, List<int> connectNodes)
+    private int AddGeneralEvent(string informationEvent, List<int> connectNodes, string typeEvent)
     {
         //if the memory already contains this general event, or something similar, do not add
         int ind = 0;
@@ -2164,15 +2165,6 @@ public class MainController : MonoBehaviour
         //int totalNodes = informationEvent.Split(' ').Length;
         foreach (KeyValuePair<int,GeneralEvent> ges in agentGeneralEvents)
         {
-            /*qntNodes = 0;
-            foreach(MemoryClass mg in agentGeneralEvents[i].nodes)
-            {
-                if (informationEvent.Contains(mg.information))
-                {
-                    qntNodes++;
-                }
-            }*/
-
             if (informationEvent == ges.Value.information)
             {
                 ind = ges.Key;
@@ -2184,9 +2176,9 @@ public class MainController : MonoBehaviour
         {
             //although we do not add a new general event, we can update the information
             agentGeneralEvents[ind].nodes.Clear();
-            //agentGeneralEvents[ind].eventType = typeEvent;
+            agentGeneralEvents[ind].eventType = typeEvent;
             agentGeneralEvents[ind].information = informationEvent;
-            //agentGeneralEvents[ind].polarity = lastPolarity;
+            agentGeneralEvents[ind].polarity = lastPolarity;
             //add the updated memory nodes on this event
             foreach (KeyValuePair<int, MemoryClass> mc in agentShortTermMemory)
             {
@@ -2201,10 +2193,10 @@ public class MainController : MonoBehaviour
 
         //create a new general event
         int geId = GenerateEpisodeID();
-        GeneralEvent ge = new GeneralEvent(System.DateTime.Now, informationEvent, geId);
+        GeneralEvent ge = new GeneralEvent(System.DateTime.Now, typeEvent, informationEvent, geId, emotionText.GetComponent<Text>().text);
 
         //set the polarity
-        //ge.polarity = lastPolarity;
+        ge.polarity = lastPolarity;
 
         //add the memory nodes on this event
         foreach (KeyValuePair<int,MemoryClass> mc in agentShortTermMemory)
@@ -2322,8 +2314,9 @@ public class MainController : MonoBehaviour
                 else allNodes += "_"+mc.informationID.ToString();
             }
 
-            //ID;Timestamp;Information;Nodes
-            writingLTM.WriteLine(mem.Key.ToString() + ";" + mem.Value.eventTime + ";" + mem.Value.information.Trim() + ";" + allNodes);
+            //ID;Timestamp;Type;Information;Polarity;Nodes
+            writingLTM.WriteLine(mem.Key.ToString() + ";" + mem.Value.eventTime + ";" + mem.Value.eventType.Trim() + ";" 
+                + mem.Value.information.Trim() + ";" + mem.Value.polarity.ToString() + ";" + allNodes);
         }
 
         writingLTM.Close();
@@ -2784,7 +2777,7 @@ public class MainController : MonoBehaviour
         connectNodes.Add(12);
 
         //create a new general event
-        AddGeneralEvent("I learned what a " + importantNoun + " is", connectNodes);
+        AddGeneralEvent("I learned what a " + importantNoun + " is", connectNodes, "belief");
 
         //reset
         isYesNoQuestion = false;
@@ -2796,28 +2789,6 @@ public class MainController : MonoBehaviour
         string responseText = "Nice, thanks!";
         SpeakYouFool(responseText);
     }
-
-    //check memory for an icebreaker
-    /*private bool FindIceBreakerInMemory(int whichIceBreaker)
-    {
-        IceBreakingTreeClass thisIceBreaker = iceBreakers.FindIcebreaker(whichIceBreaker);
-
-        //check general events
-        foreach (GeneralEvent geez in agentGeneralEvents)
-        {
-            //for each node
-            foreach (MemoryClass node in geez.nodes)
-            {
-                //if it has both the name of the person and the type of the icebreaker, already exists
-                if (node.information.Contains(thisIceBreaker.GetType()) && node.information.Contains(personName))
-                {
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }*/
 
     //breaking the ice!
     private void BreakIce(string beforeText = "")
@@ -4062,5 +4033,150 @@ public class MainController : MonoBehaviour
         }
 
         return chosenEmo;
+    }
+
+    //clean the memory file
+    public void ClearMemoryFile(bool keepBeliefs = true)
+    {
+        Dictionary<int, MemoryClass> ltm = new Dictionary<int, MemoryClass>();
+        Dictionary<int, GeneralEvent> ge = new Dictionary<int, GeneralEvent>();
+
+        StreamReader readingLTM = new StreamReader("AutobiographicalStorage/episodicMemory.txt", System.Text.Encoding.Default);
+        //the file stores both info, divided by "%%%"
+        bool readingESK = true;
+        using (readingLTM)
+        {
+            string line;
+            do
+            {
+                line = readingLTM.ReadLine();
+
+                //when we read the dividing sequence "%%%", episodes start
+                if (line == "%%%")
+                {
+                    readingESK = false;
+                    continue;
+                }
+
+                if (line != "" && line != null)
+                {
+                    string[] info = line.Split(';');
+                    int ide = System.Convert.ToInt32(info[0]);
+
+                    //while it is reading ESK
+                    if (readingESK)
+                    {
+                        //id;memory timestamp;information;5W1H class;Activation;Weight
+                        MemoryClass newMem = new MemoryClass(System.DateTime.Parse(info[1]), info[3], info[2], ide, float.Parse(info[5]));
+                        //newMem.activation = System.Convert.ToSingle(info[4]);
+
+                        //LTM - everything
+                        ltm.Add(ide, newMem);
+                    }//else, it is episodes
+                    else
+                    {
+                        //id;memory timestamp;type;information;polarity;nodes
+                        GeneralEvent newGen = new GeneralEvent(System.DateTime.Parse(info[1]), info[2], info[3], ide, "");
+                        newGen.polarity = float.Parse(info[4]);
+
+                        //add the associated nodes of this episode
+                        string[] memNodes = info[5].Split('_');
+                        foreach (string nod in memNodes)
+                        {
+                            newGen.nodes.Add(ltm[int.Parse(nod)]);
+                        }
+
+                        //add
+                        ge.Add(ide, newGen);
+                    }
+                }
+            } while (line != null);
+        }
+        readingLTM.Close();
+
+        //for each event, we check if it can be wiped
+        List<int> eventsKill = new List<int>();
+        List<int> memKill = new List<int>();
+        foreach (KeyValuePair<int, GeneralEvent> vento in ge)
+        {
+            if(vento.Value.eventType == "person" || (vento.Value.eventType == "belief" && !keepBeliefs))
+            {
+                //we exclude this event, but do we exclude the resources as well? Check if it is present in other events
+                foreach(MemoryClass mi in vento.Value.nodes)
+                {
+                    bool kill = true;
+
+                    foreach (KeyValuePair<int, GeneralEvent> vusshhhh in ge)
+                    {
+                        //different event which contains
+                        if(vusshhhh.Key != vento.Key)
+                        {
+                            foreach (MemoryClass niii in vusshhhh.Value.nodes)
+                            {
+                                if(niii.informationID == mi.informationID)
+                                {
+                                    if(vusshhhh.Value.eventType == "agent" || (vusshhhh.Value.eventType == "belief" && keepBeliefs))
+                                    {
+                                        kill = false;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+
+                        //if not kill, dont need to keep going
+                        if (!kill) break;
+                    }
+
+                    if (kill)
+                    {
+                        memKill.Add(mi.informationID);
+                    }
+                }
+
+                eventsKill.Add(vento.Key);
+            }
+        }
+
+        //now, we kill
+        foreach(int eid in eventsKill)
+        {
+            ge.Remove(eid);
+        }
+        foreach (int mid in memKill)
+        {
+            ltm.Remove(mid);
+        }
+
+        //finally, we save again
+        StreamWriter writingLTM;
+        writingLTM = File.CreateText("AutobiographicalStorage/episodicMemory.txt");
+
+        //first, save the ESK
+        foreach (KeyValuePair<int, MemoryClass> mem in ltm)
+        {
+            //ID;Timestamp;Information;Type;Activation;Weight
+            writingLTM.WriteLine(mem.Key.ToString() + ";" + mem.Value.memoryTime + ";" + mem.Value.information.Trim() + ";"
+                + mem.Value.informationType.ToString() + ";" + mem.Value.activation.ToString() + ";" + mem.Value.weight.ToString());
+        }
+
+        //second, we save the episodes
+        writingLTM.WriteLine("%%%");
+        foreach (KeyValuePair<int, GeneralEvent> mem in ge)
+        {
+            //get the nodes first
+            string allNodes = "";
+            foreach (MemoryClass mc in mem.Value.nodes)
+            {
+                if (allNodes == "") allNodes = mc.informationID.ToString();
+                else allNodes += "_" + mc.informationID.ToString();
+            }
+
+            //ID;Timestamp;Type;Information;Polarity;Nodes
+            writingLTM.WriteLine(mem.Key.ToString() + ";" + mem.Value.eventTime + ";" + mem.Value.eventType.Trim() + ";"
+                + mem.Value.information.Trim() + ";" + mem.Value.polarity.ToString() + ";" + allNodes);
+        }
+
+        writingLTM.Close();
     }
 }

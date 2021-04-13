@@ -193,6 +193,7 @@
     <Compile Include="Assets\Anima2D\Scripts\Editor\ContextMenu.cs" />
     <Compile Include="Assets\Anima2D\Scripts\Editor\Triangle\TriangleLocator.cs" />
     <Compile Include="Assets\Anima2D\Scripts\Editor\EditorUpdater.cs" />
+    <Compile Include="Assets\Editor\EditorController.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\NuGet\Editor\DotNetZip.dll" />
