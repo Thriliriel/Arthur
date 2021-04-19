@@ -1,0 +1,2 @@
+sibling(X,Z) :- parent(Y,X), parent(Y,Z), X\=Z
+grandparent(X,Z) :- parent(X,Y), parent(Y,Z)

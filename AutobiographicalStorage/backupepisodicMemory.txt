@@ -1,0 +1,28 @@
+1;7/10/2019 10:00:00 PM;Arthur;Person;1;1
+2;7/10/2019 10:00:00 PM;AutobiographicalStorage/Images/Arthur.png;Imagery;1;1
+3;7/10/2019 10:00:00 PM;Brazil;Location;1;1
+4;7/10/2019 10:00:00 PM;2019;Time;1;1
+5;7/10/2019 10:00:00 PM;born;Activity;1;1
+6;7/10/2019 10:00:00 PM;work;Activity;1;1
+7;7/10/2019 10:00:00 PM;study;Activity;1;1
+8;7/10/2019 10:00:00 PM;has children;Activity;1;1
+9;7/10/2019 10:00:00 PM;Joy;Emotion;1;1
+10;7/10/2019 10:00:00 PM;Sadness;Emotion;1;1
+11;7/10/2019 10:00:00 PM;meet;Activity;1;1
+12;7/10/2019 10:00:00 PM;learn;Activity;1;1
+13;7/10/2019 10:00:00 PM;like;Activity;1;1
+14;7/10/2019 10:00:00 PM;love;Activity;1;1
+15;7/10/2019 10:00:00 PM;food;Object;1;1
+16;7/10/2019 10:00:00 PM;pizza;Object;1;1
+17;7/10/2019 10:00:00 PM;calabresa;Object;1;1
+18;7/10/2019 10:00:00 PM;portuguesa;Object;1;1
+%%%
+1;7/10/2019 10:00:00 PM;agent;I was born at Brazil in 2019-08-10;1;1_2_3_4_5
+2;7/10/2019 10:00:00 PM;agent;I have no job;-1;1_6_10
+3;7/10/2019 10:00:00 PM;agent;I am not studying;-1;1_7_10
+4;7/10/2019 10:00:00 PM;agent;I have no children;-1;1_8_9
+5;7/10/2019 10:00:00 PM;agent;That is me!;1;1_2_9
+6;7/10/2019 10:00:00 PM;agent;I like food;1;1_13_15
+7;7/10/2019 10:00:00 PM;agent;I love pizza;1;1_14_16
+8;7/10/2019 10:00:00 PM;agent;My favorite pizza is calabresa;1;1_13_14_17
+9;7/10/2019 10:00:00 PM;agent;I do not like portuguesa;-1;1_13_18
