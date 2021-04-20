@@ -127,7 +127,27 @@ namespace DialogCS
             bool foundKey = nodes.TryGetValue(higherId, out currentNode);
             
             if(higherId == "") currentNode = exitNode; // VICTOR COMMENT: here you can choose a rule to take everytime arthur not find a node with higher ponctuation (maybe polarity)
-            if (!foundKey) throw new ArgumentException("Next utterance not found, supose to be: " + higherId, nameof(higherId));
+            if (!foundKey)
+            {
+                //throw new ArgumentException("Next utterance not found, supose to be: " + higherId, nameof(higherId));
+                //get a random child
+                if(childrenCount.Count > 0)
+                {
+                    int rnd = UnityEngine.Random.Range(0, childrenCount.Count);
+                    int i = 0;
+                    foreach (KeyValuePair<string, double> cc in childrenCount)
+                    {
+                        if (i == rnd)
+                        {
+                            higher = cc.Value;
+                            higherId = cc.Key;
+                            foundKey = nodes.TryGetValue(higherId, out currentNode);
+                            break;
+                        }
+                        i++;
+                    }
+                }
+            }
 
             ReadCurrentNode();
 

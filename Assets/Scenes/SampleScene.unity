@@ -8857,7 +8857,7 @@ MonoBehaviour:
   mariano: {fileID: 568877340}
   webServicePath: 
   idleTimer: 0
-  waitForSeconds: 30
+  waitForSeconds: 10
   lastInteraction: 
   chatMode: 0
   emotionText: {fileID: 615780898}

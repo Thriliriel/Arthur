@@ -1323,27 +1323,11 @@ public class MainController : MonoBehaviour
 
     private void SaveSmallTalk(Dictionary<string, string> tokens)
     {
-        //just to be sure, clear it
-        //tempDialogs.Clear();
-
-        //first, we need to save this topic and dialog
-        //for create relationship later
-        //qntTempDialogs = 2; //topic and dialog to connect
-        //type of the event, to save later
-
-        //save topic dialog description
-        /*string label = "name:'" + currentTopic.GetCurrentDialog().GetDescription() + "',activation:1,weight:0.8,nodeType:'text'";
-        StartCoroutine(CreateMemoryNodeWebService(currentTopic.GetCurrentDialog().GetDescription(), "Topic", label, 0.8f));
-
-        //save dialog
-        label = "name:'Dialog" + currentTopic.GetCurrentDialog().GetId().ToString() + "',activation:1,weight:0.8,nodeType:'text',topic:'"+ currentTopic.GetCurrentDialog().GetDescription() + "'";//text:'"+ currentTopic.GetCurrentDialog() + "'
-        StartCoroutine(CreateMemoryNodeWebService("Dialog"+currentTopic.GetCurrentDialog().GetId().ToString(), "Dialog", label, 0.8f));
-        */
-        //NEED TO SEE ABOVE
-
         //if we have 2 or more NNP in sequence, we understand it is a compound name (ex: Sonata Artica)
         Dictionary<string, string> newTokens = new Dictionary<string, string>();
         string merging = "";
+
+        Debug.Log("Answered: " + currentTopic.GetCurrentDialog().GetSentence());
 
         foreach(KeyValuePair<string,string> tt in tokens)
         {
@@ -1383,19 +1367,7 @@ public class MainController : MonoBehaviour
         }
 
         //now, save the answer
-        //for create general event later
-        //qntTempNodes = newTokens.Count;
-        //type of the event, to save later
-        //tempTypeEvent = "";
-        //tempRelationship = "KNOWS";
         float weight = 0.8f;
-
-        //"create" the person as well, just to get id back, if it is not already in the sentence
-        /*if (!newTokens.ContainsKey(personName))
-        {
-            StartCoroutine(CreateMemoryNodeWebService(personName, "Person", "", 0.9f));
-            qntTempNodes++;
-        }*/
 
         List<int> connectNodes = new List<int>();
         string infor = personName;
@@ -1403,33 +1375,6 @@ public class MainController : MonoBehaviour
         //for each information, save it in memory
         foreach (KeyValuePair<string, string> txt in newTokens)
         {
-            /*string nodeTag = "SmallTalk";
-
-            //if is verb, relationship
-            if (txt.Value == "VB" || txt.Value == "VBP")
-            {
-                tempRelationship = txt.Key.ToUpper();
-                qntTempNodes--;
-                continue;
-            }
-
-            //if it is NNP, we save with Person tag
-            if(txt.Value == "NNP")
-            {
-                nodeTag = "Person";
-            }
-
-            //if it is Arthur or the person, just get it
-            if (txt.Key == "Arthur" || txt.Key == personName)
-            {
-                StartCoroutine(CreateMemoryNodeWebService(txt.Key, "Person", "", 0.9f));
-            }
-            else
-            {
-                label = "name:'" + txt.Key + "',activation:1,weight:" + weight + ",nodeType:'text',lastEmotion:'" + foundEmotion + "'";
-                StartCoroutine(CreateMemoryNodeWebService(txt.Key, nodeTag, label, weight));
-            }*/
-
             string fiveW = "";
             //NEED TO SEE HOW TO TAKE THE NAMED ENTITIES
             //if it is a proper noun, people
@@ -1454,14 +1399,18 @@ public class MainController : MonoBehaviour
                 int thisID = AddToSTM(fiveW, txt.Key, weight);
                 connectNodes.Add(thisID);
 
-                infor += " " + txt.Key;
+                if (!infor.Contains(txt.Key))
+                    infor += " " + txt.Key;
             }
         }
 
         //create a new general event
         if (connectNodes.Count > 0)
         {
-            connectNodes.Add(personId);
+            //just add person if it is not already in
+            if(!connectNodes.Contains(personId))
+                connectNodes.Add(personId);
+
             AddGeneralEvent(infor.Trim(), connectNodes, "person");
         }
 
@@ -1843,7 +1792,7 @@ public class MainController : MonoBehaviour
                     //if it already exists in memory, update it, because it is being rehearsed (just work for the name...)
                     foreach (KeyValuePair<int, MemoryClass> mc in agentShortTermMemory)
                     {
-                        if (mc.Value.information.Contains(personName))
+                        if (mc.Value.information == personName)
                         {
                             talaaaaa = true;
 
@@ -1857,7 +1806,7 @@ public class MainController : MonoBehaviour
                     //if not found, trying to get ID from LTM
                     foreach (KeyValuePair<int, MemoryClass> mc in agentLongTermMemory)
                     {
-                        if (mc.Value.information.Contains(personName))
+                        if (mc.Value.information == personName)
                         {
                             personId = mc.Key;
                             break;
@@ -1951,19 +1900,6 @@ public class MainController : MonoBehaviour
 
             File.Copy("camImage.png", "AutobiographicalStorage/Images/" + namePerson + ".png");
             StartCoroutine(SavePersonWebService());
-
-            //save on Neo4j
-            //on temp, we have to find 2 information later
-            /*qntTempNodes = 2;
-            string label = "name:'" + namePerson + "',activation:1,weight:0.9,nodeType:'text',lastEmotion:'" + foundEmotion + "',image:'AutobiographicalStorage/Images/" + namePerson + ".png'";
-            StartCoroutine(CreateMemoryNodeWebService(namePerson, "Person", label, 0.9f));
-
-            label = "name:'myself',image:'AutobiographicalStorage/Images/" + namePerson + ".png',activation:1,weight:0.9,nodeType:'image',lastEmotion:'" + foundEmotion + "'";
-            StartCoroutine(CreateMemoryNodeWebService("myself", "Image", label, 0.9f));
-
-            //type of the event, to save later
-            tempTypeEvent = "meet new person";
-            tempRelationship = "HAS_PHOTO";*/
 
             int thisID = AddToSTM("Person", namePerson, 0.9f);
             personId = thisID;
@@ -2974,6 +2910,8 @@ public class MainController : MonoBehaviour
 
     private void SmallTalking(List<string> tokenizeSentence, string beforeText = "")
     {
+        if (currentTopic == null || topics == null) return;
+
         //if topics is empty, we are done
         if (topics.Count == 0 && !currentTopic.IsDialogsAvailable() && currentTopic.GetCurrentDialog().DialogIsOver())
         {

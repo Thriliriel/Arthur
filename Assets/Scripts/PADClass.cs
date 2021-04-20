@@ -145,7 +145,7 @@ public class PADClass
             else if (arousal > oldArousal) arousal -= 0.05f;
         }
 
-        Debug.Log("P = " + pleasure + ", A = " + arousal);
+        //Debug.Log("P = " + pleasure + ", A = " + arousal);
     }
 }
 
