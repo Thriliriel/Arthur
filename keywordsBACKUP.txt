@@ -7,6 +7,7 @@ FODff0202 knob 3.500 1
 FODff0202 feeling 3.500 1
 FODff0202 great 3.500 1
 FODff0302 i 1.000 1
+FODff0302 no 1.000 10
 FODff0302 hate 1.000 1
 FODff0302 really 0.625 5
 FODff0403 i 0.286 1

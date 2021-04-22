@@ -818,6 +818,9 @@ public class MainController : MonoBehaviour
         //now, lets see if we have some new term
         //string unk = CheckNewTerm(retrieved, tokens);
 
+        //update PAD based on event polarity
+        UpdatePadEmotion(retrieved.polarity);
+
         SpeakYouFool(responseText);// + unk
     }
 
@@ -1375,19 +1378,22 @@ public class MainController : MonoBehaviour
         //for each information, save it in memory
         foreach (KeyValuePair<string, string> txt in newTokens)
         {
+            //words like "be", "is" or such can be ignored
+            if (txt.Key == "be" || txt.Key == "is" || txt.Key == "yes" || txt.Key == "no" || txt.Key == "sure") continue;
+
             string fiveW = "";
             //NEED TO SEE HOW TO TAKE THE NAMED ENTITIES
             //if it is a proper noun, people
             if (txt.Value == "NNP")
             {
                 fiveW = "Person";
-            }//else, if it is a noun, object
-            else if (txt.Value == "NN")
+            }//else, if it is a noun or adjective, object
+            else if (txt.Value == "NN" || txt.Value == "JJ")
             {
                 fiveW = "Object";
             }
             //else, if it is a verb, activity
-            else if (txt.Value == "VB" || txt.Value == "VBP")
+            else if (txt.Value == "VB" || txt.Value == "VBP" || txt.Value == "VBN")
             {
                 fiveW = "Activity";
             }
