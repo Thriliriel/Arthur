@@ -136,8 +136,10 @@ public class MainController : MonoBehaviour
     private int nextEskId;
     private int nextEpisodeId;
 
-    //mariano
+    //arthur
     public GameObject mariano;
+    //bella
+    public GameObject belinha;
 
     //last sentence polarity found
     private float lastPolarity;
@@ -193,6 +195,7 @@ public class MainController : MonoBehaviour
         string textFile = sr.ReadLine();
         if (textFile == "0") chatMode = false;
         else if (textFile == "1") chatMode = true;
+        agentName = sr.ReadLine();
         personName = sr.ReadLine();
         sr.Close();
 
@@ -202,6 +205,7 @@ public class MainController : MonoBehaviour
         if (chatMode)
         {
             mariano.SetActive(false);
+            belinha.SetActive(false);
             cam.SetActive(false);
             sleepButton.SetActive(false);
             voiceButton.SetActive(false);
@@ -214,6 +218,18 @@ public class MainController : MonoBehaviour
             GameObject.Find("Go").GetComponent<RectTransform>().sizeDelta = new Vector2(80, 50);
             GameObject.Find("Go").GetComponent<RectTransform>().anchoredPosition = new Vector3(640, 0, 0);
             canSpeak = false;
+        }//otherwise, is it Arthur or Bella?
+        else
+        {
+            if(agentName == "Arthur")
+            {
+                mariano.SetActive(true);
+                belinha.SetActive(false);
+            }else if (agentName == "Bella")
+            {
+                mariano.SetActive(false);
+                belinha.SetActive(true);
+            }
         }
 
         //if arthur cannot speak, deactivate the game Object
@@ -1640,7 +1656,13 @@ public class MainController : MonoBehaviour
             string emoAnim = marioEmotion.Substring(0, 1).ToUpper() + marioEmotion.Substring(1) + "_A";
             //UnityEngine.Debug.Log(emoAnim);
 
-            mariano.GetComponent<CharacterCTRL>().PlayAnimation(emoAnim);
+            //if Arthur, play
+            if(agentName == "Arthur")
+                mariano.GetComponent<CharacterCTRL>().PlayAnimation(emoAnim);
+            else if (agentName == "Bella")
+            {
+                //play bella
+            }
         }
 
         //StartCoroutine(EyesMovement(actionScript));
@@ -2264,7 +2286,7 @@ public class MainController : MonoBehaviour
         writingLTM.Close();
     }
 
-    public void SleepAgent()
+    /*public void SleepAgent()
     {
         //put agent to sleep
         isSleeping = true;
@@ -2280,9 +2302,9 @@ public class MainController : MonoBehaviour
 
         //consolidate LTM
         MemoryREM();
-    }
+    }*/
 
-    public void WakeAgent()
+    /*public void WakeAgent()
     {
         //come ooooonnn!!!
         isSleeping = false;
@@ -2295,9 +2317,9 @@ public class MainController : MonoBehaviour
 
         //hide zzz
         zzz.SetActive(false);
-    }
+    }*/
 
-    private void CloseEyesAndDream()
+    /*private void CloseEyesAndDream()
     {
         //call the character animation to sleepy leepy
         mariano.GetComponent<CharacterCTRL>().PlayAnimation("sleep");
@@ -2307,7 +2329,7 @@ public class MainController : MonoBehaviour
     {
         //call the character animation to good morning sunshine
         mariano.GetComponent<CharacterCTRL>().PlayAnimation("wakywaky");
-    }
+    }*/
 
     //save the used small talks
     private void SaveUsedST()

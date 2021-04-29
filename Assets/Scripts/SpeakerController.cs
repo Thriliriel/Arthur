@@ -7,6 +7,12 @@ using System.IO;
 public class SpeakerController : MonoBehaviour
 {
     private SpVoice voice;
+    private MainController mc;
+
+    private void Awake()
+    {
+        mc = GameObject.Find("MainController").GetComponent<MainController>();
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -21,10 +27,16 @@ public class SpeakerController : MonoBehaviour
         tokenCat.SetId(SpeechLib.SpeechStringConstants.SpeechCategoryVoices, false);
         ISpeechObjectTokens tokens = tokenCat.EnumerateTokens(null, null);
 
+        //DAVID OR ZIRA
         foreach (SpObjectToken item in tokens)
         {
-            //lets get david!
-            if (item.GetDescription(0).Contains("David"))
+            //lets get david for Arthur!
+            if (mc.agentName == "Arthur" && item.GetDescription(0).Contains("David"))
+            {
+                voice.Voice = item;
+                break;
+            }//or Zira for Bella
+            else if (mc.agentName == "Bella" && item.GetDescription(0).Contains("Zira"))
             {
                 voice.Voice = item;
                 break;
