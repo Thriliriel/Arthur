@@ -27,10 +27,21 @@ public class EditorController : Editor {
         {
             ClearMemory();
         }
+
+        rect = GUILayoutUtility.GetRect(500, 40);
+        if (GUI.Button(rect, "Load Wordnet"))
+        {
+            LoadWordnet();
+        }
     }
 
     public void ClearMemory()
     {
         (target as MainController).ClearMemoryFile();
+    }
+
+    public void LoadWordnet()
+    {
+        (target as MainController).LoadWordnetDatabase();
     }
 }

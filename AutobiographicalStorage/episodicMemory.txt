@@ -1,8 +1,8 @@
-1;4/21/2021 2:45:19 PM;Arthur;Person;1;1
-2;4/21/2021 2:45:19 PM;AutobiographicalStorage/Images/Arthur.png;Imagery;1;1
-3;4/21/2021 2:45:19 PM;Brazil;Location;1;1
-4;4/21/2021 2:45:19 PM;2019;Time;1;1
-5;4/21/2021 2:45:19 PM;born;Activity;1;1
+1;7/10/2019 10:00:00 PM;Arthur;Person;1;1
+2;7/10/2019 10:00:00 PM;AutobiographicalStorage/Images/Arthur.png;Imagery;1;1
+3;7/10/2019 10:00:00 PM;Brazil;Location;1;1
+4;7/10/2019 10:00:00 PM;2019;Time;1;1
+5;7/10/2019 10:00:00 PM;born;Activity;1;1
 6;7/10/2019 10:00:00 PM;work;Activity;1;1
 7;7/10/2019 10:00:00 PM;study;Activity;1;1
 8;7/10/2019 10:00:00 PM;has children;Activity;1;1
@@ -11,16 +11,1012 @@
 11;7/10/2019 10:00:00 PM;meet;Activity;1;1
 12;7/10/2019 10:00:00 PM;learn;Activity;1;1
 13;7/10/2019 10:00:00 PM;like;Activity;1;1
-14;4/21/2021 3:22:48 PM;love;Activity;1;1
-15;4/21/2021 3:22:48 PM;food;Object;1;1
-16;4/21/2021 3:23:37 PM;pizza;Object;1;1
-17;4/21/2021 3:23:37 PM;calabresa;Object;1;1
+14;7/10/2019 10:00:00 PM;love;Activity;1;1
+15;7/10/2019 10:00:00 PM;food;Object;1;1
+16;7/10/2019 10:00:00 PM;pizza;Object;1;1
+17;7/10/2019 10:00:00 PM;calabresa;Object;1;1
 18;7/10/2019 10:00:00 PM;portuguesa;Object;1;1
-20;4/19/2021 3:09:50 PM;AutobiographicalStorage/Images/Knob.png;Imagery;1;0.2557754
-21;4/19/2021 3:09:50 PM;2021-04-19;Time;1;0.2557754
-22;4/21/2021 2:38:34 PM;1989;Time;1;1
-19;4/21/2021 3:23:54 PM;Knob;Person;1;1
-23;4/21/2021 2:38:41 PM;computer_science;Activity;1;0.2557754
+19;5/4/2021 3:26:50 PM;entity;Object;1;1
+20;5/4/2021 3:26:50 PM;physical entity;Object;1;1
+21;5/4/2021 3:26:50 PM;abstraction;Object;1;1
+22;5/4/2021 3:26:50 PM;abstract entity;Object;1;1
+23;5/4/2021 3:26:50 PM;thing;Object;1;1
+24;5/4/2021 3:26:50 PM;object;Object;1;1
+25;5/4/2021 3:26:50 PM;physical object;Object;1;1
+26;5/4/2021 3:26:50 PM;whole;Object;1;1
+27;5/4/2021 3:26:50 PM;unit;Object;1;1
+28;5/4/2021 3:26:50 PM;congener;Object;1;1
+29;5/4/2021 3:26:50 PM;living thing;Object;1;1
+30;5/4/2021 3:26:50 PM;animate thing;Object;1;1
+31;5/4/2021 3:26:50 PM;organism;Object;1;1
+32;5/4/2021 3:26:50 PM;being;Object;1;1
+33;5/4/2021 3:26:50 PM;benthos;Object;1;1
+34;5/4/2021 3:26:50 PM;dwarf;Object;1;1
+35;5/4/2021 3:26:50 PM;heterotroph;Object;1;1
+36;5/4/2021 3:26:50 PM;parent;Object;1;1
+37;5/4/2021 3:26:50 PM;life;Object;1;1
+38;5/4/2021 3:26:50 PM;biont;Object;1;1
+39;5/4/2021 3:26:50 PM;cell;Object;1;1
+40;5/4/2021 3:26:50 PM;causal agent;Object;1;1
+41;5/4/2021 3:26:50 PM;cause;Object;1;1
+42;5/4/2021 3:26:50 PM;causal agency;Object;1;1
+43;5/4/2021 3:26:50 PM;person;Object;1;1
+44;5/4/2021 3:26:50 PM;individual;Object;1;1
+45;5/4/2021 3:26:50 PM;someone;Object;1;1
+46;5/4/2021 3:26:50 PM;somebody;Object;1;1
+47;5/4/2021 3:26:50 PM;mortal;Object;1;1
+48;5/4/2021 3:26:50 PM;soul;Object;1;1
+49;5/4/2021 3:26:50 PM;animal;Object;1;1
+50;5/4/2021 3:26:50 PM;animate being;Object;1;1
+51;5/4/2021 3:26:50 PM;beast;Object;1;1
+52;5/4/2021 3:26:50 PM;brute;Object;1;1
+53;5/4/2021 3:26:50 PM;creature;Object;1;1
+54;5/4/2021 3:26:50 PM;fauna;Object;1;1
+55;5/4/2021 3:26:50 PM;plant;Object;1;1
+56;5/4/2021 3:26:50 PM;flora;Object;1;1
+57;5/4/2021 3:26:50 PM;plant life;Object;1;1
+58;5/4/2021 3:26:50 PM;native;Object;1;1
+59;5/4/2021 3:26:50 PM;natural object;Object;1;1
+60;5/4/2021 3:26:50 PM;substance;Object;1;1
+61;5/4/2021 3:26:50 PM;substance;Object;1;1
+62;5/4/2021 3:26:50 PM;matter;Object;1;1
+63;5/4/2021 3:26:50 PM;food;Object;1;1
+64;5/4/2021 3:26:50 PM;nutrient;Object;1;1
+65;5/4/2021 3:26:50 PM;nutrient;Object;1;1
+66;5/4/2021 3:26:50 PM;artifact;Object;1;1
+67;5/4/2021 3:26:50 PM;artefact;Object;1;1
+68;5/4/2021 3:26:50 PM;article;Object;1;1
+69;5/4/2021 3:26:50 PM;psychological feature;Object;1;1
+70;5/4/2021 3:26:50 PM;cognition;Object;1;1
+71;5/4/2021 3:26:50 PM;knowledge;Object;1;1
+72;5/4/2021 3:26:50 PM;noesis;Object;1;1
+73;5/4/2021 3:26:50 PM;motivation;Object;1;1
+74;5/4/2021 3:26:50 PM;motive;Object;1;1
+75;5/4/2021 3:26:50 PM;need;Object;1;1
+76;5/4/2021 3:26:50 PM;attribute;Object;1;1
+77;5/4/2021 3:26:50 PM;state;Object;1;1
+78;5/4/2021 3:26:50 PM;feeling;Object;1;1
+79;5/4/2021 3:26:50 PM;location;Object;1;1
+80;5/4/2021 3:26:50 PM;shape;Object;1;1
+81;5/4/2021 3:26:50 PM;form;Object;1;1
+82;5/4/2021 3:26:50 PM;time;Object;1;1
+83;5/4/2021 3:26:50 PM;space;Object;1;1
+84;5/4/2021 3:26:50 PM;infinite;Object;1;1
+85;5/4/2021 3:26:50 PM;absolute space;Object;1;1
+86;5/4/2021 3:26:50 PM;phase space;Object;1;1
+87;5/4/2021 3:26:50 PM;event;Object;1;1
+88;5/4/2021 3:26:50 PM;process;Object;1;1
+89;5/4/2021 3:26:50 PM;physical process;Object;1;1
+90;5/4/2021 3:26:50 PM;act;Object;1;1
+91;5/4/2021 3:26:50 PM;deed;Object;1;1
+92;5/4/2021 3:26:50 PM;human action;Object;1;1
+93;5/4/2021 3:26:50 PM;human activity;Object;1;1
+94;5/4/2021 3:26:50 PM;group;Object;1;1
+95;5/4/2021 3:26:50 PM;grouping;Object;1;1
+96;5/4/2021 3:26:50 PM;relation;Object;1;1
+97;5/4/2021 3:26:50 PM;possession;Object;1;1
+98;5/4/2021 3:26:50 PM;social relation;Object;1;1
+99;5/4/2021 3:26:50 PM;communication;Object;1;1
+100;5/4/2021 3:26:50 PM;measure;Object;1;1
+101;5/4/2021 3:26:50 PM;quantity;Object;1;1
+102;5/4/2021 3:26:50 PM;amount;Object;1;1
+103;5/4/2021 3:26:50 PM;phenomenon;Object;1;1
+104;5/4/2021 3:26:50 PM;thing;Object;1;1
+105;5/4/2021 3:26:50 PM;kindness;Object;1;1
+106;5/4/2021 3:26:50 PM;benignity;Object;1;1
+107;5/4/2021 3:26:50 PM;abdominoplasty;Object;1;1
+108;5/4/2021 3:26:50 PM;tummy tuck;Object;1;1
+109;5/4/2021 3:26:50 PM;abort;Object;1;1
+110;5/4/2021 3:26:50 PM;accomplishment;Object;1;1
+111;5/4/2021 3:26:50 PM;achievement;Object;1;1
+112;5/4/2021 3:26:50 PM;agon;Object;1;1
+113;5/4/2021 3:26:50 PM;alienation;Object;1;1
+114;5/4/2021 3:26:50 PM;application;Object;1;1
+115;5/4/2021 3:26:50 PM;beachhead;Object;1;1
+116;5/4/2021 3:26:50 PM;foothold;Object;1;1
+117;5/4/2021 3:26:50 PM;cakewalk;Object;1;1
+118;5/4/2021 3:26:50 PM;feat;Object;1;1
+119;5/4/2021 3:26:50 PM;effort;Object;1;1
+120;5/4/2021 3:26:50 PM;exploit;Object;1;1
+121;5/4/2021 3:26:50 PM;masterpiece;Object;1;1
+122;5/4/2021 3:26:50 PM;masterstroke;Object;1;1
+123;5/4/2021 3:26:50 PM;credit;Object;1;1
+124;5/4/2021 3:26:50 PM;action;Object;1;1
+125;5/4/2021 3:26:50 PM;res gestae;Object;1;1
+126;5/4/2021 3:26:50 PM;course;Object;1;1
+127;5/4/2021 3:26:50 PM;course of action;Object;1;1
+128;5/4/2021 3:26:50 PM;blind alley;Object;1;1
+129;5/4/2021 3:26:50 PM;collision course;Object;1;1
+130;5/4/2021 3:26:50 PM;interaction;Object;1;1
+131;5/4/2021 3:26:50 PM;interplay;Object;1;1
+132;5/4/2021 3:26:50 PM;contact;Object;1;1
+133;5/4/2021 3:26:50 PM;brush;Object;1;1
+134;5/4/2021 3:26:50 PM;eye contact;Object;1;1
+135;5/4/2021 3:26:50 PM;fetch;Object;1;1
+136;5/4/2021 3:26:50 PM;placement;Object;1;1
+137;5/4/2021 3:26:50 PM;interchange;Object;1;1
+138;5/4/2021 3:26:50 PM;reciprocation;Object;1;1
+139;5/4/2021 3:26:50 PM;give-and-take;Object;1;1
+140;5/4/2021 3:26:50 PM;reciprocity;Object;1;1
+141;5/4/2021 3:26:50 PM;cross-fertilization;Object;1;1
+142;5/4/2021 3:26:50 PM;cross-fertilisation;Object;1;1
+143;5/4/2021 3:26:50 PM;dealings;Object;1;1
+144;5/4/2021 3:26:50 PM;traffic;Object;1;1
+145;5/4/2021 3:26:50 PM;relation;Object;1;1
+146;5/4/2021 3:26:50 PM;playing;Object;1;1
+147;5/4/2021 3:26:50 PM;play;Object;1;1
+148;5/4/2021 3:26:50 PM;swordplay;Object;1;1
+149;5/4/2021 3:26:50 PM;boondoggle;Object;1;1
+150;5/4/2021 3:26:50 PM;bowling;Object;1;1
+151;5/4/2021 3:26:50 PM;acquiring;Object;1;1
+152;5/4/2021 3:26:50 PM;getting;Object;1;1
+153;5/4/2021 3:26:50 PM;causing;Object;1;1
+154;5/4/2021 3:26:50 PM;causation;Object;1;1
+155;5/4/2021 3:26:50 PM;delivery;Object;1;1
+156;5/4/2021 3:26:50 PM;obstetrical delivery;Object;1;1
+157;5/4/2021 3:26:50 PM;departure;Object;1;1
+158;5/4/2021 3:26:50 PM;going;Object;1;1
+159;5/4/2021 3:26:50 PM;going away;Object;1;1
+160;5/4/2021 3:26:50 PM;leaving;Object;1;1
+161;5/4/2021 3:26:50 PM;derring-do;Object;1;1
+162;5/4/2021 3:26:50 PM;discovery;Object;1;1
+163;5/4/2021 3:26:50 PM;find;Object;1;1
+164;5/4/2021 3:26:50 PM;uncovering;Object;1;1
+165;5/4/2021 3:26:50 PM;disposal;Object;1;1
+166;5/4/2021 3:26:50 PM;disposition;Object;1;1
+167;5/4/2021 3:26:50 PM;hit;Object;1;1
+168;5/4/2021 3:26:50 PM;implementation;Object;1;1
+169;5/4/2021 3:26:50 PM;effectuation;Object;1;1
+170;5/4/2021 3:26:50 PM;egress;Object;1;1
+171;5/4/2021 3:26:50 PM;egression;Object;1;1
+172;5/4/2021 3:26:50 PM;emergence;Object;1;1
+173;5/4/2021 3:26:50 PM;equalization;Object;1;1
+174;5/4/2021 3:26:50 PM;equalisation;Object;1;1
+175;5/4/2021 3:26:50 PM;leveling;Object;1;1
+176;5/4/2021 3:26:50 PM;exhumation;Object;1;1
+177;5/4/2021 3:26:50 PM;disinterment;Object;1;1
+178;5/4/2021 3:26:50 PM;digging up;Object;1;1
+179;5/4/2021 3:26:50 PM;mitzvah;Object;1;1
+180;5/4/2021 3:26:50 PM;mitsvah;Object;1;1
+181;5/4/2021 3:26:50 PM;propulsion;Object;1;1
+182;5/4/2021 3:26:50 PM;actuation;Object;1;1
+183;5/4/2021 3:26:50 PM;rally;Object;1;1
+184;5/4/2021 3:26:50 PM;rallying;Object;1;1
+185;5/4/2021 3:26:50 PM;recovery;Object;1;1
+186;5/4/2021 3:26:50 PM;retrieval;Object;1;1
+187;5/4/2021 3:26:50 PM;running away;Object;1;1
+188;5/4/2021 3:26:50 PM;stunt;Object;1;1
+189;5/4/2021 3:26:50 PM;touch;Object;1;1
+190;5/4/2021 3:26:50 PM;touching;Object;1;1
+191;5/4/2021 3:26:50 PM;tour de force;Object;1;1
+192;5/4/2021 3:26:50 PM;performance;Object;1;1
+193;5/4/2021 3:26:50 PM;overachievement;Object;1;1
+194;5/4/2021 3:26:50 PM;underachievement;Object;1;1
+195;5/4/2021 3:26:50 PM;record;Object;1;1
+196;5/4/2021 3:26:50 PM;track record;Object;1;1
+197;5/4/2021 3:26:50 PM;fait accompli;Object;1;1
+198;5/4/2021 3:26:50 PM;accomplished fact;Object;1;1
+199;5/4/2021 3:26:50 PM;going;Object;1;1
+200;5/4/2021 3:26:50 PM;sledding;Object;1;1
+201;5/4/2021 3:26:50 PM;arrival;Object;1;1
+202;5/4/2021 3:26:50 PM;reaching;Object;1;1
+203;5/4/2021 3:26:50 PM;arrival;Object;1;1
+204;5/4/2021 3:26:50 PM;attainment;Object;1;1
+205;5/4/2021 3:26:50 PM;advent;Object;1;1
+206;5/4/2021 3:26:50 PM;coming;Object;1;1
+207;5/4/2021 3:26:50 PM;entrance;Object;1;1
+208;5/4/2021 3:26:50 PM;entering;Object;1;1
+209;5/4/2021 3:26:50 PM;entry;Object;1;1
+210;5/4/2021 3:26:50 PM;ingress;Object;1;1
+211;5/4/2021 3:26:50 PM;incoming;Object;1;1
+212;5/4/2021 3:26:50 PM;incursion;Object;1;1
+213;5/4/2021 3:26:50 PM;intrusion;Object;1;1
+214;5/4/2021 3:26:50 PM;irruption;Object;1;1
+215;5/4/2021 3:26:50 PM;entree;Object;1;1
+216;5/4/2021 3:26:50 PM;entail;Object;1;1
+217;5/4/2021 3:26:50 PM;registration;Object;1;1
+218;5/4/2021 3:26:50 PM;enrollment;Object;1;1
+219;5/4/2021 3:26:50 PM;enrolment;Object;1;1
+220;5/4/2021 3:26:50 PM;appearance;Object;1;1
+221;5/4/2021 3:26:50 PM;apparition;Object;1;1
+222;5/4/2021 3:26:50 PM;emergence;Object;1;1
+223;5/4/2021 3:26:50 PM;emersion;Object;1;1
+224;5/4/2021 3:26:50 PM;reappearance;Object;1;1
+225;5/4/2021 3:26:50 PM;return;Object;1;1
+226;5/4/2021 3:26:50 PM;comeback;Object;1;1
+227;5/4/2021 3:26:50 PM;return;Object;1;1
+228;5/4/2021 3:26:50 PM;homecoming;Object;1;1
+229;5/4/2021 3:26:50 PM;repatriation;Object;1;1
+230;5/4/2021 3:26:50 PM;penetration;Object;1;1
+231;5/4/2021 3:26:50 PM;interpenetration;Object;1;1
+232;5/4/2021 3:26:50 PM;permeation;Object;1;1
+233;5/4/2021 3:26:50 PM;market penetration;Object;1;1
+234;5/4/2021 3:26:50 PM;anchorage;Object;1;1
+235;5/4/2021 3:26:50 PM;docking;Object;1;1
+236;5/4/2021 3:26:50 PM;moorage;Object;1;1
+237;5/4/2021 3:26:50 PM;dockage;Object;1;1
+238;5/4/2021 3:26:50 PM;tying up;Object;1;1
+239;5/4/2021 3:26:50 PM;landing;Object;1;1
+240;5/4/2021 3:26:50 PM;landing;Object;1;1
+241;5/4/2021 3:26:50 PM;forced landing;Object;1;1
+242;5/4/2021 3:26:50 PM;emergency landing;Object;1;1
+243;5/4/2021 3:26:50 PM;breaking away;Object;1;1
+244;5/4/2021 3:26:50 PM;farewell;Object;1;1
+245;5/4/2021 3:26:50 PM;leave;Object;1;1
+246;5/4/2021 3:26:50 PM;leave-taking;Object;1;1
+247;5/4/2021 3:26:50 PM;parting;Object;1;1
+248;5/4/2021 3:26:50 PM;french leave;Object;1;1
+249;5/4/2021 3:26:50 PM;valediction;Object;1;1
+250;5/4/2021 3:26:50 PM;disappearance;Object;1;1
+251;5/4/2021 3:26:50 PM;disappearing;Object;1;1
+252;5/4/2021 3:26:50 PM;vanishing;Object;1;1
+253;5/4/2021 3:26:50 PM;withdrawal;Object;1;1
+254;5/4/2021 3:26:50 PM;effacement;Object;1;1
+255;5/4/2021 3:26:50 PM;self-effacement;Object;1;1
+256;5/4/2021 3:26:50 PM;retreat;Object;1;1
+257;5/4/2021 3:26:50 PM;retirement;Object;1;1
+258;5/4/2021 3:26:50 PM;retreat;Object;1;1
+259;5/4/2021 3:26:50 PM;evacuation;Object;1;1
+260;5/4/2021 3:26:50 PM;medical evacuation;Object;1;1
+261;5/4/2021 3:26:50 PM;medevac;Object;1;1
+262;5/4/2021 3:26:50 PM;medivac;Object;1;1
+263;5/4/2021 3:26:50 PM;decampment;Object;1;1
+264;5/4/2021 3:26:50 PM;desertion;Object;1;1
+265;5/4/2021 3:26:50 PM;abandonment;Object;1;1
+266;5/4/2021 3:26:50 PM;defection;Object;1;1
+267;5/4/2021 3:26:50 PM;abscondment;Object;1;1
+268;5/4/2021 3:26:50 PM;decampment;Object;1;1
+269;5/4/2021 3:26:50 PM;absence without leave;Object;1;1
+270;5/4/2021 3:26:50 PM;unauthorized absence;Object;1;1
+271;5/4/2021 3:26:50 PM;deviationism;Object;1;1
+272;5/4/2021 3:26:50 PM;emigration;Object;1;1
+273;5/4/2021 3:26:50 PM;out-migration;Object;1;1
+274;5/4/2021 3:26:50 PM;expatriation;Object;1;1
+275;5/4/2021 3:26:50 PM;immigration;Object;1;1
+276;5/4/2021 3:26:50 PM;in-migration;Object;1;1
+277;5/4/2021 3:26:50 PM;aliyah;Object;1;1
+278;5/4/2021 3:26:50 PM;pullback;Object;1;1
+279;5/4/2021 3:26:50 PM;retreat;Object;1;1
+280;5/4/2021 3:26:50 PM;standdown;Object;1;1
+281;5/4/2021 3:26:50 PM;stand-down;Object;1;1
+282;5/4/2021 3:26:50 PM;disengagement;Object;1;1
+283;5/4/2021 3:26:50 PM;fallback;Object;1;1
+284;5/4/2021 3:26:50 PM;pullout;Object;1;1
+285;5/4/2021 3:26:50 PM;receding;Object;1;1
+286;5/4/2021 3:26:50 PM;recession;Object;1;1
+287;5/4/2021 3:26:50 PM;sailing;Object;1;1
+288;5/4/2021 3:26:50 PM;amphibious landing;Object;1;1
+289;5/4/2021 3:26:50 PM;debarkation;Object;1;1
+290;5/4/2021 3:26:50 PM;disembarkation;Object;1;1
+291;5/4/2021 3:26:50 PM;disembarkment;Object;1;1
+292;5/4/2021 3:26:50 PM;going ashore;Object;1;1
+293;5/4/2021 3:26:50 PM;boarding;Object;1;1
+294;5/4/2021 3:26:50 PM;embarkation;Object;1;1
+295;5/4/2021 3:26:50 PM;embarkment;Object;1;1
+296;5/4/2021 3:26:50 PM;exit;Object;1;1
+297;5/4/2021 3:26:50 PM;elopement;Object;1;1
+298;5/4/2021 3:26:50 PM;escape;Object;1;1
+299;5/4/2021 3:26:50 PM;flight;Object;1;1
+300;5/4/2021 3:26:50 PM;evasion;Object;1;1
+301;5/4/2021 3:26:50 PM;slip;Object;1;1
+302;5/4/2021 3:26:50 PM;elusion;Object;1;1
+303;5/4/2021 3:26:50 PM;eluding;Object;1;1
+304;5/4/2021 3:26:50 PM;maneuver;Object;1;1
+305;5/4/2021 3:26:50 PM;manoeuvre;Object;1;1
+306;5/4/2021 3:26:50 PM;evasive action;Object;1;1
+307;5/4/2021 3:26:50 PM;clinch;Object;1;1
+308;5/4/2021 3:26:50 PM;dodge;Object;1;1
+309;5/4/2021 3:26:50 PM;break;Object;1;1
+310;5/4/2021 3:26:50 PM;breakout;Object;1;1
+311;5/4/2021 3:26:50 PM;jailbreak;Object;1;1
+312;5/4/2021 3:26:50 PM;gaolbreak;Object;1;1
+313;5/4/2021 3:26:50 PM;prisonbreak;Object;1;1
+314;5/4/2021 3:26:50 PM;prison-breaking;Object;1;1
+315;5/4/2021 3:26:50 PM;getaway;Object;1;1
+316;5/4/2021 3:26:50 PM;lam;Object;1;1
+317;5/4/2021 3:26:50 PM;exodus;Object;1;1
+318;5/4/2021 3:26:50 PM;hegira;Object;1;1
+319;5/4/2021 3:26:50 PM;hejira;Object;1;1
+320;5/4/2021 3:26:50 PM;hegira;Object;1;1
+321;5/4/2021 3:26:50 PM;hejira;Object;1;1
+322;5/4/2021 3:26:50 PM;skedaddle;Object;1;1
+323;5/4/2021 3:26:50 PM;underground railroad;Object;1;1
+324;5/4/2021 3:26:50 PM;underground railway;Object;1;1
+325;5/4/2021 3:26:50 PM;close call;Object;1;1
+326;5/4/2021 3:26:50 PM;close shave;Object;1;1
+327;5/4/2021 3:26:50 PM;squeak;Object;1;1
+328;5/4/2021 3:26:50 PM;squeaker;Object;1;1
+329;5/4/2021 3:26:50 PM;narrow escape;Object;1;1
+330;5/4/2021 3:26:50 PM;surfacing;Object;1;1
+331;5/4/2021 3:26:50 PM;dispatch;Object;1;1
+332;5/4/2021 3:26:50 PM;despatch;Object;1;1
+333;5/4/2021 3:26:50 PM;shipment;Object;1;1
+334;5/4/2021 3:26:50 PM;reshipment;Object;1;1
+335;5/4/2021 3:26:50 PM;consummation;Object;1;1
+336;5/4/2021 3:26:50 PM;consummation;Object;1;1
+337;5/4/2021 3:26:50 PM;realization;Object;1;1
+338;5/4/2021 3:26:50 PM;realisation;Object;1;1
+339;5/4/2021 3:26:50 PM;fruition;Object;1;1
+340;5/4/2021 3:26:50 PM;orgasm;Object;1;1
+341;5/4/2021 3:26:50 PM;climax;Object;1;1
+342;5/4/2021 3:26:50 PM;sexual climax;Object;1;1
+343;5/4/2021 3:26:50 PM;coming;Object;1;1
+344;5/4/2021 3:26:50 PM;male orgasm;Object;1;1
+345;5/4/2021 3:26:50 PM;fulfillment;Object;1;1
+346;5/4/2021 3:26:50 PM;fulfilment;Object;1;1
+347;5/4/2021 3:26:50 PM;self-fulfillment;Object;1;1
+348;5/4/2021 3:26:50 PM;self-realization;Object;1;1
+349;5/4/2021 3:26:50 PM;self-realisation;Object;1;1
+350;5/4/2021 3:26:50 PM;attainment;Object;1;1
+351;5/4/2021 3:26:50 PM;record;Object;1;1
+352;5/4/2021 3:26:50 PM;track record;Object;1;1
+353;5/4/2021 3:26:50 PM;world record;Object;1;1
+354;5/4/2021 3:26:50 PM;success;Object;1;1
+355;5/4/2021 3:26:50 PM;winning;Object;1;1
+356;5/4/2021 3:26:50 PM;blockbuster;Object;1;1
+357;5/4/2021 3:26:50 PM;megahit;Object;1;1
+358;5/4/2021 3:26:50 PM;smash hit;Object;1;1
+359;5/4/2021 3:26:50 PM;sleeper;Object;1;1
+360;5/4/2021 3:26:50 PM;hit;Object;1;1
+361;5/4/2021 3:26:50 PM;smash;Object;1;1
+362;5/4/2021 3:26:50 PM;smasher;Object;1;1
+363;5/4/2021 3:26:50 PM;strike;Object;1;1
+364;5/4/2021 3:26:50 PM;bang;Object;1;1
+365;5/4/2021 3:26:50 PM;bell ringer;Object;1;1
+366;5/4/2021 3:26:50 PM;bull's eye;Object;1;1
+367;5/4/2021 3:26:50 PM;mark;Object;1;1
+368;5/4/2021 3:26:50 PM;home run;Object;1;1
+369;5/4/2021 3:26:50 PM;ennoblement;Object;1;1
+370;5/4/2021 3:26:50 PM;conquest;Object;1;1
+371;5/4/2021 3:26:50 PM;coup;Object;1;1
+372;5/4/2021 3:26:50 PM;flying colors;Object;1;1
+373;5/4/2021 3:26:50 PM;flying colours;Object;1;1
+374;5/4/2021 3:26:50 PM;passing;Object;1;1
+375;5/4/2021 3:26:50 PM;pass;Object;1;1
+376;5/4/2021 3:26:50 PM;qualifying;Object;1;1
+377;5/4/2021 3:26:50 PM;credit;Object;1;1
+378;5/4/2021 3:26:50 PM;course credit;Object;1;1
+379;5/4/2021 3:26:50 PM;semester hour;Object;1;1
+380;5/4/2021 3:26:50 PM;credit hour;Object;1;1
+381;5/4/2021 3:26:50 PM;nonaccomplishment;Object;1;1
+382;5/4/2021 3:26:50 PM;nonachievement;Object;1;1
+383;5/4/2021 3:26:50 PM;failure;Object;1;1
+384;5/4/2021 3:26:50 PM;failure;Object;1;1
+385;5/4/2021 3:26:50 PM;failing;Object;1;1
+386;5/4/2021 3:26:50 PM;flunk;Object;1;1
+387;5/4/2021 3:26:50 PM;naught;Object;1;1
+388;5/4/2021 3:26:50 PM;cut;Object;1;1
+389;5/4/2021 3:26:50 PM;default;Object;1;1
+390;5/4/2021 3:26:50 PM;loss;Object;1;1
+391;5/4/2021 3:26:50 PM;capitulation;Object;1;1
+392;5/4/2021 3:26:50 PM;fall;Object;1;1
+393;5/4/2021 3:26:50 PM;surrender;Object;1;1
+394;5/4/2021 3:26:50 PM;frustration;Object;1;1
+395;5/4/2021 3:26:50 PM;thwarting;Object;1;1
+396;5/4/2021 3:26:50 PM;foiling;Object;1;1
+397;5/4/2021 3:26:50 PM;overturn;Object;1;1
+398;5/4/2021 3:26:50 PM;upset;Object;1;1
+399;5/4/2021 3:26:50 PM;backsliding;Object;1;1
+400;5/4/2021 3:26:50 PM;lapse;Object;1;1
+401;5/4/2021 3:26:50 PM;lapsing;Object;1;1
+402;5/4/2021 3:26:50 PM;relapse;Object;1;1
+403;5/4/2021 3:26:50 PM;relapsing;Object;1;1
+404;5/4/2021 3:26:50 PM;reversion;Object;1;1
+405;5/4/2021 3:26:50 PM;reverting;Object;1;1
+406;5/4/2021 3:26:50 PM;recidivism;Object;1;1
+407;5/4/2021 3:26:50 PM;disappointment;Object;1;1
+408;5/4/2021 3:26:50 PM;dashing hopes;Object;1;1
+409;5/4/2021 3:26:50 PM;breach;Object;1;1
+410;5/4/2021 3:26:50 PM;copout;Object;1;1
+411;5/4/2021 3:26:50 PM;breach of contract;Object;1;1
+412;5/4/2021 3:26:50 PM;anticipatory breach;Object;1;1
+413;5/4/2021 3:26:50 PM;constructive breach;Object;1;1
+414;5/4/2021 3:26:50 PM;breach of duty;Object;1;1
+415;5/4/2021 3:26:50 PM;breach of the covenant of warranty;Object;1;1
+416;5/4/2021 3:26:50 PM;breach of promise;Object;1;1
+417;5/4/2021 3:26:50 PM;breach of trust;Object;1;1
+418;5/4/2021 3:26:50 PM;breach of trust with fraudulent intent;Object;1;1
+419;5/4/2021 3:26:50 PM;breach of warranty;Object;1;1
+420;5/4/2021 3:26:50 PM;leaning;Object;1;1
+421;5/4/2021 3:26:50 PM;material breach;Object;1;1
+422;5/4/2021 3:26:50 PM;motivation;Object;1;1
+423;5/4/2021 3:26:50 PM;motivating;Object;1;1
+424;5/4/2021 3:26:50 PM;partial breach;Object;1;1
+425;5/4/2021 3:26:50 PM;mistake;Object;1;1
+426;5/4/2021 3:26:50 PM;error;Object;1;1
+427;5/4/2021 3:26:50 PM;fault;Object;1;1
+428;5/4/2021 3:26:50 PM;double fault;Object;1;1
+429;5/4/2021 3:26:50 PM;footfault;Object;1;1
+430;5/4/2021 3:26:50 PM;bobble;Object;1;1
+431;5/4/2021 3:26:50 PM;error;Object;1;1
+432;5/4/2021 3:26:50 PM;misplay;Object;1;1
+433;5/4/2021 3:26:50 PM;blot;Object;1;1
+434;5/4/2021 3:26:50 PM;smear;Object;1;1
+435;5/4/2021 3:26:50 PM;smirch;Object;1;1
+436;5/4/2021 3:26:50 PM;spot;Object;1;1
+437;5/4/2021 3:26:50 PM;stain;Object;1;1
+438;5/4/2021 3:26:50 PM;confusion;Object;1;1
+439;5/4/2021 3:26:50 PM;mix-up;Object;1;1
+440;5/4/2021 3:26:50 PM;incursion;Object;1;1
+441;5/4/2021 3:26:50 PM;miscalculation;Object;1;1
+442;5/4/2021 3:26:50 PM;misreckoning;Object;1;1
+443;5/4/2021 3:26:50 PM;misestimation;Object;1;1
+444;5/4/2021 3:26:50 PM;backfire;Object;1;1
+445;5/4/2021 3:26:50 PM;boomerang;Object;1;1
+446;5/4/2021 3:26:50 PM;rounding;Object;1;1
+447;5/4/2021 3:26:50 PM;rounding error;Object;1;1
+448;5/4/2021 3:26:50 PM;truncation error;Object;1;1
+449;5/4/2021 3:26:50 PM;distortion;Object;1;1
+450;5/4/2021 3:26:50 PM;slip;Object;1;1
+451;5/4/2021 3:26:50 PM;receipt;Object;1;1
+452;5/4/2021 3:26:50 PM;slip-up;Object;1;1
+453;5/4/2021 3:26:50 PM;miscue;Object;1;1
+454;5/4/2021 3:26:50 PM;parapraxis;Object;1;1
+455;5/4/2021 3:26:50 PM;freudian slip;Object;1;1
+456;5/4/2021 3:26:50 PM;offside;Object;1;1
+457;5/4/2021 3:26:50 PM;oversight;Object;1;1
+458;5/4/2021 3:26:50 PM;lapse;Object;1;1
+459;5/4/2021 3:26:50 PM;omission;Object;1;1
+460;5/4/2021 3:26:50 PM;skip;Object;1;1
+461;5/4/2021 3:26:50 PM;blunder;Object;1;1
+462;5/4/2021 3:26:50 PM;blooper;Object;1;1
+463;5/4/2021 3:26:50 PM;bloomer;Object;1;1
+464;5/4/2021 3:26:50 PM;bungle;Object;1;1
+465;5/4/2021 3:26:50 PM;pratfall;Object;1;1
+466;5/4/2021 3:26:50 PM;foul-up;Object;1;1
+467;5/4/2021 3:26:50 PM;fuckup;Object;1;1
+468;5/4/2021 3:26:50 PM;flub;Object;1;1
+469;5/4/2021 3:26:50 PM;botch;Object;1;1
+470;5/4/2021 3:26:50 PM;boner;Object;1;1
+471;5/4/2021 3:26:50 PM;boo-boo;Object;1;1
+472;5/4/2021 3:26:50 PM;snafu;Object;1;1
+473;5/4/2021 3:26:50 PM;spectacle;Object;1;1
+474;5/4/2021 3:26:50 PM;ballup;Object;1;1
+475;5/4/2021 3:26:50 PM;balls-up;Object;1;1
+476;5/4/2021 3:26:50 PM;cockup;Object;1;1
+477;5/4/2021 3:26:50 PM;mess-up;Object;1;1
+478;5/4/2021 3:26:50 PM;bull;Object;1;1
+479;5/4/2021 3:26:50 PM;fumble;Object;1;1
+480;5/4/2021 3:26:50 PM;muff;Object;1;1
+481;5/4/2021 3:26:50 PM;fluff;Object;1;1
+482;5/4/2021 3:26:50 PM;faux pas;Object;1;1
+483;5/4/2021 3:26:50 PM;gaffe;Object;1;1
+484;5/4/2021 3:26:50 PM;solecism;Object;1;1
+485;5/4/2021 3:26:50 PM;slip;Object;1;1
+486;5/4/2021 3:26:50 PM;gaucherie;Object;1;1
+487;5/4/2021 3:26:50 PM;howler;Object;1;1
+488;5/4/2021 3:26:50 PM;clanger;Object;1;1
+489;5/4/2021 3:26:50 PM;trip;Object;1;1
+490;5/4/2021 3:26:50 PM;trip-up;Object;1;1
+491;5/4/2021 3:26:50 PM;stumble;Object;1;1
+492;5/4/2021 3:26:50 PM;misstep;Object;1;1
+493;5/4/2021 3:26:50 PM;spill;Object;1;1
+494;5/4/2021 3:26:50 PM;tumble;Object;1;1
+495;5/4/2021 3:26:50 PM;fall;Object;1;1
+496;5/4/2021 3:26:50 PM;pratfall;Object;1;1
+497;5/4/2021 3:26:50 PM;wipeout;Object;1;1
+498;5/4/2021 3:26:50 PM;acquisition;Object;1;1
+499;5/4/2021 3:26:50 PM;obtainment;Object;1;1
+500;5/4/2021 3:26:50 PM;obtention;Object;1;1
+501;5/4/2021 3:26:50 PM;catching;Object;1;1
+502;5/4/2021 3:26:50 PM;contracting;Object;1;1
+503;5/4/2021 3:26:50 PM;incurring;Object;1;1
+504;5/4/2021 3:26:50 PM;moneymaking;Object;1;1
+505;5/4/2021 3:26:50 PM;annexation;Object;1;1
+506;5/4/2021 3:26:50 PM;pork-barreling;Object;1;1
+507;5/4/2021 3:26:50 PM;purchase;Object;1;1
+508;5/4/2021 3:26:50 PM;redemption;Object;1;1
+509;5/4/2021 3:26:50 PM;repurchase;Object;1;1
+510;5/4/2021 3:26:50 PM;buyback;Object;1;1
+511;5/4/2021 3:26:50 PM;trading;Object;1;1
+512;5/4/2021 3:26:50 PM;abortion;Object;1;1
+513;5/4/2021 3:26:50 PM;bond trading;Object;1;1
+514;5/4/2021 3:26:50 PM;bond-trading activity;Object;1;1
+515;5/4/2021 3:26:50 PM;program trading;Object;1;1
+516;5/4/2021 3:26:50 PM;short sale;Object;1;1
+517;5/4/2021 3:26:50 PM;short selling;Object;1;1
+518;5/4/2021 3:26:50 PM;short covering;Object;1;1
+519;5/4/2021 3:26:50 PM;insider trading;Object;1;1
+520;5/4/2021 3:26:50 PM;naked option;Object;1;1
+521;5/4/2021 3:26:50 PM;covered option;Object;1;1
+522;5/4/2021 3:26:50 PM;call option;Object;1;1
+523;5/4/2021 3:26:50 PM;call;Object;1;1
+524;5/4/2021 3:26:50 PM;put option;Object;1;1
+525;5/4/2021 3:26:50 PM;put;Object;1;1
+526;5/4/2021 3:26:50 PM;straddle;Object;1;1
+527;5/4/2021 3:26:50 PM;incentive option;Object;1;1
+528;5/4/2021 3:26:50 PM;incentive stock option;Object;1;1
+529;5/4/2021 3:26:50 PM;buying;Object;1;1
+530;5/4/2021 3:26:50 PM;purchasing;Object;1;1
+531;5/4/2021 3:26:50 PM;shopping;Object;1;1
+532;5/4/2021 3:26:50 PM;marketing;Object;1;1
+533;5/4/2021 3:26:50 PM;mail-order buying;Object;1;1
+534;5/4/2021 3:26:50 PM;catalog buying;Object;1;1
+535;5/4/2021 3:26:50 PM;viatication;Object;1;1
+536;5/4/2021 3:26:50 PM;viaticus;Object;1;1
+537;5/4/2021 3:26:50 PM;acceptance;Object;1;1
+538;5/4/2021 3:26:50 PM;succession;Object;1;1
+539;5/4/2021 3:26:50 PM;taking over;Object;1;1
+540;5/4/2021 3:26:50 PM;assumption;Object;1;1
+541;5/4/2021 3:26:50 PM;laying claim;Object;1;1
+542;5/4/2021 3:26:50 PM;assumption;Object;1;1
+543;5/4/2021 3:26:50 PM;position;Object;1;1
+544;5/4/2021 3:26:50 PM;inheritance;Object;1;1
+545;5/4/2021 3:26:50 PM;heritage;Object;1;1
+546;5/4/2021 3:26:50 PM;procurement;Object;1;1
+547;5/4/2021 3:26:50 PM;procurance;Object;1;1
+548;5/4/2021 3:26:50 PM;procural;Object;1;1
+549;5/4/2021 3:26:50 PM;appropriation;Object;1;1
+550;5/4/2021 3:26:50 PM;borrowing;Object;1;1
+551;5/4/2021 3:26:50 PM;adoption;Object;1;1
+552;5/4/2021 3:26:50 PM;naturalization;Object;1;1
+553;5/4/2021 3:26:50 PM;naturalisation;Object;1;1
+554;5/4/2021 3:26:50 PM;misappropriation;Object;1;1
+555;5/4/2021 3:26:50 PM;preemption;Object;1;1
+556;5/4/2021 3:26:50 PM;pre-emption;Object;1;1
+557;5/4/2021 3:26:50 PM;seizure;Object;1;1
+558;5/4/2021 3:26:50 PM;spitting;Object;1;1
+559;5/4/2021 3:26:50 PM;usurpation;Object;1;1
+560;5/4/2021 3:26:50 PM;confiscation;Object;1;1
+561;5/4/2021 3:26:50 PM;arrogation;Object;1;1
+562;5/4/2021 3:26:50 PM;distress;Object;1;1
+563;5/4/2021 3:26:50 PM;distraint;Object;1;1
+564;5/4/2021 3:26:50 PM;expropriation;Object;1;1
+565;5/4/2021 3:26:50 PM;impoundment;Object;1;1
+566;5/4/2021 3:26:50 PM;impounding;Object;1;1
+567;5/4/2021 3:26:50 PM;internment;Object;1;1
+568;5/4/2021 3:26:50 PM;poundage;Object;1;1
+569;5/4/2021 3:26:50 PM;drug bust;Object;1;1
+570;5/4/2021 3:26:50 PM;drugs bust;Object;1;1
+571;5/4/2021 3:26:50 PM;impress;Object;1;1
+572;5/4/2021 3:26:50 PM;impressment;Object;1;1
+573;5/4/2021 3:26:50 PM;occupation;Object;1;1
+574;5/4/2021 3:26:50 PM;occupancy;Object;1;1
+575;5/4/2021 3:26:50 PM;moving in;Object;1;1
+576;5/4/2021 3:26:50 PM;preoccupancy;Object;1;1
+577;5/4/2021 3:26:50 PM;preoccupation;Object;1;1
+578;5/4/2021 3:26:50 PM;sequestration;Object;1;1
+579;5/4/2021 3:26:50 PM;requisition;Object;1;1
+580;5/4/2021 3:26:50 PM;grant;Object;1;1
+581;5/4/2021 3:26:50 PM;subsidization;Object;1;1
+582;5/4/2021 3:26:50 PM;subsidisation;Object;1;1
+583;5/4/2021 3:26:50 PM;award;Object;1;1
+584;5/4/2021 3:26:50 PM;awarding;Object;1;1
+585;5/4/2021 3:26:50 PM;addiction;Object;1;1
+586;5/4/2021 3:26:50 PM;block grant;Object;1;1
+587;5/4/2021 3:26:50 PM;grant-in-aid;Object;1;1
+588;5/4/2021 3:26:50 PM;capture;Object;1;1
+589;5/4/2021 3:26:50 PM;gaining control;Object;1;1
+590;5/4/2021 3:26:50 PM;seizure;Object;1;1
+591;5/4/2021 3:26:50 PM;apprehension;Object;1;1
+592;5/4/2021 3:26:50 PM;arrest;Object;1;1
+593;5/4/2021 3:26:50 PM;catch;Object;1;1
+594;5/4/2021 3:26:50 PM;collar;Object;1;1
+595;5/4/2021 3:26:50 PM;pinch;Object;1;1
+596;5/4/2021 3:26:50 PM;taking into custody;Object;1;1
+597;5/4/2021 3:26:50 PM;conquest;Object;1;1
+598;5/4/2021 3:26:50 PM;conquering;Object;1;1
+599;5/4/2021 3:26:50 PM;subjection;Object;1;1
+600;5/4/2021 3:26:50 PM;subjugation;Object;1;1
+601;5/4/2021 3:26:50 PM;enslavement;Object;1;1
+602;5/4/2021 3:26:50 PM;restitution;Object;1;1
+603;5/4/2021 3:26:50 PM;return;Object;1;1
+604;5/4/2021 3:26:50 PM;restoration;Object;1;1
+605;5/4/2021 3:26:50 PM;regaining;Object;1;1
+606;5/4/2021 3:26:50 PM;clawback;Object;1;1
+607;5/4/2021 3:26:50 PM;repossession;Object;1;1
+608;5/4/2021 3:26:50 PM;foreclosure;Object;1;1
+609;5/4/2021 3:26:50 PM;reception;Object;1;1
+610;5/4/2021 3:26:50 PM;appointment;Object;1;1
+611;5/4/2021 3:26:50 PM;comb-out;Object;1;1
+612;5/4/2021 3:26:50 PM;giving;Object;1;1
+613;5/4/2021 3:26:50 PM;abandonment;Object;1;1
+614;5/4/2021 3:26:50 PM;discard;Object;1;1
+615;5/4/2021 3:26:50 PM;throwing away;Object;1;1
+616;5/4/2021 3:26:50 PM;staging;Object;1;1
+617;5/4/2021 3:26:50 PM;discard;Object;1;1
+618;5/4/2021 3:26:50 PM;mine disposal;Object;1;1
+619;5/4/2021 3:26:50 PM;minesweeping;Object;1;1
+620;5/4/2021 3:26:50 PM;sewage disposal;Object;1;1
+621;5/4/2021 3:26:50 PM;bait and switch;Object;1;1
+622;5/4/2021 3:26:50 PM;private treaty;Object;1;1
+623;5/4/2021 3:26:50 PM;auction;Object;1;1
+624;5/4/2021 3:26:50 PM;auction sale;Object;1;1
+625;5/4/2021 3:26:50 PM;vendue;Object;1;1
+626;5/4/2021 3:26:50 PM;bootlegging;Object;1;1
+627;5/4/2021 3:26:50 PM;bootlegging;Object;1;1
+628;5/4/2021 3:26:50 PM;capitalization;Object;1;1
+629;5/4/2021 3:26:50 PM;capitalisation;Object;1;1
+630;5/4/2021 3:26:50 PM;overcapitalization;Object;1;1
+631;5/4/2021 3:26:50 PM;overcapitalisation;Object;1;1
+632;5/4/2021 3:26:50 PM;reclamation;Object;1;1
+633;5/4/2021 3:26:50 PM;rescue;Object;1;1
+634;5/4/2021 3:26:50 PM;deliverance;Object;1;1
+635;5/4/2021 3:26:50 PM;delivery;Object;1;1
+636;5/4/2021 3:26:50 PM;saving;Object;1;1
+637;5/4/2021 3:26:50 PM;lifesaving;Object;1;1
+638;5/4/2021 3:26:50 PM;redemption;Object;1;1
+639;5/4/2021 3:26:50 PM;salvation;Object;1;1
+640;5/4/2021 3:26:50 PM;absolution;Object;1;1
+641;5/4/2021 3:26:50 PM;remission;Object;1;1
+642;5/4/2021 3:26:50 PM;remittal;Object;1;1
+643;5/4/2021 3:26:50 PM;remission of sin;Object;1;1
+644;5/4/2021 3:26:50 PM;indulgence;Object;1;1
+645;5/4/2021 3:26:50 PM;conversion;Object;1;1
+646;5/4/2021 3:26:50 PM;rebirth;Object;1;1
+647;5/4/2021 3:26:50 PM;spiritual rebirth;Object;1;1
+648;5/4/2021 3:26:50 PM;proselytism;Object;1;1
+649;5/4/2021 3:26:50 PM;expiation;Object;1;1
+650;5/4/2021 3:26:50 PM;atonement;Object;1;1
+651;5/4/2021 3:26:50 PM;propitiation;Object;1;1
+652;5/4/2021 3:26:50 PM;reparation;Object;1;1
+653;5/4/2021 3:26:50 PM;amends;Object;1;1
+654;5/4/2021 3:26:50 PM;liberation;Object;1;1
+655;5/4/2021 3:26:50 PM;release;Object;1;1
+656;5/4/2021 3:26:50 PM;freeing;Object;1;1
+657;5/4/2021 3:26:50 PM;jail delivery;Object;1;1
+658;5/4/2021 3:26:50 PM;reclamation;Object;1;1
+659;5/4/2021 3:26:50 PM;reformation;Object;1;1
+660;5/4/2021 3:26:50 PM;salvage;Object;1;1
+661;5/4/2021 3:26:50 PM;salvage;Object;1;1
+662;5/4/2021 3:26:50 PM;double stopping;Object;1;1
+663;5/4/2021 3:26:50 PM;salvation;Object;1;1
+664;5/4/2021 3:26:50 PM;search and rescue mission;Object;1;1
+665;5/4/2021 3:26:50 PM;ransom;Object;1;1
+666;5/4/2021 3:26:50 PM;recapture;Object;1;1
+667;5/4/2021 3:26:50 PM;retaking;Object;1;1
+668;5/4/2021 3:26:50 PM;recapture;Object;1;1
+669;5/4/2021 3:26:50 PM;invocation;Object;1;1
+670;5/4/2021 3:26:50 PM;instrumentation;Object;1;1
+671;5/4/2021 3:26:50 PM;performance;Object;1;1
+672;5/4/2021 3:26:50 PM;execution;Object;1;1
+673;5/4/2021 3:26:50 PM;carrying out;Object;1;1
+674;5/4/2021 3:26:50 PM;carrying into action;Object;1;1
+675;5/4/2021 3:26:50 PM;specific performance;Object;1;1
+676;5/4/2021 3:26:50 PM;linguistic performance;Object;1;1
+677;5/4/2021 3:26:50 PM;mechanism;Object;1;1
+678;5/4/2021 3:26:50 PM;mechanics;Object;1;1
+679;5/4/2021 3:26:50 PM;service;Object;1;1
+680;5/4/2021 3:26:50 PM;curb service;Object;1;1
+681;5/4/2021 3:26:50 PM;self-service;Object;1;1
+682;5/4/2021 3:26:50 PM;valet parking;Object;1;1
+683;5/4/2021 3:26:50 PM;dramatic production;Object;1;1
+684;5/4/2021 3:26:50 PM;dramatic performance;Object;1;1
+685;5/4/2021 3:26:50 PM;encore;Object;1;1
+686;5/4/2021 3:26:50 PM;extemporization;Object;1;1
+687;5/4/2021 3:26:50 PM;extemporisation;Object;1;1
+688;5/4/2021 3:26:50 PM;improvisation;Object;1;1
+689;5/4/2021 3:26:50 PM;juggle;Object;1;1
+690;5/4/2021 3:26:50 PM;juggling;Object;1;1
+691;5/4/2021 3:26:50 PM;magic trick;Object;1;1
+692;5/4/2021 3:26:50 PM;conjuring trick;Object;1;1
+693;5/4/2021 3:26:50 PM;trick;Object;1;1
+694;5/4/2021 3:26:50 PM;magic;Object;1;1
+695;5/4/2021 3:26:50 PM;legerdemain;Object;1;1
+696;5/4/2021 3:26:50 PM;conjuration;Object;1;1
+697;5/4/2021 3:26:50 PM;thaumaturgy;Object;1;1
+698;5/4/2021 3:26:50 PM;illusion;Object;1;1
+699;5/4/2021 3:26:50 PM;deception;Object;1;1
+700;5/4/2021 3:26:50 PM;musical performance;Object;1;1
+701;5/4/2021 3:26:50 PM;one-night stand;Object;1;1
+702;5/4/2021 3:26:50 PM;rendition;Object;1;1
+703;5/4/2021 3:26:50 PM;rendering;Object;1;1
+704;5/4/2021 3:26:50 PM;interpretation;Object;1;1
+705;5/4/2021 3:26:50 PM;reinterpretation;Object;1;1
+706;5/4/2021 3:26:50 PM;spin;Object;1;1
+707;5/4/2021 3:26:50 PM;playing;Object;1;1
+708;5/4/2021 3:26:50 PM;bowing;Object;1;1
+709;5/4/2021 3:26:50 PM;spiccato;Object;1;1
+710;5/4/2021 3:26:50 PM;spiccato bowing;Object;1;1
+711;5/4/2021 3:26:50 PM;piping;Object;1;1
+712;5/4/2021 3:26:50 PM;stopping;Object;1;1
+713;5/4/2021 3:26:50 PM;shellfire;Object;1;1
+714;5/4/2021 3:26:50 PM;transposition;Object;1;1
+715;5/4/2021 3:26:50 PM;jam session;Object;1;1
+716;5/4/2021 3:26:50 PM;automation;Object;1;1
+717;5/4/2021 3:26:50 PM;mechanization;Object;1;1
+718;5/4/2021 3:26:50 PM;mechanisation;Object;1;1
+719;5/4/2021 3:26:50 PM;computerization;Object;1;1
+720;5/4/2021 3:26:50 PM;cybernation;Object;1;1
+721;5/4/2021 3:26:50 PM;motorization;Object;1;1
+722;5/4/2021 3:26:50 PM;motorisation;Object;1;1
+723;5/4/2021 3:26:50 PM;launching;Object;1;1
+724;5/4/2021 3:26:50 PM;launch;Object;1;1
+725;5/4/2021 3:26:50 PM;launching;Object;1;1
+726;5/4/2021 3:26:50 PM;rocket firing;Object;1;1
+727;5/4/2021 3:26:50 PM;rocket launching;Object;1;1
+728;5/4/2021 3:26:50 PM;blastoff;Object;1;1
+729;5/4/2021 3:26:50 PM;shot;Object;1;1
+730;5/4/2021 3:26:50 PM;moon shot;Object;1;1
+731;5/4/2021 3:26:50 PM;drive;Object;1;1
+732;5/4/2021 3:26:50 PM;thrust;Object;1;1
+733;5/4/2021 3:26:50 PM;driving force;Object;1;1
+734;5/4/2021 3:26:50 PM;firewall;Object;1;1
+735;5/4/2021 3:26:50 PM;impulse;Object;1;1
+736;5/4/2021 3:26:50 PM;impulsion;Object;1;1
+737;5/4/2021 3:26:50 PM;impetus;Object;1;1
+738;5/4/2021 3:26:50 PM;roll;Object;1;1
+739;5/4/2021 3:26:50 PM;bowl;Object;1;1
+740;5/4/2021 3:26:50 PM;throw;Object;1;1
+741;5/4/2021 3:26:50 PM;bowling;Object;1;1
+742;5/4/2021 3:26:50 PM;fling;Object;1;1
+743;5/4/2021 3:26:50 PM;heave;Object;1;1
+744;5/4/2021 3:26:50 PM;heaving;Object;1;1
+745;5/4/2021 3:26:50 PM;hurl;Object;1;1
+746;5/4/2021 3:26:50 PM;cast;Object;1;1
+747;5/4/2021 3:26:50 PM;leaner;Object;1;1
+748;5/4/2021 3:26:50 PM;pass;Object;1;1
+749;5/4/2021 3:26:50 PM;toss;Object;1;1
+750;5/4/2021 3:26:50 PM;flip;Object;1;1
+751;5/4/2021 3:26:50 PM;pitch;Object;1;1
+752;5/4/2021 3:26:50 PM;pitch;Object;1;1
+753;5/4/2021 3:26:50 PM;delivery;Object;1;1
+754;5/4/2021 3:26:50 PM;ringer;Object;1;1
+755;5/4/2021 3:26:50 PM;shy;Object;1;1
+756;5/4/2021 3:26:50 PM;slinging;Object;1;1
+757;5/4/2021 3:26:50 PM;throw-in;Object;1;1
+758;5/4/2021 3:26:50 PM;balk;Object;1;1
+759;5/4/2021 3:26:50 PM;ball;Object;1;1
+760;5/4/2021 3:26:50 PM;beanball;Object;1;1
+761;5/4/2021 3:26:50 PM;beaner;Object;1;1
+762;5/4/2021 3:26:50 PM;change-up;Object;1;1
+763;5/4/2021 3:26:50 PM;change-of-pace;Object;1;1
+764;5/4/2021 3:26:50 PM;change-of-pace ball;Object;1;1
+765;5/4/2021 3:26:50 PM;off-speed pitch;Object;1;1
+766;5/4/2021 3:26:50 PM;curve;Object;1;1
+767;5/4/2021 3:26:50 PM;curve ball;Object;1;1
+768;5/4/2021 3:26:50 PM;breaking ball;Object;1;1
+769;5/4/2021 3:26:50 PM;bender;Object;1;1
+770;5/4/2021 3:26:50 PM;duster;Object;1;1
+771;5/4/2021 3:26:50 PM;fastball;Object;1;1
+772;5/4/2021 3:26:50 PM;heater;Object;1;1
+773;5/4/2021 3:26:50 PM;smoke;Object;1;1
+774;5/4/2021 3:26:50 PM;hummer;Object;1;1
+775;5/4/2021 3:26:50 PM;bullet;Object;1;1
+776;5/4/2021 3:26:50 PM;knuckleball;Object;1;1
+777;5/4/2021 3:26:50 PM;knuckler;Object;1;1
+778;5/4/2021 3:26:50 PM;overhand pitch;Object;1;1
+779;5/4/2021 3:26:50 PM;passed ball;Object;1;1
+780;5/4/2021 3:26:50 PM;screwball;Object;1;1
+781;5/4/2021 3:26:50 PM;sinker;Object;1;1
+782;5/4/2021 3:26:50 PM;slider;Object;1;1
+783;5/4/2021 3:26:50 PM;spitball;Object;1;1
+784;5/4/2021 3:26:50 PM;spitter;Object;1;1
+785;5/4/2021 3:26:50 PM;strike;Object;1;1
+786;5/4/2021 3:26:50 PM;submarine ball;Object;1;1
+787;5/4/2021 3:26:50 PM;submarine pitch;Object;1;1
+788;5/4/2021 3:26:50 PM;wild pitch;Object;1;1
+789;5/4/2021 3:26:50 PM;basketball shot;Object;1;1
+790;5/4/2021 3:26:50 PM;bank shot;Object;1;1
+791;5/4/2021 3:26:50 PM;dunk;Object;1;1
+792;5/4/2021 3:26:50 PM;dunk shot;Object;1;1
+793;5/4/2021 3:26:50 PM;stuff shot;Object;1;1
+794;5/4/2021 3:26:50 PM;slam dunk;Object;1;1
+795;5/4/2021 3:26:50 PM;finger-roll;Object;1;1
+796;5/4/2021 3:26:50 PM;foul shot;Object;1;1
+797;5/4/2021 3:26:50 PM;free throw;Object;1;1
+798;5/4/2021 3:26:50 PM;penalty free throw;Object;1;1
+799;5/4/2021 3:26:50 PM;charity toss;Object;1;1
+800;5/4/2021 3:26:50 PM;charity throw;Object;1;1
+801;5/4/2021 3:26:50 PM;charity shot;Object;1;1
+802;5/4/2021 3:26:50 PM;one-and-one;Object;1;1
+803;5/4/2021 3:26:50 PM;hook shot;Object;1;1
+804;5/4/2021 3:26:50 PM;hook;Object;1;1
+805;5/4/2021 3:26:50 PM;jumper;Object;1;1
+806;5/4/2021 3:26:50 PM;jump shot;Object;1;1
+807;5/4/2021 3:26:50 PM;lay-up;Object;1;1
+808;5/4/2021 3:26:50 PM;layup;Object;1;1
+809;5/4/2021 3:26:50 PM;pivot shot;Object;1;1
+810;5/4/2021 3:26:50 PM;set shot;Object;1;1
+811;5/4/2021 3:26:50 PM;scoop shot;Object;1;1
+812;5/4/2021 3:26:50 PM;tip in;Object;1;1
+813;5/4/2021 3:26:50 PM;push;Object;1;1
+814;5/4/2021 3:26:50 PM;pushing;Object;1;1
+815;5/4/2021 3:26:50 PM;depression;Object;1;1
+816;5/4/2021 3:26:50 PM;click;Object;1;1
+817;5/4/2021 3:26:50 PM;mouse click;Object;1;1
+818;5/4/2021 3:26:50 PM;nudge;Object;1;1
+819;5/4/2021 3:26:50 PM;jog;Object;1;1
+820;5/4/2021 3:26:50 PM;press;Object;1;1
+821;5/4/2021 3:26:50 PM;pressure;Object;1;1
+822;5/4/2021 3:26:50 PM;parry;Object;1;1
+823;5/4/2021 3:26:50 PM;pressing;Object;1;1
+824;5/4/2021 3:26:50 PM;impression;Object;1;1
+825;5/4/2021 3:26:50 PM;shove;Object;1;1
+826;5/4/2021 3:26:50 PM;bundling;Object;1;1
+827;5/4/2021 3:26:50 PM;jostle;Object;1;1
+828;5/4/2021 3:26:50 PM;jostling;Object;1;1
+829;5/4/2021 3:26:50 PM;elbowing;Object;1;1
+830;5/4/2021 3:26:50 PM;pull;Object;1;1
+831;5/4/2021 3:26:50 PM;pulling;Object;1;1
+832;5/4/2021 3:26:50 PM;drag;Object;1;1
+833;5/4/2021 3:26:50 PM;draw;Object;1;1
+834;5/4/2021 3:26:50 PM;haul;Object;1;1
+835;5/4/2021 3:26:50 PM;haulage;Object;1;1
+836;5/4/2021 3:26:50 PM;tow;Object;1;1
+837;5/4/2021 3:26:50 PM;towage;Object;1;1
+838;5/4/2021 3:26:50 PM;tug;Object;1;1
+839;5/4/2021 3:26:50 PM;jerk;Object;1;1
+840;5/4/2021 3:26:50 PM;draft;Object;1;1
+841;5/4/2021 3:26:50 PM;draught;Object;1;1
+842;5/4/2021 3:26:50 PM;drawing;Object;1;1
+843;5/4/2021 3:26:50 PM;extirpation;Object;1;1
+844;5/4/2021 3:26:50 PM;excision;Object;1;1
+845;5/4/2021 3:26:50 PM;deracination;Object;1;1
+846;5/4/2021 3:26:50 PM;pluck;Object;1;1
+847;5/4/2021 3:26:50 PM;traction;Object;1;1
+848;5/4/2021 3:26:50 PM;lift;Object;1;1
+849;5/4/2021 3:26:50 PM;raise;Object;1;1
+850;5/4/2021 3:26:50 PM;heave;Object;1;1
+851;5/4/2021 3:26:50 PM;expulsion;Object;1;1
+852;5/4/2021 3:26:50 PM;projection;Object;1;1
+853;5/4/2021 3:26:50 PM;ejection;Object;1;1
+854;5/4/2021 3:26:50 PM;forcing out;Object;1;1
+855;5/4/2021 3:26:50 PM;defenestration;Object;1;1
+856;5/4/2021 3:26:50 PM;accommodation reflex;Object;1;1
+857;5/4/2021 3:26:50 PM;babinski;Object;1;1
+858;5/4/2021 3:26:50 PM;babinski reflex;Object;1;1
+859;5/4/2021 3:26:50 PM;babinski sign;Object;1;1
+860;5/4/2021 3:26:50 PM;belch;Object;1;1
+861;5/4/2021 3:26:50 PM;belching;Object;1;1
+862;5/4/2021 3:26:50 PM;burp;Object;1;1
+863;5/4/2021 3:26:50 PM;burping;Object;1;1
+864;5/4/2021 3:26:50 PM;eructation;Object;1;1
+865;5/4/2021 3:26:50 PM;belching;Object;1;1
+866;5/4/2021 3:26:50 PM;blink;Object;1;1
+867;5/4/2021 3:26:50 PM;eye blink;Object;1;1
+868;5/4/2021 3:26:50 PM;blinking;Object;1;1
+869;5/4/2021 3:26:50 PM;wink;Object;1;1
+870;5/4/2021 3:26:50 PM;winking;Object;1;1
+871;5/4/2021 3:26:50 PM;nictitation;Object;1;1
+872;5/4/2021 3:26:50 PM;nictation;Object;1;1
+873;5/4/2021 3:26:50 PM;blush;Object;1;1
+874;5/4/2021 3:26:50 PM;flush;Object;1;1
+875;5/4/2021 3:26:50 PM;coughing up;Object;1;1
+876;5/4/2021 3:26:50 PM;spit;Object;1;1
+877;5/4/2021 3:26:50 PM;counter;Object;1;1
+878;5/4/2021 3:26:50 PM;expectoration;Object;1;1
+879;5/4/2021 3:26:50 PM;vomit;Object;1;1
+880;5/4/2021 3:26:50 PM;vomiting;Object;1;1
+881;5/4/2021 3:26:50 PM;emesis;Object;1;1
+882;5/4/2021 3:26:50 PM;regurgitation;Object;1;1
+883;5/4/2021 3:26:50 PM;disgorgement;Object;1;1
+884;5/4/2021 3:26:50 PM;puking;Object;1;1
+885;5/4/2021 3:26:50 PM;rumination;Object;1;1
+886;5/4/2021 3:26:50 PM;hematemesis;Object;1;1
+887;5/4/2021 3:26:50 PM;haematemesis;Object;1;1
+888;5/4/2021 3:26:50 PM;hyperemesis;Object;1;1
+889;5/4/2021 3:26:50 PM;hyperemesis gravidarum;Object;1;1
+890;5/4/2021 3:26:50 PM;jump;Object;1;1
+891;5/4/2021 3:26:50 PM;jumping;Object;1;1
+892;5/4/2021 3:26:50 PM;header;Object;1;1
+893;5/4/2021 3:26:50 PM;hop;Object;1;1
+894;5/4/2021 3:26:50 PM;leap;Object;1;1
+895;5/4/2021 3:26:50 PM;leaping;Object;1;1
+896;5/4/2021 3:26:50 PM;spring;Object;1;1
+897;5/4/2021 3:26:50 PM;saltation;Object;1;1
+898;5/4/2021 3:26:50 PM;bound;Object;1;1
+899;5/4/2021 3:26:50 PM;bounce;Object;1;1
+900;5/4/2021 3:26:50 PM;vault;Object;1;1
+901;5/4/2021 3:26:50 PM;hurdle;Object;1;1
+902;5/4/2021 3:26:50 PM;jumping up and down;Object;1;1
+903;5/4/2021 3:26:50 PM;lob;Object;1;1
+904;5/4/2021 3:26:50 PM;centering;Object;1;1
+905;5/4/2021 3:26:50 PM;snap;Object;1;1
+906;5/4/2021 3:26:50 PM;sending;Object;1;1
+907;5/4/2021 3:26:50 PM;transmission;Object;1;1
+908;5/4/2021 3:26:50 PM;transmittal;Object;1;1
+909;5/4/2021 3:26:50 PM;transmitting;Object;1;1
+910;5/4/2021 3:26:50 PM;forwarding;Object;1;1
+911;5/4/2021 3:26:50 PM;referral;Object;1;1
+912;5/4/2021 3:26:50 PM;remission;Object;1;1
+913;5/4/2021 3:26:50 PM;remitment;Object;1;1
+914;5/4/2021 3:26:50 PM;remit;Object;1;1
+915;5/4/2021 3:26:50 PM;mailing;Object;1;1
+916;5/4/2021 3:26:50 PM;posting;Object;1;1
+917;5/4/2021 3:26:50 PM;wheeling;Object;1;1
+918;5/4/2021 3:26:50 PM;rolling;Object;1;1
+919;5/4/2021 3:26:50 PM;shooting;Object;1;1
+920;5/4/2021 3:26:50 PM;shot;Object;1;1
+921;5/4/2021 3:26:50 PM;shoot;Object;1;1
+922;5/4/2021 3:26:50 PM;countershot;Object;1;1
+923;5/4/2021 3:26:50 PM;discharge;Object;1;1
+924;5/4/2021 3:26:50 PM;firing;Object;1;1
+925;5/4/2021 3:26:50 PM;firing off;Object;1;1
+926;5/4/2021 3:26:50 PM;gun;Object;1;1
+927;5/4/2021 3:26:50 PM;fire control;Object;1;1
+928;5/4/2021 3:26:50 PM;gunfire;Object;1;1
+929;5/4/2021 3:26:50 PM;gunshot;Object;1;1
+930;5/4/2021 3:26:50 PM;enfilade;Object;1;1
+931;5/4/2021 3:26:50 PM;enfilade fire;Object;1;1
+932;5/4/2021 3:26:50 PM;snipe;Object;1;1
+933;5/4/2021 3:26:50 PM;headshot;Object;1;1
+934;5/4/2021 3:26:50 PM;skeet;Object;1;1
+935;5/4/2021 3:26:50 PM;skeet shooting;Object;1;1
+936;5/4/2021 3:26:50 PM;trapshooting;Object;1;1
+937;5/4/2021 3:26:50 PM;gunfight;Object;1;1
+938;5/4/2021 3:26:50 PM;gunplay;Object;1;1
+939;5/4/2021 3:26:50 PM;shootout;Object;1;1
+940;5/4/2021 3:26:50 PM;potshot;Object;1;1
+941;5/4/2021 3:26:50 PM;contact;Object;1;1
+942;5/4/2021 3:26:50 PM;physical contact;Object;1;1
+943;5/4/2021 3:26:50 PM;rub;Object;1;1
+944;5/4/2021 3:26:50 PM;wipe;Object;1;1
+945;5/4/2021 3:26:50 PM;scuff;Object;1;1
+946;5/4/2021 3:26:50 PM;tap;Object;1;1
+947;5/4/2021 3:26:50 PM;pat;Object;1;1
+948;5/4/2021 3:26:50 PM;dab;Object;1;1
+949;5/4/2021 3:26:50 PM;hit;Object;1;1
+950;5/4/2021 3:26:50 PM;hitting;Object;1;1
+951;5/4/2021 3:26:50 PM;striking;Object;1;1
+952;5/4/2021 3:26:50 PM;contusion;Object;1;1
+953;5/4/2021 3:26:50 PM;crash;Object;1;1
+954;5/4/2021 3:26:50 PM;smash;Object;1;1
+955;5/4/2021 3:26:50 PM;impingement;Object;1;1
+956;5/4/2021 3:26:50 PM;impaction;Object;1;1
+957;5/4/2021 3:26:50 PM;batting;Object;1;1
+958;5/4/2021 3:26:50 PM;fielding;Object;1;1
+959;5/4/2021 3:26:50 PM;catching;Object;1;1
+960;5/4/2021 3:26:50 PM;golfing;Object;1;1
+961;5/4/2021 3:26:50 PM;pitching;Object;1;1
+962;5/4/2021 3:26:50 PM;base on balls;Object;1;1
+963;5/4/2021 3:26:50 PM;walk;Object;1;1
+964;5/4/2021 3:26:50 PM;pass;Object;1;1
+965;5/4/2021 3:26:50 PM;best;Object;1;1
+966;5/4/2021 3:26:50 PM;worst;Object;1;1
+967;5/4/2021 3:26:50 PM;fair ball;Object;1;1
+968;5/4/2021 3:26:50 PM;foul ball;Object;1;1
+969;5/4/2021 3:26:50 PM;snick;Object;1;1
+970;5/4/2021 3:26:50 PM;bunt;Object;1;1
+971;5/4/2021 3:26:50 PM;fly;Object;1;1
+972;5/4/2021 3:26:50 PM;fly ball;Object;1;1
+973;5/4/2021 3:26:50 PM;blast;Object;1;1
+974;5/4/2021 3:26:50 PM;pop fly;Object;1;1
+975;5/4/2021 3:26:50 PM;pop-fly;Object;1;1
+976;5/4/2021 3:26:50 PM;pop-up;Object;1;1
+977;5/4/2021 3:26:50 PM;grounder;Object;1;1
+978;5/4/2021 3:26:50 PM;ground ball;Object;1;1
+979;5/4/2021 3:26:50 PM;groundball;Object;1;1
+980;5/4/2021 3:26:50 PM;hopper;Object;1;1
+981;5/4/2021 3:26:50 PM;chop;Object;1;1
+982;5/4/2021 3:26:50 PM;chopper;Object;1;1
+983;5/4/2021 3:26:50 PM;roller;Object;1;1
+984;5/4/2021 3:26:50 PM;out;Object;1;1
+985;5/4/2021 3:26:50 PM;force out;Object;1;1
+986;5/4/2021 3:26:50 PM;force-out;Object;1;1
+987;5/4/2021 3:26:50 PM;force play;Object;1;1
+988;5/4/2021 3:26:50 PM;force;Object;1;1
+989;5/4/2021 3:26:50 PM;putout;Object;1;1
+990;5/4/2021 3:26:50 PM;strikeout;Object;1;1
+991;5/4/2021 3:26:50 PM;whiff;Object;1;1
+992;5/4/2021 3:26:50 PM;check-in;Object;1;1
+993;5/4/2021 3:26:50 PM;fielder's choice;Object;1;1
+994;5/4/2021 3:26:50 PM;sacrifice;Object;1;1
+995;5/4/2021 3:26:50 PM;sacrifice fly;Object;1;1
+996;5/4/2021 3:26:50 PM;base hit;Object;1;1
+997;5/4/2021 3:26:50 PM;safety;Object;1;1
+998;5/4/2021 3:26:50 PM;daisy cutter;Object;1;1
+999;5/4/2021 3:26:50 PM;header;Object;1;1
+1000;5/4/2021 3:26:50 PM;liner;Object;1;1
+1001;5/4/2021 3:26:50 PM;line drive;Object;1;1
+1002;5/4/2021 3:26:50 PM;scorcher;Object;1;1
+1003;5/4/2021 3:26:50 PM;screamer;Object;1;1
+1004;5/4/2021 3:26:50 PM;line-drive single;Object;1;1
+1005;5/4/2021 3:26:50 PM;line single;Object;1;1
+1006;5/4/2021 3:26:50 PM;line-drive double;Object;1;1
+1007;5/4/2021 3:26:50 PM;line double;Object;1;1
+1008;5/4/2021 3:26:50 PM;line-drive triple;Object;1;1
+1009;5/4/2021 3:26:50 PM;line triple;Object;1;1
+1010;5/4/2021 3:26:50 PM;plunk;Object;1;1
+1011;5/4/2021 3:26:50 PM;plunker;Object;1;1
+1012;5/4/2021 3:26:50 PM;homer;Object;1;1
+1013;5/4/2021 3:26:50 PM;home run;Object;1;1
+1014;5/4/2021 3:26:50 PM;solo homer;Object;1;1
+1015;5/4/2021 3:26:50 PM;solo blast;Object;1;1
+1016;5/4/2021 3:26:50 PM;single;Object;1;1
+1017;5/4/2021 3:26:50 PM;bingle;Object;1;1
+1018;5/4/2021 3:26:50 PM;double;Object;1;1
+1019;5/4/2021 3:26:50 PM;two-base hit;Object;1;1
 %%%
 1;7/10/2019 10:00:00 PM;agent;I was born at Brazil in 2019-08-10;1;1_2_3_4_5
 2;7/10/2019 10:00:00 PM;agent;I have no job;-1;1_6_10
@@ -31,8 +1027,571 @@
 7;7/10/2019 10:00:00 PM;agent;I love pizza;1;1_14_16
 8;7/10/2019 10:00:00 PM;agent;My favorite pizza is calabresa;1;1_13_14_17
 9;7/10/2019 10:00:00 PM;agent;I do not like portuguesa;-1;1_13_18
-10;4/19/2021 3:09:50 PM;person;I met Knob today;0;19_20_21
-11;4/21/2021 2:38:34 PM;person;Knob was born in 1989-01-01;0;22_5_19
-12;4/21/2021 2:38:41 PM;person;Knob is studying computer_science;0;23_7_19
-13;4/21/2021 2:38:44 PM;person;Knob is not working;-0.296;6_19
-14;4/21/2021 2:38:46 PM;person;Knob has no children;-0.296;8_19
+10;5/4/2021 3:26:50 PM;object;that which is perceived or known or inferred to have its own distinct existence (living or nonliving);0;1_19
+11;5/4/2021 3:26:50 PM;object;an entity that has physical existence;0;1_20
+12;5/4/2021 3:26:50 PM;object;a general concept formed by extracting common features from specific examples;0;
+13;5/4/2021 3:26:50 PM;object;a separate and self-contained entity;0;1_23
+14;5/4/2021 3:26:50 PM;object;a tangible and visible entity; an entity that can cast a shadow; "it was full of rackets, balls and other objects";0;
+15;5/4/2021 3:26:50 PM;object;an assemblage of parts that is regarded as a single entity; "how big is that part compared to the whole?"; "the team is a unit";0;
+16;5/4/2021 3:26:50 PM;object;a whole (a thing or person) of the same kind or category as another; "lard was also used, though its congener, butter, was more frequently employed"; "the American shopkeeper differs from his European congener";0;1_28
+17;5/4/2021 3:26:50 PM;object;a living (or once living) entity;0;
+18;5/4/2021 3:26:50 PM;object;a living thing that has (or can develop) the ability to act or function independently;0;
+19;5/4/2021 3:26:50 PM;object;organisms (plants and animals) that live at or near the bottom of a sea;0;1_33
+20;5/4/2021 3:26:50 PM;object;a plant or animal that is atypically small;0;1_34
+21;5/4/2021 3:26:50 PM;object;an organism that depends on complex organic substances for nutrition;0;1_35
+22;5/4/2021 3:26:50 PM;object;an organism (plant or animal) from which younger ones are obtained;0;1_36
+23;5/4/2021 3:26:50 PM;object;living things collectively; "the oceans are teeming with life";0;1_37
+24;5/4/2021 3:26:50 PM;object;a discrete unit of living matter;0;1_38
+25;5/4/2021 3:26:50 PM;object;(biology) the basic structural and functional unit of all organisms; they may exist as independent units of life (as in monads) or may form colonies or tissues as in higher plants and animals;0;1_39
+26;5/4/2021 3:26:50 PM;object;any entity that produces an effect or is responsible for events or results;0;
+27;5/4/2021 3:26:50 PM;object;a human being; "there was too much for one person to do";0;
+28;5/4/2021 3:26:50 PM;object;a living organism characterized by voluntary movement;0;
+29;5/4/2021 3:26:50 PM;object;(botany) a living organism lacking the power of locomotion;0;
+30;5/4/2021 3:26:50 PM;object;indigenous plants and animals;0;1_58
+31;5/4/2021 3:26:50 PM;object;an object occurring naturally; not made by man;0;1_59
+32;5/4/2021 3:26:50 PM;object;the real physical matter of which a person or thing consists; "DNA is the substance of our genes";0;1_60
+33;5/4/2021 3:26:50 PM;object;a particular kind or species of matter with uniform properties; "shigella is one of the most toxic substances known to man";0;1_61
+34;5/4/2021 3:26:50 PM;object;that which has mass and occupies space; "physicists study both the nature of matter and the forces which govern it";0;1_62
+35;5/4/2021 3:26:50 PM;object;any substance that can be metabolized by an animal to give energy and build tissue;0;
+36;5/4/2021 3:26:50 PM;object;any substance (such as a chemical element or inorganic compound) that can be taken in by a green plant and used in organic synthesis;0;1_65
+37;5/4/2021 3:26:50 PM;object;a man-made object taken as a whole;0;
+38;5/4/2021 3:26:50 PM;object;one of a class of artifacts; "an article of clothing";0;1_68
+39;5/4/2021 3:26:50 PM;object;a feature of the mental life of a living organism;0;1_69
+40;5/4/2021 3:26:50 PM;object;the psychological result of perception and learning and reasoning;0;
+41;5/4/2021 3:26:50 PM;object;the psychological feature that arouses an organism to action toward a desired goal; the reason for the action; that which gives purpose and direction to behavior; "we did not understand his motivation"; "he acted with the best of motives";0;
+42;5/4/2021 3:26:50 PM;object;an abstraction belonging to or characteristic of an entity;0;1_76
+43;5/4/2021 3:26:50 PM;object;the way something is with respect to its main attributes; "the current state of knowledge"; "his state of health"; "in a weak financial state";0;1_77
+44;5/4/2021 3:26:50 PM;object;the experiencing of affective and emotional states; "she had a feeling of euphoria"; "he had terrible feelings of guilt"; "I disliked him and the feeling was mutual";0;1_78
+45;5/4/2021 3:26:50 PM;object;a point or extent in space;0;1_79
+46;5/4/2021 3:26:50 PM;object;the spatial arrangement of something as distinct from its substance; "geometry is the mathematical science of shape";0;
+47;5/4/2021 3:26:50 PM;object;the continuum of experience in which events pass from the future through the present to the past;0;1_82
+48;5/4/2021 3:26:50 PM;object;the unlimited expanse in which everything is located; "they tested his ability to locate objects in space"; "the boundless regions of the infinite";0;
+49;5/4/2021 3:26:50 PM;object;physical space independent of what occupies it;0;1_85
+50;5/4/2021 3:26:50 PM;object;(physics) an ideal space in which the coordinate dimensions represent the variables that are required to describe a system or substance; "a multidimensional phase space";0;1_86
+51;5/4/2021 3:26:50 PM;object;something that happens at a given place and time;0;1_87
+52;5/4/2021 3:26:50 PM;object;a sustained phenomenon or one marked by gradual changes through a series of states; "events now in process"; "the process of calcification begins later for boys than for girls";0;
+53;5/4/2021 3:26:50 PM;object;something that people do or cause to happen;0;
+54;5/4/2021 3:26:50 PM;object;any number of entities (members) considered as a unit;0;
+55;5/4/2021 3:26:50 PM;object;an abstraction belonging to or characteristic of two entities or parts together;0;1_96
+56;5/4/2021 3:26:50 PM;object;anything owned or possessed;0;1_97
+57;5/4/2021 3:26:50 PM;object;a relation between living organisms (especially between people);0;1_98
+58;5/4/2021 3:26:50 PM;object;something that is communicated by or to or between people or groups;0;1_99
+59;5/4/2021 3:26:50 PM;object;how much there is or how many there are of something that you can quantify;0;
+60;5/4/2021 3:26:50 PM;object;any state or process known through the senses rather than by intuition or reasoning;0;1_103
+61;5/4/2021 3:26:50 PM;object;an action; "how could you do such a thing?";0;1_104
+62;5/4/2021 3:26:50 PM;object;a kind act;0;
+63;5/4/2021 3:26:50 PM;object;cosmetic surgery of the abdomen to remove wrinkles and tighten the skin over the stomach;0;
+64;5/4/2021 3:26:50 PM;object;the act of terminating a project or procedure before it is completed; "I wasted a year of my life working on an abort"; "he sent a short message requesting an abort due to extreme winds in the area";0;1_109
+65;5/4/2021 3:26:50 PM;object;the action of accomplishing something;0;
+66;5/4/2021 3:26:50 PM;object;a festivity in ancient Greece at which competitors contended for prizes;0;1_112
+67;5/4/2021 3:26:50 PM;object;the action of alienating; the action of causing to become unfriendly; "his behavior alienated the other students";0;1_113
+68;5/4/2021 3:26:50 PM;object;the action of putting something into operation; "the application of maximum thrust"; "massage has far-reaching medical applications"; "the application of indexes to tables of data";0;1_114
+69;5/4/2021 3:26:50 PM;object;an initial accomplishment that opens the way for further developments; "the town became a beachhead in the campaign to ban smoking outdoors"; "they are presently attempting to gain a foothold in the Russian market";0;
+70;5/4/2021 3:26:50 PM;object;an easy accomplishment; "winning the tournament was a cakewalk for him"; "invading Iraq won`t be a cakewalk";0;1_117
+71;5/4/2021 3:26:50 PM;object;a notable achievement; "he performed a great feat"; "the book was her finest effort";0;
+72;5/4/2021 3:26:50 PM;object;an outstanding achievement;0;1_121
+73;5/4/2021 3:26:50 PM;object;an achievement demonstrating great skill or mastery;0;1_122
+74;5/4/2021 3:26:50 PM;object;used in the phrase `to your credit` in order to indicate an achievement deserving praise; "she already had several performances to her credit";;0;1_123
+75;5/4/2021 3:26:50 PM;object;something done (usually as opposed to something said); "there were stories of murders and other unnatural actions";0;1_124
+76;5/4/2021 3:26:50 PM;object;things done;0;1_125
+77;5/4/2021 3:26:50 PM;object;a mode of action; "if you persist in that course you will surely fail"; "once a nation is embarked on a course of action it becomes extremely difficult for any retraction to take place";0;
+78;5/4/2021 3:26:50 PM;object;(figurative) a course of action that is unproductive and offers no hope of improvement; "all the clues led the police into blind alleys"; "so far every road that we`ve been down has turned out to be a blind alley";0;1_128
+79;5/4/2021 3:26:50 PM;object;a course of action (following a given idea) that will lead to conflict if it continues unabated;0;1_129
+80;5/4/2021 3:26:50 PM;object;a mutual or reciprocal action; interacting;0;1_130
+81;5/4/2021 3:26:50 PM;object;reciprocal action and reaction;0;1_131
+82;5/4/2021 3:26:50 PM;object;close interaction; "they kept in daily contact"; "they claimed that they had been in contact with extraterrestrial beings";0;1_132
+83;5/4/2021 3:26:50 PM;object;contact with something dangerous or undesirable; "I had a brush with danger on my way to work"; "he tried to avoid any brushes with the police";0;1_133
+84;5/4/2021 3:26:50 PM;object;contact that occurs when two people look directly at each other; "a teacher should make eye contact with the students";0;1_134
+85;5/4/2021 3:26:50 PM;object;the action of fetching;0;1_135
+86;5/4/2021 3:26:50 PM;object;contact established between applicants and prospective employees; "the agency provided placement services";0;1_136
+87;5/4/2021 3:26:50 PM;object;mutual interaction; the activity of reciprocating or exchanging (especially information);0;
+88;5/4/2021 3:26:50 PM;object;mutual exchange of commercial or other privileges;0;1_140
+89;5/4/2021 3:26:50 PM;object;interchange between different cultures or different ways of thinking that is mutually productive and beneficial; "the cross-fertilization of science and the creative arts";0;
+90;5/4/2021 3:26:50 PM;object;social or verbal interchange (usually followed by `with`);0;
+91;5/4/2021 3:26:50 PM;object;(usually plural) mutual dealings or connections among persons or groups; "international relations";0;1_145
+92;5/4/2021 3:26:50 PM;object;the action of taking part in a game or sport or other recreation;0;1_146
+93;5/4/2021 3:26:50 PM;object;the act using a sword (or other weapon) vigorously and skillfully;0;
+94;5/4/2021 3:26:50 PM;object;work of little or no value done merely to look busy;0;1_149
+95;5/4/2021 3:26:50 PM;object;the playing of a game of tenpins or duckpins etc;0;1_150
+96;5/4/2021 3:26:50 PM;object;the act of acquiring something; "I envied his talent for acquiring"; "he`s much more interested in the getting than in the giving";0;
+97;5/4/2021 3:26:50 PM;object;the act of causing something to happen;0;
+98;5/4/2021 3:26:50 PM;object;the act of delivering a child;0;
+99;5/4/2021 3:26:50 PM;object;the act of departing;0;
+100;5/4/2021 3:26:50 PM;object;brave and heroic feats;0;1_161
+101;5/4/2021 3:26:50 PM;object;the act of discovering something;0;
+102;5/4/2021 3:26:50 PM;object;the act or means of getting rid of something;0;
+103;5/4/2021 3:26:50 PM;object;(baseball) a successful stroke in an athletic contest (especially in baseball); "he came all the way around on Williams` hit";0;1_167
+104;5/4/2021 3:26:50 PM;object;the act of implementing (providing a practical means for accomplishing something); carrying into effect;0;
+105;5/4/2021 3:26:50 PM;object;the act of coming (or going) out; becoming apparent;0;
+106;5/4/2021 3:26:50 PM;object;the act of making equal or uniform;0;
+107;5/4/2021 3:26:50 PM;object;the act of digging something out of the ground (especially a corpse) where it has been buried;0;
+108;5/4/2021 3:26:50 PM;object;(Judaism) a good deed performed out of religious duty;0;
+109;5/4/2021 3:26:50 PM;object;the act of propelling;0;
+110;5/4/2021 3:26:50 PM;object;the feat of mustering strength for a renewed effort; "he singled to start a rally in the 9th inning"; "he feared the rallying of their troops for a counterattack";0;
+111;5/4/2021 3:26:50 PM;object;the act of regaining or saving something lost (or in danger of becoming lost);0;
+112;5/4/2021 3:26:50 PM;object;the act of leaving (without permission) the place you are expected to be;0;1_187
+113;5/4/2021 3:26:50 PM;object;a difficult or unusual or dangerous feat; usually done to gain attention;0;1_188
+114;5/4/2021 3:26:50 PM;object;the act of putting two things together with no space between them; "at his touch the room filled with lights";0;
+115;5/4/2021 3:26:50 PM;object;a masterly or brilliant feat;0;1_191
+116;5/4/2021 3:26:50 PM;object;any recognized accomplishment; "they admired his performance under stress"; "when Roger Maris powered four home runs in one game his performance merits awe";0;1_192
+117;5/4/2021 3:26:50 PM;object;better than expected performance (better than might have been predicted from intelligence tests);0;1_193
+118;5/4/2021 3:26:50 PM;object;poorer than expected performance (poorer than might have been predicted from intelligence tests);0;1_194
+119;5/4/2021 3:26:50 PM;object;the sum of recognized accomplishments; "the lawyer has a good record"; "the track record shows that he will be a good president";0;
+120;5/4/2021 3:26:50 PM;object;an irreversible accomplishment;0;
+121;5/4/2021 3:26:50 PM;object;advancing toward a goal; "persuading him was easy going"; "the proposal faces tough sledding";0;
+122;5/4/2021 3:26:50 PM;object;accomplishment of an objective;0;
+123;5/4/2021 3:26:50 PM;object;the act of arriving at a certain place; "they awaited her arrival";0;1_203
+124;5/4/2021 3:26:50 PM;object;arrival at a new stage; "his attainment of puberty was delayed by malnutrition";0;1_204
+125;5/4/2021 3:26:50 PM;object;arrival that has been awaited (especially of something momentous); "the advent of the computer";0;
+126;5/4/2021 3:26:50 PM;object;the act of entering; "she made a grand entrance";0;
+127;5/4/2021 3:26:50 PM;object;the act of entering some territory or domain (often in large numbers); "the incursion of television into the American living room";0;1_212
+128;5/4/2021 3:26:50 PM;object;entrance by force or without permission or welcome;0;1_213
+129;5/4/2021 3:26:50 PM;object;a sudden violent entrance; a bursting in; "the recent irruption of bad manners";0;1_214
+130;5/4/2021 3:26:50 PM;object;the act of entering; "she made a graceful entree into the ballroom";0;1_215
+131;5/4/2021 3:26:50 PM;object;the act of entailing property; the creation of a fee tail from a fee simple;0;1_216
+132;5/4/2021 3:26:50 PM;object;the act of enrolling;0;
+133;5/4/2021 3:26:50 PM;object;the act of appearing in public view; "the rookie made a brief appearance in the first period"; "it was Bernhardt`s last appearance in America";0;1_220
+134;5/4/2021 3:26:50 PM;object;an act of appearing or becoming visible unexpectedly; "natives were amazed at the apparition of this white stranger";0;1_221
+135;5/4/2021 3:26:50 PM;object;the act of emerging;0;
+136;5/4/2021 3:26:50 PM;object;the act of someone appearing again; "his reappearance as Hamlet has been long awaited";0;
+137;5/4/2021 3:26:50 PM;object;return by a celebrity to some previously successful activity;0;1_226
+138;5/4/2021 3:26:50 PM;object;a coming to or returning home; "on his return from Australia we gave him a welcoming party";0;
+139;5/4/2021 3:26:50 PM;object;the act of returning to the country of origin;0;1_229
+140;5/4/2021 3:26:50 PM;object;the act of entering into or through something; "the penetration of upper management by women";0;1_230
+141;5/4/2021 3:26:50 PM;object;mutual penetration; diffusion of each through the other;0;
+142;5/4/2021 3:26:50 PM;object;the extent to which a product is recognized and bought by customers in a particular market;0;1_233
+143;5/4/2021 3:26:50 PM;object;the act of anchoring;0;1_234
+144;5/4/2021 3:26:50 PM;object;the act of securing an arriving vessel with ropes;0;
+145;5/4/2021 3:26:50 PM;object;the act of coming to land after a voyage;0;1_239
+146;5/4/2021 3:26:50 PM;object;the act of coming down to the earth (or other surface); "the plane made a smooth landing"; "his landing on his feet was catlike";0;1_240
+147;5/4/2021 3:26:50 PM;object;an unscheduled airplane landing that is made under circumstances (engine failure or adverse weather) not under the pilot`s control;0;
+148;5/4/2021 3:26:50 PM;object;departing hastily;0;1_243
+149;5/4/2021 3:26:50 PM;object;the act of departing politely; "he disliked long farewells"; "he took his leave"; "parting is such sweet sorrow";0;
+150;5/4/2021 3:26:50 PM;object;an abrupt and unannounced departure (without saying farewell);0;1_248
+151;5/4/2021 3:26:50 PM;object;the act of saying farewell;0;1_249
+152;5/4/2021 3:26:50 PM;object;the act of leaving secretly or without explanation;0;
+153;5/4/2021 3:26:50 PM;object;a sudden disappearance from sight;0;1_252
+154;5/4/2021 3:26:50 PM;object;the act of withdrawing; "the withdrawal of French troops from Vietnam";0;1_253
+155;5/4/2021 3:26:50 PM;object;withdrawing into the background; making yourself inconspicuous;0;
+156;5/4/2021 3:26:50 PM;object;the act of withdrawing or going backward (especially to escape something hazardous or unpleasant);0;1_256
+157;5/4/2021 3:26:50 PM;object;withdrawal for prayer and study and meditation; "the religious retreat is a form of vacation activity";0;
+158;5/4/2021 3:26:50 PM;object;the act of evacuating; leaving a place in an orderly fashion; especially for protection;0;1_259
+159;5/4/2021 3:26:50 PM;object;the evacuation of persons (usually by air transportation) to a place where they can receive medical care;0;
+160;5/4/2021 3:26:50 PM;object;breaking camp;0;1_263
+161;5/4/2021 3:26:50 PM;object;withdrawing support or help despite allegiance or responsibility; "his abandonment of his wife and children left them penniless";0;
+162;5/4/2021 3:26:50 PM;object;the act of running away secretly (as to avoid arrest);0;
+163;5/4/2021 3:26:50 PM;object;unauthorized military absence;0;
+164;5/4/2021 3:26:50 PM;object;ideological defection from the party line (especially from orthodox communism);0;1_271
+165;5/4/2021 3:26:50 PM;object;migration from a place (especially migration from your native country in order to settle in another);0;
+166;5/4/2021 3:26:50 PM;object;migration into a place (especially migration to a country of which you are not a native in order to settle there);0;
+167;5/4/2021 3:26:50 PM;object;(Judaism) immigration of Jews to Israel; "students making aliyah";0;1_277
+168;5/4/2021 3:26:50 PM;object;(military) the act of pulling back (especially an orderly withdrawal of troops); "the pullback is expected to be over 25,000 troops";0;1_278
+169;5/4/2021 3:26:50 PM;object;(military) withdrawal of troops to a more favorable position to escape the enemy`s superior forces or after a defeat; "the disorderly retreat of French troops";0;1_279
+170;5/4/2021 3:26:50 PM;object;(military) a temporary stop of offensive military action;0;
+171;5/4/2021 3:26:50 PM;object;to break off a military action with an enemy;0;
+172;5/4/2021 3:26:50 PM;object;the act of becoming more distant;0;
+173;5/4/2021 3:26:50 PM;object;the departure of a vessel from a port;0;1_287
+174;5/4/2021 3:26:50 PM;object;a military action of coordinated land, sea, and air forces organized for an invasion; "MacArthur staged a massive amphibious landing behind enemy lines";0;1_288
+175;5/4/2021 3:26:50 PM;object;the act of passengers and crew getting off of a ship or aircraft;0;
+176;5/4/2021 3:26:50 PM;object;debarkation from a boat or ship;0;1_292
+177;5/4/2021 3:26:50 PM;object;the act of passengers and crew getting aboard a ship or aircraft;0;
+178;5/4/2021 3:26:50 PM;object;the act of going out;0;1_296
+179;5/4/2021 3:26:50 PM;object;the act of running away with a lover (usually to get married);0;1_297
+180;5/4/2021 3:26:50 PM;object;the act of escaping physically; "he made his escape from the mental hospital"; "the canary escaped from its cage"; "his flight was an indication of his guilt";0;
+181;5/4/2021 3:26:50 PM;object;the act of physically escaping from something (an opponent or a pursuer or an unpleasant situation) by some adroit maneuver;0;1_300
+182;5/4/2021 3:26:50 PM;object;the act of avoiding capture (especially by cunning);0;
+183;5/4/2021 3:26:50 PM;object;an action aimed at evading an opponent;0;
+184;5/4/2021 3:26:50 PM;object;(boxing) the act of one boxer holding onto the other to avoid being hit and to rest momentarily;0;1_307
+185;5/4/2021 3:26:50 PM;object;a quick evasive movement;0;1_308
+186;5/4/2021 3:26:50 PM;object;an escape from jail; "the breakout was carefully planned";0;
+187;5/4/2021 3:26:50 PM;object;a rapid escape (as by criminals); "the thieves made a clean getaway"; "after the expose he had to take it on the lam";0;
+188;5/4/2021 3:26:50 PM;object;a journey by a large group to escape from a hostile environment;0;
+189;5/4/2021 3:26:50 PM;object;the flight of Muhammad from Mecca to Medina in 622 which marked the beginning of the Muslim era; the Muslim calendar begins in that year;0;
+190;5/4/2021 3:26:50 PM;object;a hasty flight;0;1_322
+191;5/4/2021 3:26:50 PM;object;secret aid to escaping slaves that was provided by abolitionists in the years before the American Civil War;0;
+192;5/4/2021 3:26:50 PM;object;something achieved (or escaped) by a narrow margin;0;
+193;5/4/2021 3:26:50 PM;object;emerging to the surface and becoming apparent;0;1_330
+194;5/4/2021 3:26:50 PM;object;the act of sending off something;0;
+195;5/4/2021 3:26:50 PM;object;the act of shipping again (especially by transferring to another ship);0;1_334
+196;5/4/2021 3:26:50 PM;object;the act of bringing to completion or fruition;0;1_335
+197;5/4/2021 3:26:50 PM;object;the completion of marriage by sexual intercourse;0;1_336
+198;5/4/2021 3:26:50 PM;object;something that is made real or concrete; "the victory was the realization of a whole year`s work";0;
+199;5/4/2021 3:26:50 PM;object;the moment of most intense pleasure in sexual intercourse;0;
+200;5/4/2021 3:26:50 PM;object;an orgasm accompanied by the sensation of ejaculation of semen;0;1_344
+201;5/4/2021 3:26:50 PM;object;the act of consummating something (a desire or promise etc);0;
+202;5/4/2021 3:26:50 PM;object;the fulfillment of your capacities;0;
+203;5/4/2021 3:26:50 PM;object;the act of achieving an aim; "the attainment of independence";0;1_350
+204;5/4/2021 3:26:50 PM;object;an extreme attainment; the best (or worst) performance ever attested (as in a sport); "he tied the Olympic record"; "coffee production last year broke all previous records"; "Chicago set the homicide record";0;1_351
+205;5/4/2021 3:26:50 PM;object;the fastest time ever recorded for a specific distance at a particular racetrack; "the track record for the mile and a half at Belmont is 2 minutes 24 seconds held by Secretariat since 1973";0;1_352
+206;5/4/2021 3:26:50 PM;object;the best record in the whole world;0;1_353
+207;5/4/2021 3:26:50 PM;object;an attainment that is successful; "his success in the marathon was unexpected"; "his new play was a great success";0;1_354
+208;5/4/2021 3:26:50 PM;object;succeeding with great difficulty; "winning is not everything";0;1_355
+209;5/4/2021 3:26:50 PM;object;an unusually successful hit with widespread popularity and huge sales (especially a movie or play or recording or novel);0;
+210;5/4/2021 3:26:50 PM;object;an unexpected hit; "that movie was the sleeper of the summer";0;1_359
+211;5/4/2021 3:26:50 PM;object;a conspicuous success; "that song was his first hit and marked the beginning of his career"; "that new Broadway show is a real smasher"; "the party went with a bang";0;
+212;5/4/2021 3:26:50 PM;object;something that exactly succeeds in achieving its goal; "the new advertising campaign was a bell ringer"; "scored a bull`s eye"; "hit the mark"; "the president`s speech was a home run";0;
+213;5/4/2021 3:26:50 PM;object;the act of raising someone to the nobility;0;1_369
+214;5/4/2021 3:26:50 PM;object;success in mastering something difficult; "the conquest of space";0;1_370
+215;5/4/2021 3:26:50 PM;object;a brilliant and notable success;0;1_371
+216;5/4/2021 3:26:50 PM;object;complete success; "they passed inspection with flying colors";0;
+217;5/4/2021 3:26:50 PM;object;success in satisfying a test or requirement; "his future depended on his passing that test"; "he got a pass in introductory chemistry";0;
+218;5/4/2021 3:26:50 PM;object;recognition by a college or university that a course of studies has been successfully completed; typically measured in semester hours;0;
+219;5/4/2021 3:26:50 PM;object;a unit of academic credit; one hour a week for an academic semester;0;
+220;5/4/2021 3:26:50 PM;object;an act that does not achieve its intended goal;0;
+221;5/4/2021 3:26:50 PM;object;an unexpected omission; "he resented my failure to return his call"; "the mechanic`s failure to check the brakes";0;1_383
+222;5/4/2021 3:26:50 PM;object;an act that fails; "his failure to pass the test";0;1_384
+223;5/4/2021 3:26:50 PM;object;failure to reach a minimum required performance; "his failing the course led to his disqualification"; "he got two flunks on his report";0;
+224;5/4/2021 3:26:50 PM;object;complete failure; "all my efforts led to naught";0;1_387
+225;5/4/2021 3:26:50 PM;object;an unexcused absence from class; "he was punished for taking too many cuts in his math class";0;1_388
+226;5/4/2021 3:26:50 PM;object;loss due to not showing up; "he lost the game by default";0;1_389
+227;5/4/2021 3:26:50 PM;object;the act of losing someone or something; "everyone expected him to win so his loss was a shock";0;1_390
+228;5/4/2021 3:26:50 PM;object;the act of surrendering (usually under agreed conditions); "they were protected until the capitulation of the fort";0;
+229;5/4/2021 3:26:50 PM;object;an act of hindering someone`s plans or efforts;0;
+230;5/4/2021 3:26:50 PM;object;an improbable and unexpected victory; "the biggest upset since David beat Goliath";0;
+231;5/4/2021 3:26:50 PM;object;a failure to maintain a higher state;0;
+232;5/4/2021 3:26:50 PM;object;habitual relapse into crime;0;1_406
+233;5/4/2021 3:26:50 PM;object;an act (or failure to act) that disappoints someone;0;
+234;5/4/2021 3:26:50 PM;object;a failure to perform some promised act or obligation;0;1_409
+235;5/4/2021 3:26:50 PM;object;a failure to face some difficulty squarely;0;1_410
+236;5/4/2021 3:26:50 PM;object;a breach of a legal duty; failure to do something that is required in a contract;0;1_411
+237;5/4/2021 3:26:50 PM;object;a breach of contract committed prior to the time of required performance;0;
+238;5/4/2021 3:26:50 PM;object;a breach of due care;0;1_414
+239;5/4/2021 3:26:50 PM;object;a failure of the seller`s guarantee of good title;0;1_415
+240;5/4/2021 3:26:50 PM;object;failure to keep a promise (of marriage);0;1_416
+241;5/4/2021 3:26:50 PM;object;violation (either through fraud or negligence) by a trustee of a duty that equity requires of him;0;1_417
+242;5/4/2021 3:26:50 PM;object;larceny after trust rather than after unlawful taking;0;1_418
+243;5/4/2021 3:26:50 PM;object;a breach that occurs when an item is deficient according to the terms of a warranty;0;1_419
+244;5/4/2021 3:26:50 PM;object;the act of deviating from a vertical position;0;1_420
+245;5/4/2021 3:26:50 PM;object;a breach serious enough to destroy the value of the contract and to give a basis for an action for breach of contract;0;1_421
+246;5/4/2021 3:26:50 PM;object;the act of motivating; providing incentive;0;
+247;5/4/2021 3:26:50 PM;object;a breach that does not destroy the value of the contract but can give rise to a claim for damages;0;1_424
+248;5/4/2021 3:26:50 PM;object;a wrong action attributable to bad judgment or ignorance or inattention; "he made a bad mistake"; "she was quick to point out my errors"; "I could understand his English in spite of his grammatical faults";0;
+249;5/4/2021 3:26:50 PM;object;(tennis) two successive faults in serving resulting in the loss of the point;0;1_428
+250;5/4/2021 3:26:50 PM;object;a fault that occurs when the server in tennis fails to keep both feet behind the baseline;0;1_429
+251;5/4/2021 3:26:50 PM;object;the momentary juggling of a batted or thrown baseball; "the second baseman made a bobble but still had time to throw the runner out";0;1_430
+252;5/4/2021 3:26:50 PM;object;(baseball) a failure of a defensive player to make an out when normal play would have sufficed;0;
+253;5/4/2021 3:26:50 PM;object;an act that brings discredit to the person who does it; "he made a huge blot on his copybook";0;
+254;5/4/2021 3:26:50 PM;object;a mistake that results from taking one thing to be another; "he changed his name in order to avoid confusion with the notorious outlaw";0;
+255;5/4/2021 3:26:50 PM;object;the mistake of incurring liability or blame;0;1_440
+256;5/4/2021 3:26:50 PM;object;a mistake in calculating;0;
+257;5/4/2021 3:26:50 PM;object;a miscalculation that recoils on its maker;0;
+258;5/4/2021 3:26:50 PM;object;(mathematics) a miscalculation that results from rounding off numbers to a convenient number of decimals; "the error in the calculation was attributable to rounding"; "taxes are rounded off to the nearest dollar but the rounding error is surprisingly smal;0;
+259;5/4/2021 3:26:50 PM;object;(mathematics) a miscalculation that results from cutting off a numerical calculation before it is finished;0;1_448
+260;5/4/2021 3:26:50 PM;object;the mistake of misrepresenting the facts;0;1_449
+261;5/4/2021 3:26:50 PM;object;a minor inadvertent mistake usually observed in speech or writing or in small accidents or memory lapses etc.;0;
+262;5/4/2021 3:26:50 PM;object;the act of receiving;0;
+263;5/4/2021 3:26:50 PM;object;a slip-up that (according to Sigmund Freud) results from the operation of unconscious wishes or conflicts and can reveal unconscious processes in normal healthy individuals;0;1_455
+264;5/4/2021 3:26:50 PM;object;(sport) the mistake of occupying an illegal position on the playing field (in football, soccer, ice hockey, field hockey, etc.);0;1_456
+265;5/4/2021 3:26:50 PM;object;a mistake resulting from inattention;0;
+266;5/4/2021 3:26:50 PM;object;a mistake resulting from neglect;0;
+267;5/4/2021 3:26:50 PM;object;an embarrassing mistake;0;
+268;5/4/2021 3:26:50 PM;object;an acronym often used by soldiers in World War II: situation normal all fucked up;0;1_472
+269;5/4/2021 3:26:50 PM;object;a blunder that makes you look ridiculous; used in the phrase `make a spectacle of` yourself;0;1_473
+270;5/4/2021 3:26:50 PM;object;something badly botched or muddled;0;
+271;5/4/2021 3:26:50 PM;object;a serious and ludicrous blunder; "he made a bad bull of the assignment";0;1_478
+272;5/4/2021 3:26:50 PM;object;(sports) dropping the ball;0;
+273;5/4/2021 3:26:50 PM;object;a blunder (especially an actor`s forgetting the lines);0;1_481
+274;5/4/2021 3:26:50 PM;object;a socially awkward or tactless act;0;
+275;5/4/2021 3:26:50 PM;object;a glaring blunder;0;1_487
+276;5/4/2021 3:26:50 PM;object;a conspicuous mistake whose effects seem to reverberate; "he dropped a clanger";0;1_488
+277;5/4/2021 3:26:50 PM;object;an unintentional but embarrassing blunder; "he recited the whole poem without a single trip"; "he arranged his robes to avoid a trip-up later"; "confusion caused his unfortunate misstep";0;
+278;5/4/2021 3:26:50 PM;object;a sudden drop from an upright position; "he had a nasty spill on the ice";0;
+279;5/4/2021 3:26:50 PM;object;a fall onto your buttocks;0;1_496
+280;5/4/2021 3:26:50 PM;object;a spill in some sport (as a fall from a bicycle or while skiing or being capsized on a surfboard);0;1_497
+281;5/4/2021 3:26:50 PM;object;the act of contracting or assuming or acquiring possession of something; "the acquisition of wealth"; "the acquisition of one company by another";0;1_498
+282;5/4/2021 3:26:50 PM;object;the act of obtaining;0;
+283;5/4/2021 3:26:50 PM;object;becoming infected; "catching cold is sometimes unavoidable"; "the contracting of a serious illness can be financially catastrophic";0;
+284;5/4/2021 3:26:50 PM;object;acquiring or coming into something (usually undesirable); "incurring debts is easier than paying them";0;1_503
+285;5/4/2021 3:26:50 PM;object;the act of making money (and accumulating wealth);0;1_504
+286;5/4/2021 3:26:50 PM;object;the formal act of acquiring something (especially territory) by conquest or occupation; "the French annexation of Madagascar as a colony in 1896"; "a protectorate has frequently been a first step to annexation";0;1_505
+287;5/4/2021 3:26:50 PM;object;acquisition of government money for benefits to a specific locale; "keeps his hold on his constituents through unashamed pork-barreling";0;1_506
+288;5/4/2021 3:26:50 PM;object;the acquisition of something for payment; "they closed the purchase with a handshake";0;1_507
+289;5/4/2021 3:26:50 PM;object;the act of purchasing back something previously sold;0;
+290;5/4/2021 3:26:50 PM;object;buying or selling securities or commodities;0;1_511
+291;5/4/2021 3:26:50 PM;object;termination of pregnancy;0;1_512
+292;5/4/2021 3:26:50 PM;object;trading in bonds (usually by a broker on the floor of an exchange);0;
+293;5/4/2021 3:26:50 PM;object;a trading technique involving large blocks of stock with trades triggered by computer programs;0;1_515
+294;5/4/2021 3:26:50 PM;object;sale of securities or commodity futures not owned by the seller (who hopes to buy them back later at a lower price);0;
+295;5/4/2021 3:26:50 PM;object;the purchase of securities or commodities by a short seller to close out a short sale;0;1_518
+296;5/4/2021 3:26:50 PM;object;buying or selling corporate stock by a corporate officer or other insider on the basis of information that has not been made public and is supposed to remain confidential;0;1_519
+297;5/4/2021 3:26:50 PM;object;a put or call option for which the seller or buyer has no underlying security position;0;1_520
+298;5/4/2021 3:26:50 PM;object;a put or call option backed by the shares underlying the option;0;1_521
+299;5/4/2021 3:26:50 PM;object;the option to buy a given stock (or stock index or commodity future) at a given price before a given date;0;
+300;5/4/2021 3:26:50 PM;object;the option to sell a given stock (or stock index or commodity future) at a given price before a given date;0;
+301;5/4/2021 3:26:50 PM;object;the option to buy or sell a given stock (or stock index or commodity future) at a given price before a given date; consists of an equal number of put and call options;0;1_526
+302;5/4/2021 3:26:50 PM;object;an option granted to corporate executives if the company achieves certain financial goals;0;
+303;5/4/2021 3:26:50 PM;object;the act of buying; "buying and selling fill their days"; "shrewd purchasing requires considerable knowledge";0;
+304;5/4/2021 3:26:50 PM;object;searching for or buying goods or services; "went shopping for a reliable plumber"; "does her shopping at the mall rather than down town";0;1_531
+305;5/4/2021 3:26:50 PM;object;shopping at a market; "does the weekly marketing at the supermarket";0;1_532
+306;5/4/2021 3:26:50 PM;object;buying goods to be shipped through the mail;0;
+307;5/4/2021 3:26:50 PM;object;purchasing insurance policies for cash from terminally ill policy holders;0;
+308;5/4/2021 3:26:50 PM;object;the act of taking something that is offered; "her acceptance of the gift encouraged him"; "he anticipated their acceptance of his offer";0;1_537
+309;5/4/2021 3:26:50 PM;object;acquisition of property by descent or by will;0;
+310;5/4/2021 3:26:50 PM;object;the act of taking possession of or power over something; "his assumption of office coincided with the trouble in Cuba"; "the Nazi assumption of power in 1934"; "he acquired all the company`s assets for ten million dollars and the assumption of the company;0;
+311;5/4/2021 3:26:50 PM;object;the act of assuming or taking for granted; "your assumption that I would agree was unwarranted";0;1_542
+312;5/4/2021 3:26:50 PM;object;the act of positing; an assumption taken as a postulate or axiom;0;1_543
+313;5/4/2021 3:26:50 PM;object;hereditary succession to a title or an office or property;0;
+314;5/4/2021 3:26:50 PM;object;the act of getting possession of something; "he was responsible for the procurement of materials and supplies";0;
+315;5/4/2021 3:26:50 PM;object;a deliberate act of acquisition of something, often without the permission of the owner; "the necessary funds were obtained by the government`s appropriation of the company`s operating unit"; "a person`s appropriation of property belonging to another is d;0;1_549
+316;5/4/2021 3:26:50 PM;object;the appropriation (of ideas or words etc) from another source; "the borrowing of ancient motifs was very apparent";0;
+317;5/4/2021 3:26:50 PM;object;changing the pronunciation of a borrowed word to agree with the borrowers` phonology; "the naturalization in English of many Italian words";0;
+318;5/4/2021 3:26:50 PM;object;wrongful borrowing; "his explanation was a misappropriation of sociological theory";0;1_554
+319;5/4/2021 3:26:50 PM;object;a prior appropriation of something; "the preemption of bandwidth by commercial interests";0;
+320;5/4/2021 3:26:50 PM;object;the taking possession of something by legal process;0;1_557
+321;5/4/2021 3:26:50 PM;object;the act of spitting (forcefully expelling saliva);0;
+322;5/4/2021 3:26:50 PM;object;wrongfully seizing and holding (an office or powers) by force (especially the seizure of a throne or supreme authority); "a succession of generals who ruled by usurpation";0;1_559
+323;5/4/2021 3:26:50 PM;object;seizure by the government;0;
+324;5/4/2021 3:26:50 PM;object;the seizure and holding of property as security for payment of a debt or satisfaction of a claim; "Originally distress was a landlord`s remedy against a tenant for unpaid rents or property damage but now the landlord is given a landlord`s lien";0;
+325;5/4/2021 3:26:50 PM;object;taking out of an owner`s hands (especially taking property by public authority);0;1_564
+326;5/4/2021 3:26:50 PM;object;placing private property in the custody of an officer of the law;0;
+327;5/4/2021 3:26:50 PM;object;seizure of illegal drugs by the police;0;
+328;5/4/2021 3:26:50 PM;object;the act of coercing someone into government service;0;
+329;5/4/2021 3:26:50 PM;object;the act of occupying or taking possession of a building; "occupation of a building without a certificate of occupancy is illegal";0;
+330;5/4/2021 3:26:50 PM;object;the act of taking occupancy before someone else does;0;
+331;5/4/2021 3:26:50 PM;object;seizing property that belongs to someone else and holding it until profits pay the demand for which it was seized;0;
+332;5/4/2021 3:26:50 PM;object;the act of providing a subsidy;0;
+333;5/4/2021 3:26:50 PM;object;a grant made by a law court; "he criticized the awarding of compensation by the court";0;
+334;5/4/2021 3:26:50 PM;object;(Roman law) a formal award by a magistrate of a thing or person to another person (as the award of a debtor to his creditor); a surrender to a master; "under Roman law addiction was the justification for slavery";0;1_585
+335;5/4/2021 3:26:50 PM;object;a grant of federal money to state and local governments to support social welfare programs; "block grants reduce federal responsibility for social welfare";0;1_586
+336;5/4/2021 3:26:50 PM;object;a grant from a central government to a local government;0;1_587
+337;5/4/2021 3:26:50 PM;object;the act of forcibly dispossessing an owner of property;0;
+338;5/4/2021 3:26:50 PM;object;the act of apprehending (especially apprehending a criminal); "the policeman on the beat got credit for the collar";0;
+339;5/4/2021 3:26:50 PM;object;the act of conquering;0;
+340;5/4/2021 3:26:50 PM;object;the act of making slaves of your captives;0;1_601
+341;5/4/2021 3:26:50 PM;object;getting something back again; "upon the restitution of the book to its rightful owner the child was given a tongue lashing";0;
+342;5/4/2021 3:26:50 PM;object;finding a way to take money back from people that they were given in another way; "the Treasury will find some clawback for the extra benefits members received";0;1_606
+343;5/4/2021 3:26:50 PM;object;the action of regaining possession (especially the seizure of collateral securing a loan that is in default);0;1_607
+344;5/4/2021 3:26:50 PM;object;the legal proceedings initiated by a creditor to repossess the collateral for loan that is in default;0;1_608
+345;5/4/2021 3:26:50 PM;object;(law) the act of disposing of property by virtue of the power of appointment; "she allocated part of the trust to her church by appointment";0;1_610
+346;5/4/2021 3:26:50 PM;object;the act of carefully weeding out unwanted things or people; "the department got a good comb-out";0;1_611
+347;5/4/2021 3:26:50 PM;object;disposing of property by voluntary transfer without receiving value in return; "the alumni followed a program of annual giving";0;1_612
+348;5/4/2021 3:26:50 PM;object;the voluntary surrender of property (or a right to property) without attempting to reclaim it or give it away;0;1_613
+349;5/4/2021 3:26:50 PM;object;getting rid something that is regarded as useless or undesirable;0;
+350;5/4/2021 3:26:50 PM;object;getting rid of a stage of a multistage rocket;0;1_616
+351;5/4/2021 3:26:50 PM;object;(cards) the act of throwing out a useless card or of failing to follow suit;0;1_617
+352;5/4/2021 3:26:50 PM;object;the disposal of explosive mines;0;1_618
+353;5/4/2021 3:26:50 PM;object;the activity of detecting and disposing of marine mines;0;1_619
+354;5/4/2021 3:26:50 PM;object;the disposal of sewage;0;1_620
+355;5/4/2021 3:26:50 PM;object;a deceptive way of selling that involves advertising a product at a very low price in order to attract customers who are then persuaded to switch to a more expensive product;0;1_621
+356;5/4/2021 3:26:50 PM;object;a sale of property at a price agreed on by the seller and buyer without an intervening agency;0;1_622
+357;5/4/2021 3:26:50 PM;object;the public sale of something to the highest bidder;0;
+358;5/4/2021 3:26:50 PM;object;the act of making or transporting alcoholic liquor for sale illegally; "the Prohibition amendment made bootlegging profitable";0;1_626
+359;5/4/2021 3:26:50 PM;object;the act of selling illegally or without permission; "the bootlegging of videotapes is common in Asia";0;1_627
+360;5/4/2021 3:26:50 PM;object;the sale of capital stock;0;
+361;5/4/2021 3:26:50 PM;object;(business) too much capitalization (the sale of more stock than the business warrants);0;
+362;5/4/2021 3:26:50 PM;object;the recovery of useful substances from waste products;0;1_632
+363;5/4/2021 3:26:50 PM;object;recovery or preservation from loss or danger; "work is the deliverance of mankind"; "a surgeon`s job is the saving of lives";0;
+364;5/4/2021 3:26:50 PM;object;saving the lives of drowning persons; "he took a course in lifesaving";0;1_637
+365;5/4/2021 3:26:50 PM;object;(theology) the act of delivering from sin or saving from evil;0;
+366;5/4/2021 3:26:50 PM;object;the act of absolving or remitting; formal redemption as pronounced by a priest in the sacrament of penance;0;
+367;5/4/2021 3:26:50 PM;object;the remission by the pope of the temporal punishment in purgatory that is still due for sins even after absolution; "in the Middle Ages the unrestricted sale of indulgences by pardoners became a widespread abuse";0;1_644
+368;5/4/2021 3:26:50 PM;object;a spiritual enlightenment causing a person to lead a new life;0;
+369;5/4/2021 3:26:50 PM;object;the state of being a proselyte; spiritual rebirth resulting from the zeal of crusading advocacy of the gospel;0;1_648
+370;5/4/2021 3:26:50 PM;object;the act of atoning for sin or wrongdoing (especially appeasing a deity);0;
+371;5/4/2021 3:26:50 PM;object;something done or paid in expiation of a wrong; "how can I make amends";0;
+372;5/4/2021 3:26:50 PM;object;the act of liberating someone or something;0;
+373;5/4/2021 3:26:50 PM;object;the use of force to liberate prisoners;0;1_657
+374;5/4/2021 3:26:50 PM;object;rescuing from error and returning to a rightful course; "the reclamation of delinquent children";0;
+375;5/4/2021 3:26:50 PM;object;the act of rescuing a ship or its crew or its cargo from a shipwreck or a fire;0;1_660
+376;5/4/2021 3:26:50 PM;object;the act of saving goods or property that were in danger of damage or destruction;0;1_661
+377;5/4/2021 3:26:50 PM;object;stopping two strings and producing two notes at the same time;0;1_662
+378;5/4/2021 3:26:50 PM;object;saving someone or something from harm or from an unpleasant situation; "the salvation of his party was the president`s major concern";0;1_663
+379;5/4/2021 3:26:50 PM;object;a rescue mission to search for survivors and to rescue them;0;1_664
+380;5/4/2021 3:26:50 PM;object;the act of freeing from captivity or punishment;0;1_665
+381;5/4/2021 3:26:50 PM;object;the act of taking something back;0;
+382;5/4/2021 3:26:50 PM;object;a legal seizure by the government of profits beyond a fixed amount;0;1_668
+383;5/4/2021 3:26:50 PM;object;the act of appealing for help;0;1_669
+384;5/4/2021 3:26:50 PM;object;the act of providing or using the instruments needed for some implementation;0;1_670
+385;5/4/2021 3:26:50 PM;object;the act of performing; of doing something successfully; using knowledge as distinguished from merely possessing it; "they criticised his performance as mayor"; "experience generally improves performance";0;
+386;5/4/2021 3:26:50 PM;object;the performance of a legal contract as specified by its terms;0;1_675
+387;5/4/2021 3:26:50 PM;object;(linguistics) a speaker`s actual use of language in real situations; what the speaker actually says, including grammatical errors and other non-linguistic features such as hesitations and other disfluencies (contrasted with linguistic competence);0;1_676
+388;5/4/2021 3:26:50 PM;object;the technical aspects of doing something; "a mechanism of social control"; "mechanisms of communication"; "the mechanics of prose style";0;
+389;5/4/2021 3:26:50 PM;object;the performance of duties by a waiter or servant; "that restaurant has excellent service";0;1_679
+390;5/4/2021 3:26:50 PM;object;service provided to customers who remain in their vehicles;0;1_680
+391;5/4/2021 3:26:50 PM;object;the practice of serving yourself (as in a grocery or cafeteria);0;1_681
+392;5/4/2021 3:26:50 PM;object;a service provided (at a club or restaurant or airport etc.) whereby a patron leaves a car at the entrance and an attendant parks and retrieves it;0;1_682
+393;5/4/2021 3:26:50 PM;object;the act of performing a drama; "the group joined together in a dramatic production";0;
+394;5/4/2021 3:26:50 PM;object;an extra or repeated performance; usually given in response to audience demand;0;1_685
+395;5/4/2021 3:26:50 PM;object;a performance given extempore without planning or preparation;0;
+396;5/4/2021 3:26:50 PM;object;throwing and catching several objects simultaneously;0;
+397;5/4/2021 3:26:50 PM;object;an illusory feat; considered magical by naive observers;0;
+398;5/4/2021 3:26:50 PM;object;the act of performing music;0;1_700
+399;5/4/2021 3:26:50 PM;object;a performance in one place on one night only;0;1_701
+400;5/4/2021 3:26:50 PM;object;the act of interpreting something as expressed in an artistic performance; "her rendition of Milton`s verse was extraordinarily moving";0;
+401;5/4/2021 3:26:50 PM;object;a new or different interpretation;0;1_705
+402;5/4/2021 3:26:50 PM;object;a distinctive interpretation (especially as used by politicians to sway public opinion); "the campaign put a favorable spin on the story";0;1_706
+403;5/4/2021 3:26:50 PM;object;the act of playing a musical instrument;0;1_707
+404;5/4/2021 3:26:50 PM;object;managing the bow in playing a stringed instrument; "the violinist`s bowing was excellent";0;1_708
+405;5/4/2021 3:26:50 PM;object;bowing in such a way that the bow bounces lightly off the strings;0;
+406;5/4/2021 3:26:50 PM;object;playing a pipe or the bagpipes;0;1_711
+407;5/4/2021 3:26:50 PM;object;the kind of playing that involves pressing the fingers on the strings of a stringed instrument to control the pitch; "the violinist`s stopping was excellent";0;1_712
+408;5/4/2021 3:26:50 PM;object;shooting artillery shells;0;1_713
+409;5/4/2021 3:26:50 PM;object;(music) playing in a different key from the key intended; moving the pitch of a piece of music upwards or downwards;0;1_714
+410;5/4/2021 3:26:50 PM;object;an impromptu jazz concert;0;1_715
+411;5/4/2021 3:26:50 PM;object;the act of implementing the control of equipment with advanced technology; usually involving electronic hardware; "automation replaces human workers by machines";0;
+412;5/4/2021 3:26:50 PM;object;the control of processes by computer;0;
+413;5/4/2021 3:26:50 PM;object;the act of motorizing (equiping with motors or with motor vehicles);0;
+414;5/4/2021 3:26:50 PM;object;the act of propelling with force;0;
+415;5/4/2021 3:26:50 PM;object;the act of moving a newly built vessel into the water for the first time;0;1_725
+416;5/4/2021 3:26:50 PM;object;the launching of a rocket or missile under its own power;0;
+417;5/4/2021 3:26:50 PM;object;the launching of a missile or spacecraft to a specified destination;0;
+418;5/4/2021 3:26:50 PM;object;the launching of a spacecraft to the moon;0;1_730
+419;5/4/2021 3:26:50 PM;object;the act of applying force to propel something; "after reaching the desired velocity the drive is cut off";0;
+420;5/4/2021 3:26:50 PM;object;(colloquial) the application of maximum thrust; "he moved the throttle to the firewall";0;1_734
+421;5/4/2021 3:26:50 PM;object;the act of applying force suddenly; "the impulse knocked him over";0;
+422;5/4/2021 3:26:50 PM;object;the act of rolling something (as the ball in bowling);0;
+423;5/4/2021 3:26:50 PM;object;the act of throwing (propelling something with a rapid movement of the arm and wrist); "the catcher made a good throw to second base";0;1_740
+424;5/4/2021 3:26:50 PM;object;(cricket) the act of delivering a cricket ball to the batsman;0;1_741
+425;5/4/2021 3:26:50 PM;object;the act of flinging;0;1_742
+426;5/4/2021 3:26:50 PM;object;throwing something heavy (with great effort); "he gave it a mighty heave"; "he was not good at heaving passes";0;
+427;5/4/2021 3:26:50 PM;object;a violent throw;0;
+428;5/4/2021 3:26:50 PM;object;(horseshoes) the throw of a horseshoe so as to lean against (but not encircle) the stake;0;1_747
+429;5/4/2021 3:26:50 PM;object;(sports) the act of throwing the ball to another member of your team; "the pass was fumbled";0;
+430;5/4/2021 3:26:50 PM;object;the action or manner of throwing something; "his pitch fell short and his hat landed on the floor";0;1_751
+431;5/4/2021 3:26:50 PM;object;(baseball) the act of throwing a baseball by a pitcher to a batter;0;
+432;5/4/2021 3:26:50 PM;object;(horseshoes) the successful throw of a horseshoe or quoit so as to encircle a stake or peg;0;1_754
+433;5/4/2021 3:26:50 PM;object;a quick throw; "he gave the ball a shy to the first baseman";0;1_755
+434;5/4/2021 3:26:50 PM;object;throwing with a wide motion (as if with a sling);0;1_756
+435;5/4/2021 3:26:50 PM;object;(rugby) an act or instance of throwing a ball in to put it into play;0;1_757
+436;5/4/2021 3:26:50 PM;object;an illegal pitching motion while runners are on base;0;1_758
+437;5/4/2021 3:26:50 PM;object;a pitch that is not in the strike zone; "he threw nine straight balls before the manager yanked him";0;1_759
+438;5/4/2021 3:26:50 PM;object;a baseball deliberately thrown at the batter`s head;0;
+439;5/4/2021 3:26:50 PM;object;a baseball thrown with little velocity when the batter is expecting a fastball;0;
+440;5/4/2021 3:26:50 PM;object;a pitch of a baseball that is thrown with spin so that its path curves as it approaches the batter;0;
+441;5/4/2021 3:26:50 PM;object;a pitch thrown deliberately close to the batter;0;1_770
+442;5/4/2021 3:26:50 PM;object;(baseball) a pitch thrown with maximum velocity; "he swung late on the fastball"; "he showed batters nothing but smoke";0;
+443;5/4/2021 3:26:50 PM;object;a baseball pitch thrown with little speed or spin;0;
+444;5/4/2021 3:26:50 PM;object;a baseball pitch in which the hand moves above the shoulder;0;1_778
+445;5/4/2021 3:26:50 PM;object;a pitch that the catcher should have caught but did not; allows a base runner to advance a base;0;1_779
+446;5/4/2021 3:26:50 PM;object;a pitch with reverse spin that curves toward the side of the plate from which it was thrown;0;1_780
+447;5/4/2021 3:26:50 PM;object;a pitch that curves downward rapidly as it approaches the plate;0;1_781
+448;5/4/2021 3:26:50 PM;object;a fastball that curves slightly away from the side from which it was thrown;0;1_782
+449;5/4/2021 3:26:50 PM;object;an illegal pitch in which a foreign substance (spit or Vaseline) is applied to the ball by the pitcher before he throws it;0;
+450;5/4/2021 3:26:50 PM;object;(baseball) a pitch that the batter swings at and misses, or that the batter hits into foul territory, or that the batter does not swing at but the umpire judges to be in the area over home plate and between the batter`s knees and shoulders; "this pitcher;0;1_785
+451;5/4/2021 3:26:50 PM;object;a pitch thrown sidearm instead of overhead;0;
+452;5/4/2021 3:26:50 PM;object;an errant pitch that the catcher cannot be expected to catch and that allows a base runner to advance a base;0;1_788
+453;5/4/2021 3:26:50 PM;object;throwing the basketball toward the hoop; "his shot hit the rim and bounced out";0;1_789
+454;5/4/2021 3:26:50 PM;object;a basketball shot that bounces off of the backboard before passing through the hoop;0;1_790
+455;5/4/2021 3:26:50 PM;object;a basketball shot in which the basketball is propelled downward into the basket;0;
+456;5/4/2021 3:26:50 PM;object;a forceful dunk;0;1_794
+457;5/4/2021 3:26:50 PM;object;a basketball shot that rolls off the tips of the fingers into the basket;0;1_795
+458;5/4/2021 3:26:50 PM;object;an unhindered basketball shot from the foul line; given to penalize the other team for committing a foul;0;
+459;5/4/2021 3:26:50 PM;object;a foul shot that must be made in order to earn the right to a second foul shot;0;1_802
+460;5/4/2021 3:26:50 PM;object;a basketball shot made over the head with the hand that is farther from the basket;0;
+461;5/4/2021 3:26:50 PM;object;(basketball) a player releases the basketball at the high point of a jump;0;
+462;5/4/2021 3:26:50 PM;object;a basketball shot made with one hand from a position under or beside the basket (and usually banked off the backboard);0;
+463;5/4/2021 3:26:50 PM;object;a one-handed basketball shot made while whirling on the pivot foot;0;1_809
+464;5/4/2021 3:26:50 PM;object;a two-handed basketball shot from a stationary position;0;1_810
+465;5/4/2021 3:26:50 PM;object;a basketball shot made with an underhand scooping motion;0;1_811
+466;5/4/2021 3:26:50 PM;object;a basketball shot made by tapping the rebounding ball back into the basket;0;1_812
+467;5/4/2021 3:26:50 PM;object;the act of applying force in order to move something away; "he gave the door a hard push"; "the pushing is good exercise";0;
+468;5/4/2021 3:26:50 PM;object;pushing down; "depression of the space bar on the typewriter";0;1_815
+469;5/4/2021 3:26:50 PM;object;depression of a button on a computer mouse; "a click on the right button for example";0;
+470;5/4/2021 3:26:50 PM;object;a slight push or shake;0;
+471;5/4/2021 3:26:50 PM;object;the act of pressing; the exertion of pressure; "he gave the button a press"; "he used pressure to stop the bleeding"; "at the pressing of a button";0;
+472;5/4/2021 3:26:50 PM;object;a return punch (especially by a boxer);0;
+473;5/4/2021 3:26:50 PM;object;the act of pressing one thing on or into the surface of another; "he watched the impression of the seal on the hot wax";0;1_824
+474;5/4/2021 3:26:50 PM;object;the act of shoving (giving a push to someone or something); "he gave the door a shove";0;1_825
+475;5/4/2021 3:26:50 PM;object;the act of shoving hastily; "she complained about bundling the children off to school";0;1_826
+476;5/4/2021 3:26:50 PM;object;the act of jostling (forcing your way by pushing);0;
+477;5/4/2021 3:26:50 PM;object;jostling with the elbows; "elbowing is a foul in basketball";0;1_829
+478;5/4/2021 3:26:50 PM;object;the act of pulling; applying force to move something toward or with you; "the pull up the hill had him breathing harder"; "his strenuous pulling strained his back";0;
+479;5/4/2021 3:26:50 PM;object;the act of dragging (pulling with force); "the drag up the hill exhausted him";0;1_832
+480;5/4/2021 3:26:50 PM;object;the act of drawing or hauling something; "the haul up the hill went very slowly";0;
+481;5/4/2021 3:26:50 PM;object;the act of hauling something (as a vehicle) by means of a hitch or rope; "the truck gave him a tow to the garage";0;
+482;5/4/2021 3:26:50 PM;object;a sudden abrupt pull;0;
+483;5/4/2021 3:26:50 PM;object;the act of moving a load by drawing or pulling;0;
+484;5/4/2021 3:26:50 PM;object;the act of pulling up or out; uprooting; cutting off from existence;0;
+485;5/4/2021 3:26:50 PM;object;the act of pulling and releasing a taut cord;0;1_846
+486;5/4/2021 3:26:50 PM;object;(orthopedics) the act of pulling on a bone or limb (as in a fracture) to relieve pressure or align parts in a special way during healing; "his leg was in traction for several days";0;1_847
+487;5/4/2021 3:26:50 PM;object;the act of raising something; "he responded with a lift of his eyebrow"; "fireman learn several different raises for getting ladders up";0;
+488;5/4/2021 3:26:50 PM;object;the act of expelling or projecting or ejecting;0;
+489;5/4/2021 3:26:50 PM;object;the act of throwing someone or something out of a window;0;1_855
+490;5/4/2021 3:26:50 PM;object;reflex changes in the eyes that enable an object to be focused on the retina;0;1_856
+491;5/4/2021 3:26:50 PM;object;extension upward of the toes when the sole of the foot is stroked firmly on the outer side from the heel to the front; normal in infants under the age of two years but a sign of brain or spinal cord injury in older persons;0;
+492;5/4/2021 3:26:50 PM;object;a reflex that expels gas noisily from the stomach through the mouth;0;
+493;5/4/2021 3:26:50 PM;object;the forceful expulsion of something from inside; "the belching of smoke from factory chimneys";0;1_865
+494;5/4/2021 3:26:50 PM;object;a reflex that closes and opens the eyes rapidly;0;
+495;5/4/2021 3:26:50 PM;object;sudden reddening of the face (as from embarrassment or guilt or shame or modesty);0;
+496;5/4/2021 3:26:50 PM;object;the act of expelling (food or phlegm) by coughing;0;1_875
+497;5/4/2021 3:26:50 PM;object;the reflex act of ejecting the contents of the stomach through the mouth;0;
+498;5/4/2021 3:26:50 PM;object;regurgitation of small amounts of food; seen in some infants after feeding;0;1_885
+499;5/4/2021 3:26:50 PM;object;vomiting blood;0;
+500;5/4/2021 3:26:50 PM;object;severe and excessive vomiting;0;1_888
+501;5/4/2021 3:26:50 PM;object;hyperemesis during pregnancy; if severe it can result in damage to the brain and liver and kidney;0;1_889
+502;5/4/2021 3:26:50 PM;object;the act of jumping; propelling yourself off the ground; "he advanced in a series of jumps"; "the jumping was unexpected";0;
+503;5/4/2021 3:26:50 PM;object;a headlong jump (or fall); "he took a header into the shrubbery";0;1_892
+504;5/4/2021 3:26:50 PM;object;the act of hopping; jumping upward or forward (especially on one foot);0;1_893
+505;5/4/2021 3:26:50 PM;object;a light, self-propelled movement upwards or forwards;0;
+506;5/4/2021 3:26:50 PM;object;the act of jumping over an obstacle;0;
+507;5/4/2021 3:26:50 PM;object;jumping in one spot (as in excitement); "the wailing and jumping up and down exhausted him";0;1_902
+508;5/4/2021 3:26:50 PM;object;the act of propelling something (as a ball or shell etc.) in a high arc;0;1_903
+509;5/4/2021 3:26:50 PM;object;(American football) putting the ball in play by passing it (between the legs) to a back; "the quarterback fumbled the snap";0;
+510;5/4/2021 3:26:50 PM;object;the act of causing something to go (especially messages);0;1_906
+511;5/4/2021 3:26:50 PM;object;the act of sending a message; causing a message to be transmitted;0;
+512;5/4/2021 3:26:50 PM;object;the act of sending on to another destination; "the forwarding of mail to a new address is done automatically"; "the forwarding of resumes to the personnel department";0;1_910
+513;5/4/2021 3:26:50 PM;object;the act of referring (as forwarding an applicant for employment or referring a matter to an appropriate agency);0;1_911
+514;5/4/2021 3:26:50 PM;object;(law) the act of remitting (especially the referral of a law case to another court);0;
+515;5/4/2021 3:26:50 PM;object;the transmission of a letter; "the postmark indicates the time of mailing";0;
+516;5/4/2021 3:26:50 PM;object;propelling something on wheels;0;
+517;5/4/2021 3:26:50 PM;object;the act of firing a projectile; "his shooting was slow but accurate";0;
+518;5/4/2021 3:26:50 PM;object;the act of shooting at targets; "they hold a shoot every weekend during the summer";0;1_921
+519;5/4/2021 3:26:50 PM;object;a return shot; a retaliatory shot;0;1_922
+520;5/4/2021 3:26:50 PM;object;the act of discharging a gun;0;
+521;5/4/2021 3:26:50 PM;object;the discharge of a firearm as signal or as a salute in military ceremonies; "two runners started before the gun"; "a twenty gun salute";0;1_926
+522;5/4/2021 3:26:50 PM;object;preparation for the delivery of shellfire on a target;0;1_927
+523;5/4/2021 3:26:50 PM;object;the act of shooting a gun; "the gunfire endangered innocent bystanders"; "they retreated in the face of withering enemy fire";0;
+524;5/4/2021 3:26:50 PM;object;gunfire directed along the length rather than the breadth of a formation;0;
+525;5/4/2021 3:26:50 PM;object;a gunshot from a concealed location;0;1_932
+526;5/4/2021 3:26:50 PM;object;a shot aimed at a person`s head;0;1_933
+527;5/4/2021 3:26:50 PM;object;the sport of shooting at clay pigeons that are hurled upward in such a way as to simulate the flight of a bird;0;
+528;5/4/2021 3:26:50 PM;object;a fight involving shooting small arms with the intent to kill or frighten;0;
+529;5/4/2021 3:26:50 PM;object;a shot taken at an easy or casual target (as by a pothunter);0;1_940
+530;5/4/2021 3:26:50 PM;object;the act of touching physically; "her fingers came in contact with the light switch";0;
+531;5/4/2021 3:26:50 PM;object;the act of rubbing or wiping; "he gave the hood a quick rub";0;
+532;5/4/2021 3:26:50 PM;object;the act of scuffing (scraping or dragging the feet);0;1_945
+533;5/4/2021 3:26:50 PM;object;a light touch or stroke;0;
+534;5/4/2021 3:26:50 PM;object;the act of contacting one thing with another; "repeated hitting raised a large bruise"; "after three misses she finally got a hit";0;
+535;5/4/2021 3:26:50 PM;object;the action of bruising; "the bruise resulted from a contusion";0;1_952
+536;5/4/2021 3:26:50 PM;object;the act of colliding with something; "his crash through the window"; "the fullback`s smash into the defensive line";0;
+537;5/4/2021 3:26:50 PM;object;a sharp collision produced by striking or dashing against something;0;
+538;5/4/2021 3:26:50 PM;object;(baseball) the batter`s attempt to get on base;0;1_957
+539;5/4/2021 3:26:50 PM;object;(baseball) handling the ball while playing in the field;0;1_958
+540;5/4/2021 3:26:50 PM;object;(baseball) playing the position of catcher on a baseball team;0;1_959
+541;5/4/2021 3:26:50 PM;object;playing golf; "he goes south every winter for the golfing";0;1_960
+542;5/4/2021 3:26:50 PM;object;(baseball) playing the position of pitcher on a baseball team;0;1_961
+543;5/4/2021 3:26:50 PM;object;(baseball) an advance to first base by a batter who receives four balls; "he worked the pitcher for a base on balls";0;
+544;5/4/2021 3:26:50 PM;object;the supreme effort one can make; "they did their best";0;1_965
+545;5/4/2021 3:26:50 PM;object;the weakest effort or poorest achievement one is capable of; "it was the worst he had ever done on a test";0;1_966
+546;5/4/2021 3:26:50 PM;object;(baseball) a ball struck with the bat so that it stays between the lines (the foul lines) that define the width of the playing field;0;1_967
+547;5/4/2021 3:26:50 PM;object;(baseball) a ball struck with the bat so that it does not stay between the lines (the foul lines) that define the width of the playing field;0;1_968
+548;5/4/2021 3:26:50 PM;object;a glancing contact with the ball off the edge of the cricket bat;0;1_969
+549;5/4/2021 3:26:50 PM;object;(baseball) the act of hitting a baseball lightly without swinging the bat;0;1_970
+550;5/4/2021 3:26:50 PM;object;(baseball) a hit that flies up in the air;0;
+551;5/4/2021 3:26:50 PM;object;a very long fly ball;0;1_973
+552;5/4/2021 3:26:50 PM;object;a short high fly ball;0;
+553;5/4/2021 3:26:50 PM;object;(baseball) a hit that travels along the ground;0;
+554;5/4/2021 3:26:50 PM;object;a grounder that bounces high in the air;0;
+555;5/4/2021 3:26:50 PM;object;a grounder that rolls along the infield;0;1_983
+556;5/4/2021 3:26:50 PM;object;(baseball) a failure by a batter or runner to reach a base safely in baseball; "you only get 3 outs per inning";0;1_984
+557;5/4/2021 3:26:50 PM;object;a putout of a base runner who is required to run; the putout is accomplished by holding the ball while touching the base to which the runner must advance before the runner reaches that base; "the shortstop got the runner at second on a force";0;
+558;5/4/2021 3:26:50 PM;object;an out resulting from a fielding play (not a strikeout); "the first baseman made 15 putouts";0;1_989
+559;5/4/2021 3:26:50 PM;object;an out resulting from the batter getting three strikes;0;1_990
+560;5/4/2021 3:26:50 PM;object;a strikeout resulting from the batter swinging at and missing the ball for the third strike;0;1_991
+561;5/4/2021 3:26:50 PM;object;the act of reporting your presence (as at an airport or a hotel);0;1_992
+562;5/4/2021 3:26:50 PM;object;a play made on a ground ball in which the fielder chooses to put out an advancing runner instead of the batter;0;1_993
+563;5/4/2021 3:26:50 PM;object;(baseball) an out that advances the base runners;0;1_994
+564;5/4/2021 3:26:50 PM;object;a sacrifice made by hitting a long fly ball;0;1_995
+565;5/4/2021 3:26:50 PM;object;(baseball) the successful act of striking a baseball in such a way that the batter reaches base safely;0;
+566;5/4/2021 3:26:50 PM;object;a batted or served ball that skims along close to the ground;0;1_998
+567;5/4/2021 3:26:50 PM;object;(soccer) the act of hitting the ball with your head;0;1_999
+568;5/4/2021 3:26:50 PM;object;(baseball) a hit that flies straight out from the batter; "the batter hit a liner to the shortstop";0;
+569;5/4/2021 3:26:50 PM;object;a very hard hit ball;0;
+570;5/4/2021 3:26:50 PM;object;a single resulting from a line drive;0;
+571;5/4/2021 3:26:50 PM;object;a double resulting from a line drive;0;
+572;5/4/2021 3:26:50 PM;object;a triple resulting from a line drive;0;
+573;5/4/2021 3:26:50 PM;object;(baseball) hitting a baseball so that it drops suddenly;0;
+574;5/4/2021 3:26:50 PM;object;a base hit on which the batter scores a run;0;
+575;5/4/2021 3:26:50 PM;object;a home run with no runners on base;0;
+576;5/4/2021 3:26:50 PM;object;a base hit on which the batter stops safely at first base;0;
+577;5/4/2021 3:26:50 PM;object;a base hit on which the batter stops safely at second base; "he hit a double to deep centerfield";0;

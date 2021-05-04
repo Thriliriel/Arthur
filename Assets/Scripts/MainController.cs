@@ -1662,6 +1662,30 @@ public class MainController : MonoBehaviour
             else if (agentName == "Bella")
             {
                 //play bella
+                //all to false first
+                foreach (AnimatorControllerParameter parameter in belinha.GetComponent<Animator>().parameters)
+                {
+                    belinha.GetComponent<Animator>().SetBool(parameter.name, false);
+                }
+
+                //just for tests
+                //emotion = "disgust";
+
+                //true
+                if (emotion == "joy")
+                    belinha.GetComponent<Animator>().SetBool("isHappy", true);
+                else if (emotion == "anger")
+                    belinha.GetComponent<Animator>().SetBool("isAngry", true);
+                else if (emotion == "surprise")
+                    belinha.GetComponent<Animator>().SetBool("isSurprised", true);
+                else if (emotion == "fear")
+                    belinha.GetComponent<Animator>().SetBool("isAfraid", true);
+                else if (emotion == "sadness")
+                    belinha.GetComponent<Animator>().SetBool("isSad", true);
+                else if (emotion == "disgust")
+                    belinha.GetComponent<Animator>().SetBool("isDisgusted", true);
+                else
+                    belinha.GetComponent<Animator>().SetBool("isNeutral", true);
             }
         }
 
@@ -4144,5 +4168,76 @@ public class MainController : MonoBehaviour
         }
 
         writingLTM.Close();
+    }
+
+    //get info from WordNet to create memories and beliefs
+    public void LoadWordnetDatabase()
+    {
+        agentGeneralEvents = new Dictionary<int, GeneralEvent>();
+        agentLongTermMemory = new Dictionary<int, MemoryClass>();
+        agentShortTermMemory = new Dictionary<int, MemoryClass>();
+
+        //load memory
+        LoadEpisodicMemory();
+
+        //next ids
+        StreamReader sr = new StreamReader("nextId.txt", System.Text.Encoding.Default);
+        string textFile = sr.ReadLine();
+        nextEskId = int.Parse(textFile.Trim());
+        textFile = sr.ReadLine();
+        nextEpisodeId = int.Parse(textFile.Trim());
+        sr.Close();
+
+        //load wordnet
+        LoadWordnetFile();
+
+        //save the new memory file
+        SaveEpisodic();
+    }
+
+    //load wordnet file
+    private void LoadWordnetFile()
+    {
+        StreamReader readingLTM = new StreamReader("wordNetDatabase.txt", System.Text.Encoding.Default);
+        int qntItens = 0;
+        using (readingLTM)
+        {
+            string line;
+            do
+            {
+                line = readingLTM.ReadLine();
+
+                if (line.Contains("#"))
+                {
+                    continue;
+                }
+
+                //too much stuff
+                if (qntItens > 1000) break;
+
+                if (line != "" && line != null)
+                {
+                    string[] info = line.Split('\t');
+
+                    //just getting the word (0) and definition (3)
+                    string word = info[0];
+                    string definition = info[3];
+
+                    //add the memory
+                    int newId = GenerateEskID();
+                    MemoryClass newMem = new MemoryClass(System.DateTime.Now, "Object", word, newId, 1);
+                    newMem.activation = 1;
+                    agentLongTermMemory.Add(newId, newMem);
+
+                    List<int> connectNodes = new List<int>();
+                    connectNodes.Add(1);
+                    connectNodes.Add(newId);
+                    AddGeneralEvent(definition, connectNodes, "object");
+
+                    qntItens++;
+                }
+            } while (line != null);
+        }
+        readingLTM.Close();
     }
 }
