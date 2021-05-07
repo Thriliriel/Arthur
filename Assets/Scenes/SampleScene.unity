@@ -6786,7 +6786,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b58a41d2cccbef14fbba41225e469907, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sampleRate: 1
+  sampleRate: 2
   isFrontFacing: 0
   targetWidth: 320
   targetHeight: 240
@@ -9248,7 +9248,7 @@ MonoBehaviour:
   belinha: {fileID: 1925109561}
   webServicePath: 
   idleTimer: 0
-  waitForSeconds: 10
+  waitForSeconds: 30
   lastInteraction: 
   chatMode: 0
   emotionText: {fileID: 615780898}

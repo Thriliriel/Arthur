@@ -57,6 +57,7 @@ namespace DialogCS
             public string GetSentence() { return sentence; }
             public Dictionary<string, WeightWords> GetChildren() { return children; }
             public bool IsLeaf() { return children.Count == 0;/*return isLeaf;*/ }
+            public void ResetChildren() { children.Clear(); }
 
         }
 
@@ -66,7 +67,6 @@ namespace DialogCS
         private Node exitNode = new Node("None", "Im sorry but I had dificulty to understand what you said, lets talk about another thing."); //when Arthur dont know what to say
 
         Dictionary<string, Node> nodes;
-
 
         public Dialog(string desc)
         {
@@ -271,6 +271,11 @@ namespace DialogCS
         private void ReadCurrentNode()
         {
             //Debug.Log(currentNode.GetSentence());
+        }
+
+        public void Done()
+        {
+            currentNode.ResetChildren();
         }
 
     }

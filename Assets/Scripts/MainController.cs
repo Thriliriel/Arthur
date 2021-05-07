@@ -2363,11 +2363,18 @@ public class MainController : MonoBehaviour
             //save LTM as it is
             StreamWriter writingLTM = File.CreateText("AutobiographicalStorage/smallTalksUsed.txt");
 
-            //first, save the ESK
-            foreach (string dmem in dialogsInMemory)
+            //save the old ones as well
+            foreach (string dmem in dialogsUsed)
             {
                 //str with the used ones
                 writingLTM.WriteLine(dmem);
+            }
+            //save the ESK
+            foreach (string dmem in dialogsInMemory)
+            {
+                //str with the used ones
+                if(!dialogsUsed.Contains(dmem))
+                    writingLTM.WriteLine(dmem);
             }
             writingLTM.Close();
 
@@ -2986,7 +2993,22 @@ public class MainController : MonoBehaviour
 
         if (first)
         {
-            ct = currentTopic.RunDialog(0, tokenizeSentence, dialogsUsed);
+            //if it is first, check if the dialog tree was already used
+            if (dialogsUsed.Contains(currentTopic.GetId() + "-" + currentTopic.GetCurrentDialog().GetDescription() + "-" + currentTopic.GetCurrentDialog().GetId()))
+            {
+                currentTopic.CloseDialog();
+                ct = null;
+
+                //if has no more dialogs, topic is gone as well
+                if(currentTopic.GetLengthDialogs() == 0)
+                {
+                    currentTopic.GetCurrentDialog().Done();
+                }
+            }
+            else
+            {
+                ct = currentTopic.RunDialog(0, tokenizeSentence, dialogsUsed);
+            }
         }
         else
         {
