@@ -72,7 +72,7 @@ namespace TopicCS
                 currentDialog.NextSentence(tokenizeSentence);
 
             //check if already used
-            while (memoryDialogs.Contains(currentDialog.GetDescription() + currentDialog.GetId().ToString()))
+            while (memoryDialogs.Contains(_identificator + "-" + currentDialog.GetDescription() + "-" + currentDialog.GetId().ToString()))
             {
                 //get next
                 //currentDialog.NextSentence(p, sentence);
@@ -100,8 +100,8 @@ namespace TopicCS
         public void CloseDialog()
         {
             dialogs.Remove(currentDialog);
-            currentDialog = null;
-            ChangeState();
+            //ChangeState();
+            busy = false;
         }
 
         // choose new dialog

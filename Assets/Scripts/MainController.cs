@@ -2367,6 +2367,7 @@ public class MainController : MonoBehaviour
         mariano.GetComponent<CharacterCTRL>().PlayAnimation("wakywaky");
     }
 
+
     //save the used small talks
     private void SaveUsedST()
     {
@@ -2376,10 +2377,19 @@ public class MainController : MonoBehaviour
             StreamWriter writingLTM = File.CreateText("AutobiographicalStorage/smallTalksUsed.txt");
 
             //first, save the ESK
-            foreach (string dmem in dialogsInMemory)
+
+            //save the old ones as well
+            foreach (string dmem in dialogsUsed)
             {
                 //str with the used ones
                 writingLTM.WriteLine(dmem);
+            }
+            //save the ESK
+            foreach (string dmem in dialogsInMemory)
+            {
+                //str with the used ones
+                if (!dialogsUsed.Contains(dmem))
+                    writingLTM.WriteLine(dmem);
             }
             writingLTM.Close();
 
@@ -2996,7 +3006,22 @@ public class MainController : MonoBehaviour
 
         if (first)
         {
-            ct = currentTopic.RunDialog(0, tokenizeSentence, dialogsUsed);
+            //if it is first, check if the dialog tree was already used
+            if (dialogsUsed.Contains(currentTopic.GetId() + "-" + currentTopic.GetCurrentDialog().GetDescription() + "-" + currentTopic.GetCurrentDialog().GetId()))
+            {
+                currentTopic.CloseDialog();
+                ct = null;
+
+                //if has no more dialogs, topic is gone as well
+                if (currentTopic.GetLengthDialogs() == 0)
+                {
+                    currentTopic.GetCurrentDialog().Done();
+                }
+            }
+            else
+            {
+                ct = currentTopic.RunDialog(0, tokenizeSentence, dialogsUsed);
+            }
         }
         else
         {
@@ -3604,7 +3629,8 @@ public class MainController : MonoBehaviour
                 for(int h = 0; h < tokens.Length; h++)
                 {
                     string[] gt = tokens[h].Split(':');
-                    tokens[h] = gt[1];
+                    //tokens[h] = gt[1];// <- Douglas
+                    tokens[h] = gt[0];
                 }
                 for (int h = 0; h < tknType.Length; h++)
                 {
