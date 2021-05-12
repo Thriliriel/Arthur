@@ -2145,7 +2145,7 @@ public class MainController : MonoBehaviour
     }
 
     //add a new general event and return its id
-    private int AddGeneralEvent(string informationEvent, List<int> connectNodes, string typeEvent)
+    private int AddGeneralEvent(string informationEvent, List<int> connectNodes, string typeEvent, bool loadingWordnet = false)
     {
         //if the memory already contains this general event, or something similar, do not add
         int ind = 0;
@@ -2160,7 +2160,8 @@ public class MainController : MonoBehaviour
             }
         }
 
-        if (ind > 0)
+        //if it is loading Wordnet, it can exist different terms with the same description.
+        if (ind > 0 && !loadingWordnet)
         {
             //although we do not add a new general event, we can update the information
             agentGeneralEvents[ind].nodes.Clear();
@@ -4215,6 +4216,11 @@ public class MainController : MonoBehaviour
 
         //save the new memory file
         SaveEpisodic();
+
+        //save next ID
+        StreamWriter textToToken = new StreamWriter("nextId.txt");
+        textToToken.WriteLine(nextEskId + "\n" + nextEpisodeId);
+        textToToken.Close();
     }
 
     //load wordnet file
@@ -4235,7 +4241,7 @@ public class MainController : MonoBehaviour
                 }
 
                 //too much stuff
-                if (qntItens > 1000) break;
+                if (qntItens > 10000) break;
 
                 if (line != "" && line != null)
                 {
@@ -4243,7 +4249,7 @@ public class MainController : MonoBehaviour
 
                     //just getting the word (0) and definition (3)
                     string word = info[0];
-                    string definition = info[3];
+                    string definition = info[3].Replace(';', ',').Replace('\"', '|');
 
                     //add the memory
                     int newId = GenerateEskID();
@@ -4254,7 +4260,9 @@ public class MainController : MonoBehaviour
                     List<int> connectNodes = new List<int>();
                     connectNodes.Add(1);
                     connectNodes.Add(newId);
-                    AddGeneralEvent(definition, connectNodes, "object");
+                    AddGeneralEvent(definition, connectNodes, "belief", true);
+
+                    Debug.Log(agentGeneralEvents);
 
                     qntItens++;
                 }
