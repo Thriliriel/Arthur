@@ -11,3 +11,26 @@ $ food
 # FODff0904; That is awesome, we should eat together someday!; FODff0403;
 # FODff0905; Oh.. thats yummy!; FODff0704;
 ]
+[ restaurant
+# FODrt0101; Do you like going on restaurants?; -1;
+# FODrt0202; I love eating outside! Say, do you prefer a pub or a pizzaria?; FODrt0101;
+# FODrt0302; Oh, too bad... So, do you like cooking?; FODrt0101;
+# FODrt0403; I love going on a pizzaria as well!; FODrt0202;
+# FODrt0503; Oh, i would rather prefer a pizzaria, but a pub is also a nice place to enjoy with friends.; FODrt0202;
+# FODrt0603; I see, neither of them so.; FODrt0202;
+# FODrt0703; Nice, hope you can cook for me someday!; FODrt0302;
+# FODrt0803; Oh, i see.; FODrt0302;
+]
+
+$ music
+[ favorite_band
+# MUSfb0101; Hey, do you like music?; -1;
+# MUSfb0202; Nice, what is your favorite band?; MUSfb0101;
+# MUSfb0302; Oh, too bad.; MUSfb0101;
+# MUSfb0403; Nice one, i love Sonata Arctica, do you know them?; MUSfb0202;
+# MUSfb0503; Mine too! Say it, did you already listened their song, "white pearl, black oceans"?; MUSfb0202;
+# MUSfb0604; I think they are great!; MUSfb0403;
+# MUSfb0704; I see, i would recommend them; MUSfb0403;
+# MUSfb0804; It is an amazing song! We should listen them together someday.; MUSfb0503;
+# MUSfb0904; Oh, too bad, but if you like Sonata, i think you would love this song.; MUSfb0503;
+]

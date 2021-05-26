@@ -9248,7 +9248,7 @@ MonoBehaviour:
   belinha: {fileID: 1925109561}
   webServicePath: 
   idleTimer: 0
-  waitForSeconds: 30
+  waitForSeconds: 5
   lastInteraction: 
   chatMode: 0
   emotionText: {fileID: 615780898}
