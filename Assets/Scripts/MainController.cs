@@ -1662,30 +1662,25 @@ public class MainController : MonoBehaviour
             else if (agentName == "Bella")
             {
                 //play bella
-                //all to false first
-                foreach (AnimatorControllerParameter parameter in belinha.GetComponent<Animator>().parameters)
-                {
-                    belinha.GetComponent<Animator>().SetBool(parameter.name, false);
-                }
-
+                
                 //just for tests
                 //emotion = "disgust";
 
                 //true
                 if (emotion == "joy")
-                    belinha.GetComponent<Animator>().SetBool("isHappy", true);
+                    belinha.GetComponentInChildren<Animator>().SetTrigger("isHappy");
                 else if (emotion == "anger")
-                    belinha.GetComponent<Animator>().SetBool("isAngry", true);
+                    belinha.GetComponentInChildren<Animator>().SetTrigger("isAngry");
                 else if (emotion == "surprise")
-                    belinha.GetComponent<Animator>().SetBool("isSurprised", true);
+                    belinha.GetComponentInChildren<Animator>().SetTrigger("isSurprised");
                 else if (emotion == "fear")
-                    belinha.GetComponent<Animator>().SetBool("isAfraid", true);
+                    belinha.GetComponentInChildren<Animator>().SetTrigger("isAfraid");
                 else if (emotion == "sadness")
-                    belinha.GetComponent<Animator>().SetBool("isSad", true);
+                    belinha.GetComponentInChildren<Animator>().SetTrigger("isSad");
                 else if (emotion == "disgust")
-                    belinha.GetComponent<Animator>().SetBool("isDisgusted", true);
+                    belinha.GetComponentInChildren<Animator>().SetTrigger("isDisgusted");
                 else
-                    belinha.GetComponent<Animator>().SetBool("isNeutral", true);
+                    belinha.GetComponentInChildren<Animator>().SetTrigger("isNeutral");
             }
         }
 

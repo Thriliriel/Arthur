@@ -1,4 +1,5 @@
 ﻿//used to do things in Editor time, like prepare the scenario
+#if UNITY_EDITOR
 using UnityEngine;
 using UnityEditor;
 
@@ -23,3 +24,4 @@ public class EditorController : Editor
         (target as MainController).ClearMemoryFile();
     }
 }
+#endif
