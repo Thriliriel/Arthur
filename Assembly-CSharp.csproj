@@ -56,63 +56,64 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\RunAbleThread.cs" />
+    <Compile Include="Assets\Anima2D\Scripts\MathUtils.cs" />
+    <Compile Include="Assets\Affdex\Plugins\Scripts\VideoFileInput.cs" />
+    <Compile Include="Assets\Anima2D\Scripts\IkSolver2DCCD.cs" />
+    <Compile Include="Assets\Anima2D\Scripts\SpriteMesh.cs" />
+    <Compile Include="Assets\Affdex\Plugins\Scripts\Face.cs" />
+    <Compile Include="Assets\Anima2D\Examples\Scripts\SkinnedMeshCombiner.cs" />
+    <Compile Include="Assets\Scripts\HeadCTRL.cs" />
+    <Compile Include="Assets\Scripts\GeneralEventClass.cs" />
+    <Compile Include="Assets\Affdex\Plugins\Scripts\Detector.cs" />
+    <Compile Include="Assets\Scripts\Dialog.cs" />
+    <Compile Include="Assets\Anima2D\Examples\Scripts\SpriteCycle.cs" />
+    <Compile Include="Assets\Affdex\Plugins\Scripts\AndroidNativePlatform.cs" />
     <Compile Include="Assets\EditorController.cs" />
     <Compile Include="Assets\Anima2D\Examples\Scripts\SpriteCycleParallax.cs" />
     <Compile Include="Assets\Anima2D\Scripts\IkSolver2DLimb.cs" />
     <Compile Include="Assets\Anima2D\Scripts\Control.cs" />
-    <Compile Include="Assets\Anima2D\Scripts\IkLimb2D.cs" />
-    <Compile Include="Assets\Anima2D\Examples\Scripts\SpringCollider.cs" />
-    <Compile Include="Assets\Scripts\Calibration.cs" />
-    <Compile Include="Assets\Scripts\EyeCTRL.cs" />
-    <Compile Include="Assets\Anima2D\Scripts\Bone2D.cs" />
-    <Compile Include="Assets\Scripts\IceBreakingTreeClass.cs" />
-    <Compile Include="Assets\Scripts\RunAbleThread.cs" />
-    <Compile Include="Assets\Affdex\Plugins\Scripts\CameraInput.cs" />
     <Compile Include="Assets\Affdex\Plugins\Scripts\Expressions.cs" />
     <Compile Include="Assets\Affdex\Examples\Scripts\ViewCam.cs" />
-    <Compile Include="Assets\Affdex\Plugins\Scripts\NativePlatform.cs" />
-    <Compile Include="Assets\Affdex\Plugins\Scripts\Frame.cs" />
     <Compile Include="Assets\Affdex\Plugins\Scripts\ImageResultsListener.cs" />
-    <Compile Include="Assets\Scripts\MicrophoneController.cs" />
-    <Compile Include="Assets\Scripts\MainController.cs" />
     <Compile Include="Assets\Anima2D\Scripts\SpriteMeshAnimation.cs" />
-    <Compile Include="Assets\Anima2D\Examples\Scripts\SpringManager.cs" />
-    <Compile Include="Assets\Anima2D\Scripts\MathUtils.cs" />
-    <Compile Include="Assets\Affdex\Plugins\Scripts\VideoFileInput.cs" />
-    <Compile Include="Assets\Anima2D\Examples\Scripts\SpringBone.cs" />
-    <Compile Include="Assets\Affdex\Plugins\Scripts\iOSNativePlatform.cs" />
     <Compile Include="Assets\Anima2D\Scripts\IkSolver2D.cs" />
-    <Compile Include="Assets\Anima2D\Scripts\IkSolver2DCCD.cs" />
-    <Compile Include="Assets\Anima2D\Scripts\PoseManager.cs" />
-    <Compile Include="Assets\Anima2D\Scripts\SpriteMesh.cs" />
-    <Compile Include="Assets\Anima2D\Examples\Scripts\Follow.cs" />
     <Compile Include="Assets\Scripts\WhichArthur.cs" />
-    <Compile Include="Assets\Affdex\Plugins\Scripts\Face.cs" />
     <Compile Include="Assets\Anima2D\Scripts\Pose.cs" />
-    <Compile Include="Assets\Scripts\SpeakerController.cs" />
-    <Compile Include="Assets\Anima2D\Examples\Scripts\SkinnedMeshCombiner.cs" />
-    <Compile Include="Assets\Scripts\HeadCTRL.cs" />
     <Compile Include="Assets\Affdex\Examples\Scripts\Listener.cs" />
-    <Compile Include="Assets\Anima2D\Scripts\IkGroup.cs" />
     <Compile Include="Assets\Anima2D\Scripts\IkCCD2D.cs" />
     <Compile Include="Assets\Anima2D\Scripts\SpriteMeshInstance.cs" />
+    <Compile Include="Assets\Affdex\Plugins\Scripts\OSXNativePlatform.cs" />
+    <Compile Include="Assets\Scripts\DictationScript.cs" />
+    <Compile Include="Assets\Affdex\Plugins\Scripts\AffdexUnityUtils.cs" />
+    <Compile Include="Assets\Scripts\Topic.cs" />
+    <Compile Include="Assets\Anima2D\Examples\Scripts\CharacterMotion.cs" />
+    <Compile Include="Assets\Scripts\Calibration.cs" />
+    <Compile Include="Assets\Anima2D\Scripts\Bone2D.cs" />
+    <Compile Include="Assets\Scripts\IceBreakingTreeClass.cs" />
+    <Compile Include="Assets\Affdex\Plugins\Scripts\NativePlatform.cs" />
+    <Compile Include="Assets\Anima2D\Scripts\PoseManager.cs" />
+    <Compile Include="Assets\Anima2D\Examples\Scripts\Follow.cs" />
     <Compile Include="Assets\Scripts\MemoryClass.cs" />
     <Compile Include="Assets\Anima2D\Scripts\Ik2D.cs" />
-    <Compile Include="Assets\Affdex\Plugins\Scripts\OSXNativePlatform.cs" />
-    <Compile Include="Assets\Scripts\GeneralEventClass.cs" />
-    <Compile Include="Assets\Scripts\DictationScript.cs" />
-    <Compile Include="Assets\Anima2D\Scripts\EditorUpdaterProxy.cs" />
-    <Compile Include="Assets\Affdex\Plugins\Scripts\AffdexUnityUtils.cs" />
-    <Compile Include="Assets\Affdex\Plugins\Scripts\Detector.cs" />
-    <Compile Include="Assets\Scripts\Topic.cs" />
     <Compile Include="Assets\Affdex\Plugins\Scripts\WindowsNativePlatform.cs" />
-    <Compile Include="Assets\Scripts\Dialog.cs" />
-    <Compile Include="Assets\Anima2D\Examples\Scripts\SpriteCycle.cs" />
-    <Compile Include="Assets\Affdex\Plugins\Scripts\AndroidNativePlatform.cs" />
-    <Compile Include="Assets\Anima2D\Examples\Scripts\CharacterMotion.cs" />
+    <Compile Include="Assets\Affdex\Plugins\Scripts\DebugFeatureViewer.cs" />
+    <Compile Include="Assets\Anima2D\Scripts\IkLimb2D.cs" />
+    <Compile Include="Assets\Anima2D\Examples\Scripts\SpringCollider.cs" />
+    <Compile Include="Assets\Scripts\EyeCTRL.cs" />
+    <Compile Include="Assets\Affdex\Plugins\Scripts\CameraInput.cs" />
+    <Compile Include="Assets\Affdex\Plugins\Scripts\Frame.cs" />
+    <Compile Include="Assets\Scripts\MicrophoneController.cs" />
+    <Compile Include="Assets\Scripts\MainController.cs" />
+    <Compile Include="Assets\Anima2D\Examples\Scripts\SpringManager.cs" />
+    <Compile Include="Assets\Anima2D\Examples\Scripts\SpringBone.cs" />
+    <Compile Include="Assets\Affdex\Plugins\Scripts\iOSNativePlatform.cs" />
+    <Compile Include="Assets\Scripts\SpeakerController.cs" />
+    <Compile Include="Assets\Anima2D\Scripts\IkGroup.cs" />
+    <Compile Include="Assets\Anima2D\Scripts\EditorUpdaterProxy.cs" />
     <Compile Include="Assets\Scripts\CharacterCTRL.cs" />
     <Compile Include="Assets\Scripts\PADClass.cs" />
-    <Compile Include="Assets\Affdex\Plugins\Scripts\DebugFeatureViewer.cs" />
+    <Compile Include="Assets\Scripts\EyeCTRLBella.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Packages\CSProlog.6.0.0\lib\net35\CSProlog.xml" />
@@ -718,6 +719,12 @@
     <Reference Include="System.Xml.XPath.XDocument">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Xml.XPath.XDocument.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.ShaderGraph.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.ShaderGraph.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.VisualEffectGraph.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.VisualEffectGraph.Editor.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.VSCode.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.VSCode.Editor.dll</HintPath>
     </Reference>
@@ -726,6 +733,12 @@
     </Reference>
     <Reference Include="Unity.VisualStudio.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.VisualStudio.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.VisualEffectGraph.Runtime">
+      <HintPath>Library\ScriptAssemblies\Unity.VisualEffectGraph.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.Timeline.Editor.dll</HintPath>
@@ -736,29 +749,8 @@
     <Reference Include="Unity.TextMeshPro">
       <HintPath>Library\ScriptAssemblies\Unity.TextMeshPro.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEditor.UI">
-      <HintPath>Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Rider.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.Rider.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.VisualEffectGraph.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.VisualEffectGraph.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.VisualEffectGraph.Runtime">
-      <HintPath>Library\ScriptAssemblies\Unity.VisualEffectGraph.Runtime.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.RenderPipelines.HighDefinition.Runtime">
       <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.HighDefinition.Runtime.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.RenderPipelines.HighDefinition.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.HighDefinition.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.RenderPipelines.Core.Runtime">
-      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Core.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Searcher.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.Searcher.Editor.dll</HintPath>
@@ -766,17 +758,26 @@
     <Reference Include="Unity.RenderPipelines.HighDefinition.Config.Runtime">
       <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.HighDefinition.Config.Runtime.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.RenderPipelines.Core.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Core.Editor.dll</HintPath>
+    <Reference Include="Unity.RenderPipelines.Core.Runtime">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Core.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.HighDefinition.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.HighDefinition.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.UI">
+      <HintPath>Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Rider.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.Rider.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Core.ShaderLibrary">
       <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Core.ShaderLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
-      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.ShaderGraph.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.ShaderGraph.Editor.dll</HintPath>
+    <Reference Include="Unity.RenderPipelines.Core.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Core.Editor.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

@@ -229,6 +229,7 @@ public class MainController : MonoBehaviour
             {
                 mariano.SetActive(false);
                 belinha.SetActive(true);
+                belinha.transform.Find("EyeCTRLBella").GetComponent<EyeCTRLBella>().enabled = true;
             }
         }
 
