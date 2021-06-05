@@ -13,6 +13,8 @@ public class EyeCTRL : MonoBehaviour
 
     public HeadCTRL headCTRL;
 
+    public GameObject REye, LEye;
+
     //main controller
     private MainController mc;
 
@@ -41,14 +43,17 @@ public class EyeCTRL : MonoBehaviour
 
     private void Awake()
     {
-        defaultPosition = transform.position;
-        xLimit = 1.75f; // Unity world position
-        yLimit = 2.0f; // ""
+        //defaultPosition = transform.position;
+        defaultPosition = Vector3.zero;
+        //xLimit = 1.75f; // Unity world position
+        //yLimit = 2.0f; // ""
+        xLimit = 0.12f; // Unity world position
+        yLimit = 0.18f; // ""
         listeningLimit = 22.7f; // Degrees
         talkingLimit = 27.5f; // ""
-        followFace = true;
+        followFace = false;
         followMouse = false;
-        saccade = false;
+        saccade = true;
         saccadeCoroutine = null;
         agentMode = "talking";
         gazeMode = "mutual";
@@ -58,16 +63,20 @@ public class EyeCTRL : MonoBehaviour
         initY = 0f;
         faceComponents = new Vector3(-5f, 7.5f, 2.5f);
         mouseComponents = new Vector3(2.5f, 3.5f, -0.375f);
+        REye = GameObject.Find("Eye_R");
+        LEye = GameObject.Find("Eye_L");
         ConfigureFocus();
     }
 
     private void ConfigureFocus()
     {
         iris = new GameObject[2];
-        iris[0] = GameObject.Find("Eye_L");
-        iris[1] = GameObject.Find("Eye_R");
-        positionOffsetL = new Vector3(-0.95f, 1.5f, 7.5f);
-        positionOffsetR = new Vector3(0.95f, 1.5f, 7.5f);
+        iris[0] = LEye;
+        iris[1] = REye;
+        //positionOffsetL = new Vector3(-0.95f, 1.5f, 7.5f);
+        //positionOffsetR = new Vector3(0.95f, 1.5f, 7.5f);
+        positionOffsetL = LEye.transform.position;
+        positionOffsetR = REye.transform.position;
         iris[0].transform.GetChild(3).GetComponent<PositionConstraint>().translationOffset = positionOffsetL;
         iris[1].transform.GetChild(3).GetComponent<PositionConstraint>().translationOffset = positionOffsetR;
     }
@@ -148,12 +157,13 @@ public class EyeCTRL : MonoBehaviour
          */
 
         float magnitude, direction, dirX, dirY, saccadeFrames, time;
-        Vector3 position;
+        Vector3 newPosition;
 
-        position = new Vector3(0f, 0f, 0f);
+        newPosition = new Vector3(0f, 0f, 0f);
         while (true)
         {
-            magnitude = -6.9f * Mathf.Log(UnityEngine.Random.Range(0f, 15f) / 15.7f);
+            magnitude = -6.9f * Mathf.Log(Random.Range(0f, 15f) / 15.7f);
+            //Debug.Log("Mag: " + magnitude);
 
             // Verifies saccade limits according to Eyes Alive
             // Also converts magnitude from degrees to percentage
@@ -168,7 +178,7 @@ public class EyeCTRL : MonoBehaviour
                 magnitude /= talkingLimit;
             }
             
-            direction = UnityEngine.Random.Range(0f, 100f);
+            direction = Random.Range(0f, 100f);
             //duration = 0.0025f + 0.00024f * magnitude; // 25msec + 2.4msec/deg * A = D0 + d * A = (Equation 1)
 
             // According to Table 1, Lee et al, Eyes Alive
@@ -222,11 +232,15 @@ public class EyeCTRL : MonoBehaviour
              * magnitude in degrees that we've had.
              */
 
-            position.x = xLimit * dirX;
-            position.y = yLimit * dirY + saccadeOffset;
+            newPosition.x = xLimit * dirX;
+            //newPosition.y = yLimit * dirY + saccadeOffset;
+            newPosition.y = yLimit * dirY;
 
             // Applies transformation
-            transform.position = position;
+            //transform.Find("Iris").Find("Pupil").transform.localPosition = newPosition;
+            REye.transform.Find("Iris").Find("Pupil").transform.localPosition = newPosition;
+            LEye.transform.Find("Iris").Find("Pupil").transform.localPosition = newPosition;
+            //transform.position = newPosition;
 
             // Variable interval between saccades
             /*
@@ -249,8 +263,8 @@ public class EyeCTRL : MonoBehaviour
             }
             else
             {
-                if (gazeMode == "mutual") saccadeFrames = UnityEngine.Random.Range(0f, 188.8f);
-                else saccadeFrames = UnityEngine.Random.Range(3.8f, 51.8f);
+                if (gazeMode == "mutual") saccadeFrames = Random.Range(0f, 188.8f);
+                else saccadeFrames = Random.Range(3.8f, 51.8f);
             }
 
             /*
@@ -260,13 +274,14 @@ public class EyeCTRL : MonoBehaviour
              * recorded at 30 fps, the random number
              * generated is divided by 30. This is made
              * in order to transform the inter-saccade
+             * in order to transform the inter-saccade
              * interval to time, instead of frames
              */
 
             time = saccadeFrames / 30f;
 
             //Debug.Log(agentMode + " | " + gazeMode + " | " + time);
-            //Debug.Log("MAGNITUDE: " + magnitude + " | " + position.x + " | " + position.y);
+            //Debug.Log("MAGNITUDE: " + magnitude + " | " + newPosition.x + " | " + newPosition.y);
 
             yield return new WaitForSeconds(time);
         }

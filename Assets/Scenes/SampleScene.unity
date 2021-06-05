@@ -966,10 +966,10 @@ PositionConstraint:
   m_Weight: 0.06
   m_TranslationAtRest: {x: 0, y: 0, z: 0}
   m_TranslationOffset: {x: 0.95, y: 2.95, z: 0}
-  m_AffectTranslationX: 1
-  m_AffectTranslationY: 1
+  m_AffectTranslationX: 0
+  m_AffectTranslationY: 0
   m_AffectTranslationZ: 1
-  m_IsContraintActive: 1
+  m_IsContraintActive: 0
   m_IsLocked: 0
   m_Sources:
   - sourceTransform: {fileID: 0}
@@ -2985,6 +2985,8 @@ MonoBehaviour:
   followMouse: 0
   saccade: 0
   headCTRL: {fileID: 213654126}
+  REye: {fileID: 1456487508}
+  LEye: {fileID: 1317432439}
   followPoint: {x: 0, y: 0, z: 0}
   faceComponents: {x: 0, y: 0, z: 0}
   mouseComponents: {x: 0, y: 0, z: 0}
@@ -9113,6 +9115,7 @@ GameObject:
   - component: {fileID: 1317432443}
   - component: {fileID: 1317432442}
   - component: {fileID: 1317432441}
+  - component: {fileID: 1317432445}
   m_Layer: 0
   m_Name: Eye_L
   m_TagString: Untagged
@@ -9152,7 +9155,7 @@ PositionConstraint:
   m_AffectTranslationX: 1
   m_AffectTranslationY: 1
   m_AffectTranslationZ: 1
-  m_IsContraintActive: 1
+  m_IsContraintActive: 0
   m_IsLocked: 0
   m_Sources:
   - sourceTransform: {fileID: 0}
@@ -9225,6 +9228,30 @@ MonoBehaviour:
   m_SortingLayerID: 0
   m_SortingOrder: 2
   m_BoneTransforms: []
+--- !u!114 &1317432445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1317432439}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4795a105937dc054085fa205f1c83a4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultPosition: {x: -0.95, y: 0.45, z: 0}
+  followFace: 0
+  followMouse: 0
+  saccade: 1
+  headCTRL: {fileID: 213654126}
+  REye: {fileID: 0}
+  LEye: {fileID: 0}
+  followPoint: {x: 0, y: 0, z: 0}
+  faceComponents: {x: 0, y: 0, z: 0}
+  mouseComponents: {x: 0, y: 0, z: 0}
+  positionOffsetL: {x: 0, y: 0, z: 0}
+  positionOffsetR: {x: 0, y: 0, z: 0}
 --- !u!1 &1328823185
 GameObject:
   m_ObjectHideFlags: 0
@@ -10192,6 +10219,7 @@ GameObject:
   - component: {fileID: 1456487512}
   - component: {fileID: 1456487511}
   - component: {fileID: 1456487510}
+  - component: {fileID: 1456487514}
   m_Layer: 0
   m_Name: Eye_R
   m_TagString: Untagged
@@ -10231,7 +10259,7 @@ PositionConstraint:
   m_AffectTranslationX: 1
   m_AffectTranslationY: 1
   m_AffectTranslationZ: 1
-  m_IsContraintActive: 1
+  m_IsContraintActive: 0
   m_IsLocked: 0
   m_Sources:
   - sourceTransform: {fileID: 0}
@@ -10304,6 +10332,30 @@ MonoBehaviour:
   m_SortingLayerID: 0
   m_SortingOrder: 2
   m_BoneTransforms: []
+--- !u!114 &1456487514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1456487508}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4795a105937dc054085fa205f1c83a4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultPosition: {x: 0.95, y: 0.45, z: 0}
+  followFace: 0
+  followMouse: 0
+  saccade: 1
+  headCTRL: {fileID: 213654126}
+  REye: {fileID: 0}
+  LEye: {fileID: 0}
+  followPoint: {x: 0, y: 0, z: 0}
+  faceComponents: {x: 0, y: 0, z: 0}
+  mouseComponents: {x: 0, y: 0, z: 0}
+  positionOffsetL: {x: 0, y: 0, z: 0}
+  positionOffsetR: {x: 0, y: 0, z: 0}
 --- !u!1 &1457608971
 GameObject:
   m_ObjectHideFlags: 0
@@ -10418,7 +10470,7 @@ PositionConstraint:
   m_AffectTranslationX: 1
   m_AffectTranslationY: 1
   m_AffectTranslationZ: 1
-  m_IsContraintActive: 1
+  m_IsContraintActive: 0
   m_IsLocked: 0
   m_Sources:
   - sourceTransform: {fileID: 0}
@@ -11704,7 +11756,7 @@ PositionConstraint:
   m_AffectTranslationX: 1
   m_AffectTranslationY: 1
   m_AffectTranslationZ: 1
-  m_IsContraintActive: 1
+  m_IsContraintActive: 0
   m_IsLocked: 0
   m_Sources:
   - sourceTransform: {fileID: 0}
@@ -12159,7 +12211,7 @@ PositionConstraint:
   m_AffectTranslationX: 1
   m_AffectTranslationY: 1
   m_AffectTranslationZ: 1
-  m_IsContraintActive: 1
+  m_IsContraintActive: 0
   m_IsLocked: 0
   m_Sources:
   - sourceTransform: {fileID: 0}
