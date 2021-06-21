@@ -56,10 +56,14 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\humelo\Lavstar\Scripts\BaseClasses\LavstarTTSSolutionBase.cs" />
+    <Compile Include="Assets\Scripts\EyeCTRLBella.cs" />
     <Compile Include="Assets\Scripts\RunAbleThread.cs" />
+    <Compile Include="Assets\humelo\Lavstar\Scripts\LavstarLipsyncForJaw.cs" />
     <Compile Include="Assets\Anima2D\Scripts\MathUtils.cs" />
     <Compile Include="Assets\Affdex\Plugins\Scripts\VideoFileInput.cs" />
     <Compile Include="Assets\Anima2D\Scripts\IkSolver2DCCD.cs" />
+    <Compile Include="Assets\humelo\Lavstar\Scripts\Util\LavstarVoiceActor.cs" />
     <Compile Include="Assets\Anima2D\Scripts\SpriteMesh.cs" />
     <Compile Include="Assets\Affdex\Plugins\Scripts\Face.cs" />
     <Compile Include="Assets\Anima2D\Examples\Scripts\SkinnedMeshCombiner.cs" />
@@ -79,6 +83,7 @@
     <Compile Include="Assets\Anima2D\Scripts\SpriteMeshAnimation.cs" />
     <Compile Include="Assets\Anima2D\Scripts\IkSolver2D.cs" />
     <Compile Include="Assets\Scripts\WhichArthur.cs" />
+    <Compile Include="Assets\humelo\Lavstar\Scripts\LavstarProsodyTTSGenerator.cs" />
     <Compile Include="Assets\Anima2D\Scripts\Pose.cs" />
     <Compile Include="Assets\Affdex\Examples\Scripts\Listener.cs" />
     <Compile Include="Assets\Anima2D\Scripts\IkCCD2D.cs" />
@@ -92,10 +97,12 @@
     <Compile Include="Assets\Anima2D\Scripts\Bone2D.cs" />
     <Compile Include="Assets\Scripts\IceBreakingTreeClass.cs" />
     <Compile Include="Assets\Affdex\Plugins\Scripts\NativePlatform.cs" />
+    <Compile Include="Assets\humelo\Lavstar\Scripts\LavstarProsodyTTSClient.cs" />
     <Compile Include="Assets\Anima2D\Scripts\PoseManager.cs" />
     <Compile Include="Assets\Anima2D\Examples\Scripts\Follow.cs" />
     <Compile Include="Assets\Scripts\MemoryClass.cs" />
     <Compile Include="Assets\Anima2D\Scripts\Ik2D.cs" />
+    <Compile Include="Assets\humelo\Lavstar\Scripts\LavstarProsodyTTS.cs" />
     <Compile Include="Assets\Affdex\Plugins\Scripts\WindowsNativePlatform.cs" />
     <Compile Include="Assets\Affdex\Plugins\Scripts\DebugFeatureViewer.cs" />
     <Compile Include="Assets\Anima2D\Scripts\IkLimb2D.cs" />
@@ -110,10 +117,10 @@
     <Compile Include="Assets\Affdex\Plugins\Scripts\iOSNativePlatform.cs" />
     <Compile Include="Assets\Scripts\SpeakerController.cs" />
     <Compile Include="Assets\Anima2D\Scripts\IkGroup.cs" />
+    <Compile Include="Assets\humelo\Lavstar\Scripts\LavstarLipsyncForBS.cs" />
     <Compile Include="Assets\Anima2D\Scripts\EditorUpdaterProxy.cs" />
     <Compile Include="Assets\Scripts\CharacterCTRL.cs" />
     <Compile Include="Assets\Scripts\PADClass.cs" />
-    <Compile Include="Assets\Scripts\EyeCTRLBella.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Packages\CSProlog.6.0.0\lib\net35\CSProlog.xml" />
@@ -121,22 +128,31 @@
      <None Include="Assets\Affdex\Plugins\x86\affdex-native.dll" />
      <None Include="Assets\StreamingAssets\affdex-data-3\haarcascade\haarcascade_frontalface_alt2.xml" />
      <None Include="Assets\Anima2D\Readme.txt" />
+     <None Include="Assets\humelo\Lavstar\_Generic\3rdParty\JsonDotNet\Windows\Newtonsoft.Json.XML" />
      <None Include="Assets\Anima2D\Examples\Shaders\VertexLitOneDirectional.shader" />
+     <None Include="Assets\humelo\Lavstar\_Generic\3rdParty\JsonDotNet\Standalone\Newtonsoft.Json.XML" />
+     <None Include="Assets\humelo\Lavstar\_Generic\3rdParty\JsonDotNet\Standalone\Newtonsoft.Json.dll" />
      <None Include="Assets\StreamingAssets\affdex-data-ios\haarcascade\004_lbp_15stage.xml" />
+     <None Include="Assets\humelo\Lavstar\Scripts\HumeloTTSClientCore.dll" />
      <None Include="Assets\StreamingAssets\affdex-data-ios\haarcascade\haarcascade_frontalface_alt2.xml" />
      <None Include="Assets\StreamingAssets\affdex-data-3\fileList.txt" />
      <None Include="Assets\StreamingAssets\affdex-data-osx\haarcascade\haarcascade_frontalface_alt2.xml" />
+     <None Include="Assets\humelo\Lavstar\_Generic\3rdParty\JsonDotNet\AOT\Newtonsoft.Json.dll" />
      <None Include="Assets\StreamingAssets\affdex-data-3\README.txt" />
+     <None Include="Assets\humelo\Lavstar\_Generic\3rdParty\JsonDotNet\AOT\Newtonsoft.Json.XML" />
      <None Include="Assets\Affdex\Plugins\x86_64\affdex-native.dll" />
+     <None Include="Assets\humelo\Lavstar\_Generic\3rdParty\JsonDotNet\Windows\Newtonsoft.Json.dll" />
      <None Include="Assets\Packages\CSProlog.6.0.0\lib\net35\CSProlog.dll" />
      <None Include="Assets\StreamingAssets\affdex-data-3\haarcascade\004_lbp_15stage.xml" />
      <None Include="Assets\StreamingAssets\affdex-data-osx\haarcascade\004_lbp_15stage.xml" />
+     <None Include="Assets\humelo\Lavstar\Scripts\LavstarLipsync.dll" />
      <None Include="Assets\Anima2D\Examples\Shaders\VisibleOutsideMask.shader" />
      <None Include="Assets\Anima2D\Examples\Shaders\VisibleInsideMask.shader" />
      <None Include="Assets\CustomMarshalers.dll" />
      <None Include="Assets\Anima2D\Examples\Shaders\Unlit-Alpha-Cull-off.shader" />
      <None Include="Assets\Anima2D\Licenses.txt" />
      <None Include="Assets\Anima2D\Version.txt" />
+     <None Include="Assets\humelo\Lavstar\_Generic\3rdParty\JsonDotNet\LICENSE_INFO.txt" />
     <Reference Include="UnityEngine">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>
@@ -362,8 +378,8 @@
     <Reference Include="AsyncIO">
       <HintPath>Assets\Plugins\AsyncIO.dll</HintPath>
     </Reference>
-    <Reference Include="CustomMarshalers">
-      <HintPath>Assets\CustomMarshalers.dll</HintPath>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>Assets\humelo\Lavstar\_Generic\3rdParty\JsonDotNet\Standalone\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Interop.SpeechLib">
       <HintPath>Assets\Interop.SpeechLib.dll</HintPath>
@@ -371,8 +387,17 @@
     <Reference Include="CSProlog">
       <HintPath>Assets\Packages\CSProlog.6.0.0\lib\net35\CSProlog.dll</HintPath>
     </Reference>
+    <Reference Include="HumeloTTSClientCore">
+      <HintPath>Assets\humelo\Lavstar\Scripts\HumeloTTSClientCore.dll</HintPath>
+    </Reference>
+    <Reference Include="LavstarLipsync">
+      <HintPath>Assets\humelo\Lavstar\Scripts\LavstarLipsync.dll</HintPath>
+    </Reference>
     <Reference Include="NetMQ">
       <HintPath>Assets\Plugins\NetMQ.dll</HintPath>
+    </Reference>
+    <Reference Include="CustomMarshalers">
+      <HintPath>Assets\CustomMarshalers.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.2f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\mscorlib.dll</HintPath>

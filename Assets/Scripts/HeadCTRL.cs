@@ -29,7 +29,7 @@ public class HeadCTRL : MonoBehaviour
         else position.y = yLimit * Mathf.Sign(yValue);
 
         // Applies transformation into ECA's head
-        transform.position = position;
+        //transform.position = position;
     }
 
     public void DefaultPosition()

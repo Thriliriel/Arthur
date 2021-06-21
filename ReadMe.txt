@@ -9,3 +9,5 @@ Since it is an Unity project (and it already wraps it all together), there is no
 - Arthur can translate a spoken sentence to text, as well to answer with his own voice. In order to do this Voice part, it was relied on some Windows libraries (for example, SPVoice and DictationRecognizer). It should not be a problem if not using Windows. If so, Arthur has a tick option named "canSpeak", which can be disabled.
 
 - As commented before, Arthur has a minor Prolog part, which deals with his beliefs. To do so, we installed CSProlog 6.0.0 as an Unity dependency. You can install it manually or through NuGet for Unity (which would be installed also: https://github.com/GlitchEnzo/NuGetForUnity).
+
+- Arthur has LipSync provided by LavStar. You may need to download it from https://assetstore.unity.com/packages/tools/audio/lavstar-lip-audio-visualization-star-166516#reviews

@@ -3,20 +3,31 @@ using System.Collections;
 using SpeechLib;
 using System.Xml;
 using System.IO;
+using System.Threading;
 
 public class SpeakerController : MonoBehaviour
 {
     private SpVoice voice;
     private MainController mc;
+    private AudioSource aus;
 
     private void Awake()
     {
         mc = GameObject.Find("MainController").GetComponent<MainController>();
+        if(mc.agentName == "Bella")
+            aus = GameObject.Find("Florisbella").GetComponentInChildren<AudioSource>();
+        else if (mc.agentName == "Arthur")
+            aus = GameObject.Find("Arthur").GetComponentInChildren<AudioSource>();
     }
 
     // Start is called before the first frame update
     void Start()
     {
+        //just to be sure
+        if(aus == null)
+            if (mc.agentName == "Bella")
+                aus = GameObject.Find("Florisbella").GetComponentInChildren<AudioSource>();
+
         voice = new SpVoice();
 
         voice.Volume = 100; // Volume (no xml)
@@ -44,9 +55,40 @@ public class SpeakerController : MonoBehaviour
         }
     }
 
+    private IEnumerator LoadFile(string path)
+    {
+        WWW www = new WWW("file://" + path);
+        print("loading " + path);
+
+        AudioClip clip = www.GetAudioClip(false);
+        while (!clip.isReadyToPlay)
+            yield return www;
+
+        clip.name = Path.GetFileName(path);
+        aus.clip = clip;
+
+        aus.Play();
+    }
+
     public void SpeakSomething(string text)
     {
+        //voice.Speak(text, SpeechVoiceSpeakFlags.SVSFlagsAsync);
+
+        SpeechStreamFileMode SpFileMode = SpeechStreamFileMode.SSFMCreateForWrite;
+        SpFileStream SpFileStream = new SpFileStream();
+        SpFileStream.Open("Assets/arthurHasSpoken.wav", SpFileMode, false);
+        voice.AudioOutputStream = SpFileStream;
         voice.Speak(text, SpeechVoiceSpeakFlags.SVSFlagsAsync);
+        voice.WaitUntilDone(Timeout.Infinite);//Using System.Threading;
+        SpFileStream.Close();
+
+        //FIX THE ABSOLUTE PATH FOR BUILD!!!
+        StartCoroutine(LoadFile("D:/Docs/UnityProjects/Arthur/Assets/arthurHasSpoken.wav"));
+
+        //aus.clip = Resources.Load("arthurHasSpoken.wav") as AudioClip;
+        //aus.Play();
+
+        //aus.PlayOneShot(Resources.Load<AudioClip>("arthurHasSpoken.wav"));
 
         //voice.Pause();
     }

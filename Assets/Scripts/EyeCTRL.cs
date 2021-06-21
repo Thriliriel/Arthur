@@ -51,9 +51,9 @@ public class EyeCTRL : MonoBehaviour
         yLimit = 0.18f; // ""
         listeningLimit = 22.7f; // Degrees
         talkingLimit = 27.5f; // ""
-        followFace = false;
+        followFace = true;
         followMouse = false;
-        saccade = true;
+        saccade = false;
         saccadeCoroutine = null;
         agentMode = "talking";
         gazeMode = "mutual";

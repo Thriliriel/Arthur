@@ -113,6 +113,7 @@
     <Compile Include="Assets\Anima2D\Scripts\Editor\Gizmos.cs" />
     <Compile Include="Assets\Anima2D\Scripts\Editor\SpriteMeshUtils.cs" />
     <Compile Include="Assets\Anima2D\Scripts\Editor\Triangle\IO\TriangleFormat.cs" />
+    <Compile Include="Assets\humelo\Lavstar\Editor\LavstarProsodyTTSGeneratorEditor.cs" />
     <Compile Include="Assets\Anima2D\Scripts\Editor\Triangle\Tools\AdjacencyMatrix.cs" />
     <Compile Include="Assets\Anima2D\Scripts\Editor\Hole.cs" />
     <Compile Include="Assets\Anima2D\Scripts\Editor\MeshToolEditor.cs" />
@@ -436,8 +437,8 @@
     <Reference Include="AsyncIO">
       <HintPath>Assets\Plugins\AsyncIO.dll</HintPath>
     </Reference>
-    <Reference Include="CustomMarshalers">
-      <HintPath>Assets\CustomMarshalers.dll</HintPath>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>Assets\humelo\Lavstar\_Generic\3rdParty\JsonDotNet\Standalone\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Interop.SpeechLib">
       <HintPath>Assets\Interop.SpeechLib.dll</HintPath>
@@ -448,8 +449,17 @@
     <Reference Include="CSProlog">
       <HintPath>Assets\Packages\CSProlog.6.0.0\lib\net35\CSProlog.dll</HintPath>
     </Reference>
+    <Reference Include="HumeloTTSClientCore">
+      <HintPath>Assets\humelo\Lavstar\Scripts\HumeloTTSClientCore.dll</HintPath>
+    </Reference>
+    <Reference Include="LavstarLipsync">
+      <HintPath>Assets\humelo\Lavstar\Scripts\LavstarLipsync.dll</HintPath>
+    </Reference>
     <Reference Include="NetMQ">
       <HintPath>Assets\Plugins\NetMQ.dll</HintPath>
+    </Reference>
+    <Reference Include="CustomMarshalers">
+      <HintPath>Assets\CustomMarshalers.dll</HintPath>
     </Reference>
     <Reference Include="ICSharpCode.NRefactory">
       <HintPath>Library\PackageCache\com.unity.render-pipelines.core@10.4.0\Editor\ShaderGenerator\ICSharpCode.NRefactory.dll</HintPath>

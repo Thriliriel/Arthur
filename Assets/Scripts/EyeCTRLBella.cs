@@ -38,10 +38,10 @@ public class EyeCTRLBella : MonoBehaviour
         //initY = 0f;
         REye = GameObject.Find("CW_Eye_R_grp");
         LEye = GameObject.Find("CW_Eye_L_grp");
-        ConfigureFocus();
+        //ConfigureFocus();
     }
 
-    private void ConfigureFocus()
+    /*private void ConfigureFocus()
     {
         iris = new GameObject[2];
         iris[0] = LEye;
@@ -50,9 +50,9 @@ public class EyeCTRLBella : MonoBehaviour
         //positionOffsetR = new Vector3(0.95f, 1.5f, 7.5f);
         positionOffsetL = LEye.transform.position;
         positionOffsetR = REye.transform.position;
-        iris[0].transform.GetChild(3).GetComponent<PositionConstraint>().translationOffset = positionOffsetL;
-        iris[1].transform.GetChild(3).GetComponent<PositionConstraint>().translationOffset = positionOffsetR;
-    }
+        iris[0].transform.GetChild(2).GetComponent<PositionConstraint>().translationOffset = positionOffsetL;
+        iris[1].transform.GetChild(2).GetComponent<PositionConstraint>().translationOffset = positionOffsetR;
+    }*/
 
     // Update is called once per frame
     void Update()
