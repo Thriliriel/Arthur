@@ -14,10 +14,10 @@ public class SpeakerController : MonoBehaviour
     private void Awake()
     {
         mc = GameObject.Find("MainController").GetComponent<MainController>();
-        if(mc.agentName == "Bella")
+        /*if(mc.agentName == "Bella")
             aus = GameObject.Find("Florisbella").GetComponentInChildren<AudioSource>();
         else if (mc.agentName == "Arthur")
-            aus = GameObject.Find("Arthur").GetComponentInChildren<AudioSource>();
+            aus = GameObject.Find("Arthur").GetComponentInChildren<AudioSource>();*/
     }
 
     // Start is called before the first frame update
@@ -27,6 +27,8 @@ public class SpeakerController : MonoBehaviour
         if(aus == null)
             if (mc.agentName == "Bella")
                 aus = GameObject.Find("Florisbella").GetComponentInChildren<AudioSource>();
+            else if (mc.agentName == "Arthur")
+                aus = GameObject.Find("Arthur").GetComponentInChildren<AudioSource>();
 
         voice = new SpVoice();
 
@@ -82,8 +84,7 @@ public class SpeakerController : MonoBehaviour
         voice.WaitUntilDone(Timeout.Infinite);//Using System.Threading;
         SpFileStream.Close();
 
-        //FIX THE ABSOLUTE PATH FOR BUILD!!!
-        StartCoroutine(LoadFile("D:/Docs/UnityProjects/Arthur/Assets/arthurHasSpoken.wav"));
+        StartCoroutine(LoadFile(mc.absPath + "Assets/arthurHasSpoken.wav"));
 
         //aus.clip = Resources.Load("arthurHasSpoken.wav") as AudioClip;
         //aus.Play();

@@ -46,6 +46,8 @@ public class WhichArthur: MonoBehaviour
         else whichAgent = "Bella";
 
         StreamWriter sr = File.CreateText("whichArthur.txt");
+        //absolute path, chat mode ON/OFF, Arthur or Bella, person name (just set if chat mode is active)
+        sr.WriteLine("D:/Docs/UnityProjects/Arthur/");
         sr.WriteLine(which);
         sr.WriteLine(whichAgent);
         sr.WriteLine(nominho);

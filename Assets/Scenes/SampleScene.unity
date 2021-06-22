@@ -9402,9 +9402,11 @@ MonoBehaviour:
   rootIceBreaker: 0
   mariano: {fileID: 568877340}
   belinha: {fileID: 1925109561}
+  lastPolarities: []
   webServicePath: 
+  absPath: 
   idleTimer: 0
-  waitForSeconds: 10
+  waitForSeconds: 30
   lastInteraction: 
   chatMode: 0
   emotionText: {fileID: 615780898}
@@ -13361,7 +13363,7 @@ MonoBehaviour:
   TargetAudioSource: {fileID: 1873448609}
   JawRotationTargetObject: {fileID: 1873448605}
   JawRotationLerpInterpValue: 70
-  JawRotationMultiply: 2000
+  JawRotationMultiply: 1500
   rotAxis: 0
   bias: 0
 --- !u!1 &1877419508

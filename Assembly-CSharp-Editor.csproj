@@ -113,7 +113,6 @@
     <Compile Include="Assets\Anima2D\Scripts\Editor\Gizmos.cs" />
     <Compile Include="Assets\Anima2D\Scripts\Editor\SpriteMeshUtils.cs" />
     <Compile Include="Assets\Anima2D\Scripts\Editor\Triangle\IO\TriangleFormat.cs" />
-    <Compile Include="Assets\humelo\Lavstar\Editor\LavstarProsodyTTSGeneratorEditor.cs" />
     <Compile Include="Assets\Anima2D\Scripts\Editor\Triangle\Tools\AdjacencyMatrix.cs" />
     <Compile Include="Assets\Anima2D\Scripts\Editor\Hole.cs" />
     <Compile Include="Assets\Anima2D\Scripts\Editor\MeshToolEditor.cs" />

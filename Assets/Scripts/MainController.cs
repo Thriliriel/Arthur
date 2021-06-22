@@ -143,9 +143,14 @@ public class MainController : MonoBehaviour
 
     //last sentence polarity found
     private float lastPolarity;
+    //list with the 5 last polarities
+    public List<float> lastPolarities;
 
     //webservice path
     public string webServicePath;
+
+    //absolute path
+    public string absPath;
 
     //timer for small talk
     public float idleTimer;
@@ -188,16 +193,27 @@ public class MainController : MonoBehaviour
     //idle time to start boredom
     public int gettingBoredAfter;
 
+    //sentiment sentences
+    private List<string> happySentences;
+    private List<string> sadSentences;
+
     private void Awake()
     {
         //Arthur mode
         StreamReader sr = new StreamReader("whichArthur.txt", System.Text.Encoding.Default);
+        absPath = sr.ReadLine();
         string textFile = sr.ReadLine();
         if (textFile == "0") chatMode = false;
         else if (textFile == "1") chatMode = true;
         agentName = sr.ReadLine();
         personName = sr.ReadLine();
         sr.Close();
+
+        lastPolarities = new List<float>();
+        happySentences = new List<string>();
+        sadSentences = new List<string>();
+
+        LoadSenSenFile();
 
         if (personName == null) personName = "";
 
@@ -463,6 +479,8 @@ public class MainController : MonoBehaviour
             //check tokens
             CheckNewTokens();
 
+            string lastPols = CheckPolarities();
+
             //if save new memory node, save it
             if (saveNewMemoryNode)
             {
@@ -521,6 +539,11 @@ public class MainController : MonoBehaviour
                         //do not save memory of this
                         saveNewMemoryNode = false;
                         isUsingMemory = false;
+                    }
+                    //if there are too many happy, sad or whatever things, get the sentiment sentence.
+                    else if(lastPols != "nope")
+                    {
+                        SpeakYouFool(ChooseSenSen(lastPols));
                     }
                     //if not using memory, just send it to the chatbot and whatever...
                     else if (!isUsingMemory)
@@ -1546,7 +1569,15 @@ public class MainController : MonoBehaviour
                     {
                         //just change it if it is not influencing
                         if (!isInfluencing)
+                        {
                             lastPolarity = float.Parse(info[0]);
+                            //add to the list
+                            if(lastPolarities.Count == 5)
+                            {
+                                lastPolarities.RemoveAt(0);
+                            }
+                            lastPolarities.Add(lastPolarity);
+                        }
                     }
                     else
                     {
@@ -4265,5 +4296,71 @@ public class MainController : MonoBehaviour
             } while (line != null);
         }
         readingLTM.Close();
+    }
+
+    //load sentiment sentences
+    private void LoadSenSenFile()
+    {
+        StreamReader readingLTM = new StreamReader("sentimentSentences.txt", System.Text.Encoding.Default);
+        using (readingLTM)
+        {
+            string line;
+            do
+            {
+                line = readingLTM.ReadLine();
+
+                if (line != "" && line != null)
+                {
+                    string[] info = line.Split(';');
+
+                    //sentiment;sentence
+                    string sentiment = info[0];
+                    string sentence = info[1].Trim();
+
+                    if(sentiment == "happy")
+                    {
+                        happySentences.Add(sentence);
+                    }else if (sentiment == "sad")
+                    {
+                        sadSentences.Add(sentence);
+                    }
+                }
+            } while (line != null);
+        }
+        readingLTM.Close();
+    }
+
+    //check the amount in lastPolatiries
+    private string CheckPolarities()
+    {
+        if (lastPolarities.Count < 5) return "nope";
+        else
+        {
+            string ret = "nope";
+
+            int mean = 0;
+            foreach(float pol in lastPolarities)
+            {
+                if (pol < 0) mean--;
+                else if (pol > 0) mean++;
+            }
+
+            if (mean >= 4) ret = "happy";
+            else if (mean <= -4) ret = "sad";
+
+            return ret;
+        }
+    }
+
+    //random choose a sentiment sentence
+    private string ChooseSenSen(string type)
+    {
+        //reset
+        lastPolarities.Clear();
+
+        if (type == "happy") return happySentences[UnityEngine.Random.Range(0, happySentences.Count)];
+        if (type == "sad") return sadSentences[UnityEngine.Random.Range(0, sadSentences.Count)];
+
+        return null;
     }
 }
