@@ -3688,6 +3688,9 @@ public class MainController : MonoBehaviour
                 List<GeneralEvent> eventFound = new List<GeneralEvent>();
                 foreach (KeyValuePair<int, GeneralEvent> geez in agentGeneralEvents)
                 {
+                    //skip the last
+                    if (geez.Value.informationID == nextEpisodeId) continue;
+
                     //for each general event, we count the cues found
                     int eventCues = 0;
                     bool aboutAgent = false;
@@ -3700,8 +3703,8 @@ public class MainController : MonoBehaviour
                             eventCues++;
                         }
 
-                        //we try to avoid finding info about the agent itself
-                        //if (node.information == agentName) aboutAgent = true;
+                        //we try to avoid finding info about the agent itself or the person, if the cue is only one
+                        if (node.information == agentName || node.information == personName) aboutAgent = true;
                     }
 
                     //if it is higher than the max cues, select this general event
@@ -3713,6 +3716,9 @@ public class MainController : MonoBehaviour
                     //if it is higher than the max cues, add this general event
                     if (eventCues > maxCues)
                     {
+
+                        if (aboutAgent && eventCues == 1) continue;
+
                         //reset it
                         eventFound.Clear();
 
@@ -3721,6 +3727,8 @@ public class MainController : MonoBehaviour
                     }//if has the same amount, add
                     else if(eventCues == maxCues)
                     {
+                        if (aboutAgent && eventCues == 1) continue;
+
                         eventFound.Add(geez.Value);
                     }
                 }
@@ -4277,6 +4285,20 @@ public class MainController : MonoBehaviour
                     //just getting the word (0) and definition (3)
                     string word = info[0];
                     string definition = info[3].Replace(';', ',').Replace('\"', '|');
+
+                    //see if it already exists
+                    bool yeap = false;
+                    foreach(KeyValuePair<int, MemoryClass> lt in agentLongTermMemory)
+                    {
+                        if(lt.Value.information == word)
+                        {
+                            yeap = true;
+                            break;
+                        }
+                    }
+
+                    //if exists, no need, go on...
+                    if (yeap) continue;
 
                     //add the memory
                     int newId = GenerateEskID();
