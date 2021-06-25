@@ -1,13 +1,13 @@
-1;6/23/2021 2:38:21 PM;Arthur;Person;0.2105099;1
-2;6/23/2021 2:21:55 PM;AutobiographicalStorage/Images/Arthur.png;Imagery;1;1
-3;6/23/2021 2:21:55 PM;Brazil;Location;1;1
-4;6/23/2021 2:21:55 PM;2019;Time;1;1
-5;6/23/2021 2:21:55 PM;born;Activity;1;1
-6;6/23/2021 2:21:44 PM;work;Activity;1;1
-7;6/23/2021 2:38:21 PM;study;Activity;0.2105099;1
+1;6/24/2021 3:58:03 PM;Arthur;Person;0.1392286;1
+2;6/24/2021 3:53:07 PM;AutobiographicalStorage/Images/Arthur.png;Imagery;0.1392286;1
+3;6/24/2021 3:53:07 PM;Brazil;Location;0.1392286;1
+4;6/24/2021 3:53:07 PM;2019;Time;0.1392286;1
+5;6/24/2021 3:53:07 PM;born;Activity;0.1392286;1
+6;6/24/2021 3:56:04 PM;work;Activity;0.1493867;1
+7;6/24/2021 3:53:23 PM;study;Activity;0.1392286;1
 8;7/10/2019 10:00:00 PM;has children;Activity;1;1
 9;7/10/2019 10:00:00 PM;Joy;Emotion;1;1
-10;6/23/2021 2:38:21 PM;Sadness;Emotion;0.2105099;1
+10;6/24/2021 3:53:50 PM;Sadness;Emotion;0.1392286;1
 11;7/10/2019 10:00:00 PM;meet;Activity;1;1
 12;7/10/2019 10:00:00 PM;learn;Activity;1;1
 13;7/10/2019 10:00:00 PM;like;Activity;1;1
@@ -10020,7 +10020,10 @@
 10021;6/23/2021 2:21:33 PM;AutobiographicalStorage/Images/Knob.png;Imagery;1;0.2557754
 10022;6/23/2021 2:21:33 PM;2021-06-23;Time;1;0.2557754
 10023;6/23/2021 2:21:34 PM;1989;Time;1;0.2914627
-10020;6/23/2021 2:38:31 PM;Knob;Person;1;1
+10020;6/24/2021 4:00:49 PM;Knob;Person;1;1
+10024;6/24/2021 3:56:04 PM;do;Activity;0.1493867;1
+10025;6/24/2021 3:58:03 PM;tire;Activity;0.1392286;0.2462584
+10026;6/24/2021 3:58:28 PM;chocolate;Object;0.1392286;0.2462584
 %%%
 1;7/10/2019 10:00:00 PM;agent;I was born at Brazil in 2019-08-10;1;1_2_3_4_5
 2;7/10/2019 10:00:00 PM;agent;I have no job;-1;1_6_10
@@ -20037,3 +20040,6 @@
 10013;6/23/2021 2:21:36 PM;person;Knob is not studying;-0.296;10020_7
 10014;6/23/2021 2:21:38 PM;person;Knob is not working;-0.296;10020_6
 10015;6/23/2021 2:21:40 PM;person;Knob has no children;-0.296;10020_8
+10016;6/24/2021 3:55:42 PM;person;Knob do Arthur work;0;6_1_10024_10020
+10017;6/24/2021 3:58:03 PM;person;Knob Arthur tire;-0.4404;10020_10025_1
+10018;6/24/2021 3:58:28 PM;person;Knob chocolate;0;10020_10026

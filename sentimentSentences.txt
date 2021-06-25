@@ -1,2 +1,6 @@
 happy;I am so glad to see you doing great!
+happy;Talking with you is so good!
+happy;It is really good to hear so many good things!
 sad;I am so sorry to hear that.
+sad;Yeah, it is tough. But things will get better, you will see.
+sad;I hope things get better soon.

@@ -1,0 +1,87 @@
+LEIla0101;i like to do many things;LEIla0202
+LEIla0101;i like to listen music, and you?;LEIla0202
+LEIla0101;listen music, go out with friends, play soccer;LEIla0202
+LEIla0101;i have a varied taste, what about you?;LEIla0202
+LEIla0101;i like to sleep and eat;LEIla0202
+LEIla0101;i like playing videogames;LEIla0302
+LEIla0101;i love video games;LEIla0302
+LEIla0101;i really love playing video game, and you?;LEIla0302
+LEIla0101;video games is my passion;LEIla0302
+LEIla0101;i like to play video games with my friends;LEIla0302
+LEIla0202;no;LEIla0403
+LEIla0202;no, i do not;LEIla0403
+LEIla0202;i dont;LEIla0403
+LEIla0202;i really dont care about it;LEIla0403
+LEIla0202;no, i do not think it is funny;LEIla0403
+LEIla0202;yes;LEIla0503
+LEIla0202;yes, i love it;LEIla0503
+LEIla0202;yes, i love playing video games;LEIla0503
+LEIla0202;i enjoy playing it with friends;LEIla0503
+LEIla0202;yes, it is one of my favorite activities;LEIla0503
+LEIla0302;my favorite game is Mario;LEIla0603
+LEIla0302;i love playing Metroid;LEIla0603
+LEIla0302;i think i do not have a favorite one;LEIla0603
+LEIla0302;there are many games i like;LEIla0603
+LEIla0302;i believe my favorite is Fifa, what about you?;LEIla0603
+LEIla0302;i love playing Zelda;LEIla0703
+LEIla0302;the legend of Zelda is my favorite one;LEIla0703
+LEIla0302;i think it is The Legend of Zelda Breath of the Wild;LEIla0703
+LEIla0302;i had a lot of fun playing Ocarina of Time;LEIla0703
+LEIla0302;Zelda is the best;LEIla0703
+LEIla0503;yes;LEIla0804
+LEIla0503;yeah i did;LEIla0804
+LEIla0503;yes, i love it;LEIla0804
+LEIla0503;sure, really enjoyed it;LEIla0804
+LEIla0503;yes, it is very good;LEIla0804
+LEIla0503;no;LEIla0904
+LEIla0503;no i did not;LEIla0904
+LEIla0503;never heard about it;LEIla0904
+LEIla0503;did not like it;LEIla0904
+LEIla0503;not yet, but i could try;LEIla0904
+LEIla0603;yes;LEIla1004
+LEIla0603;yeah i did;LEIla1004
+LEIla0603;yes i love it;LEIla1004
+LEIla0603;sure, really enjoyed it;LEIla1004
+LEIla0603;yes, it is very good;LEIla1004
+LEIla0603;no;LEIla1104
+LEIla0603;no i did not;LEIla1104
+LEIla0603;never heard about it;LEIla1104
+LEIla0603;did not like it;LEIla1104
+LEIla0603;not yet, but i could try;LEIla1104
+PETdc0101;dog person;PETdc0202
+PETdc0101;i think i am a dog person;PETdc0202
+PETdc0101;definitely dog;PETdc0202
+PETdc0101;i like dogs more than cats;PETdc0202
+PETdc0101;i love dogs;PETdc0202
+PETdc0101;cat person;PETdc0302
+PETdc0101;i think i am a cat person;PETdc0302
+PETdc0101;definitely cat;PETdc0302
+PETdc0101;i like cats more than dogs;PETdc0302
+PETdc0101;i love cats;PETdc0302
+PETdc0101;i like them equally;PETdc0402
+PETdc0101;i like both;PETdc0402
+PETdc0101;neither of them;PETdc0402
+PETdc0101;i am not sure;PETdc0402
+PETdc0101;i like dogs and cats;PETdc0402
+PETdc0202;yes;PETdc0503
+PETdc0202;yes i do;PETdc0503
+PETdc0202;i have many dogs;PETdc0503
+PETdc0202;i have lots of dogs;PETdc0503
+PETdc0202;sure, i have one dog;PETdc0503
+PETdc0202;no;PETdc0603
+PETdc0202;no, i do not;PETdc0603
+PETdc0202;i do not have dogs;PETdc0603
+PETdc0202;i have no dogs;PETdc0603
+PETdc0202;i am afraid i do not have a dog;PETdc0603
+PETdc0302;yes;PETdc0703
+PETdc0302;yes i do;PETdc0703
+PETdc0302;i have many cats;PETdc0703
+PETdc0302;i have lots of cats;PETdc0703
+PETdc0302;sure, i have one cat;PETdc0703
+PETdc0302;no;PETdc0803
+PETdc0302;no, i do not;PETdc0803
+PETdc0302;i do not have cats;PETdc0803
+PETdc0302;i have no cats;PETdc0803
+PETdc0302;i am afraid i do not have a cat;PETdc0803
+PETdc0503;yeah;PETdc0904
+PETdc0703;yeah;PETdc1004

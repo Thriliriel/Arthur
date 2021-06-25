@@ -34,3 +34,32 @@ $ music
 # MUSfb0804; It is an amazing song! We should listen them together someday.; MUSfb0503;
 # MUSfb0904; Oh, too bad, but if you like Sonata, i think you would love this song.; MUSfb0503;
 ]
+
+$ leisure
+[ leisure_activity
+# LEIla0101; Let me ask you, what do you do for fun?; -1;
+# LEIla0202; Oh, that is nice. I like to play videogames, do you like it?; LEIla0101;
+# LEIla0302; You too? I love playing videogames! What is your favorite game?; LEIla0101;
+# LEIla0403; Oh, too bad...; LEIla0202;
+# LEIla0503; Awesome! Have you ever played Metroid?; LEIla0202;
+# LEIla0603; This one is very good, but my favorite is Zelda, have you heard about it?; LEIla0302;
+# LEIla0703; Mine too! It seems like we have a similar taste in games!; LEIla0302;
+# LEIla0804; Nice, i love this game!; LEIla0503;
+# LEIla0904; Too bad, but i would recommend it!; LEIla0503;
+# LEIla1004; Yeah, i love this game!; LEIla0603;
+# LEIla1104; Really? It is an awesome game, you should try sometime!; LEIla0603;
+]
+
+$ pets
+[ dog_cat
+# PETdc0101; Tell me something, are you a dog or a cat person?; -1;
+# PETdc0202; Nice, dogs are very loyal companions. Do you have any dog pet?; PETdc0101;
+# PETdc0302; Nice, cats are very independent creatures. Do you have any cat pet?; PETdc0101;
+# PETdc0402; I agree with you, they are both so cute!; PETdc0101;
+# PETdc0503; Nice, it must be awesome to have a lovely dog. Did you know that dogs had a major religious role in the Aztec civilization?; PETdc0202;
+# PETdc0603; Oh, i see; PETdc0202;
+# PETdc0703; Nice, it must be awesome to have a kitten. Did you know that cats were represented in social and religious practices of the ancient Egypt?; PETdc0302;
+# PETdc0803; Oh, i see; PETdc0302;
+# PETdc0904; Yeah! Also, they have discovered several ancient burial sites for dogs in Mexico. I read this in Wikipedia, if you want to know more about it.; PETdc0503;
+# PETdc1004; Yeah! Also, several ancient Egyptian deities were depicted and sculptured with cat-like heads, such as Mafdet, Bastet and Sekhmet. I read this in Wikipedia, if you want to know more about it.; PETdc0703;
+]
