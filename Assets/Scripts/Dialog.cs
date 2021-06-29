@@ -88,6 +88,13 @@ namespace DialogCS
         {
             var childrenCount = new Dictionary<string, double>();
 
+            //put all to minor
+            List<string> newtokensList = new List<string>();
+            foreach(string lis in tokensList)
+            {
+                newtokensList.Add(lis.ToLower());
+            }
+            tokensList = newtokensList;
 
             foreach (string childId in currentNode.GetChildren().Keys)
             {
@@ -126,6 +133,7 @@ namespace DialogCS
 
             bool foundKey = nodes.TryGetValue(higherId, out currentNode);
             
+            //LOOK HERE!!! SOME SMALLTALKS ARE NOT GOING TO THE RIGHT TREE NODE
             if(higherId == "") currentNode = exitNode; // VICTOR COMMENT: here you can choose a rule to take everytime arthur not find a node with higher ponctuation (maybe polarity)
             if (!foundKey)
             {

@@ -1,13 +1,13 @@
-1;6/24/2021 3:58:03 PM;Arthur;Person;0.1392286;1
-2;6/24/2021 3:53:07 PM;AutobiographicalStorage/Images/Arthur.png;Imagery;0.1392286;1
-3;6/24/2021 3:53:07 PM;Brazil;Location;0.1392286;1
-4;6/24/2021 3:53:07 PM;2019;Time;0.1392286;1
-5;6/24/2021 3:53:07 PM;born;Activity;0.1392286;1
-6;6/24/2021 3:56:04 PM;work;Activity;0.1493867;1
-7;6/24/2021 3:53:23 PM;study;Activity;0.1392286;1
-8;7/10/2019 10:00:00 PM;has children;Activity;1;1
-9;7/10/2019 10:00:00 PM;Joy;Emotion;1;1
-10;6/24/2021 3:53:50 PM;Sadness;Emotion;0.1392286;1
+1;6/29/2021 2:41:44 PM;Bella;Person;1;1
+2;6/29/2021 2:18:59 PM;AutobiographicalStorage/Images/Bella.png;Imagery;1;1
+3;6/29/2021 2:18:59 PM;Brazil;Location;1;1
+4;6/29/2021 2:18:59 PM;2019;Time;1;1
+5;6/29/2021 2:18:59 PM;born;Activity;1;1
+6;6/23/2021 2:21:44 PM;work;Activity;1;1
+7;6/23/2021 2:21:49 PM;study;Activity;1;1
+8;6/29/2021 2:41:44 PM;has children;Activity;1;1
+9;6/29/2021 2:41:44 PM;Joy;Emotion;1;1
+10;6/23/2021 2:21:44 PM;Sadness;Emotion;1;1
 11;7/10/2019 10:00:00 PM;meet;Activity;1;1
 12;7/10/2019 10:00:00 PM;learn;Activity;1;1
 13;7/10/2019 10:00:00 PM;like;Activity;1;1
@@ -28,7 +28,7 @@
 28;6/23/2021 2:16:53 PM;biont;Object;1;1
 29;6/23/2021 2:16:53 PM;causal agent;Object;1;1
 30;6/23/2021 2:16:53 PM;causal agency;Object;1;1
-31;6/23/2021 2:16:53 PM;person;Object;1;1
+31;6/29/2021 2:09:19 PM;person;Object;1;1
 32;6/23/2021 2:16:53 PM;individual;Object;1;1
 33;6/23/2021 2:16:53 PM;someone;Object;1;1
 34;6/23/2021 2:16:53 PM;somebody;Object;1;1
@@ -5030,7 +5030,7 @@
 5030;6/23/2021 2:16:56 PM;offensive;Object;1;1
 5031;6/23/2021 2:16:56 PM;counteroffensive;Object;1;1
 5032;6/23/2021 2:16:56 PM;dirty war;Object;1;1
-5033;6/23/2021 2:23:42 PM;rollback;Object;1;1
+5033;6/23/2021 2:16:56 PM;rollback;Object;1;1
 5034;6/23/2021 2:16:56 PM;push back;Object;1;1
 5035;6/23/2021 2:16:56 PM;peacekeeping;Object;1;1
 5036;6/23/2021 2:16:56 PM;peacekeeping mission;Object;1;1
@@ -10017,13 +10017,16 @@
 10017;6/23/2021 2:17:04 PM;family dermochelyidae;Object;1;1
 10018;6/23/2021 2:17:04 PM;dermochelys;Object;1;1
 10019;6/23/2021 2:17:04 PM;genus dermochelys;Object;1;1
-10021;6/23/2021 2:21:33 PM;AutobiographicalStorage/Images/Knob.png;Imagery;1;0.2557754
-10022;6/23/2021 2:21:33 PM;2021-06-23;Time;1;0.2557754
-10023;6/23/2021 2:21:34 PM;1989;Time;1;0.2914627
-10020;6/24/2021 4:00:49 PM;Knob;Person;1;1
-10024;6/24/2021 3:56:04 PM;do;Activity;0.1493867;1
-10025;6/24/2021 3:58:03 PM;tire;Activity;0.1392286;0.2462584
-10026;6/24/2021 3:58:28 PM;chocolate;Object;0.1392286;0.2462584
+10021;6/29/2021 2:04:15 PM;AutobiographicalStorage/Images/Gabriel.png;Imagery;1;0.2557754
+10022;6/29/2021 2:04:15 PM;2021-06-29;Time;1;0.2557754
+10023;6/29/2021 2:04:17 PM;1991;Time;1;0.2557754
+10024;6/29/2021 2:04:25 PM;teacher;Activity;1;0.2557754
+10025;6/29/2021 2:53:08 PM;Metallica;Person;1;1
+10020;6/29/2021 2:53:10 PM;Gabriel;Person;1;1
+10026;6/29/2021 2:09:19 PM;dog;Object;1;0.462341
+10028;6/29/2021 2:09:40 PM;Arthur;Person;1;0.2792301
+10027;6/29/2021 2:09:40 PM;old;Object;1;0.2792301
+10029;6/29/2021 2:11:20 PM;listen;Object;1;0.8
 %%%
 1;7/10/2019 10:00:00 PM;agent;I was born at Brazil in 2019-08-10;1;1_2_3_4_5
 2;7/10/2019 10:00:00 PM;agent;I have no job;-1;1_6_10
@@ -20035,11 +20038,13 @@
 10008;6/23/2021 2:17:04 PM;belief;sea turtles;0;1_10017
 10009;6/23/2021 2:17:04 PM;belief;type genus of the Dermochelyidae: leatherback turtles;0;1_10018
 10010;6/23/2021 2:17:04 PM;belief;type genus of the Dermochelyidae: leatherback turtles;0;1_10019
-10011;6/23/2021 2:21:33 PM;person;I met Knob today;0;10020_10021_10022_1_11
-10012;6/23/2021 2:21:34 PM;person;Knob was born in 1989-01-01;0;10020_10023_5
-10013;6/23/2021 2:21:36 PM;person;Knob is not studying;-0.296;10020_7
-10014;6/23/2021 2:21:38 PM;person;Knob is not working;-0.296;10020_6
-10015;6/23/2021 2:21:40 PM;person;Knob has no children;-0.296;10020_8
-10016;6/24/2021 3:55:42 PM;person;Knob do Arthur work;0;6_1_10024_10020
-10017;6/24/2021 3:58:03 PM;person;Knob Arthur tire;-0.4404;10020_10025_1
-10018;6/24/2021 3:58:28 PM;person;Knob chocolate;0;10020_10026
+10011;6/29/2021 2:04:15 PM;person;I met Gabriel today;0;10020_10021_10022_1_11
+10012;6/29/2021 2:04:17 PM;person;Gabriel was born in 1991-01-01;0;10020_10023_5
+10013;6/29/2021 2:04:19 PM;person;Gabriel is not studying;-0.296;10020_7
+10014;6/29/2021 2:04:25 PM;person;Gabriel is working as teacher;0;10020_10024_6
+10015;6/29/2021 2:04:27 PM;person;Gabriel has no children;-0.296;10020_8
+10016;6/29/2021 2:04:41 PM;person;Gabriel;0.4019;10020
+10017;6/29/2021 2:04:48 PM;person;Gabriel Metallica;0;10020_10025
+10018;6/29/2021 2:09:19 PM;person;Gabriel dog person;0;10020_10026_31
+10019;6/29/2021 2:09:40 PM;person;Gabriel old Arthur;0;10020_10028_10027
+10020;6/29/2021 2:11:20 PM;person;Gabriel listen;0;10029_10020

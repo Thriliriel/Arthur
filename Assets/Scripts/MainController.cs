@@ -320,6 +320,17 @@ public class MainController : MonoBehaviour
         //what we have on textLTM, load into auxiliary LTM
         LoadEpisodicMemory();
 
+        //after loading the memory, we update it depending on if it is Arthur or Bella
+        if(agentName == "Arthur" && agentLongTermMemory[1].information == "Bella")
+        {
+            agentLongTermMemory[1].information = "Arthur";
+            agentLongTermMemory[2].information = "AutobiographicalStorage/Images/Arthur.png";
+        } else if (agentName == "Bella" && agentLongTermMemory[1].information == "Arthur")
+        {
+            agentLongTermMemory[1].information = "Bella";
+            agentLongTermMemory[2].information = "AutobiographicalStorage/Images/Bella.png";
+        }
+
         //create the facts from the memory
         CreateFactsFromMemory();
 
@@ -491,15 +502,15 @@ public class MainController : MonoBehaviour
                 if (tokens != null)
                 {
                     //change some tokens, if exists
-                    if (tokens.ContainsKey("you") && !tokens.ContainsKey("Arthur"))
+                    if (tokens.ContainsKey("you") && !tokens.ContainsKey(agentName))
                     {
                         tokens.Remove("you");
-                        tokens.Add("Arthur", "NNP");
+                        tokens.Add(agentName, "NNP");
                     }
-                    if (tokens.ContainsKey("yourself") && !tokens.ContainsKey("Arthur"))
+                    if (tokens.ContainsKey("yourself") && !tokens.ContainsKey(agentName))
                     {
                         tokens.Remove("yourself");
-                        tokens.Add("Arthur", "NNP");
+                        tokens.Add(agentName, "NNP");
                     }
                     if (tokens.ContainsKey("i"))
                     {
@@ -1685,16 +1696,18 @@ public class MainController : MonoBehaviour
             if (marioEmotion == "joy")
                 marioEmotion = "happiness";
 
-            string emoAnim = marioEmotion.Substring(0, 1).ToUpper() + marioEmotion.Substring(1) + "_A";
-            //UnityEngine.Debug.Log(emoAnim);
-
             //if Arthur, play
-            if(agentName == "Arthur")
+            if (agentName == "Arthur")
+            {
+                string emoAnim = marioEmotion.Substring(0, 1).ToUpper() + marioEmotion.Substring(1) + "_A";
+                //UnityEngine.Debug.Log(emoAnim);
+
                 mariano.GetComponent<CharacterCTRL>().PlayAnimation(emoAnim);
+            }
             else if (agentName == "Bella")
             {
                 //play bella
-                
+
                 //just for tests
                 //emotion = "disgust";
 
@@ -1711,6 +1724,8 @@ public class MainController : MonoBehaviour
                     belinha.GetComponentInChildren<Animator>().SetTrigger("isSad");
                 else if (emotion == "disgust")
                     belinha.GetComponentInChildren<Animator>().SetTrigger("isDisgusted");
+                else if (emotion == "bored")
+                    belinha.GetComponentInChildren<Animator>().SetTrigger("isBored");
                 else
                     belinha.GetComponentInChildren<Animator>().SetTrigger("isNeutral");
             }
@@ -3625,7 +3640,7 @@ public class MainController : MonoBehaviour
             }
             else
             {
-                Debug.Log("Received: " + www.downloadHandler.data);
+                //Debug.Log("Received: " + www.downloadHandler.data);
                 //WriteWordVec(www.downloadHandler.text);
 
                 //need to format it properly now
@@ -4078,6 +4093,10 @@ public class MainController : MonoBehaviour
         else if (chosenEmo == "Depressed" || chosenEmo == "Sad" || chosenEmo == "Frustrated")
         {
             chosenEmo = "sadness";
+        }
+        else if (chosenEmo == "Bored")
+        {
+            chosenEmo = "bored";
         }
 
         return chosenEmo;

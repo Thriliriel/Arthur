@@ -10017,10 +10017,6 @@
 10017;6/23/2021 2:17:04 PM;family dermochelyidae;Object;1;1
 10018;6/23/2021 2:17:04 PM;dermochelys;Object;1;1
 10019;6/23/2021 2:17:04 PM;genus dermochelys;Object;1;1
-10021;6/23/2021 2:21:33 PM;AutobiographicalStorage/Images/Knob.png;Imagery;0.1392286;0.2557754
-10022;6/23/2021 2:21:33 PM;2021-06-23;Time;0.1392286;0.2557754
-10023;6/23/2021 2:21:34 PM;1989;Time;0.1493867;0.2914627
-10020;6/23/2021 2:21:58 PM;Knob;Person;1;1
 %%%
 1;7/10/2019 10:00:00 PM;agent;I was born at Brazil in 2019-08-10;1;1_2_3_4_5
 2;7/10/2019 10:00:00 PM;agent;I have no job;-1;1_6_10
@@ -20032,8 +20028,3 @@
 10008;6/23/2021 2:17:04 PM;belief;sea turtles;0;1_10017
 10009;6/23/2021 2:17:04 PM;belief;type genus of the Dermochelyidae: leatherback turtles;0;1_10018
 10010;6/23/2021 2:17:04 PM;belief;type genus of the Dermochelyidae: leatherback turtles;0;1_10019
-10011;6/23/2021 2:21:33 PM;person;I met Knob today;0;10020_10021_10022_1_11
-10012;6/23/2021 2:21:34 PM;person;Knob was born in 1989-01-01;0;10020_10023_5
-10013;6/23/2021 2:21:36 PM;person;Knob is not studying;-0.296;10020_7
-10014;6/23/2021 2:21:38 PM;person;Knob is not working;-0.296;10020_6
-10015;6/23/2021 2:21:40 PM;person;Knob has no children;-0.296;10020_8
