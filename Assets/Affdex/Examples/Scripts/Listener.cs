@@ -119,8 +119,9 @@ public class Listener : ImageResultsListener
                 {
                     //it changes the face. We do not want that now
                     //mc.SetEmotion(chosenEmotion);
-                    //update the PAD with the new emotion valence.
-                    mc.UpdatePadEmotion(mc.foundValence);
+                    //update the PAD with the new emotion valence, if not bored.
+                    if(!mc.isBored)
+                        mc.UpdatePadEmotion(mc.foundValence);
                 }
                 textArea.CrossFadeColor(Color.white, 0.2f, true, false);
             }

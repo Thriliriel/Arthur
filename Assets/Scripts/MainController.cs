@@ -197,6 +197,9 @@ public class MainController : MonoBehaviour
     private List<string> happySentences;
     private List<string> sadSentences;
 
+    //bored
+    public bool isBored;
+
     private void Awake()
     {
         //Arthur mode
@@ -208,6 +211,8 @@ public class MainController : MonoBehaviour
         agentName = sr.ReadLine();
         personName = sr.ReadLine();
         sr.Close();
+
+        isBored = false;
 
         lastPolarities = new List<float>();
         happySentences = new List<string>();
@@ -528,6 +533,17 @@ public class MainController : MonoBehaviour
                         tokens.Add(personName, "NNP");
                     }
 
+                    //check if it is a question
+                    bool isQuestion = false;
+                    foreach (KeyValuePair<string, string> tt in tokens)
+                    {
+                        if (tt.Key == "?")
+                        {
+                            isQuestion = true;
+                            break;
+                        }
+                    }
+
                     if (!isGettingInformation && isKnowingNewPeople)
                     {
                         SaveNewPerson(tokens);
@@ -556,8 +572,8 @@ public class MainController : MonoBehaviour
                     {
                         SpeakYouFool(ChooseSenSen(lastPols));
                     }
-                    //if not using memory, just send it to the chatbot and whatever...
-                    else if (!isUsingMemory)
+                    //if not using memory or it is not a question, just send it to the chatbot and whatever...
+                    else if (!isUsingMemory || (isUsingMemory && !isBreakingIce && !currentTopic.IsDialoging() && !isQuestion))
                     {
                         //request for chat.
                         string txt = "";
@@ -571,14 +587,8 @@ public class MainController : MonoBehaviour
                     {
                         //if it is a question, we do not save it. Otherwise, yeap
                         saveNewMemoryNode = true;
-                        foreach (KeyValuePair<string, string> tt in tokens)
-                        {
-                            if (tt.Key == "?")
-                            {
-                                saveNewMemoryNode = false;
-                                break;
-                            }
-                        }
+                        if(isQuestion) saveNewMemoryNode = false;
+
                         GenerativeRetrieval(tokens);
 
                         /*GeneralEvent foundIt = null;
@@ -648,15 +658,24 @@ public class MainController : MonoBehaviour
                 //reset files
                 ResetTokenFiles();
 
-                //update PAD and emotion
-                UpdatePadEmotion(lastPolarity);
+                //update PAD and emotion, if not bored
+                if (!isBored)
+                {
+                    UpdatePadEmotion(lastPolarity);
+                }
 
                 //reset boredom
                 pad.ResetBoredom();
+                if (agentName == "Bella" && isBored)
+                {
+                    isBored = false;
+                    string chosenEmo = FindPADEmotion();
+                    SetEmotion(chosenEmo.ToLower());
+                }
             }
 
             //if it is not breaking ice or already small talking, check the idle timer for a small talk
-            if(!isBreakingIce && !currentTopic.IsDialoging())
+            if(!isBreakingIce && !currentTopic.IsDialoging() && !isBreakingIce && !isKnowingNewPeople)
             if(Time.time - idleTimer > waitForSeconds)
             {
                 List<string> asToki = new List<string>();
@@ -869,8 +888,11 @@ public class MainController : MonoBehaviour
         //now, lets see if we have some new term
         //string unk = CheckNewTerm(retrieved, tokens);
 
-        //update PAD based on event polarity
-        UpdatePadEmotion(retrieved.polarity);
+        //update PAD based on event polarity, if not bored
+        if (!isBored)
+        {
+            UpdatePadEmotion(retrieved.polarity);
+        }
 
         SpeakYouFool(responseText);// + unk
     }
@@ -4032,6 +4054,13 @@ public class MainController : MonoBehaviour
     private void Boring()
     {
         pad.IncreaseBoredom(personality[0], personality[1], personality[3]);
+
+        //if boredom is too high, and it is Bella, boring animation
+        if(agentName == "Bella" && pad.GetBoredom() < -0.8f && !isBored)
+        {
+            isBored = true;
+            belinha.GetComponentInChildren<Animator>().SetTrigger("isBored");
+        }
     }
 
     //update PAD and check emotion

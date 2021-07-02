@@ -1,6 +1,10 @@
-PETdc0101;i am a dog person;PETdc0202
-PETdc0202;no;PETdc0603
-PETdc0603;how old are you?;MUSfb0101
-MUSfb0101;yes;MUSfb0202
-MUSfb0202;mine is Metallica;MUSfb0403
-MUSfb0403;yes i do;MUSfb0604
+FODff0101;yes;FODff0202
+FODff0202;i do not;FODff0503
+FODff0503;calabresa;FODrt0101
+FODrt0101;no;FODrt0302
+FODrt0302;yes;FODrt0703
+FODrt0703;sure;LEIla0101
+LEIla0101;i like playing soccer;LEIla0202
+LEIla0202;no;LEIla0403
+LEIla0403;sure;PETdc0101
+PETdc0101;neither of them;PETdc0402
