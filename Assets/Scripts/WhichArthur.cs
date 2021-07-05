@@ -10,6 +10,7 @@ public class WhichArthur: MonoBehaviour
     public GameObject informName;
     public GameObject togArthur;
     public GameObject togBella;
+    public GameObject globalPath;
 
     private void Awake()
     {
@@ -27,6 +28,7 @@ public class WhichArthur: MonoBehaviour
     {
         string nominho = "";
         string whichAgent = "";
+        string absPath = globalPath.GetComponent<Text>().text;
 
         //if it is chat mode (1), we need first to check if the name was informed
         if (which == 1)
@@ -47,7 +49,8 @@ public class WhichArthur: MonoBehaviour
 
         StreamWriter sr = File.CreateText("whichArthur.txt");
         //absolute path, chat mode ON/OFF, Arthur or Bella, person name (just set if chat mode is active)
-        sr.WriteLine("D:/Docs/UnityProjects/Arthur/");
+        sr.WriteLine(absPath);
+        //C:/Users/55549/Desktop/ArBeBuild
         sr.WriteLine(which);
         sr.WriteLine(whichAgent);
         sr.WriteLine(nominho);
