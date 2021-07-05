@@ -73,6 +73,9 @@ FODrt0603 none 0.750 2
 FODrt0603 two 0.750 2
 FODrt0703 sure 0.591 2
 FODrt0803 way 1.000 2
+FODrt0803 no 1.000 2
+FODrt0803 not 1.000 2
+FODrt0803 dont 1.000 2
 MUSfb0202 yes 0.401 7
 MUSfb0202 love 0.117 2
 MUSfb0202 music 0.417 2

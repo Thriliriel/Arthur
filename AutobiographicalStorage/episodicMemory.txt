@@ -1,8 +1,8 @@
-1;7/2/2021 1:26:11 PM;Bella;Person;1;1
-2;7/2/2021 1:26:11 PM;AutobiographicalStorage/Images/Bella.png;Imagery;1;1
-3;7/2/2021 1:26:11 PM;Brazil;Location;1;1
-4;7/2/2021 1:26:11 PM;2019;Time;1;1
-5;7/2/2021 1:26:11 PM;born;Activity;1;1
+1;7/5/2021 2:19:00 PM;Bella;Person;1;1
+2;7/5/2021 2:17:27 PM;AutobiographicalStorage/Images/Bella.png;Imagery;1;1
+3;7/5/2021 2:17:27 PM;Brazil;Location;1;1
+4;7/5/2021 2:17:27 PM;2019;Time;1;1
+5;7/5/2021 2:17:27 PM;born;Activity;1;1
 6;6/23/2021 2:21:44 PM;work;Activity;1;1
 7;6/23/2021 2:21:49 PM;study;Activity;1;1
 8;7/10/2019 10:00:00 PM;has children;Activity;1;1
@@ -10,11 +10,11 @@
 10;6/23/2021 2:21:44 PM;Sadness;Emotion;1;1
 11;7/10/2019 10:00:00 PM;meet;Activity;1;1
 12;7/10/2019 10:00:00 PM;learn;Activity;1;1
-13;7/2/2021 1:24:53 PM;like;Activity;1;1
+13;7/5/2021 2:14:08 PM;like;Activity;1;1
 14;7/10/2019 10:00:00 PM;love;Activity;1;1
 15;7/10/2019 10:00:00 PM;food;Object;1;1
 16;7/10/2019 10:00:00 PM;pizza;Object;1;1
-17;7/2/2021 2:42:33 PM;calabresa;Object;0.1493867;1
+17;7/5/2021 2:13:15 PM;calabresa;Object;1;1
 18;7/10/2019 10:00:00 PM;portuguesa;Object;1;1
 19;6/23/2021 2:16:53 PM;entity;Object;1;1
 20;6/23/2021 2:16:53 PM;physical entity;Object;1;1
@@ -1850,7 +1850,7 @@
 1850;6/23/2021 2:16:54 PM;abuse;Object;1;1
 1851;6/23/2021 2:16:54 PM;child abuse;Object;1;1
 1852;6/23/2021 2:16:54 PM;child neglect;Object;1;1
-1853;6/23/2021 2:16:54 PM;persecution;Object;1;1
+1853;7/5/2021 2:19:00 PM;persecution;Object;1;1
 1854;6/23/2021 2:16:54 PM;impalement;Object;1;1
 1855;6/23/2021 2:16:54 PM;oppression;Object;1;1
 1856;6/23/2021 2:16:54 PM;pogrom;Object;1;1
@@ -2051,7 +2051,7 @@
 2051;6/23/2021 2:16:54 PM;fly casting;Object;1;1
 2052;6/23/2021 2:16:54 PM;surf casting;Object;1;1
 2053;6/23/2021 2:16:54 PM;surf fishing;Object;1;1
-2054;6/23/2021 2:16:54 PM;game;Object;1;1
+2054;7/5/2021 2:14:35 PM;game;Object;1;1
 2055;6/23/2021 2:16:54 PM;day game;Object;1;1
 2056;6/23/2021 2:16:54 PM;night game;Object;1;1
 2057;6/23/2021 2:16:54 PM;away game;Object;1;1
@@ -2167,7 +2167,7 @@
 2167;6/23/2021 2:16:54 PM;lacrosse;Object;1;1
 2168;6/23/2021 2:16:54 PM;pushball;Object;1;1
 2169;6/23/2021 2:16:54 PM;ultimate frisbee;Object;1;1
-2170;7/2/2021 2:43:16 PM;soccer;Object;0.1392286;1
+2170;6/23/2021 2:16:54 PM;soccer;Object;1;1
 2171;6/23/2021 2:16:54 PM;association football;Object;1;1
 2172;6/23/2021 2:16:54 PM;dribbling;Object;1;1
 2173;6/23/2021 2:16:54 PM;double dribble;Object;1;1
@@ -10017,19 +10017,17 @@
 10017;6/23/2021 2:17:04 PM;family dermochelyidae;Object;1;1
 10018;6/23/2021 2:17:04 PM;dermochelys;Object;1;1
 10019;6/23/2021 2:17:04 PM;genus dermochelys;Object;1;1
-10021;7/2/2021 1:23:35 PM;AutobiographicalStorage/Images/Gabriel.png;Imagery;1;0.2914627
-10022;7/2/2021 1:23:35 PM;2021-07-02;Time;1;0.2914627
-10023;7/2/2021 1:23:41 PM;1991;Time;1;0.2557754
-10024;7/2/2021 1:24:12 PM;Sonata_Arctica;Person;1;0.2462584
-10025;7/2/2021 2:43:16 PM;play;Activity;0.1392286;1
-10020;7/2/2021 2:44:00 PM;Gabriel;Person;1;1
-10026;7/2/2021 1:25:11 PM;have;Activity;1;0.2462584
-10027;7/2/2021 1:25:54 PM;be;Activity;1;1
-10028;7/2/2021 1:25:54 PM;feel;Activity;1;0.205929
-10029;7/2/2021 2:32:07 PM;favorite;Object;1;0.2462584
-10030;7/2/2021 2:32:07 PM;Metallica;Person;1;0.2462584
-10031;7/2/2021 2:32:23 PM;nice;Object;1;0.2792301
-10032;7/2/2021 2:37:57 PM;much;Object;1;0.8
+10021;7/5/2021 2:09:58 PM;AutobiographicalStorage/Images/Gabriel.png;Imagery;1;0.2914627
+10022;7/5/2021 2:09:58 PM;2021-07-05;Time;1;0.2914627
+10023;7/5/2021 2:10:01 PM;1991;Time;1;0.2557754
+10024;7/5/2021 2:10:15 PM;teacher;Activity;1;0.2557754
+10020;7/5/2021 2:19:26 PM;Gabriel;Person;1;1
+10025;7/5/2021 2:14:41 PM;favorite;Object;1;1
+10027;7/5/2021 2:14:35 PM;video;Object;1;0.2462584
+10026;7/5/2021 2:14:35 PM;play;Object;1;0.2462584
+10028;7/5/2021 2:14:41 PM;Mario;Person;1;0.2462584
+10029;7/5/2021 2:17:35 PM;be;Activity;1;0.5
+10030;7/5/2021 2:17:35 PM;today;Object;1;0.205929
 %%%
 1;7/10/2019 10:00:00 PM;agent;I was born at Brazil in 2019-08-10;1;1_2_3_4_5
 2;7/10/2019 10:00:00 PM;agent;I have no job;-1;1_6_10
@@ -20041,19 +20039,15 @@
 10008;6/23/2021 2:17:04 PM;belief;sea turtles;0;1_10017
 10009;6/23/2021 2:17:04 PM;belief;type genus of the Dermochelyidae: leatherback turtles;0;1_10018
 10010;6/23/2021 2:17:04 PM;belief;type genus of the Dermochelyidae: leatherback turtles;0;1_10019
-10011;7/2/2021 1:23:35 PM;person;I met Gabriel today;0;10020_10021_10022_1_11
-10012;7/2/2021 1:23:41 PM;person;Gabriel was born in 1991-01-01;0;10020_10023_5
-10013;7/2/2021 1:23:44 PM;person;Gabriel is not studying;-0.296;10020_7
-10014;7/2/2021 1:23:48 PM;person;Gabriel is not working;-0.296;10020_6
-10015;7/2/2021 1:23:53 PM;person;Gabriel has no children;-0.296;10020_8
-10016;7/2/2021 1:24:03 PM;person;Gabriel;0;10020
-10017;7/2/2021 1:24:12 PM;person;Gabriel Sonata_Arctica;0;10020_10024
-10018;7/2/2021 1:24:53 PM;person;Gabriel like play soccer;0.5994;10020_2170_10025_13
-10019;7/2/2021 1:25:11 PM;person;Gabriel have;0;10020_10026
-10020;7/2/2021 1:25:54 PM;belief;Gabriel be feel;-0.4168;10020_10027_10028
-10021;7/2/2021 1:26:01 PM;belief;be;-0.4471;10027
-10022;7/2/2021 2:32:07 PM;person;Gabriel favorite Metallica;0.4588;10029_10030_10020
-10023;7/2/2021 2:32:23 PM;person;Gabriel nice;0.4215;10031_10020
-10024;7/2/2021 2:35:48 PM;person;Gabriel play soccer;0.5106;10020_10025_2170
-10025;7/2/2021 2:37:57 PM;person;Gabriel much;0;10020_10032
-10026;7/2/2021 2:42:33 PM;person;Gabriel calabresa;0;10020_17
+10011;7/5/2021 2:09:58 PM;person;I met Gabriel today;0;10020_10021_10022_1_11
+10012;7/5/2021 2:10:01 PM;person;Gabriel was born in 1991-01-01;0;10020_10023_5
+10013;7/5/2021 2:10:10 PM;person;Gabriel is not studying;-0.296;10020_7
+10014;7/5/2021 2:10:15 PM;person;Gabriel is working as teacher;0;10020_10024_6
+10015;7/5/2021 2:10:17 PM;person;Gabriel has no children;-0.296;10020_8
+10016;7/5/2021 2:10:29 PM;person;Gabriel;0.4019;10020
+10017;7/5/2021 2:13:15 PM;person;Gabriel favorite calabresa;0.4588;10020_10025_17
+10018;7/5/2021 2:14:08 PM;person;Gabriel like;0.3612;10020_13
+10019;7/5/2021 2:14:35 PM;person;Gabriel play video game;0.5106;10020_10027_10026_2054
+10020;7/5/2021 2:14:41 PM;person;Gabriel favorite Mario;0.4588;10020_10025_10028
+10021;7/5/2021 2:17:35 PM;belief;Gabriel be today;0.6808;10020_10030_10029
+10022;7/5/2021 2:18:43 PM;belief;persecution;0;1853

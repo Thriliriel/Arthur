@@ -9421,7 +9421,7 @@ MonoBehaviour:
   webServicePath: 
   absPath: 
   idleTimer: 0
-  waitForSeconds: 5
+  waitForSeconds: 30
   lastInteraction: 
   chatMode: 0
   emotionText: {fileID: 615780898}

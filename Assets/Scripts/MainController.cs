@@ -212,6 +212,14 @@ public class MainController : MonoBehaviour
         personName = sr.ReadLine();
         sr.Close();
 
+        //if it is random, we sort out
+        if(agentName == "Random")
+        {
+            int rnd = UnityEngine.Random.Range(0, 2);
+            if (rnd == 0) agentName = "Arthur";
+            else agentName = "Bella";
+        }
+
         isBored = false;
 
         lastPolarities = new List<float>();
@@ -568,7 +576,7 @@ public class MainController : MonoBehaviour
                         isUsingMemory = false;
                     }
                     //if there are too many happy, sad or whatever things, get the sentiment sentence.
-                    else if(lastPols != "nope")
+                    else if(lastPols != "nope" && !isBreakingIce && !currentTopic.IsDialoging())
                     {
                         SpeakYouFool(ChooseSenSen(lastPols));
                     }
