@@ -1,5 +1,5 @@
-1;7/5/2021 2:19:00 PM;Bella;Person;1;1
-2;7/5/2021 2:17:27 PM;AutobiographicalStorage/Images/Bella.png;Imagery;1;1
+1;7/5/2021 2:19:00 PM;Arthur;Person;1;1
+2;7/5/2021 2:17:27 PM;AutobiographicalStorage/Images/Arthur.png;Imagery;1;1
 3;7/5/2021 2:17:27 PM;Brazil;Location;1;1
 4;7/5/2021 2:17:27 PM;2019;Time;1;1
 5;7/5/2021 2:17:27 PM;born;Activity;1;1

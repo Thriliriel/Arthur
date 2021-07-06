@@ -11,3 +11,10 @@ Since it is an Unity project (and it already wraps it all together), there is no
 - As commented before, Arthur has a minor Prolog part, which deals with his beliefs. To do so, we installed CSProlog 6.0.0 as an Unity dependency. You can install it manually or through NuGet for Unity (which would be installed also: https://github.com/GlitchEnzo/NuGetForUnity).
 
 - Arthur has LipSync provided by LavStar. You may need to download it from https://assetstore.unity.com/packages/tools/audio/lavstar-lip-audio-visualization-star-166516#reviews
+
+- If you have the need to restart all over (memory, people known and such), you can do it in a few steps:
+ . Inside the folder AutobiographicalStorage, delete the file "episodicMemory.txt", create a backup of "backupepisodicMemoryWordnet.txt" and rename it to "episodicMemory.txt". This way, the memory will be reseted to the beggining.
+ . Inside the folder AutobiographicalStorage, clear both "historic.txt" and "smallTalksUsed.txt".
+ . Inside the folder AutobiographicalStorage, enter the "Images" folder and delete all pictures, but Arthur and Bella images.
+ . Inside the folder RestAPI, delete the files "facefile.npy", "namefile.npy" and "camImage.png". Also, delete all images inside the folder "Data".
+ . In the root folder, open the "nextId.txt" file and reset it to the original values (10020 in first line, 10011 in second line).

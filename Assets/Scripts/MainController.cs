@@ -1727,14 +1727,14 @@ public class MainController : MonoBehaviour
                 marioEmotion = "happiness";
 
             //if Arthur, play
-            if (agentName == "Arthur")
+            if (agentName == "Arthur" && !chatMode)
             {
                 string emoAnim = marioEmotion.Substring(0, 1).ToUpper() + marioEmotion.Substring(1) + "_A";
                 //UnityEngine.Debug.Log(emoAnim);
 
                 mariano.GetComponent<CharacterCTRL>().PlayAnimation(emoAnim);
             }
-            else if (agentName == "Bella")
+            else if (agentName == "Bella" && !chatMode)
             {
                 //play bella
 
