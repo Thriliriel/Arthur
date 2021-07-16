@@ -1,10 +1,3 @@
-FODff0101;yes i do;FODff0202
-FODff0202;no i do not;FODff0503
-FODff0503;my favorite is calabresa;MUSfb0101
-MUSfb0101;no;MUSfb0302
-MUSfb0302;sure;PETdc0101
-PETdc0101;i like cats more;PETdc0402
-PETdc0402;yes;LEIla0101
-LEIla0101;i like playing video games;LEIla0302
-LEIla0302;my favorite is Mario;LEIla0603
-LEIla0603;yes i did;LEIla1004
+PETdc0101;i am a cat person;PETdc0202
+PETdc0202;no;PETdc0503
+PETdc0503;i did not;PETdc0904

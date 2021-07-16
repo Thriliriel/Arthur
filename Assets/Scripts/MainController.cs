@@ -13,6 +13,9 @@ using Prolog;
 
 using TopicCS;
 using DialogCS;
+using DCXR.Demo;
+using System.Globalization;
+using System.Threading;
 
 public class MainController : MonoBehaviour
 {
@@ -200,8 +203,13 @@ public class MainController : MonoBehaviour
     //bored
     public bool isBored;
 
+    //python calls
+    public GameObject pythonCalls;
+
     private void Awake()
     {
+        Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+
         //Arthur mode
         StreamReader sr = new StreamReader("whichArthur.txt", System.Text.Encoding.Default);
         absPath = sr.ReadLine();
@@ -1716,7 +1724,8 @@ public class MainController : MonoBehaviour
         //if it is setting emotion, it means it found a face. So, let us find out whom face it is
         if (personName == "" && marioEmotion == "")
         {
-            StartCoroutine(RecognitionWebService());
+            //StartCoroutine(RecognitionWebService());
+            RecognitionWebService();
         }
 
         marioEmotion = emotion;
@@ -1794,7 +1803,8 @@ public class MainController : MonoBehaviour
 
         //UPDATE: we always tokenize now, and treat things in the update
         //UPDATE: now we send a request to our webservice, through a json
-        StartCoroutine(TokenizationWebService(textSend));
+        //StartCoroutine(TokenizationWebService(textSend));
+        TokenizationWebService(textSend);
 
         //replace occurences of "you" for "Arthur"
         //UPDATE: IT IS BETTER TO REPLACE IT LATER, SO THE VERBS ARE CLASSIFIED IN A BETTER WAY
@@ -1970,7 +1980,7 @@ public class MainController : MonoBehaviour
                     }
                 }//else, if it is empty, did not find anyone. So, the agent can meet someone new!! How amazing!!!
                  //UPDATE: just meet someone new IF did not see anyone yet (to avoid changing between person/not knowing)
-                else if (textFile.Contains("false") && !isKnowingNewPeople && faceName.GetComponent<Text>().text == "")
+                else if ((textFile.Contains("false") || textFile.Contains("{}")) && !isKnowingNewPeople && faceName.GetComponent<Text>().text == "")
                 {
                     isGettingInformation = true;
 
@@ -2022,8 +2032,8 @@ public class MainController : MonoBehaviour
             if (File.Exists("AutobiographicalStorage/Images/" + namePerson + ".png"))
                 File.Delete("AutobiographicalStorage/Images/" + namePerson + ".png");
 
-            File.Copy("camImage.png", "AutobiographicalStorage/Images/" + namePerson + ".png");
-            StartCoroutine(SavePersonWebService());
+            File.Copy(Application.dataPath + "/camImage.png", "AutobiographicalStorage/Images/" + namePerson + ".png");
+            SavePersonWebService();
 
             int thisID = AddToSTM("Person", namePerson, 0.9f);
             personId = thisID;
@@ -2664,7 +2674,7 @@ public class MainController : MonoBehaviour
     //deactivated for now
     private void GenerativeRetrieval(Dictionary<string, string> cues)
     {
-        GeneralEvent eventFound = new GeneralEvent();
+        //GeneralEvent eventFound = new GeneralEvent();
         Dictionary<string, string> auxCues = new Dictionary<string, string>();
         foreach(KeyValuePair<string,string> cue in cues)
         {
@@ -2782,7 +2792,108 @@ public class MainController : MonoBehaviour
             //retrieving memory
             isRetrievingMemory = true;
 
-            StartCoroutine(WordVecWebService(textParam, cues));
+            //StartCoroutine(WordVecWebService(textParam, cues));
+
+            //we find the general event which has the most cues compounding its memory nodes
+            //BUT... select the general event is a bit trickier, since it can exist many events with the same memory information.
+            //so, we select the event which has the most cues
+            int maxCues = 0;
+            //making a test: instead to find just one event, bring all events which have the same amount of cues, and we decide later which one to pick
+            //GeneralEvent eventFound = null;
+            List<GeneralEvent> eventFound = new List<GeneralEvent>();
+            foreach (KeyValuePair<int, GeneralEvent> geez in agentGeneralEvents)
+            {
+                //skip the last
+                if (geez.Value.informationID == nextEpisodeId) continue;
+
+                //for each general event, we count the cues found
+                int eventCues = 0;
+                bool aboutAgent = false;
+                //for each memory node which compounds this general event
+                foreach (MemoryClass node in geez.Value.nodes)
+                {
+                    //if it exists, ++
+                    if (cues.ContainsKey(node.information))
+                    {
+                        eventCues++;
+                    }
+
+                    //we try to avoid finding info about the agent itself or the person, if the cue is only one
+                    if ((node.information == agentName || node.information == personName) && cues.Count == 1) aboutAgent = true;
+                }
+
+                //if it is higher than the max cues, select this general event
+                /*if (eventCues > maxCues || (eventCues == maxCues && !aboutAgent))
+                {
+                    maxCues = eventCues;
+                    eventFound = geez.Value;
+                }*/
+                //if it is higher than the max cues, add this general event
+                if (eventCues > maxCues)
+                {
+
+                    if (aboutAgent && eventCues == 1) continue;
+
+                    //reset it
+                    eventFound.Clear();
+
+                    maxCues = eventCues;
+                    eventFound.Add(geez.Value);
+                }//if has the same amount, add
+                else if (eventCues == maxCues)
+                {
+                    if (aboutAgent && eventCues == 1) continue;
+
+                    eventFound.Add(geez.Value);
+                }
+            }
+
+            //if maxCues changed, we found an event
+            //MAYBE INSTEAD OF GETTING THE MAX CUES, WE TRY TO GET EXACT CUES, SO WE DO NOT GET A RANDOM EVENT EVERYTIME, EVEN WHEN IT IS SOMETHING NOT KNOWN
+            //IDEA: instead of just checking if it is above 0, it has to have, at least, 50% of the cues found
+            //if (maxCues >= (cues.Count/2))
+            if (maxCues > 0)
+            {
+                GeneralEvent theChosenOne = eventFound[0];
+                //from the events found, we try to choose the one more aligned with the topic
+                if (topicSent.Count > 0)
+                {
+                    foreach (GeneralEvent cow in eventFound)
+                    {
+                        foreach (MemoryClass mem in cow.nodes)
+                        {
+                            if (topicSent.Contains(mem.information))
+                            {
+                                theChosenOne = cow;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                //add the nodes back to the STM
+                foreach (MemoryClass mem in theChosenOne.nodes)
+                {
+                    AddToSTM(mem.informationType, mem.information, mem.weight);
+                }
+
+                DealWithIt(theChosenOne, cues);
+            }//else, nothing was found
+            else
+            {
+                //else, see if we have some new term to learn
+                /*string unk = CheckNewTerm(eventFound, newCues);
+                if (unk != "" && unk != ". ")
+                {
+                    SpeakYouFool(unk);
+                }//else, dunno
+                else
+                {*/
+                SpeakYouFool("Sorry, i do not know.");
+                //}
+            }
+
+            isRetrievingMemory = false;
         }
     }
 
@@ -3268,14 +3379,14 @@ public class MainController : MonoBehaviour
         keywordsFile.Close();
 
 
-        foreach (KeyValuePair<string, List<Tuple<string, double>>> kd in keywordsDataset)
+        /*foreach (KeyValuePair<string, List<Tuple<string, double>>> kd in keywordsDataset)
         {
             foreach (Tuple<string, double> kw in kd.Value)
             {
                 Debug.Log(kd.Key + "  (" + kw.Item1 + ", " + kw.Item2 + ")");
             }
 
-        }
+        }*/
     }
 
     public void LoadSmallTalk()
@@ -3612,33 +3723,13 @@ public class MainController : MonoBehaviour
     }
 
     //Web Service for Tokenization
-    private IEnumerator TokenizationWebService(string sentence)
+    private void TokenizationWebService(string sentence)
     {
-        UnityWebRequest www = new UnityWebRequest(webServicePath + "tokenize", "POST");
-        byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes("{\"text\" : [\"" + sentence + "\"]}");
-        www.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
-        www.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
-
-        www.SetRequestHeader("Content-Type", "application/json");
-
-        using (www)
-        {
-            yield return www.SendWebRequest();
-
-            if (www.isNetworkError || www.isHttpError)
-            {
-                UnityEngine.Debug.Log(www.error);
-            }
-            else
-            {
-                //UnityEngine.Debug.Log("Received: " + www.downloadHandler.data);
-                WriteTokens(www.downloadHandler.text);
-            }
-        }
+        pythonCalls.GetComponent<PythonCalls>().Tokenization(sentence);
     }
 
-    //Web Service for Word2Vec
-    private IEnumerator WordVecWebService(string sentence, Dictionary<string, string> cues)
+    //Web Service for Word2Vec (deactivated)
+    /*private IEnumerator WordVecWebService(string sentence, Dictionary<string, string> cues)
     {
         UnityWebRequest www = new UnityWebRequest(webServicePath + "similarWords", "POST");
         byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes("{\"text\" : [\"" + sentence + "\"]}");
@@ -3689,12 +3780,18 @@ public class MainController : MonoBehaviour
                 for(int h = 0; h < tokens.Length; h++)
                 {
                     string[] gt = tokens[h].Split(':');
-                    tokens[h] = gt[1];
+                    if(gt.Length > 1)
+                        tokens[h] = gt[1];
+                    else
+                        tokens[h] = "";
                 }
                 for (int h = 0; h < tknType.Length; h++)
                 {
                     string[] gt = tknType[h].Split(':');
-                    tknType[h] = gt[1];
+                    if (gt.Length > 1)
+                        tknType[h] = gt[1];
+                    else
+                        tknType[h] = "";
                 }
 
                 //organize cues with similars
@@ -3724,114 +3821,15 @@ public class MainController : MonoBehaviour
                     qntCue++;
                 }
 
-                //we find the general event which has the most cues compounding its memory nodes
-                //BUT... select the general event is a bit trickier, since it can exist many events with the same memory information.
-                //so, we select the event which has the most cues
-                int maxCues = 0;
-                //making a test: instead to find just one event, bring all events which have the same amount of cues, and we decide later which one to pick
-                //GeneralEvent eventFound = null;
-                List<GeneralEvent> eventFound = new List<GeneralEvent>();
-                foreach (KeyValuePair<int, GeneralEvent> geez in agentGeneralEvents)
-                {
-                    //skip the last
-                    if (geez.Value.informationID == nextEpisodeId) continue;
-
-                    //for each general event, we count the cues found
-                    int eventCues = 0;
-                    bool aboutAgent = false;
-                    //for each memory node which compounds this general event
-                    foreach (MemoryClass node in geez.Value.nodes)
-                    {
-                        //if it exists, ++
-                        if (newCues.ContainsKey(node.information))
-                        {
-                            eventCues++;
-                        }
-
-                        //we try to avoid finding info about the agent itself or the person, if the cue is only one
-                        if (node.information == agentName || node.information == personName) aboutAgent = true;
-                    }
-
-                    //if it is higher than the max cues, select this general event
-                    /*if (eventCues > maxCues || (eventCues == maxCues && !aboutAgent))
-                    {
-                        maxCues = eventCues;
-                        eventFound = geez.Value;
-                    }*/
-                    //if it is higher than the max cues, add this general event
-                    if (eventCues > maxCues)
-                    {
-
-                        if (aboutAgent && eventCues == 1) continue;
-
-                        //reset it
-                        eventFound.Clear();
-
-                        maxCues = eventCues;
-                        eventFound.Add(geez.Value);
-                    }//if has the same amount, add
-                    else if(eventCues == maxCues)
-                    {
-                        if (aboutAgent && eventCues == 1) continue;
-
-                        eventFound.Add(geez.Value);
-                    }
-                }
-
-                //if maxCues changed, we found an event
-                //MAYBE INSTEAD OF GETTING THE MAX CUES, WE TRY TO GET EXACT CUES, SO WE DO NOT GET A RANDOM EVENT EVERYTIME, EVEN WHEN IT IS SOMETHING NOT KNOWN
-                //IDEA: instead of just checking if it is above 0, it has to have, at least, 50% of the cues found
-                //if (maxCues >= (cues.Count/2))
-                if (maxCues > 0)
-                {
-                    GeneralEvent theChosenOne = eventFound[0];
-                    //from the events found, we try to choose the one more aligned with the topic
-                    if(topicSent.Count > 0)
-                    {
-                        foreach(GeneralEvent cow in eventFound)
-                        {
-                            foreach (MemoryClass mem in cow.nodes)
-                            {
-                                if (topicSent.Contains(mem.information))
-                                {
-                                    theChosenOne = cow;
-                                    break;
-                                }
-                            }
-                        }
-                    }
-
-                    //add the nodes back to the STM
-                    foreach (MemoryClass mem in theChosenOne.nodes)
-                    {
-                        AddToSTM(mem.informationType, mem.information, mem.weight);
-                    }
-
-                    DealWithIt(theChosenOne, newCues);
-                }//else, nothing was found
-                else
-                {
-                    //else, see if we have some new term to learn
-                    /*string unk = CheckNewTerm(eventFound, newCues);
-                    if (unk != "" && unk != ". ")
-                    {
-                        SpeakYouFool(unk);
-                    }//else, dunno
-                    else
-                    {*/
-                        SpeakYouFool("Sorry, i do not know.");
-                    //}
-                }
-
-                isRetrievingMemory = false;
+                
             }
         }
-    }
+    }*/
 
     //Web Service for Face Recognition
-    private IEnumerator RecognitionWebService()
+    private void RecognitionWebService()
     {
-        if (!File.Exists("camImage.png"))
+        if (!File.Exists(Application.dataPath + "/camImage.png"))
         {
             //save image
             Texture txtr = cam.GetComponent<ViewCam>().GetComponent<MeshRenderer>().materials[0].mainTexture;
@@ -3849,118 +3847,60 @@ public class MainController : MonoBehaviour
 
             byte[] _bytes = image.EncodeToPNG();
             //Debug.Log(_bytes);
-            FileStream newImage = File.Create("camImage.png");
+            FileStream newImage = File.Create(Application.dataPath + "/camImage.png");
             newImage.Close();
-            File.WriteAllBytes("camImage.png", _bytes);
+            File.WriteAllBytes(Application.dataPath + "/camImage.png", _bytes);
 
             Destroy(image);
         }
 
-        UnityWebRequest www = new UnityWebRequest(webServicePath + "recognize", "POST");
-
-        //convert image to string
-        byte[] imageData = File.ReadAllBytes("camImage.png");
-        string b64 = System.Convert.ToBase64String(imageData);
-
-        byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes("{\"image\" : [\"" + b64 + "\"], \"direc\" : [\"Data\"], \"th\" : [0.5], \"mode\" : [\"n\"]}");
-        www.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
-        www.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
-
-        www.SetRequestHeader("Content-Type", "application/json");
-
-        using (www)
-        {
-            yield return www.SendWebRequest();
-
-            if (www.isNetworkError || www.isHttpError)
-            {
-                //UnityEngine.Debug.Log(www.error);
-                //if error, try again
-                StartCoroutine(RecognitionWebService());
-            }
-            else
-            {
-                //UnityEngine.Debug.Log("Received: " + www.downloadHandler.text);
-                WriteFaceResult(www.downloadHandler.text);
-            }
-        }
+        pythonCalls.GetComponent<PythonCalls>().FaceRecognition(Application.dataPath+"/camImage.png", Application.dataPath+"/Python/Data", "0.5", "n");
     }
 
     //Web Service for save a new person
-    private IEnumerator SavePersonWebService()
+    private void SavePersonWebService()
     {
-        UnityWebRequest www = new UnityWebRequest(webServicePath + "savePerson", "POST");
-
-        //convert image to string
-        byte[] imageData = File.ReadAllBytes("camImage.png");
-        string b64 = System.Convert.ToBase64String(imageData);
-
-        byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes("{\"image\" : [\"" + b64 + "\"], \"direc\" : [\"Data\"], \"name\" : [\"" + personName + "\"]}");
-        www.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
-        www.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
-
-        www.SetRequestHeader("Content-Type", "application/json");
-
-        using (www)
-        {
-            yield return www.SendWebRequest();
-
-            if (www.isNetworkError || www.isHttpError)
-            {
-                UnityEngine.Debug.Log(www.error);
-            }
-            else
-            {
-                UnityEngine.Debug.Log("Received: " + www.downloadHandler.text);
-            }
-        }
+        pythonCalls.GetComponent<PythonCalls>().SavePerson(Application.dataPath + "/camImage.png", Application.dataPath + "/Python/Data", personName);
 
         //try to find again
-        StartCoroutine(RecognitionWebService());
+        //RecognitionWebService();
     }
 
-    private void WriteTokens(string webServiceResponse)
+    public void ParseTokens(string webServiceResponse)
     {
         //need to format it properly now
+        //new parsing:  [('i', 'NN'), ('be', 'VB'), ('Knob', 'NNP'), [0.0, 0]]
         string info = webServiceResponse.Replace("\"", "");
-        info = info.Replace(@"\", "");
-        info = info.Replace("},", "@");
+        info = info.Replace("'", "");
+        info = info.Replace("),", "@");
         string[] infoSplit = info.Split('@');
 
-        infoSplit[0] = infoSplit[0].Replace("{0:{", "");
-        infoSplit[1] = infoSplit[1].Replace("1:{", "");
-        infoSplit[1] = infoSplit[1].Replace("}}", "");
+        infoSplit[0] = infoSplit[0].Replace("[", "");
+        infoSplit[infoSplit.Length-1] = infoSplit[infoSplit.Length - 1].Replace("]]", "");
+        infoSplit[infoSplit.Length - 1] = infoSplit[infoSplit.Length - 1].Replace("[", "(");
 
-        string[] tokens = infoSplit[0].Split(',');
-        string[] tknType = infoSplit[1].Split(',');
-
-        for (int i = 0; i < tokens.Length; i++)
-        {
-            tokens[i] = tokens[i].Split(':')[1];
-        }
-        for (int i = 0; i < tknType.Length; i++)
-        {
-            tknType[i] = tknType[i].Split(':')[1];
-        }
+        //Debug.Log("potato: " + infoSplit[0] + "-" + infoSplit[1] + "-" + infoSplit[2] + "-" + infoSplit[3]);
         //end formatting
-
-        //UnityEngine.Debug.Log(tokens[0]);
-        //UnityEngine.Debug.Log(tknType[0]);
 
         //write the file
         StreamWriter sr = File.CreateText("resultToken.txt");
 
-        for (int i = 0; i < tokens.Length; i++)
+        //potato: (name, NN- (be, VB- (Knob, NNP- (0.0, 0
+        for (int i = 0; i < infoSplit.Length; i++)
         {
+            infoSplit[i] = infoSplit[i].Trim();
+            infoSplit[i] = infoSplit[i].Replace("(", "");
+            string[] brick = infoSplit[i].Split(',');
+
             //if it is the last, it is the polarity
-            if (i == tokens.Length - 1)
+            if (i == infoSplit.Length - 1)
             {
-                sr.WriteLine(tokens[i]);
+                sr.WriteLine(brick[0].Trim());
                 //UnityEngine.Debug.Log(tokens[i]);
             }
             else
             {
-                sr.WriteLine(tokens[i] + ";" + tknType[i]);
+                sr.WriteLine(brick[0].Trim() + ";" + brick[1].Trim());
                 //UnityEngine.Debug.Log(tknType[i]);
             }
         }
@@ -3968,13 +3908,16 @@ public class MainController : MonoBehaviour
         sr.Close();
     }
 
-    private void WriteFaceResult(string webServiceResponse)
+    public void ParseFaceResult(string webServiceResponse)
     {
+        //if nothing, nothing
+        if (webServiceResponse.Contains("{}")) return;
+
         //need to format it properly now
-        string info = webServiceResponse.Replace("\"", "");
-        info = info.Replace(@"\", "");
-        info = info.Replace("}}", "");
-        info = info.Replace("{0:{0:", "");
+        //['Knob:0.3420321531545304']
+        string info = webServiceResponse.Replace("['", "@");
+        info = info.Replace("']", "@");
+        info = info.Replace("@", "");
 
         string[] infoSplit = info.Split(',');
         //end formatting

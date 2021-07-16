@@ -1,8 +1,8 @@
-1;7/5/2021 2:19:00 PM;Arthur;Person;1;1
-2;7/5/2021 2:17:27 PM;AutobiographicalStorage/Images/Arthur.png;Imagery;1;1
-3;7/5/2021 2:17:27 PM;Brazil;Location;1;1
-4;7/5/2021 2:17:27 PM;2019;Time;1;1
-5;7/5/2021 2:17:27 PM;born;Activity;1;1
+1;7/16/2021 3:12:24 PM;Arthur;Person;0.2640329;1
+2;7/16/2021 2:47:55 PM;AutobiographicalStorage/Images/Arthur.png;Imagery;1;1
+3;7/16/2021 2:47:55 PM;Brazil;Location;1;1
+4;7/16/2021 2:47:55 PM;2019;Time;1;1
+5;7/16/2021 2:47:55 PM;born;Activity;1;1
 6;6/23/2021 2:21:44 PM;work;Activity;1;1
 7;6/23/2021 2:21:49 PM;study;Activity;1;1
 8;7/10/2019 10:00:00 PM;has children;Activity;1;1
@@ -10,11 +10,11 @@
 10;6/23/2021 2:21:44 PM;Sadness;Emotion;1;1
 11;7/10/2019 10:00:00 PM;meet;Activity;1;1
 12;7/10/2019 10:00:00 PM;learn;Activity;1;1
-13;7/5/2021 2:14:08 PM;like;Activity;1;1
+13;7/16/2021 2:49:37 PM;like;Activity;1;1
 14;7/10/2019 10:00:00 PM;love;Activity;1;1
-15;7/10/2019 10:00:00 PM;food;Object;1;1
+15;7/16/2021 2:49:37 PM;food;Object;1;1
 16;7/10/2019 10:00:00 PM;pizza;Object;1;1
-17;7/5/2021 2:13:15 PM;calabresa;Object;1;1
+17;7/10/2019 10:00:00 PM;calabresa;Object;1;1
 18;7/10/2019 10:00:00 PM;portuguesa;Object;1;1
 19;6/23/2021 2:16:53 PM;entity;Object;1;1
 20;6/23/2021 2:16:53 PM;physical entity;Object;1;1
@@ -23,12 +23,12 @@
 23;6/23/2021 2:16:53 PM;physical object;Object;1;1
 24;6/23/2021 2:16:53 PM;living thing;Object;1;1
 25;6/23/2021 2:16:53 PM;animate thing;Object;1;1
-26;6/23/2021 2:16:53 PM;organism;Object;1;1
+26;7/16/2021 3:12:24 PM;organism;Object;0.2640329;1
 27;6/23/2021 2:16:53 PM;heterotroph;Object;1;1
 28;6/23/2021 2:16:53 PM;biont;Object;1;1
 29;6/23/2021 2:16:53 PM;causal agent;Object;1;1
 30;6/23/2021 2:16:53 PM;causal agency;Object;1;1
-31;6/23/2021 2:16:53 PM;person;Object;1;1
+31;7/16/2021 2:48:42 PM;person;Object;1;1
 32;6/23/2021 2:16:53 PM;individual;Object;1;1
 33;6/23/2021 2:16:53 PM;someone;Object;1;1
 34;6/23/2021 2:16:53 PM;somebody;Object;1;1
@@ -1850,7 +1850,7 @@
 1850;6/23/2021 2:16:54 PM;abuse;Object;1;1
 1851;6/23/2021 2:16:54 PM;child abuse;Object;1;1
 1852;6/23/2021 2:16:54 PM;child neglect;Object;1;1
-1853;7/5/2021 2:19:00 PM;persecution;Object;1;1
+1853;6/23/2021 2:16:54 PM;persecution;Object;1;1
 1854;6/23/2021 2:16:54 PM;impalement;Object;1;1
 1855;6/23/2021 2:16:54 PM;oppression;Object;1;1
 1856;6/23/2021 2:16:54 PM;pogrom;Object;1;1
@@ -2051,7 +2051,7 @@
 2051;6/23/2021 2:16:54 PM;fly casting;Object;1;1
 2052;6/23/2021 2:16:54 PM;surf casting;Object;1;1
 2053;6/23/2021 2:16:54 PM;surf fishing;Object;1;1
-2054;7/5/2021 2:14:35 PM;game;Object;1;1
+2054;6/23/2021 2:16:54 PM;game;Object;1;1
 2055;6/23/2021 2:16:54 PM;day game;Object;1;1
 2056;6/23/2021 2:16:54 PM;night game;Object;1;1
 2057;6/23/2021 2:16:54 PM;away game;Object;1;1
@@ -10017,17 +10017,12 @@
 10017;6/23/2021 2:17:04 PM;family dermochelyidae;Object;1;1
 10018;6/23/2021 2:17:04 PM;dermochelys;Object;1;1
 10019;6/23/2021 2:17:04 PM;genus dermochelys;Object;1;1
-10021;7/5/2021 2:09:58 PM;AutobiographicalStorage/Images/Gabriel.png;Imagery;1;0.2914627
-10022;7/5/2021 2:09:58 PM;2021-07-05;Time;1;0.2914627
-10023;7/5/2021 2:10:01 PM;1991;Time;1;0.2557754
-10024;7/5/2021 2:10:15 PM;teacher;Activity;1;0.2557754
-10020;7/5/2021 2:19:26 PM;Gabriel;Person;1;1
-10025;7/5/2021 2:14:41 PM;favorite;Object;1;1
-10027;7/5/2021 2:14:35 PM;video;Object;1;0.2462584
-10026;7/5/2021 2:14:35 PM;play;Object;1;0.2462584
-10028;7/5/2021 2:14:41 PM;Mario;Person;1;0.2462584
-10029;7/5/2021 2:17:35 PM;be;Activity;1;0.5
-10030;7/5/2021 2:17:35 PM;today;Object;1;0.205929
+10020;7/16/2021 2:49:03 PM;Knob;Person;1;1
+10021;7/16/2021 2:47:21 PM;AutobiographicalStorage/Images/Knob.png;Imagery;1;0.2557754
+10022;7/16/2021 2:47:21 PM;2021-07-16;Time;1;0.2557754
+10023;7/16/2021 2:47:31 PM;1989;Time;1;0.2557754
+10024;7/16/2021 2:48:42 PM;cat;Object;1;0.2792301
+10025;7/16/2021 2:49:13 PM;thank;Object;1;0.8
 %%%
 1;7/10/2019 10:00:00 PM;agent;I was born at Brazil in 2019-08-10;1;1_2_3_4_5
 2;7/10/2019 10:00:00 PM;agent;I have no job;-1;1_6_10
@@ -20039,15 +20034,11 @@
 10008;6/23/2021 2:17:04 PM;belief;sea turtles;0;1_10017
 10009;6/23/2021 2:17:04 PM;belief;type genus of the Dermochelyidae: leatherback turtles;0;1_10018
 10010;6/23/2021 2:17:04 PM;belief;type genus of the Dermochelyidae: leatherback turtles;0;1_10019
-10011;7/5/2021 2:09:58 PM;person;I met Gabriel today;0;10020_10021_10022_1_11
-10012;7/5/2021 2:10:01 PM;person;Gabriel was born in 1991-01-01;0;10020_10023_5
-10013;7/5/2021 2:10:10 PM;person;Gabriel is not studying;-0.296;10020_7
-10014;7/5/2021 2:10:15 PM;person;Gabriel is working as teacher;0;10020_10024_6
-10015;7/5/2021 2:10:17 PM;person;Gabriel has no children;-0.296;10020_8
-10016;7/5/2021 2:10:29 PM;person;Gabriel;0.4019;10020
-10017;7/5/2021 2:13:15 PM;person;Gabriel favorite calabresa;0.4588;10020_10025_17
-10018;7/5/2021 2:14:08 PM;person;Gabriel like;0.3612;10020_13
-10019;7/5/2021 2:14:35 PM;person;Gabriel play video game;0.5106;10020_10027_10026_2054
-10020;7/5/2021 2:14:41 PM;person;Gabriel favorite Mario;0.4588;10020_10025_10028
-10021;7/5/2021 2:17:35 PM;belief;Gabriel be today;0.6808;10020_10030_10029
-10022;7/5/2021 2:18:43 PM;belief;persecution;0;1853
+10011;7/16/2021 2:47:21 PM;person;I met Knob today;0;10020_10021_10022_1_11
+10012;7/16/2021 2:47:31 PM;person;Knob was born in 1989-01-01;0;10020_10023_5
+10013;7/16/2021 2:47:36 PM;person;Knob is not studying;-0.296;10020_7
+10014;7/16/2021 2:47:41 PM;person;Knob is not working;-0.296;6_10020
+10015;7/16/2021 2:47:47 PM;person;Knob has no children;-0.296;8_10020
+10016;7/16/2021 2:48:42 PM;person;Knob cat person;0;31_10024_10020
+10017;7/16/2021 2:49:03 PM;person;Knob;0;10020
+10018;7/16/2021 2:49:13 PM;person;Knob thank;0.6908;10025_10020

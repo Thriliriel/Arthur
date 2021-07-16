@@ -91,7 +91,7 @@ public class ViewCam : MonoBehaviour {
             //face shape
             //FaceShape(dfv.face.FeaturePoints);
 
-            StartSaveImageCoRo("camImage.png");
+            StartSaveImageCoRo(Application.dataPath+"/camImage.png");
         }
     }
 
