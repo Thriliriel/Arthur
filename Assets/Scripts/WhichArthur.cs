@@ -17,6 +17,20 @@ public class WhichArthur: MonoBehaviour
         informName.SetActive(false);
     }
 
+    private void Start()
+    {
+        string appPath = Application.dataPath;
+
+#if UNITY_EDITOR
+        appPath = appPath.Replace("Assets", "");
+#else
+        appPath = appPath.Replace("Arthur_Data", "");
+#endif
+
+        //D:/Docs/UnityProjects/Arthur/
+        globalPath.GetComponentInParent<InputField>().text = appPath;
+    }
+
     private IEnumerator Timer()
     {
         informName.SetActive(true);

@@ -12,6 +12,8 @@ Since it is an Unity project (and it already wraps it all together), there is no
 
 - Arthur has LipSync provided by LavStar. You may need to download it from https://assetstore.unity.com/packages/tools/audio/lavstar-lip-audio-visualization-star-166516#reviews
 
+- It should not be a problem, but, just to be sure, try to avoid using punctuation on sentences, besides "?". Also, proper nouns should have a capital first letter (Ex: "Jack", instead of "jack").
+
 - If you have the need to restart all over (memory, people known and such), you can do it in a few steps:
  . Inside the folder AutobiographicalStorage, delete the file "episodicMemory.txt", create a backup of "backupepisodicMemoryWordnet.txt" and rename it to "episodicMemory.txt". This way, the memory will be reseted to the beggining.
  . Inside the folder AutobiographicalStorage, clear both "historic.txt" and "smallTalksUsed.txt".

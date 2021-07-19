@@ -2032,7 +2032,7 @@ public class MainController : MonoBehaviour
             if (File.Exists("AutobiographicalStorage/Images/" + namePerson + ".png"))
                 File.Delete("AutobiographicalStorage/Images/" + namePerson + ".png");
 
-            File.Copy(Application.dataPath + "/camImage.png", "AutobiographicalStorage/Images/" + namePerson + ".png");
+            File.Copy(absPath + "camImage.png", "AutobiographicalStorage/Images/" + namePerson + ".png");
             SavePersonWebService();
 
             int thisID = AddToSTM("Person", namePerson, 0.9f);
@@ -3829,7 +3829,7 @@ public class MainController : MonoBehaviour
     //Web Service for Face Recognition
     private void RecognitionWebService()
     {
-        if (!File.Exists(Application.dataPath + "/camImage.png"))
+        if (!File.Exists(absPath + "camImage.png"))
         {
             //save image
             Texture txtr = cam.GetComponent<ViewCam>().GetComponent<MeshRenderer>().materials[0].mainTexture;
@@ -3847,20 +3847,20 @@ public class MainController : MonoBehaviour
 
             byte[] _bytes = image.EncodeToPNG();
             //Debug.Log(_bytes);
-            FileStream newImage = File.Create(Application.dataPath + "/camImage.png");
+            FileStream newImage = File.Create(absPath + "camImage.png");
             newImage.Close();
-            File.WriteAllBytes(Application.dataPath + "/camImage.png", _bytes);
+            File.WriteAllBytes(absPath + "camImage.png", _bytes);
 
             Destroy(image);
         }
 
-        pythonCalls.GetComponent<PythonCalls>().FaceRecognition(Application.dataPath+"/camImage.png", Application.dataPath+"/Python/Data", "0.5", "n");
+        pythonCalls.GetComponent<PythonCalls>().FaceRecognition(absPath + "camImage.png", absPath + "Python/Data", "0.5", "n");
     }
 
     //Web Service for save a new person
     private void SavePersonWebService()
     {
-        pythonCalls.GetComponent<PythonCalls>().SavePerson(Application.dataPath + "/camImage.png", Application.dataPath + "/Python/Data", personName);
+        pythonCalls.GetComponent<PythonCalls>().SavePerson(absPath + "camImage.png", absPath + "Python/Data", personName);
 
         //try to find again
         //RecognitionWebService();
@@ -3912,6 +3912,7 @@ public class MainController : MonoBehaviour
     {
         //if nothing, nothing
         if (webServiceResponse.Contains("{}")) return;
+        if (webServiceResponse.Contains("NULL")) return;
 
         //need to format it properly now
         //['Knob:0.3420321531545304']
