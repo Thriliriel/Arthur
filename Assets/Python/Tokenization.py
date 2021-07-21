@@ -45,6 +45,9 @@ class Tokenization:
             keepWords.append("myself")
             keepWords.append("you")
             keepWords.append("yourself")
+            keepWords.append("my")
+            keepWords.append("your")
+            keepWords.append("name")
 
             #lemmatizing (the real word: matei -> stem = mat -> lemm = matar)
             #default: nouns. To change: lemmatizer.lemmatize('playing', pos="v")

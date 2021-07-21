@@ -548,6 +548,18 @@ public class MainController : MonoBehaviour
                         tokens.Remove("myself");
                         tokens.Add(personName, "NNP");
                     }
+                    if (tokens.ContainsKey("my") && tokens.ContainsKey("name"))
+                    {
+                        tokens.Remove("my");
+                        //tokens.Remove("name");
+                        tokens.Add(personName, "NNP");
+                    }
+                    if (tokens.ContainsKey("your") && tokens.ContainsKey("name"))
+                    {
+                        tokens.Remove("your");
+                        //tokens.Remove("name");
+                        tokens.Add(agentName, "NNP");
+                    }
 
                     //check if it is a question
                     bool isQuestion = false;
@@ -845,6 +857,22 @@ public class MainController : MonoBehaviour
 
         //by default, we get the episode itself
         responseText += retrieved.information;
+
+        //if it has "name", the name of the person was asked. Answer accordingly
+        if (tokens.ContainsKey("name"))
+        {
+            if (tokens.ContainsKey(agentName))
+            {
+                responseText = "My name is " + agentName;
+            }else if (tokens.ContainsKey(personName))
+            {
+                responseText = "Your name is " + personName;
+            }
+
+            SpeakYouFool(responseText);// + unk
+
+            return;
+        }
 
         //some things we can try to infer, like Icebreakers
         //lets divide the nodes by the type
@@ -1632,6 +1660,9 @@ public class MainController : MonoBehaviour
                     {
                         string token = info[0];
                         string tknType = info[1];
+
+                        //if it is punctuation, exclude it unless it is a question
+                        if (tknType == "." && token != "?") continue;
 
                         if (!returnValues.ContainsKey(token))
                         {
@@ -3854,7 +3885,11 @@ public class MainController : MonoBehaviour
             Destroy(image);
         }
 
-        pythonCalls.GetComponent<PythonCalls>().FaceRecognition(absPath + "camImage.png", absPath + "Python/Data", "0.5", "n");
+        string dataPath = absPath;
+#if UNITY_EDITOR
+        dataPath += "Assets/";
+#endif
+        pythonCalls.GetComponent<PythonCalls>().FaceRecognition(absPath + "camImage.png", dataPath + "Python/Data", "0.5", "n");
     }
 
     //Web Service for save a new person
@@ -3913,6 +3948,7 @@ public class MainController : MonoBehaviour
         //if nothing, nothing
         if (webServiceResponse.Contains("{}")) return;
         if (webServiceResponse.Contains("NULL")) return;
+        if (webServiceResponse.Contains("Erro")) return;
 
         //need to format it properly now
         //['Knob:0.3420321531545304']

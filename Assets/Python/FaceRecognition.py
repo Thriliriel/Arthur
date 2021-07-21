@@ -251,6 +251,7 @@ class FaceRecognition:
 
 	def comp1N(self, foto, num_matches, direc, th):
 		unknown_image = face_recognition.load_image_file(foto)
+		#print(unknown_image)
 	
 		if unknown_image.all(None):
 			print("false")
