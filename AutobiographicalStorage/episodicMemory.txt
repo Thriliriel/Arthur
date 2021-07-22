@@ -1,14 +1,14 @@
-1;7/21/2021 11:26:18 AM;Arthur;Person;0.2343073;1
-2;7/21/2021 11:26:26 AM;AutobiographicalStorage/Images/Arthur.png;Imagery;0.161122;1
-3;7/21/2021 11:26:26 AM;Brazil;Location;0.161122;1
-4;7/21/2021 11:26:26 AM;2019;Time;0.161122;1
-5;7/21/2021 11:26:26 AM;born;Activity;0.161122;1
+1;7/22/2021 1:10:29 PM;Arthur;Person;1;1
+2;7/21/2021 11:26:26 AM;AutobiographicalStorage/Images/Arthur.png;Imagery;1;1
+3;7/21/2021 11:26:26 AM;Brazil;Location;1;1
+4;7/21/2021 11:26:26 AM;2019;Time;1;1
+5;7/21/2021 11:26:26 AM;born;Activity;1;1
 6;6/23/2021 2:21:44 PM;work;Activity;1;1
 7;6/23/2021 2:21:49 PM;study;Activity;1;1
 8;7/10/2019 10:00:00 PM;has children;Activity;1;1
 9;7/10/2019 10:00:00 PM;Joy;Emotion;1;1
 10;6/23/2021 2:21:44 PM;Sadness;Emotion;1;1
-11;7/21/2021 11:26:18 AM;meet;Activity;0.1392286;1
+11;7/21/2021 11:26:18 AM;meet;Activity;1;1
 12;7/10/2019 10:00:00 PM;learn;Activity;1;1
 13;7/16/2021 2:49:37 PM;like;Activity;1;1
 14;7/10/2019 10:00:00 PM;love;Activity;1;1
@@ -10017,13 +10017,16 @@
 10017;6/23/2021 2:17:04 PM;family dermochelyidae;Object;1;1
 10018;6/23/2021 2:17:04 PM;dermochelys;Object;1;1
 10019;6/23/2021 2:17:04 PM;genus dermochelys;Object;1;1
-10020;7/21/2021 11:26:39 AM;Knob;Person;1;1
-10021;7/21/2021 11:26:18 AM;AutobiographicalStorage/Images/Knob.png;Imagery;0.1392286;1
-10022;7/21/2021 11:26:18 AM;2021-07-16;Time;0.1392286;1
-10023;7/21/2021 11:26:10 AM;1989;Time;0.1392286;1
+10020;7/22/2021 1:09:24 PM;Knob;Person;1;1
+10021;7/21/2021 11:26:18 AM;AutobiographicalStorage/Images/Knob.png;Imagery;1;1
+10022;7/21/2021 11:26:18 AM;2021-07-16;Time;1;1
+10023;7/21/2021 11:26:10 AM;1989;Time;1;1
 10024;7/16/2021 2:48:42 PM;cat;Object;1;0.2792301
 10025;7/16/2021 2:49:13 PM;thank;Object;1;0.8
-10026;7/21/2021 11:26:35 AM;do;Activity;0.526589;0.5
+10026;7/21/2021 11:26:35 AM;do;Activity;1;0.5
+10027;7/22/2021 1:09:19 PM;sure;Object;1;0.5
+10028;7/22/2021 1:10:29 PM;be;Activity;1;0.205929
+10029;7/22/2021 1:17:15 PM;alô;Object;0.4230359;0.5
 %%%
 1;7/10/2019 10:00:00 PM;agent;I was born at Brazil in 2019-08-10;1;1_2_3_4_5
 2;7/10/2019 10:00:00 PM;agent;I have no job;-1;1_6_10
@@ -20041,6 +20044,9 @@
 10014;7/16/2021 2:47:41 PM;person;Knob is not working;-0.296;6_10020
 10015;7/16/2021 2:47:47 PM;person;Knob has no children;-0.296;8_10020
 10016;7/16/2021 2:48:42 PM;person;Knob cat person;0;31_10024_10020
-10017;7/16/2021 2:49:03 PM;person;Knob;0;10020
+10017;7/16/2021 2:49:03 PM;belief;Knob;0;10020
 10018;7/16/2021 2:49:13 PM;person;Knob thank;0.6908;10025_10020
 10019;7/21/2021 11:26:35 AM;belief;do;0.2732;10026
+10020;7/22/2021 1:09:19 PM;belief;sure;0.3182;10027
+10021;7/22/2021 1:10:29 PM;belief;Arthur be;0;1_10028
+10022;7/22/2021 1:17:15 PM;belief;alô;0;10029

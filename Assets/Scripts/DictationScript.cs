@@ -19,11 +19,17 @@ public class DictationScript : MonoBehaviour
     [SerializeField]
     private Button goAndTranslate;
 
+    //microphone
+    private GameObject micro;
+
     void Start()
     {
         //maybe???
         //InitialSilenceTimeoutSeconds -> The time length in seconds before dictation recognizer session ends due to lack of audio input.
         //Dispose -> Disposes the resources this dictation recognizer uses.
+
+        micro = GameObject.Find("Microphone");
+        micro.SetActive(false);
 
         m_DictationRecognizer = new DictationRecognizer();
 
@@ -61,6 +67,8 @@ public class DictationScript : MonoBehaviour
 
     public void StartDictator()
     {
+        micro.SetActive(true);
+
         m_DictationRecognizer.Start();
 
         voiceButton.GetComponent<Text>().text = "...";
@@ -71,6 +79,8 @@ public class DictationScript : MonoBehaviour
 
     public void StopDictator()
     {
+        micro.SetActive(false);
+
         m_DictationRecognizer.Stop();
 
         voiceButton.GetComponent<Text>().text = "Voice";

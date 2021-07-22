@@ -609,7 +609,7 @@ public class MainController : MonoBehaviour
                         {
                             txt += tt.Key + " ";
                         }
-                        StartCoroutine(GetRequest("https://acobot-brainshop-ai-v1.p.rapidapi.com/get?bid=178&key=sX5A2PcYZbsN5EY6&uid=mashape&msg=" + txt));
+                        StartCoroutine(GetRequest("https://acobot-brainshop-ai-v1.p.rapidapi.com/get?bid=178&key=sX5A2PcYZbsN5EY6&uid=mashape&msg=" + lastInteraction));
                     }
                     else if (!isBreakingIce && !currentTopic.IsDialoging())
                     {
@@ -1898,6 +1898,7 @@ public class MainController : MonoBehaviour
                 }
                 else
                 {
+                    //sing for me -> "{\"cnt\":\"<a href=\\\"http://www.msn.com/en-us/music\\\">click here to search and listen music<\\/a>\"}"
                     string response = webRequest.downloadHandler.text;
                     //UnityEngine.Debug.Log(pages[page] + ":\nReceived: " + webRequest.downloadHandler.text);
 
@@ -3889,7 +3890,13 @@ public class MainController : MonoBehaviour
 #if UNITY_EDITOR
         dataPath += "Assets/";
 #endif
-        pythonCalls.GetComponent<PythonCalls>().FaceRecognition(absPath + "camImage.png", dataPath + "Python/Data", "0.5", "n");
+
+        //create a copy of camImage
+        if (File.Exists(dataPath + "Python/" + "camImage.png"))
+            File.Delete(dataPath + "Python/" + "camImage.png");
+        File.Copy(absPath + "camImage.png", dataPath + "Python/" + "camImage.png");
+
+        pythonCalls.GetComponent<PythonCalls>().FaceRecognition(dataPath + "Python/" + "camImage.png", dataPath + "Python/Data", "0.5", "n");
     }
 
     //Web Service for save a new person
