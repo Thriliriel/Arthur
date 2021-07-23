@@ -16,13 +16,27 @@
 16;7/10/2019 10:00:00;pizza;Object;1;1
 17;7/10/2019 10:00:00;calabresa;Object;1;1
 18;7/10/2019 10:00:00;portuguesa;Object;1;1
+19;7/10/2019 10:00:00;music;Object;1;1
+20;7/10/2019 10:00:00;Sonata Artica;Person;1;1
+21;7/10/2019 10:00:00;favorite;Object;1;1
+22;7/10/2019 10:00:00;band;Object;1;1
+23;7/10/2019 10:00:00;White Pearl Black Oceans;Object;1;1
+24;7/10/2019 10:00:00;play;Activity;1;1
+25;7/10/2019 10:00:00;video games;Object;1;1
+26;7/10/2019 10:00:00;game;Object;1;1
+27;7/10/2019 10:00:00;Zelda;Object;1;1
 %%%
 1;7/10/2019 10:00:00;agent;I was born at Brazil in 2019-08-10;1;1_2_3_4_5
 2;7/10/2019 10:00:00;agent;I have no job;-1;1_6_10
 3;7/10/2019 10:00:00;agent;I am not studying;-1;1_7_10
 4;7/10/2019 10:00:00;agent;I have no children;-1;1_8_9
 5;7/10/2019 10:00:00;agent;That is me!;1;1_2_9
-6;7/10/2019 10:00:00;agent;I like food;1;1_13_15
-7;7/10/2019 10:00:00;agent;I love pizza;1;1_14_16
-8;7/10/2019 10:00:00;agent;My favorite pizza is calabresa;1;1_13_14_17
-9;7/10/2019 10:00:00;agent;I do not like portuguesa;-1;1_13_18
+6;7/10/2019 10:00:00;agent;I like food;1;1_13_15_9
+7;7/10/2019 10:00:00;agent;I love pizza;1;1_14_16_9
+8;7/10/2019 10:00:00;agent;My favorite pizza is calabresa;1;1_13_14_17_21_16_9
+9;7/10/2019 10:00:00;agent;I do not like portuguesa;-1;1_13_18_10
+10;7/10/2019 10:00:00;agent;I love music;1;1_14_19_9
+11;7/10/2019 10:00:00;agent;My favorite band is Sonata Arctica;1;1_21_22_13_14_20_9
+12;7/10/2019 10:00:00;agent;My favorite music is White Pearl Black Oceans;1;1_21_19_13_14_23_9
+13;7/10/2019 10:00:00;agent;I love to play video games;1;1_13_14_24_25_9
+14;7/10/2019 10:00:00;agent;My favorite game is Zelda;1;1_13_14_21_26_27_9

@@ -28,7 +28,7 @@ $ music
 # MUSfb0202; Nice, what is your favorite band?; MUSfb0101;
 # MUSfb0302; Oh, too bad. Lets talk about something else then.; MUSfb0101;
 # MUSfb0403; Nice one, i love Sonata Arctica, do you know them?; MUSfb0202;
-# MUSfb0503; Mine too! Say it, did you already listened their song, "white pearl, black oceans"?; MUSfb0202;
+# MUSfb0503; Oh, i like Sonata Arctica! Say it, did you already listened their song, "white pearl, black oceans"?; MUSfb0202;
 # MUSfb0604; I think they are great!; MUSfb0403;
 # MUSfb0704; I see, i would recommend them; MUSfb0403;
 # MUSfb0804; It is an amazing song! We should listen them together someday.; MUSfb0503;
@@ -39,11 +39,11 @@ $ leisure
 [ leisure_activity
 # LEIla0101; Let me ask you, what do you do for fun?; -1;
 # LEIla0202; Oh, that is nice. I like to play videogames, do you like it?; LEIla0101;
-# LEIla0302; You too? I love playing videogames! What is your favorite game?; LEIla0101;
+# LEIla0302; Nice, I love playing videogames! What is your favorite game?; LEIla0101;
 # LEIla0403; Oh, too bad. But i think it is fun.; LEIla0202;
 # LEIla0503; Awesome! Have you ever played Metroid?; LEIla0202;
 # LEIla0603; This one is very good, but my favorite is Zelda, have you heard about it?; LEIla0302;
-# LEIla0703; Mine too! It seems like we have a similar taste in games!; LEIla0302;
+# LEIla0703; Interesting, mine is Zelda. It seems like we have a similar taste in games!; LEIla0302;
 # LEIla0804; Nice, i love this game!; LEIla0503;
 # LEIla0904; Too bad, but i would recommend it!; LEIla0503;
 # LEIla1004; Yeah, i love this game!; LEIla0603;
@@ -62,4 +62,47 @@ $ pets
 # PETdc0803; Oh, i see. Maybe in the future.; PETdc0302;
 # PETdc0904; Yeah! Also, they have discovered several ancient burial sites for dogs in Mexico. I read this in Wikipedia, if you want to know more about it.; PETdc0503;
 # PETdc1004; Yeah! Also, several ancient Egyptian deities were depicted and sculptured with cat-like heads, such as Mafdet, Bastet and Sekhmet. I read this in Wikipedia, if you want to know more about it.; PETdc0703;
+]
+
+$ extroversion
+[ introverted
+# EXTin0101; You talk a lot with me! Do you like to talk with other people too?; -1;
+# EXTin0202; Okay, but do you make an effort to try to talk to people?; EXTin0101;
+# EXTin0302; How cool! It's great to exchange experiences with other people. Are you usually the person who starts the conversation?; EXTin0101;
+# EXTin0403; It's okay, everyone has their own time. But it's very important that you talk and make friends with other people, ok?; EXTin0202;
+# EXTin0503; Sometimes people don't talk much either.; EXTin0202;
+# EXTin0603; What a coincidence, I'm like that too.; EXTin0302;
+# EXTin0703; That's cool, I love talking about different subjects.; EXTin0302;
+]
+[ ashamed
+# EXTen0101;Do you like to make presentations on projects you've already done?;-1;
+# EXTen0202;Oh, have you had bad experiences doing this?;EXTen0101;
+# EXTen0302;Wow, that's cool, when they finish my new word recognition algorithm I'll call you to make a presentation for me!;EXTen0101;
+# EXTen0403;Okay, no one is forced to enjoy presenting.;EXTen0202;
+# EXTen0503;I see, and have you tried to train this more?;EXTen0202;
+# EXTen0604;Hmm, try training this a little;EXTen0503;
+# EXTen0704;So sorry, but try to train a little more, it's with practice that we achieve excellence.;EXTen0503;
+]
+[ shy
+# EXTti0101;Today I made a friend named Bella. Do you also usually talk with strangers?;-1;
+# EXTti0202;Oh, so you are more reserved, right?; EXTti0101;
+# EXTti0302;Cool! Someday i will introduce you to her, okay?; EXTti0101;
+# EXTti0403;I see, you are more open to people you already know.; EXTti0202;
+# EXTti0503;Hmmm, right. It’s okay if you are more shy. ; EXTti0202;
+# EXTti0603;Oh, ok. I won’t tell her about this, I promise.; EXTti0302;
+# EXTti0703;Nice! You will like her, she’s very chatty, just like me!; EXTti0302;
+]
+[ inhibited
+# EXTni0101;I’ve been learning about human emotions lately, could you help me with a question? It’s common for you to express emotions to other people?;-1;
+# EXTni0202;I see, it’s not so common for you.; EXTni0101;
+# EXTni0302;I see.. and is it easier for you to share happy thoughts than sad things?; EXTni0101;
+# EXTni0403;Hmm… Interesting,I don't think I've ever met anyone who thinks that. Very cool.; EXTni0302;
+# EXTni0503;Hmmm, right, that makes more sense.; EXTni0302;
+]
+[ extroverted
+# EXTex0101;Do you study right? Are you the person who make questions on the class time or after the class?;-1;
+# EXTex0202;Right, is it because you don't like to talk to a lot of people?;EXTex0101;
+# EXTex0302;Nice, just make sure you don't disturb the teacher.;EXTex0101;
+# EXTex0403;Okay, i understand.;EXTex0202;
+# EXTex0503;I see, sometimes it’s difficult to express your thoughts;EXTex0202;
 ]

@@ -3711,11 +3711,15 @@ public class MainController : MonoBehaviour
                     List<string> paramer = new List<string>();
                     foreach(MemoryClass prn in person)
                     {
-                        paramer.Add(prn.information.ToLower());
+                        string[] aaaaaa = prn.information.ToLower().Split(' ');
+                        foreach(string zz in aaaaaa)
+                            paramer.Add(zz);
                     }
                     foreach (MemoryClass obj in objects)
                     {
-                        paramer.Add(obj.information.ToLower());
+                        string[] aaaaaa = obj.information.ToLower().Split(' ');
+                        foreach (string zz in aaaaaa)
+                            paramer.Add(zz);
                     }
 
                     foreach (MemoryClass acs in activity)
