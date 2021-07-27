@@ -71,17 +71,23 @@
     <Compile Include="Assets\Scripts\GeneralEventClass.cs" />
     <Compile Include="Assets\Affdex\Plugins\Scripts\Detector.cs" />
     <Compile Include="Assets\Scripts\Dialog.cs" />
+    <Compile Include="Assets\Word2vec\Word2vec.Tools\Word2VecTextReader.cs" />
     <Compile Include="Assets\Anima2D\Examples\Scripts\SpriteCycle.cs" />
     <Compile Include="Assets\Affdex\Plugins\Scripts\AndroidNativePlatform.cs" />
     <Compile Include="Assets\EditorController.cs" />
     <Compile Include="Assets\Anima2D\Examples\Scripts\SpriteCycleParallax.cs" />
     <Compile Include="Assets\Anima2D\Scripts\IkSolver2DLimb.cs" />
     <Compile Include="Assets\Anima2D\Scripts\Control.cs" />
+    <Compile Include="Assets\Word2vec\Word2vec.Tools\WordDistance.cs" />
+    <Compile Include="Assets\Word2vec\Word2vec.Tools\Representation.cs" />
     <Compile Include="Assets\Affdex\Plugins\Scripts\Expressions.cs" />
     <Compile Include="Assets\Affdex\Examples\Scripts\ViewCam.cs" />
     <Compile Include="Assets\DCXR\UPython2\Scripts\UPython2.cs" />
     <Compile Include="Assets\Affdex\Plugins\Scripts\ImageResultsListener.cs" />
+    <Compile Include="Assets\Word2vec\Word2vec.Tools\LinkedDistance.cs" />
+    <Compile Include="Assets\Word2vec\Word2vec.Tools\TheHelper.cs" />
     <Compile Include="Assets\Anima2D\Scripts\SpriteMeshAnimation.cs" />
+    <Compile Include="Assets\Word2vec\Word2vec.Tools.Example\Word2vecClass.cs" />
     <Compile Include="Assets\Anima2D\Scripts\IkSolver2D.cs" />
     <Compile Include="Assets\Scripts\PythonCalls.cs" />
     <Compile Include="Assets\Scripts\WhichArthur.cs" />
@@ -94,12 +100,15 @@
     <Compile Include="Assets\Scripts\DictationScript.cs" />
     <Compile Include="Assets\Affdex\Plugins\Scripts\AffdexUnityUtils.cs" />
     <Compile Include="Assets\Scripts\Topic.cs" />
+    <Compile Include="Assets\Word2vec\Word2vec.Tools\Word2VecBinaryReader.cs" />
     <Compile Include="Assets\Anima2D\Examples\Scripts\CharacterMotion.cs" />
+    <Compile Include="Assets\Word2vec\Word2vec.Tools\WordRepresentation.cs" />
     <Compile Include="Assets\Scripts\Calibration.cs" />
     <Compile Include="Assets\Anima2D\Scripts\Bone2D.cs" />
     <Compile Include="Assets\Scripts\IceBreakingTreeClass.cs" />
     <Compile Include="Assets\Affdex\Plugins\Scripts\NativePlatform.cs" />
     <Compile Include="Assets\humelo\Lavstar\Scripts\LavstarProsodyTTSClient.cs" />
+    <Compile Include="Assets\Word2vec\Word2vec.Tools\Vocabulary.cs" />
     <Compile Include="Assets\DCXR\UPython2\Scripts\UPython2ChannelSO.cs" />
     <Compile Include="Assets\Anima2D\Scripts\PoseManager.cs" />
     <Compile Include="Assets\Anima2D\Examples\Scripts\Follow.cs" />
@@ -122,7 +131,9 @@
     <Compile Include="Assets\Anima2D\Scripts\IkGroup.cs" />
     <Compile Include="Assets\humelo\Lavstar\Scripts\LavstarLipsyncForBS.cs" />
     <Compile Include="Assets\Anima2D\Scripts\EditorUpdaterProxy.cs" />
+    <Compile Include="Assets\Word2vec\Word2vec.Tools\IWord2VecReader.cs" />
     <Compile Include="Assets\Scripts\CharacterCTRL.cs" />
+    <Compile Include="Assets\Word2vec\Word2vec.Tools\DistanceTo.cs" />
     <Compile Include="Assets\Scripts\PADClass.cs" />
   </ItemGroup>
   <ItemGroup>

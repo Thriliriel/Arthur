@@ -13,3 +13,4 @@ Clustering/OpenFace_Output/*
 Clustering/Profiles/*
 Build/
 Assets/humelo/
+Assets/Word2vec/GoogleNews-vectors-negative300.bin

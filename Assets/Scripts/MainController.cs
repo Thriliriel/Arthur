@@ -10,6 +10,7 @@ using UnityEngine.UI;
 //using System.Text;
 //using System.Globalization;
 using Prolog;
+using Word2vec.Tools.Example;
 
 using TopicCS;
 using DialogCS;
@@ -206,6 +207,10 @@ public class MainController : MonoBehaviour
     //python calls
     public GameObject pythonCalls;
 
+    //Word2Vec (approx 6GB Ram with Google database)
+    private Word2vecClass w2v;
+    public bool useW2V;
+
     private void Awake()
     {
         Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
@@ -213,6 +218,7 @@ public class MainController : MonoBehaviour
         //Arthur mode
         StreamReader sr = new StreamReader("whichArthur.txt", System.Text.Encoding.Default);
         absPath = sr.ReadLine();
+        useW2V = Boolean.Parse(sr.ReadLine());
         string textFile = sr.ReadLine();
         if (textFile == "0") chatMode = false;
         else if (textFile == "1") chatMode = true;
@@ -402,6 +408,14 @@ public class MainController : MonoBehaviour
                 connectNodes.Add(thisID);
                 AddGeneralEvent("I met " + personName + " today", connectNodes, "person");
             }
+        }
+
+        //word2vec stuff (heavy stuff, just use if chosen)
+        if (useW2V)
+        {
+            w2v = new Word2vecClass();
+            w2v.Start();
+            //w2v.MostSimilar("boy");
         }
     }
 
@@ -2825,6 +2839,28 @@ public class MainController : MonoBehaviour
             isRetrievingMemory = true;
 
             //StartCoroutine(WordVecWebService(textParam, cues));
+            //if using word2vec, get some more
+            if (useW2V)
+            {
+                Dictionary<string, string> newCues = new Dictionary<string, string>();
+
+                foreach(KeyValuePair<string, string> cu in cues)
+                {
+                    newCues.Add(cu.Key, cu.Value);
+                    List<string> moreCues = w2v.MostSimilar(cu.Key);
+                    foreach(string more in moreCues)
+                    {
+                        if(more != null)
+                        {
+                            newCues.Add(more, cu.Value);
+                        }
+                    }
+                }
+
+                cues = newCues;
+
+                //w2v.MostSimilar("boy");
+            }
 
             //we find the general event which has the most cues compounding its memory nodes
             //BUT... select the general event is a bit trickier, since it can exist many events with the same memory information.
