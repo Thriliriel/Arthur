@@ -16,9 +16,9 @@ Since it is an Unity project (and it already wraps it all together), there is no
 
 - In the menu panel, the last option allows to choose using Word2Vec for Arthur. It is disabled by default, because it is very heavy (around 6GB RAM usage). Use it at your own risk =P.
 
-- If you have the need to restart all over (memory, people known and such), you can do it in a few steps:
+- If you have the need to restart all over (memory, people known and such), you can do it in a few steps (or just run the "clearMemory.bat" file):
  . Inside the folder AutobiographicalStorage, delete the file "episodicMemory.txt", create a backup of "backupepisodicMemoryWordnet.txt" and rename it to "episodicMemory.txt". This way, the memory will be reseted to the beggining.
  . Inside the folder AutobiographicalStorage, clear both "historic.txt" and "smallTalksUsed.txt".
  . Inside the folder AutobiographicalStorage, enter the "Images" folder and delete all pictures, but Arthur and Bella images.
  . Inside the folder RestAPI, delete the files "facefile.npy", "namefile.npy" and "camImage.png". Also, delete all images inside the folder "Data".
- . In the root folder, open the "nextId.txt" file and reset it to the original values (10020 in first line, 10011 in second line).
+ . In the root folder, open the "nextId.txt" file and reset it to the original values (10029 in first line, 10016 in second line).

@@ -211,9 +211,14 @@ public class MainController : MonoBehaviour
     private Word2vecClass w2v;
     public bool useW2V;
 
+    //chat log
+    private string chatLog;
+
     private void Awake()
     {
         Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+
+        chatLog = "";
 
         //Arthur mode
         StreamReader sr = new StreamReader("whichArthur.txt", System.Text.Encoding.Default);
@@ -463,6 +468,9 @@ public class MainController : MonoBehaviour
 
         //save used STs
         SaveUsedST();
+
+        //save chat log
+        SaveChatLog();
     }
 
     // Update is called once per frame
@@ -797,7 +805,11 @@ public class MainController : MonoBehaviour
     //Agent says something
     private void SpeakYouFool(string weirdThingToTalk)
     {
-        chatText.text += "<b>"+agentName+"</b>: "+ weirdThingToTalk+"\n";
+        string newText = "<b>" + agentName + "</b>: " + weirdThingToTalk + "\n";
+        chatText.text += newText;
+
+        //add in chat log
+        chatLog += newText;
 
         //just speak if canSpeak is true
         if (canSpeak)
@@ -1835,7 +1847,11 @@ public class MainController : MonoBehaviour
         inputText.GetComponent<InputField>().text = "";
 
         //put it in the general chat as well
-        chatText.text += "<b>" + personName + "</b>: " + textSend + "\n";
+        string newText = "<b>" + personName + "</b>: " + textSend + "\n";
+        chatText.text += newText;
+
+        //add to chat log
+        chatLog += newText;
 
         //reset the idle timer
         idleTimer = Time.time;
@@ -2847,19 +2863,21 @@ public class MainController : MonoBehaviour
                 foreach(KeyValuePair<string, string> cu in cues)
                 {
                     newCues.Add(cu.Key, cu.Value);
-                    List<string> moreCues = w2v.MostSimilar(cu.Key);
-                    foreach(string more in moreCues)
+                    //if it is ponctuation, there is no need. Also, NNPs are not needed
+                    if (cu.Value != "NNP" && cu.Value != ".")
                     {
-                        if(more != null)
+                        List<string> moreCues = w2v.MostSimilar(cu.Key);
+                        foreach (string more in moreCues)
                         {
-                            newCues.Add(more, cu.Value);
+                            if (more != null)
+                            {
+                                newCues.Add(more, cu.Value);
+                            }
                         }
                     }
                 }
 
                 cues = newCues;
-
-                //w2v.MostSimilar("boy");
             }
 
             //we find the general event which has the most cues compounding its memory nodes
@@ -3942,7 +3960,12 @@ public class MainController : MonoBehaviour
     //Web Service for save a new person
     private void SavePersonWebService()
     {
-        pythonCalls.GetComponent<PythonCalls>().SavePerson(absPath + "camImage.png", absPath + "Python/Data", personName);
+        string dataPath = absPath;
+#if UNITY_EDITOR
+        dataPath += "Assets/";
+#endif
+
+        pythonCalls.GetComponent<PythonCalls>().SavePerson(absPath + "camImage.png", dataPath + "Python/Data", personName);
 
         //try to find again
         //RecognitionWebService();
@@ -4467,5 +4490,15 @@ public class MainController : MonoBehaviour
         if (type == "sad") return sadSentences[UnityEngine.Random.Range(0, sadSentences.Count)];
 
         return null;
+    }
+
+    //save the chat log file
+    private void SaveChatLog()
+    {
+        using (StreamWriter sw = File.AppendText("AutobiographicalStorage/chatLog.txt"))
+        {
+            sw.WriteLine(System.DateTime.Now);
+            sw.WriteLine(chatLog);
+        }
     }
 }

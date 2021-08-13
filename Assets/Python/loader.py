@@ -19,14 +19,15 @@ def load(direc):
 	known_faces = []
 	known_names = []
 	for filename in os.listdir(direc):
-		file = os.path.join(direc, filename)
-		image = face_recognition.load_image_file(file)
-		try:
-			image_encoding = face_recognition.face_encodings(image)[0]	#get only the first encoding
-			known_faces.append(image_encoding)
-			known_names.append(filename[:-4])							#remove filetype from filename
-		except Exception as e:
-			print("Error in face:" + file)
+		if "meta" not in filename:
+			file = os.path.join(direc, filename)
+			image = face_recognition.load_image_file(file)
+			try:
+				image_encoding = face_recognition.face_encodings(image)[0]	#get only the first encoding
+				known_faces.append(image_encoding)
+				known_names.append(filename[:-4])							#remove filetype from filename
+			except Exception as e:
+				print("Error in face:" + file)
 	np.save("faceFile",known_faces,False,False)
 	np.save("nameFile",known_names,False,False)
 	#print("Tempo de carregamento do diretório: " + str(time.time() - start) + "segundos")

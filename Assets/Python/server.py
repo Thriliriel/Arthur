@@ -3,16 +3,14 @@ import os
 import _thread as thread
 import time
 import KeywordFilter
-
-#import nltk
-#nltk.download("stop-words")
-#nltk.download("vader_lexicon")
-#nltk.download("punkt")
-#nltk.download("wordnet")
+#import Wordvec
 
 #keyword stuff first
 keywordstuff = KeywordFilter.KeywordFilter("../../")
 keywordstuff.updateHistoric()
+
+#word2vec
+#wordvec = Wordvec.Wordvec()
 
 # settings
 python_cmd = 'python'
@@ -25,7 +23,6 @@ s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.bind(address) 
 
 print(s)
-
 
 print("Server Started!")
 s.listen(10)

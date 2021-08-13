@@ -1,0 +1,30 @@
+8/13/2021 1:34:24 PM
+<b>Bella</b>: Hello stranger! May i know your name?
+<b></b>: my name is Knob
+<b>Bella</b>: How old are you?
+<b>Knob</b>: 32
+<b>Bella</b>: Do you study?
+<b>Knob</b>: no
+<b>Bella</b>: Do you work?
+<b>Knob</b>: no
+<b>Bella</b>: Do you have children?
+<b>Knob</b>: no
+<b>Bella</b>: Thanks! Anything else you would like to talk about?
+
+8/13/2021 1:35:52 PM
+<b>Bella</b>: Greetings Knob!
+<b>Knob</b>: how are you?
+<b>Bella</b>: 2 years old. Here it is!
+<b>Knob</b>: do you like food?
+<b>Bella</b>: I like food
+<b>Knob</b>: i like sushi
+<b>Bella</b>: Do you know many people who like sushi as well?
+<b>Knob</b>: yeah, my friends like it
+<b>Bella</b>: Sure.
+<b>Knob</b>: what do you like?
+<b>Bella</b>: I like food
+<b>Knob</b>: do you like sushi?
+<b>Bella</b>: Talking with you is so good!
+<b>Knob</b>: and sushi, do you like it?
+<b>Bella</b>: I like food
+
