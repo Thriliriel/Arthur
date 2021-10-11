@@ -9479,7 +9479,7 @@ MonoBehaviour:
   gettingBoredAfter: 15
   isBored: 0
   pythonCalls: {fileID: 605639625}
-  useW2V: 0
+  usingEmpathy: 0
 --- !u!4 &1328823187
 Transform:
   m_ObjectHideFlags: 0
@@ -13507,7 +13507,7 @@ MonoBehaviour:
   JawRotationLerpInterpValue: 70
   JawRotationMultiply: 1500
   rotAxis: 0
-  bias: 0
+  bias: 20
 --- !u!1 &1877419508
 GameObject:
   m_ObjectHideFlags: 0

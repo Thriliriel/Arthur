@@ -11,7 +11,8 @@ public class WhichArthur: MonoBehaviour
     public GameObject togArthur;
     public GameObject togBella;
     public GameObject globalPath;
-    public GameObject useW2V;
+    //public GameObject useW2V;
+    public GameObject togEmpathy;
 
     private void Awake()
     {
@@ -44,6 +45,7 @@ public class WhichArthur: MonoBehaviour
         string nominho = "";
         string whichAgent = "";
         bool usingW2v = false;
+        bool usingEmpathy = true;
         string absPath = globalPath.GetComponent<Text>().text;
 
         //if it is chat mode (1), we need first to check if the name was informed
@@ -64,12 +66,16 @@ public class WhichArthur: MonoBehaviour
         else whichAgent = "Bella";
 
         //using word2vec or not
-        if (useW2V.GetComponent<Toggle>().isOn) usingW2v = true;
+        //if (useW2V.GetComponent<Toggle>().isOn) usingW2v = true;
+
+        //using empathy
+        if (!togEmpathy.GetComponent<Toggle>().isOn) usingEmpathy = false;
 
         StreamWriter sr = File.CreateText("whichArthur.txt");
         //absolute path, chat mode ON/OFF, Arthur or Bella, person name (just set if chat mode is active)
         sr.WriteLine(absPath);
-        sr.WriteLine(usingW2v.ToString());
+        //sr.WriteLine(usingW2v.ToString());
+        sr.WriteLine(usingEmpathy.ToString());
         //C:/Users/55549/Desktop/ArBeBuild
         sr.WriteLine(which);
         sr.WriteLine(whichAgent);

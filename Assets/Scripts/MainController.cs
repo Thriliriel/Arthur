@@ -10,7 +10,7 @@ using UnityEngine.UI;
 //using System.Text;
 //using System.Globalization;
 using Prolog;
-using Word2vec.Tools.Example;
+//using Word2vec.Tools.Example;
 
 using TopicCS;
 using DialogCS;
@@ -208,14 +208,19 @@ public class MainController : MonoBehaviour
     public GameObject pythonCalls;
 
     //Word2Vec (approx 6GB Ram with Google database)
-    private Word2vecClass w2v;
-    public bool useW2V;
+    //private Word2vecClass w2v;
+    //public bool useW2V;
+
+    //using empathy
+    public bool usingEmpathy;
 
     //chat log
     private string chatLog;
 
     private void Awake()
     {
+        usingEmpathy = true;
+
         Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
 
         chatLog = "";
@@ -223,7 +228,8 @@ public class MainController : MonoBehaviour
         //Arthur mode
         StreamReader sr = new StreamReader("whichArthur.txt", System.Text.Encoding.Default);
         absPath = sr.ReadLine();
-        useW2V = Boolean.Parse(sr.ReadLine());
+        //useW2V = Boolean.Parse(sr.ReadLine());
+        usingEmpathy = Boolean.Parse(sr.ReadLine());
         string textFile = sr.ReadLine();
         if (textFile == "0") chatMode = false;
         else if (textFile == "1") chatMode = true;
@@ -416,12 +422,12 @@ public class MainController : MonoBehaviour
         }
 
         //word2vec stuff (heavy stuff, just use if chosen)
-        if (useW2V)
+        /*if (useW2V)
         {
             w2v = new Word2vecClass();
             w2v.Start();
             //w2v.MostSimilar("boy");
-        }
+        }*/
     }
 
     // Start is called before the first frame update
@@ -436,6 +442,8 @@ public class MainController : MonoBehaviour
         writingResult = File.CreateText("result.txt");
         writingResult.Write("");
         writingResult.Close();
+
+        //SpeakYouFool("i would like to introduce Soraia, our awesome advisor!");
 
         //reset the result token files
         ResetTokenFiles();
@@ -1792,38 +1800,42 @@ public class MainController : MonoBehaviour
             if (marioEmotion == "joy")
                 marioEmotion = "happiness";
 
-            //if Arthur, play
-            if (agentName == "Arthur" && !chatMode)
+            //just change facial expression if empathy is being used
+            if (usingEmpathy)
             {
-                string emoAnim = marioEmotion.Substring(0, 1).ToUpper() + marioEmotion.Substring(1) + "_A";
-                //UnityEngine.Debug.Log(emoAnim);
+                //if Arthur, play
+                if (agentName == "Arthur" && !chatMode)
+                {
+                    string emoAnim = marioEmotion.Substring(0, 1).ToUpper() + marioEmotion.Substring(1) + "_A";
+                    //UnityEngine.Debug.Log(emoAnim);
 
-                mariano.GetComponent<CharacterCTRL>().PlayAnimation(emoAnim);
-            }
-            else if (agentName == "Bella" && !chatMode)
-            {
-                //play bella
+                    mariano.GetComponent<CharacterCTRL>().PlayAnimation(emoAnim);
+                }
+                else if (agentName == "Bella" && !chatMode)
+                {
+                    //play bella
 
-                //just for tests
-                //emotion = "disgust";
+                    //just for tests
+                    //emotion = "disgust";
 
-                //true
-                if (emotion == "joy")
-                    belinha.GetComponentInChildren<Animator>().SetTrigger("isHappy");
-                else if (emotion == "anger")
-                    belinha.GetComponentInChildren<Animator>().SetTrigger("isAngry");
-                else if (emotion == "surprise")
-                    belinha.GetComponentInChildren<Animator>().SetTrigger("isSurprised");
-                else if (emotion == "fear")
-                    belinha.GetComponentInChildren<Animator>().SetTrigger("isAfraid");
-                else if (emotion == "sadness")
-                    belinha.GetComponentInChildren<Animator>().SetTrigger("isSad");
-                else if (emotion == "disgust")
-                    belinha.GetComponentInChildren<Animator>().SetTrigger("isDisgusted");
-                else if (emotion == "bored")
-                    belinha.GetComponentInChildren<Animator>().SetTrigger("isBored");
-                else
-                    belinha.GetComponentInChildren<Animator>().SetTrigger("isNeutral");
+                    //true
+                    if (emotion == "joy")
+                        belinha.GetComponentInChildren<Animator>().SetTrigger("isHappy");
+                    else if (emotion == "anger")
+                        belinha.GetComponentInChildren<Animator>().SetTrigger("isAngry");
+                    else if (emotion == "surprise")
+                        belinha.GetComponentInChildren<Animator>().SetTrigger("isSurprised");
+                    else if (emotion == "fear")
+                        belinha.GetComponentInChildren<Animator>().SetTrigger("isAfraid");
+                    else if (emotion == "sadness")
+                        belinha.GetComponentInChildren<Animator>().SetTrigger("isSad");
+                    else if (emotion == "disgust")
+                        belinha.GetComponentInChildren<Animator>().SetTrigger("isDisgusted");
+                    else if (emotion == "bored")
+                        belinha.GetComponentInChildren<Animator>().SetTrigger("isBored");
+                    else
+                        belinha.GetComponentInChildren<Animator>().SetTrigger("isNeutral");
+                }
             }
         }
 
@@ -2129,6 +2141,7 @@ public class MainController : MonoBehaviour
     private void MeetNewPeople()
     {
         string greetingText = "Hello stranger! May i know your name?";
+        //string greetingText = "Come on Arthur, it is about us! Soraia is going to make a presentation about conversational agents. Welcome everyone!";
         SpeakYouFool(greetingText);
 
         //need to wait for the answer
@@ -2856,7 +2869,7 @@ public class MainController : MonoBehaviour
 
             //StartCoroutine(WordVecWebService(textParam, cues));
             //if using word2vec, get some more
-            if (useW2V)
+            /*if (useW2V)
             {
                 Dictionary<string, string> newCues = new Dictionary<string, string>();
 
@@ -2878,7 +2891,7 @@ public class MainController : MonoBehaviour
                 }
 
                 cues = newCues;
-            }
+            }*/
 
             //we find the general event which has the most cues compounding its memory nodes
             //BUT... select the general event is a bit trickier, since it can exist many events with the same memory information.
@@ -3632,6 +3645,9 @@ public class MainController : MonoBehaviour
             List<MemoryClass> objects = new List<MemoryClass>();
             foreach (MemoryClass mem in ge.Value.nodes)
             {
+                //reserved words from prolog, do not add
+                if (mem.information == "call") continue;
+
                 if (mem.informationType == "Person") person.Add(mem);
                 if (mem.informationType == "Location") location.Add(mem);
                 if (mem.informationType == "Time") time.Add(mem);
@@ -3668,7 +3684,7 @@ public class MainController : MonoBehaviour
                         facts.Add("born", born);
                     }
                 }//else, if it is "meet", we have Arthur meeting someone with a date of the meeting (which is not needed, i believe)
-                else if (activity[0].information == "meet")
+                else if (activity[0].information == "meet" && person.Count > 1)
                 {
                     string meet = "";
                     
@@ -3687,7 +3703,7 @@ public class MainController : MonoBehaviour
                         facts.Add("meet", meet);
                     }
                 }//else, if it is "study", someone is studying or not. If we have 2 activities, one of them is the study course.
-                else if (activity[0].information == "study")
+                else if (activity[0].information == "study" && person.Count > 0)
                 {
                     string study = "";
 
@@ -3709,7 +3725,7 @@ public class MainController : MonoBehaviour
                         facts.Add("study", study);
                     }
                 }//else, if it is "work", someone is working or not. If we have 2 activities, one of them is the job.
-                else if (activity[0].information == "work")
+                else if (activity[0].information == "work" && person.Count > 0)
                 {
                     string work = "";
 
