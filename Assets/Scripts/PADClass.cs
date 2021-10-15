@@ -101,7 +101,7 @@ public class PADClass
         float pBore = ((0.25f * (1-O)) + (0.25f * (1-C)) + (0.5f * (1-A))) / 1000;
 
         boredom -= pBore;
-        Debug.Log("Boredom: " + boredom);
+        //Debug.Log("Boredom: " + boredom);
     }
 
     //reset boredom
