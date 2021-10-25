@@ -33,6 +33,12 @@ public class EditorController : Editor {
         {
             LoadWordnet();
         }
+
+        rect = GUILayoutUtility.GetRect(500, 40);
+        if (GUI.Button(rect, "Import Small Talks"))
+        {
+            ImportST();
+        }
     }
 
     public void ClearMemory()
@@ -43,5 +49,10 @@ public class EditorController : Editor {
     public void LoadWordnet()
     {
         (target as MainController).LoadWordnetDatabase();
+    }
+
+    public void ImportST()
+    {
+        (target as MainController).ImportST();
     }
 }

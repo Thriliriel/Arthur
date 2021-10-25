@@ -4517,4 +4517,119 @@ public class MainController : MonoBehaviour
             sw.WriteLine(chatLog);
         }
     }
+
+    public void ImportST()
+    {
+        if (!File.Exists("newDialogues.txt")) return;
+
+        int idTopic = 1;
+        int idDialog = 1;
+        int dialogTreeId = 1;
+        int dialogTreeLevel = 1;
+
+        //we need to store the triplet sentence->answer->sentence, so we can build the dialog tree
+        //ST ID;answer;ST ID
+        List<string> triplets = new List<string>();
+
+        StreamWriter sw = File.AppendText("testST.txt");
+        StreamWriter sw2 = File.AppendText("testHistoric.txt");
+
+        //start the topic
+        if (new FileInfo("newDialogues.txt").Length > 0)
+        {
+            sw.WriteLine("$ randomTopic"+idTopic++);
+        }
+
+        StreamReader readingLTM = new StreamReader("newDialogues.txt", System.Text.Encoding.Default);
+        using (readingLTM)
+        {
+            string line;
+            bool newDiag = true;
+            do
+            {
+                line = readingLTM.ReadLine();
+
+                if (line == "")
+                {
+                    //next dialogue (if any)
+                    sw.WriteLine("]");
+                    triplets.Clear();
+                    dialogTreeId = 1;
+                    dialogTreeLevel = 1;
+                    newDiag = true;
+                    continue;
+                }
+
+                if (line != "" && line != null)
+                {
+                    //Debug.Log(line);
+                    //A is the first person (which we use as agent). B is the answer.
+                    string[] info = line.Split(':');
+                    triplets.Add(info[1].Trim());
+
+                    //if we have 3, we can store
+                    if(triplets.Count == 3)
+                    {
+                        string dtid = "";
+                        string dtl = "";
+                        string stId = "";
+
+                        //if new dialog, save the root
+                        if (newDiag)
+                        {
+                            sw.WriteLine("[ randomDialog" + idDialog++);
+
+                            dtid = "0" + dialogTreeId.ToString();
+                            if (dialogTreeId >= 10) dtid = dialogTreeId.ToString();
+
+                            dtl = "0" + dialogTreeLevel.ToString();
+                            if (dialogTreeLevel >= 10) dtl = dialogTreeLevel.ToString();
+
+                            stId = "RT"+(idTopic-1)+ "d" + (idDialog - 1) + dtid + dtl;
+
+                            sw.WriteLine("# "+stId+"; "+triplets[0]+"; -1;");
+
+                            //change for the id
+                            triplets[0] = stId;
+
+                            newDiag = false;
+                            dialogTreeId++;
+                            dialogTreeLevel++;
+                        }
+
+                        //save the last, with the link to the id of the parent
+                        dtid = "0" + dialogTreeId.ToString();
+                        if (dialogTreeId >= 10) dtid = dialogTreeId.ToString();
+
+                        dtl = "0" + dialogTreeLevel.ToString();
+                        if (dialogTreeLevel >= 10) dtl = dialogTreeLevel.ToString();
+
+                        stId = "RT" + (idTopic - 1) + "d" + (idDialog - 1) + dtid + dtl;
+
+                        sw.WriteLine("# " + stId + "; " + triplets[2] + "; "+triplets[0]+";");
+
+                        //change for the id
+                        triplets[2] = stId;
+
+                        dialogTreeId++;
+                        dialogTreeLevel++;
+
+                        //save the historic
+                        sw2.WriteLine(triplets[0]+";"+triplets[1]+";"+triplets[2]);
+
+                        //reset the triplets, keeping the last
+                        string keep = triplets[2];
+                        triplets.Clear();
+                        triplets.Add(keep);
+                    }
+                }
+            } while (line != null);
+        }
+        readingLTM.Close();
+
+        sw.WriteLine("]");
+
+        sw.Close();
+        sw2.Close();
+    }
 }
