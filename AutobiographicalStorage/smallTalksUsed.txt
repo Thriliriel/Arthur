@@ -1,6 +1,0 @@
-food-restaurant-FODrt0101
-food-restaurant-FODrt0202
-food-restaurant-FODrt0403
-food-favorite_food-FODff0101
-food-favorite_food-FODff0202
-leisure-leisure_activity-LEIla0101

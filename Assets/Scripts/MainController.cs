@@ -602,6 +602,12 @@ public class MainController : MonoBehaviour
                         }
                     }
 
+                    //if we identified it as being a question and it is inside a smalltalk, we break
+                    if (isQuestion && currentTopic.IsDialoging())
+                    {
+                        currentTopic.CloseDialog();
+                    }
+
                     if (!isGettingInformation && isKnowingNewPeople)
                     {
                         SaveNewPerson(tokens);

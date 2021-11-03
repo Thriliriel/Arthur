@@ -112,3 +112,57 @@
 <b>Knob</b>: how old are you?
 <b>Bella</b>: 2 years old. Here it is!
 
+10/28/2021 8:50:22 AM
+<b>Bella</b>: Greetings Knob!
+<b>Knob</b>: how old are you?
+<b>Bella</b>: 2 years old. Here it is!
+
+11/3/2021 2:10:14 PM
+<b>Bella</b>: Hello stranger! May i know your name?
+<b></b>: Knob
+<b>Bella</b>: Thanks! Anything else you would like to talk about?
+
+11/3/2021 2:12:20 PM
+<b>Bella</b>: Greetings Knob!
+<b>Bella</b>: Hey, do you like music?
+<b>Knob</b>: yes i do
+<b>Bella</b>: Nice, what is your favorite band?
+<b>Knob</b>: what do you do for living?
+<b>Bella</b>: Oh, i like Sonata Arctica! Say it, did you already listened their song, "white pearl, black oceans"?
+
+11/3/2021 2:21:19 PM
+<b>Bella</b>: Greetings Knob!
+<b>Bella</b>: Tell me something, are you a dog or a cat person?
+<b>Knob</b>: i like cats
+<b>Bella</b>: I agree with you, they are both so cute, right?
+<b>Knob</b>: what are you talking about?
+<b>Bella</b>: Do you like food?
+<b>Knob</b>: i love food
+<b>Bella</b>: I love pizza, do you?
+<b>Knob</b>: how old are you?
+<b>Bella</b>: Do you like going on restaurants?
+
+11/3/2021 2:22:46 PM
+<b>Bella</b>: Hello stranger! May i know your name?
+
+11/3/2021 2:23:05 PM
+<b>Bella</b>: Hello stranger! May i know your name?
+
+11/3/2021 2:23:20 PM
+<b>Bella</b>: Hello stranger! May i know your name?
+
+11/3/2021 2:24:36 PM
+<b>Bella</b>: Hello stranger! May i know your name?
+<b></b>: Knob
+<b>Bella</b>: Thanks! Anything else you would like to talk about?
+<b>Bella</b>: Do you like food?
+<b>Knob</b>: i love food
+<b>Bella</b>: I love pizza, do you?
+<b>Knob</b>: how old are you?
+<b>Bella</b>: 2 years old. Here it is!
+<b>Bella</b>: Do you like going on restaurants?
+<b>Knob</b>: i do
+<b>Bella</b>: I love eating outside! Say, do you prefer a pub or a pizzaria?
+<b>Knob</b>: do you work?
+<b>Bella</b>: I have no job
+
