@@ -1,168 +1,62 @@
-10/11/2021 3:00:01 PM
-
-10/11/2021 3:02:14 PM
+11/6/2021 2:09:10 PM
 <b>Bella</b>: Hello stranger! May i know your name?
-<b></b>: my name is Knob
-<b>Bella</b>: How old are you?
-<b>Knob</b>: 32
-<b>Bella</b>: Do you study?
-<b>Knob</b>: no
-<b>Bella</b>: Do you work?
-<b>Knob</b>: no
-<b>Bella</b>: Do you have children?
-<b>Knob</b>: no
-<b>Bella</b>: Thanks! Anything else you would like to talk about?
-<b>Knob</b>: how old are you?
-<b>Bella</b>: 2 years old. Here it is!
-<b>Knob</b>: seems like it is going to rain
-<b>Bella</b>: Interesting comparison.
-<b>Knob</b>: bye
-<b>Bella</b>: Looking forward to our next time together, Destinee Right. I was enjoying our conversation very much.
 
-10/13/2021 7:51:57 AM
-<b>Bella</b>: Greetings Knob!
-<b>Knob</b>: do you know me?
-<b>Bella</b>: Yeah, we met at 2021-10-11. Here it is!
-<b>Knob</b>: who are you?
-<b>Bella</b>: 2 years old. Here it is!
-<b>Knob</b>: what is your name?
-<b>Bella</b>: My name is Bella
-<b>Knob</b>: do you study?
-<b>Bella</b>: I am not studying
+11/6/2021 2:09:31 PM
+<b>Bella</b>: Hello stranger! May i know your name?
 
-10/13/2021 8:30:41 AM
-
-10/13/2021 8:47:59 AM
-<b>Bella</b>: Greetings Knob!
-<b>Knob</b>: do you know me?
-<b>Bella</b>: Yeah, we met at 2021-10-11. Here it is!
-<b>Knob</b>: do you study?
-<b>Bella</b>: I am not studying
-<b>Knob</b>: how are you today?
-<b>Bella</b>: 2 years old. Here it is!
-<b>Bella</b>: Do you like going on restaurants?
-<b>Knob</b>: yes
-<b>Bella</b>: I love eating outside! Say, do you prefer a pub or a pizzaria?
-<b>Knob</b>: i prefer a pizzaria
-<b>Bella</b>: I love going on a pizzaria as well!
-<b>Knob</b>: awesome
-<b>Knob</b>: how are you feeling today?
-<b>Bella</b>: 2 years old. Here it is!
-<b>Bella</b>: Do you like food?
-<b>Knob</b>: i am very sad today
-<b>Bella</b>: I love pizza, do you?
-
-10/15/2021 2:02:13 PM
-<b>Bella</b>: Greetings Knob!
-<b>Knob</b>: how old are you?
-<b>Bella</b>: 2 years old. Here it is!
-
-10/15/2021 2:04:48 PM
-<b>Bella</b>: Greetings Knob!
-
-10/15/2021 2:10:02 PM
-<b>Bella</b>: Greetings Knob!
-<b>Knob</b>: how old are you?
-<b>Bella</b>: 2 years old. Here it is!
-
-10/15/2021 2:10:41 PM
-<b>Bella</b>: Greetings Knob!
-<b>Knob</b>: how old are you?
-<b>Bella</b>: 2 years old. Here it is!
-
-10/15/2021 2:11:27 PM
-<b>Bella</b>: Greetings Knob!
-<b>Knob</b>: how old are you?
-<b>Bella</b>: 2 years old. Here it is!
-
-10/15/2021 2:15:15 PM
-<b>Bella</b>: Greetings Knob!
-<b>Knob</b>: how old are you?
-<b>Bella</b>: 2 years old. Here it is!
-
-10/15/2021 2:15:57 PM
-<b>Bella</b>: Greetings Knob!
-<b>Knob</b>: how old are you?
-<b>Bella</b>: 2 years old. Here it is!
-
-10/15/2021 2:23:11 PM
-<b>Bella</b>: Greetings Knob!
-<b>Knob</b>: how old are you?
-<b>Bella</b>: 2 years old. Here it is!
-<b>Bella</b>: Let me ask you, what do you do for fun?
-
-10/15/2021 2:24:44 PM
-<b>Bella</b>: Greetings Knob!
-
-10/15/2021 2:28:08 PM
-<b>Bella</b>: Greetings Knob!
-
-10/15/2021 2:29:02 PM
-<b>Bella</b>: Greetings Knob!
-
-10/15/2021 2:30:17 PM
-<b>Bella</b>: Greetings Knob!
-<b>Knob</b>: how old are you?
-<b>Bella</b>: 2 years old. Here it is!
-<b>Knob</b>: how old are you?
-<b>Bella</b>: 2 years old. Here it is!
-
-10/15/2021 2:30:58 PM
-<b>Bella</b>: Greetings Knob!
-<b>Knob</b>: how old are you?
-<b>Bella</b>: 2 years old. Here it is!
-
-10/28/2021 8:50:22 AM
-<b>Bella</b>: Greetings Knob!
-<b>Knob</b>: how old are you?
-<b>Bella</b>: 2 years old. Here it is!
-
-11/3/2021 2:10:14 PM
+11/6/2021 2:10:33 PM
 <b>Bella</b>: Hello stranger! May i know your name?
 <b></b>: Knob
 <b>Bella</b>: Thanks! Anything else you would like to talk about?
+<b>Knob</b>: how are you feeling?
 
-11/3/2021 2:12:20 PM
+11/6/2021 2:12:46 PM
 <b>Bella</b>: Greetings Knob!
-<b>Bella</b>: Hey, do you like music?
-<b>Knob</b>: yes i do
-<b>Bella</b>: Nice, what is your favorite band?
-<b>Knob</b>: what do you do for living?
-<b>Bella</b>: Oh, i like Sonata Arctica! Say it, did you already listened their song, "white pearl, black oceans"?
+<b>Knob</b>: how are you feeling?
 
-11/3/2021 2:21:19 PM
-<b>Bella</b>: Greetings Knob!
-<b>Bella</b>: Tell me something, are you a dog or a cat person?
-<b>Knob</b>: i like cats
-<b>Bella</b>: I agree with you, they are both so cute, right?
-<b>Knob</b>: what are you talking about?
-<b>Bella</b>: Do you like food?
-<b>Knob</b>: i love food
-<b>Bella</b>: I love pizza, do you?
-<b>Knob</b>: how old are you?
-<b>Bella</b>: Do you like going on restaurants?
-
-11/3/2021 2:22:46 PM
-<b>Bella</b>: Hello stranger! May i know your name?
-
-11/3/2021 2:23:05 PM
-<b>Bella</b>: Hello stranger! May i know your name?
-
-11/3/2021 2:23:20 PM
-<b>Bella</b>: Hello stranger! May i know your name?
-
-11/3/2021 2:24:36 PM
+11/6/2021 2:15:56 PM
 <b>Bella</b>: Hello stranger! May i know your name?
 <b></b>: Knob
 <b>Bella</b>: Thanks! Anything else you would like to talk about?
-<b>Bella</b>: Do you like food?
-<b>Knob</b>: i love food
-<b>Bella</b>: I love pizza, do you?
-<b>Knob</b>: how old are you?
-<b>Bella</b>: 2 years old. Here it is!
-<b>Bella</b>: Do you like going on restaurants?
-<b>Knob</b>: i do
-<b>Bella</b>: I love eating outside! Say, do you prefer a pub or a pizzaria?
-<b>Knob</b>: do you work?
-<b>Bella</b>: I have no job
+<b>Knob</b>: how are you feeling?
+
+11/6/2021 2:19:25 PM
+<b>Bella</b>: Hello stranger! May i know your name?
+<b></b>: Knob
+<b>Bella</b>: Thanks! Anything else you would like to talk about?
+<b>Knob</b>: how are you feeling?
+
+11/6/2021 2:21:52 PM
+<b>Bella</b>: Hello stranger! May i know your name?
+<b></b>: Knob
+<b>Bella</b>: Thanks! Anything else you would like to talk about?
+<b>Knob</b>: how are you feeling?
+
+11/6/2021 2:24:53 PM
+<b>Bella</b>: Greetings Knob!
+<b>Knob</b>: how are you feeling?
+
+11/6/2021 2:26:48 PM
+<b>Bella</b>: Hello stranger! May i know your name?
+<b></b>: Knob
+<b>Bella</b>: Thanks! Anything else you would like to talk about?
+<b>Knob</b>: how are you feeling?
+
+11/6/2021 2:28:50 PM
+<b>Bella</b>: Hello stranger! May i know your name?
+<b></b>: Knob
+<b>Bella</b>: Thanks! Anything else you would like to talk about?
+<b>Knob</b>: how are you feeling?
+<b>Bella</b>: Me? i am not feeling so good today...
+<b>Knob</b>: i am sorry to hear that
+<b>Bella</b>: Thanks. Anyway, how are you doing?
+<b>Knob</b>: i am fine
+<b>Bella</b>: Glad to know you are fine
+<b>Knob</b>: thanks
+
+11/6/2021 2:29:06 PM
+<b>Bella</b>: Hello stranger! May i know your name?
+
+11/6/2021 2:29:49 PM
+<b>Bella</b>: Hello stranger! May i know your name?
 

@@ -298,3 +298,14 @@ EXTex0403 no 1.000 1
 EXTex0503 always 0.750 1
 EXTex0503 positive 0.750 1
 FODff0101 awesome 1.000 1
+EMOhe0202 fine 1.000 1
+EMOhe0302 feeling 0.750 1
+EMOhe0302 awful 0.750 1
+EMOhe0403 fine 1.000 1
+EMOhe0503 feeling 0.750 1
+EMOhe0503 awful 0.750 1
+EMOse0202 help 1.000 1
+EMOse0302 sure 0.625 1
+EMOse0302 get 0.625 1
+EMOse0302 better 0.625 1
+EMOse0302 soon 0.625 1

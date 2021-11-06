@@ -543,6 +543,8 @@ public class MainController : MonoBehaviour
 
             string lastPols = CheckPolarities();
 
+            bool emoTalk = false;
+
             //if save new memory node, save it
             if (saveNewMemoryNode)
             {
@@ -608,7 +610,13 @@ public class MainController : MonoBehaviour
                         currentTopic.CloseDialog();
                     }
 
-                    if (!isGettingInformation && isKnowingNewPeople)
+                    //if the person is asking about the feelings of the agent, we start the related emotional smalltalk
+                    if(isQuestion && tokens.ContainsKey(agentName) && (tokens.ContainsKey("feel") || tokens.ContainsKey("feels")))
+                    {
+                        PickTopic("emotions");
+                        emoTalk = true;
+                    }
+                    else if (!isGettingInformation && isKnowingNewPeople)
                     {
                         SaveNewPerson(tokens);
                         isUsingMemory = false;
@@ -740,11 +748,11 @@ public class MainController : MonoBehaviour
 
             //if it is not breaking ice or already small talking, check the idle timer for a small talk
             if(!isBreakingIce && !currentTopic.IsDialoging() && !isBreakingIce && !isKnowingNewPeople)
-            if(Time.time - idleTimer > waitForSeconds)
-            {
-                List<string> asToki = new List<string>();
-                SmallTalking(asToki);
-            }
+                if(Time.time - idleTimer > waitForSeconds || emoTalk)
+                {
+                    List<string> asToki = new List<string>();
+                    SmallTalking(asToki);
+                }
 
             //if too much time idle, boring...
             if (Time.time - idleTimer > gettingBoredAfter)
@@ -3247,13 +3255,39 @@ public class MainController : MonoBehaviour
     }
 
     //new small talking
-    private void PickTopic()
+    private void PickTopic(string whichTopic = "")
     {
-        if (topics.Count == 0) return;
-        var rnd = new System.Random(DateTime.Now.Millisecond);
-        int index = rnd.Next(0, topics.Count);
-        currentTopic = topics[index];
-        topics.Remove(currentTopic);
+        //equal 1, because the emotion topic is not pickable
+        if (topics.Count == 1) return;
+
+        //if it is random topic
+        if (whichTopic == "")
+        {
+            var rnd = new System.Random(DateTime.Now.Millisecond);
+
+            int index = rnd.Next(0, topics.Count);
+            currentTopic = topics[index];
+
+            //emotions is not pickable
+            while (currentTopic.GetId().Contains("emotions"))
+            {
+                index = rnd.Next(0, topics.Count);
+                currentTopic = topics[index];
+            }
+
+            topics.Remove(currentTopic);
+        }//else, it is a chosen topic
+        else
+        {
+            int ind = 0;
+            currentTopic = topics[ind];
+            while(currentTopic.GetId() != whichTopic)
+            {
+                ind++;
+                if (ind >= topics.Count) break;
+                currentTopic = topics[ind];
+            }
+        }
     }
 
     private void SmallTalking(List<string> tokenizeSentence, string beforeText = "")
@@ -3308,13 +3342,17 @@ public class MainController : MonoBehaviour
         {
             string digmem = currentTopic.GetId() + "-" + currentTopic.GetCurrentDialog().GetDescription() + "-" + currentTopic.GetCurrentDialog().GetId().ToString();
         
-            if (!dialogsUsed.Contains(digmem))
+            if (!dialogsUsed.Contains(digmem) && currentTopic.GetId() != "emotions")
             {
                 dialogsUsed.Add(digmem);
             }
-            if (!dialogsInMemory.Contains(digmem))
+            if (!dialogsInMemory.Contains(digmem) && currentTopic.GetId() != "emotions")
             {
                 dialogsInMemory.Add(digmem);
+                SpeakYouFool(ct);
+            }
+            if(currentTopic.GetId() == "emotions")
+            {
                 SpeakYouFool(ct);
             }
         }

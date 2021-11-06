@@ -1,3 +1,19 @@
+$ emotions
+[ happy_emotion
+# EMOhe0101; Oh, i am feeling good, what about you?; -1;
+# EMOhe0202; I am glad to know! It is always so fun to talk with you!; EMOhe0101;
+# EMOhe0302; I am sorry to hear that. Did something happen?; EMOhe0101;
+# EMOhe0403; Oh no, that is awful...Hope you can recover soon, i am here for you if you need me.; EMOhe0302;
+# EMOhe0503; Anyway, i hope you can recover soon.; EMOhe0302;
+]
+[ sad_emotion
+# EMOse0101; Me? i am not feeling so good today...; -1;
+# EMOse0202; Oh, nothing special, just not in a good mood today.; EMOse0101;
+# EMOse0302; Thanks. Anyway, how are you doing?; EMOse0101;
+# EMOse0403; Glad to know you are fine; EMOse0302;
+# EMOse0503; Oh, so you are not fine too? But i am sure we will both get better soon enough.; EMOse0302;
+]
+
 $ food
 [ favorite_food
 # FODff0101; Do you like food?; -1;

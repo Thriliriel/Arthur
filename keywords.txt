@@ -4,7 +4,7 @@ FODff0202 love 0.149 6
 FODff0202 yes 0.235 13
 FODff0202 food 0.236 5
 FODff0202 knob 0.514 1
-FODff0202 feeling 0.264 1
+FODff0202 feeling 0.114 1
 FODff0202 great 0.514 1
 FODff0202 sad 0.514 1
 FODff0202 today 0.264 1
@@ -35,7 +35,7 @@ FODff0603 actually 0.333 5
 FODff0603 im 0.333 5
 FODff0603 big 0.333 5
 FODff0603 fan 0.333 5
-FODff0603 feeling 0.333 1
+FODff0603 feeling 0.119 1
 FODff0603 good 0.101 1
 FODff0603 love 0.035 1
 FODff0704 not 0.143 1
@@ -63,7 +63,7 @@ FODff0904 love 0.053 1
 FODff0904 calabresa 0.643 6
 FODff0904 favorite 0.212 4
 FODff0904 mine 0.136 1
-FODrt0202 sure 0.144 2
+FODrt0202 sure 0.130 2
 FODrt0202 yes 0.061 2
 FODrt0202 yeah 0.173 5
 FODrt0202 like 0.181 5
@@ -85,7 +85,7 @@ FODrt0603 none 0.750 10
 FODrt0603 them 0.750 10
 FODrt0603 neither 0.750 10
 FODrt0603 two 0.750 2
-FODrt0703 sure 0.577 2
+FODrt0703 sure 0.101 2
 FODrt0703 yes 0.161 10
 FODrt0703 yeah 0.577 10
 FODrt0703 like 0.577 10
@@ -200,7 +200,7 @@ PETdc0402 neither 0.633 10
 PETdc0402 none 0.633 10
 PETdc0402 them 0.589 5
 PETdc0402 person 0.089 1
-PETdc0503 sure 0.282 3
+PETdc0503 sure 0.167 3
 PETdc0503 yes 0.214 10
 PETdc0503 yeah 0.282 10
 PETdc0503 one 0.260 3
@@ -210,7 +210,7 @@ PETdc0603 no 0.500 10
 PETdc0603 not 0.500 10
 PETdc0603 dont 0.500 10
 PETdc0603 dog 0.357 3
-PETdc0703 sure 0.282 3
+PETdc0703 sure 0.167 3
 PETdc0703 one 0.260 3
 PETdc0703 cat 0.260 3
 PETdc0703 yes 0.214 10
@@ -246,7 +246,7 @@ EXTen0302 yes 0.171 1
 EXTen0403 not 0.750 1
 EXTen0403 like 0.750 1
 EXTen0503 yes 0.258 2
-EXTen0503 get 0.625 1
+EXTen0503 get 0.292 1
 EXTen0503 embarrassed 0.625 1
 EXTen0604 never 0.750 1
 EXTen0604 trained 0.750 1
@@ -298,3 +298,17 @@ EXTex0403 no 1.000 1
 EXTex0503 always 0.750 1
 EXTex0503 positive 0.750 1
 FODff0101 awesome 1.000 1
+EMOhe0202 fine 1.333 2
+EMOhe0302 feeling 0.700 2
+EMOhe0302 awful 0.833 2
+EMOhe0403 fine 0.833 2
+EMOhe0503 feeling 0.450 2
+EMOhe0503 awful 0.583 2
+EMOse0202 help 1.000 2
+EMOse0302 sure 0.202 2
+EMOse0302 get 0.458 2
+EMOse0302 better 0.625 2
+EMOse0302 soon 0.625 2
+EMOse0403 fine 1.333 2
+EMOse0403 great 1.333 2
+EMOse0503 awful 0.583 2
