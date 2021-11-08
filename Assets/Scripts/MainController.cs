@@ -217,6 +217,10 @@ public class MainController : MonoBehaviour
     //chat log
     private string chatLog;
 
+    //background
+    public GameObject backGround;
+    public string chosenBackground;
+
     private void Awake()
     {
         usingEmpathy = true;
@@ -234,6 +238,7 @@ public class MainController : MonoBehaviour
         if (textFile == "0") chatMode = false;
         else if (textFile == "1") chatMode = true;
         agentName = sr.ReadLine();
+        chosenBackground = sr.ReadLine();
         personName = sr.ReadLine();
         sr.Close();
 
@@ -428,6 +433,10 @@ public class MainController : MonoBehaviour
             w2v.Start();
             //w2v.MostSimilar("boy");
         }*/
+
+        //background
+        Sprite sp = Resources.Load<Sprite>(chosenBackground);
+        backGround.GetComponent<SpriteRenderer>().sprite = sp;
     }
 
     // Start is called before the first frame update
@@ -640,10 +649,11 @@ public class MainController : MonoBehaviour
                         isUsingMemory = false;
                     }
                     //if there are too many happy, sad or whatever things, get the sentiment sentence.
-                    else if(lastPols != "nope" && !isBreakingIce && !currentTopic.IsDialoging())
+                    //deactivated for now
+                    /*else if(lastPols != "nope" && !isBreakingIce && !currentTopic.IsDialoging())
                     {
                         SpeakYouFool(ChooseSenSen(lastPols));
-                    }
+                    }*/
                     //if not using memory or it is not a question, just send it to the chatbot and whatever...
                     else if (!isUsingMemory || (isUsingMemory && !isBreakingIce && !currentTopic.IsDialoging() && !isQuestion))
                     {
@@ -3310,7 +3320,15 @@ public class MainController : MonoBehaviour
         {
             if (!currentTopic.IsDialogsAvailable()) PickTopic(); //there isnt available dialogs in current topic
 
-            currentTopic.StartNewDialog();
+            //if the topic is emotions, we pass the marioEmotion together to select the appropiate dialog
+            if (currentTopic.GetId() == "emotions")
+            {
+                currentTopic.StartNewDialog(marioEmotion);
+            }
+            else
+            {
+                currentTopic.StartNewDialog();
+            }
             first = true;
         }
 

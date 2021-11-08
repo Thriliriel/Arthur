@@ -13,6 +13,7 @@ public class WhichArthur: MonoBehaviour
     public GameObject globalPath;
     //public GameObject useW2V;
     public GameObject togEmpathy;
+    public GameObject scenario;
 
     private void Awake()
     {
@@ -44,6 +45,7 @@ public class WhichArthur: MonoBehaviour
     {
         string nominho = "";
         string whichAgent = "";
+        string whichScenario = "";
         bool usingW2v = false;
         bool usingEmpathy = true;
         string absPath = globalPath.GetComponent<Text>().text;
@@ -71,6 +73,9 @@ public class WhichArthur: MonoBehaviour
         //using empathy
         if (!togEmpathy.GetComponent<Toggle>().isOn) usingEmpathy = false;
 
+        //get chosen scenario
+        whichScenario = scenario.GetComponent<Dropdown>().options[scenario.GetComponent<Dropdown>().value].text;
+
         StreamWriter sr = File.CreateText("whichArthur.txt");
         //absolute path, chat mode ON/OFF, Arthur or Bella, person name (just set if chat mode is active)
         sr.WriteLine(absPath);
@@ -79,6 +84,7 @@ public class WhichArthur: MonoBehaviour
         //C:/Users/55549/Desktop/ArBeBuild
         sr.WriteLine(which);
         sr.WriteLine(whichAgent);
+        sr.WriteLine(whichScenario);
         sr.WriteLine(nominho);
         sr.Close();
         SceneManager.LoadScene(1);

@@ -6826,7 +6826,7 @@ GameObject:
   - component: {fileID: 959598510}
   - component: {fileID: 959598511}
   m_Layer: 0
-  m_Name: beach
+  m_Name: back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6886,7 +6886,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: cf2c099530f8fdf4e87f7a8893345e54, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2cc3511c616a906459b4f5a2b78d5af6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -9779,6 +9779,8 @@ MonoBehaviour:
   isBored: 0
   pythonCalls: {fileID: 605639625}
   usingEmpathy: 0
+  backGround: {fileID: 959598509}
+  chosenBackground: beach
 --- !u!4 &1328823187
 Transform:
   m_ObjectHideFlags: 0

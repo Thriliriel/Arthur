@@ -87,9 +87,9 @@ namespace TopicCS
         }
 
         //search for other dialog routine
-        public void StartNewDialog()
+        public void StartNewDialog(string emotion = "")
         {
-            currentDialog = GetDialog();
+            currentDialog = GetDialog(emotion);
             if (currentDialog != null)
             {
                 ChangeState();
@@ -107,13 +107,37 @@ namespace TopicCS
 
         // choose new dialog
         // obs: next version it woundn´t be random dialog
-        private Dialog GetDialog()
+        private Dialog GetDialog(string emotion = "")
         {
             if (dialogs.Count == 0)
                 return null;
 
-            var rnd = new System.Random(DateTime.Now.Millisecond);
-            int index = rnd.Next(0, dialogs.Count);
+            //if we have emotion, we need to find the correct dialog. Otherwise, it can be random.
+            int index = -1;
+            if (emotion == "")
+            {
+                var rnd = new System.Random(DateTime.Now.Millisecond);
+                index = rnd.Next(0, dialogs.Count);
+            }
+            else
+            {
+                //happiness, sadness
+                for(int i = 0; i < dialogs.Count; i++)
+                {
+                    if (dialogs[i].GetDescription().Contains(emotion))
+                    {
+                        index = i;
+                        break;
+                    }
+                }
+
+                //if did not find, get random, whatever!
+                if(index == -1)
+                {
+                    var rnd = new System.Random(DateTime.Now.Millisecond);
+                    index = rnd.Next(0, dialogs.Count);
+                }
+            }
 
             Dialog d = dialogs[index];
             dialogs.Remove(d);

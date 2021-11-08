@@ -1,4 +1,4 @@
-1;11/6/2021 2:28:17 PM;Bella;Person;1;1
+1;11/8/2021 2:49:08 PM;Bella;Person;1;1
 2;7/10/2019 10:00:00 AM;AutobiographicalStorage/Images/Bella.png;Imagery;1;1
 3;7/10/2019 10:00:00 AM;Brazil;Location;1;1
 4;7/10/2019 10:00:00 AM;2019;Time;1;1
@@ -10026,16 +10026,18 @@
 10026;7/23/2021 1:20:41 PM;dermochelys;Object;1;1
 10027;7/23/2021 1:20:41 PM;genus dermochelys;Object;1;1
 10028;7/23/2021 1:20:41 PM;leatherback turtle;Object;1;1
-10029;11/6/2021 2:28:28 PM;Knob;Person;1;1
-10030;11/6/2021 2:28:08 PM;AutobiographicalStorage/Images/Knob.png;Imagery;1;1
+10029;11/8/2021 2:48:24 PM;Knob;Person;1;1
+10030;11/8/2021 2:48:06 PM;AutobiographicalStorage/Images/Knob.png;Imagery;1;1
 10031;11/6/2021 2:28:08 PM;2021-11-06;Time;1;1
 10032;11/6/2021 2:01:27 PM;1988;Time;1;0.2557754
-10033;11/6/2021 2:28:17 PM;be;Activity;1;1
-10034;11/6/2021 2:28:17 PM;feel;Activity;1;1
+10033;11/8/2021 2:49:08 PM;be;Activity;1;1
+10034;11/8/2021 2:49:08 PM;feel;Activity;1;1
 10036;11/6/2021 2:28:28 PM;hear;Activity;1;0.2462584
 10035;11/6/2021 2:28:28 PM;sorry;Object;1;0.2462584
-10038;11/6/2021 2:28:42 PM;thank;Object;1;0.8
+10038;11/8/2021 2:48:34 PM;thank;Object;1;1
 10037;11/6/2021 2:28:36 PM;fine;Object;1;0.3221115
+10039;11/8/2021 2:48:06 PM;2021-11-08;Time;1;1
+10040;11/8/2021 2:48:24 PM;great;Object;1;0.2462584
 %%%
 1;7/10/2019 10:00:00 AM;agent;I was born at Brazil in 2019-08-10;1;1_2_3_4_5
 2;7/10/2019 10:00:00 AM;agent;I have no job;-1;1_6_10
@@ -20052,13 +20054,15 @@
 10013;7/23/2021 1:20:41 PM;belief;type genus of the Dermochelyidae: leatherback turtles;0;1_10026
 10014;7/23/2021 1:20:41 PM;belief;type genus of the Dermochelyidae: leatherback turtles;0;1_10027
 10015;7/23/2021 1:20:41 PM;belief;wide-ranging marine turtle with flexible leathery carapace, largest living turtle;0;1_10028
-10016;11/6/2021 2:01:20 PM;person;I met Knob today;0;10029_10030_10031
+10016;11/6/2021 2:01:20 PM;person;I met Knob today;0;10029_10030_10039
 10017;11/6/2021 2:01:27 PM;person;Knob was born in 1988-01-01;0;10029_10032_5
 10018;11/6/2021 2:01:36 PM;person;Knob is not studying;-0.296;7_10029
 10019;11/6/2021 2:01:43 PM;person;Knob is not working;-0.296;6_10029
 10020;11/6/2021 2:01:50 PM;person;Knob has no children;-0.296;8_10029
-10021;11/6/2021 2:10:19 PM;belief;be Bella feel;0.128;10033_1_10034
+10021;11/6/2021 2:10:19 PM;belief;be Bella feel;0.128;1_10033_10034
 10022;11/6/2021 2:12:31 PM;person;Knob Bella feel;0.128;10029_1_10034
 10023;11/6/2021 2:28:28 PM;person;Knob sorry hear;-0.0772;10036_10035_10029
 10024;11/6/2021 2:28:36 PM;person;Knob fine;0.2023;10029_10037
 10025;11/6/2021 2:28:42 PM;person;Knob thank;0.4404;10029_10038
+10026;11/8/2021 2:48:24 PM;person;Knob great;0.6249;10040_10029
+10027;11/8/2021 2:48:52 PM;belief;be;0;10033
