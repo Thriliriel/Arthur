@@ -54,6 +54,8 @@ public class MainController : MonoBehaviour
     public bool isSleeping;
     //zzz text
     public GameObject zzz;
+    //thinking balloon
+    public GameObject thinkingBalloon;
     //sleep button
     public GameObject sleepButton;
     //voice button
@@ -160,6 +162,8 @@ public class MainController : MonoBehaviour
     public float idleTimer;
     //how much time should Arthur wait?
     public float waitForSeconds;
+    //how much time to random thoughts?
+    public float waitForThoughts;
 
     public string lastInteraction;
 
@@ -221,6 +225,10 @@ public class MainController : MonoBehaviour
     public GameObject backGround;
     public string chosenBackground;
 
+    //list of thoughts
+    private List<string> randomThoughts;
+    private int thoughtsUsed = 0;
+
     private void Awake()
     {
         usingEmpathy = true;
@@ -242,8 +250,12 @@ public class MainController : MonoBehaviour
         personName = sr.ReadLine();
         sr.Close();
 
+        //get the random thougths
+        randomThoughts = new List<string>();
+        LoadRandomThoughts();
+
         //if it is random, we sort out
-        if(agentName == "Random")
+        if (agentName == "Random")
         {
             int rnd = UnityEngine.Random.Range(0, 2);
             if (rnd == 0) agentName = "Arthur";
@@ -342,8 +354,9 @@ public class MainController : MonoBehaviour
 
         PickTopic();
 
-        //hide zzz
+        //hide zzz and stuff
         zzz.SetActive(false);
+        thinkingBalloon.SetActive(false);
         timerObject.SetActive(false);
         randomImage.SetActive(false);
         riTarget.SetActive(false);
@@ -563,6 +576,8 @@ public class MainController : MonoBehaviour
                 //if it has tokens, we try to make a generative retrieval
                 if (tokens != null)
                 {
+                    thinkingBalloon.SetActive(false);
+
                     //change some tokens, if exists
                     if (tokens.ContainsKey("you") && !tokens.ContainsKey(agentName))
                     {
@@ -756,12 +771,17 @@ public class MainController : MonoBehaviour
                 }
             }
 
-            //if it is not breaking ice or already small talking, check the idle timer for a small talk
+            //if it is not breaking ice or already small talking, check the idle timer for a small talk. Also, check for thoughts
             if(!isBreakingIce && !currentTopic.IsDialoging() && !isBreakingIce && !isKnowingNewPeople)
                 if(Time.time - idleTimer > waitForSeconds || emoTalk)
                 {
+                    thinkingBalloon.SetActive(false);
                     List<string> asToki = new List<string>();
                     SmallTalking(asToki);
+                }else if (Time.time - idleTimer > waitForThoughts * (1 + thoughtsUsed))
+                {
+                    thoughtsUsed++;
+                    NextThought();
                 }
 
             //if too much time idle, boring...
@@ -4693,5 +4713,32 @@ public class MainController : MonoBehaviour
 
         sw.Close();
         sw2.Close();
+    }
+
+    //Load random thoughts
+    private void LoadRandomThoughts()
+    {
+        StreamReader readingLTM = new StreamReader("randomThoughts.txt", System.Text.Encoding.Default);
+        using (readingLTM)
+        {
+            string line;
+            do
+            {
+                line = readingLTM.ReadLine();
+
+                if (line != "" && line != null)
+                {
+                    randomThoughts.Add(line.Trim());
+                }
+            } while (line != null);
+        }
+        readingLTM.Close();
+    }
+
+    //wondering...
+    private void NextThought()
+    {
+        thinkingBalloon.GetComponentInChildren<Text>().text = randomThoughts[UnityEngine.Random.Range(0, randomThoughts.Count)];
+        thinkingBalloon.SetActive(true);
     }
 }
