@@ -9848,7 +9848,7 @@ MonoBehaviour:
   absPath: 
   idleTimer: 0
   waitForSeconds: 30
-  waitForThoughts: 5
+  waitForThoughts: 60
   lastInteraction: 
   chatMode: 0
   emotionText: {fileID: 615780898}

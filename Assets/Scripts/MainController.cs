@@ -773,16 +773,17 @@ public class MainController : MonoBehaviour
 
             //if it is not breaking ice or already small talking, check the idle timer for a small talk. Also, check for thoughts
             if(!isBreakingIce && !currentTopic.IsDialoging() && !isBreakingIce && !isKnowingNewPeople)
-                if(Time.time - idleTimer > waitForSeconds || emoTalk)
-                {
-                    thinkingBalloon.SetActive(false);
-                    List<string> asToki = new List<string>();
-                    SmallTalking(asToki);
-                }else if (Time.time - idleTimer > waitForThoughts * (1 + thoughtsUsed))
+                if (Time.time - idleTimer > waitForThoughts * (1 + thoughtsUsed))
                 {
                     thoughtsUsed++;
                     NextThought();
                 }
+                else if (Time.time - idleTimer > waitForSeconds || emoTalk)
+                {
+                    thinkingBalloon.SetActive(false);
+                    List<string> asToki = new List<string>();
+                    SmallTalking(asToki);
+                }            
 
             //if too much time idle, boring...
             if (Time.time - idleTimer > gettingBoredAfter)
@@ -3343,6 +3344,7 @@ public class MainController : MonoBehaviour
             //if the topic is emotions, we pass the marioEmotion together to select the appropiate dialog
             if (currentTopic.GetId() == "emotions")
             {
+                Debug.Log(marioEmotion);
                 currentTopic.StartNewDialog(marioEmotion);
             }
             else

@@ -4,8 +4,8 @@ FODff0202 love 0.149 6
 FODff0202 yes 0.235 13
 FODff0202 food 0.236 5
 FODff0202 knob 0.514 1
-FODff0202 feeling 0.114 1
-FODff0202 great 0.514 1
+FODff0202 feeling 0.085 1
+FODff0202 great 0.139 1
 FODff0202 sad 0.514 1
 FODff0202 today 0.264 1
 FODff0302 i 1.000 1
@@ -35,8 +35,8 @@ FODff0603 actually 0.333 5
 FODff0603 im 0.333 5
 FODff0603 big 0.333 5
 FODff0603 fan 0.333 5
-FODff0603 feeling 0.119 1
-FODff0603 good 0.101 1
+FODff0603 feeling 0.090 1
+FODff0603 good 0.081 1
 FODff0603 love 0.035 1
 FODff0704 not 0.143 1
 FODff0704 yes 0.227 10
@@ -173,7 +173,7 @@ LEIla0703 favorite 0.042 1
 LEIla0703 one 0.056 1
 LEIla0804 yes 0.179 3
 LEIla0804 yeah 0.295 3
-LEIla0804 good 0.625 3
+LEIla0804 good 0.354 3
 LEIla0904 yet 0.550 3
 LEIla0904 could 0.550 3
 LEIla0904 no 0.550 3
@@ -181,7 +181,7 @@ LEIla0904 didnt 0.550 3
 LEIla0904 try 0.550 3
 LEIla1004 yes 0.198 4
 LEIla1004 yeah 0.346 4
-LEIla1004 good 0.429 3
+LEIla1004 good 0.324 3
 LEIla1104 yet 0.467 3
 LEIla1104 could 0.467 3
 LEIla1104 try 0.467 3
@@ -298,11 +298,14 @@ EXTex0403 no 1.000 1
 EXTex0503 always 0.750 1
 EXTex0503 positive 0.750 1
 FODff0101 awesome 1.000 1
-EMOhe0202 fine 1.333 2
-EMOhe0302 feeling 0.700 2
-EMOhe0302 awful 0.833 2
+EMOhe0202 fine 0.417 2
+EMOhe0202 feeling 0.196 1
+EMOhe0202 great 0.250 1
+EMOhe0302 feeling 0.464 3
+EMOhe0302 awful 0.333 2
+EMOhe0302 good 0.146 1
 EMOhe0403 fine 0.833 2
-EMOhe0503 feeling 0.450 2
+EMOhe0503 feeling 0.393 2
 EMOhe0503 awful 0.583 2
 EMOse0202 help 1.000 2
 EMOse0302 sure 0.202 2
@@ -310,5 +313,5 @@ EMOse0302 get 0.458 2
 EMOse0302 better 0.625 2
 EMOse0302 soon 0.625 2
 EMOse0403 fine 1.333 2
-EMOse0403 great 1.333 2
+EMOse0403 great 0.500 2
 EMOse0503 awful 0.583 2

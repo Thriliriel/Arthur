@@ -1,0 +1,2 @@
+python SmallTalkParser.py
+PAUSE

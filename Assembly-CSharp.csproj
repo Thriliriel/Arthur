@@ -144,6 +144,7 @@
      <None Include="Assets\Affdex\Plugins\x86\affdex-native.dll" />
      <None Include="Assets\StreamingAssets\affdex-data-3\haarcascade\haarcascade_frontalface_alt2.xml" />
      <None Include="Assets\Anima2D\Readme.txt" />
+     <None Include="Assets\Python\SmallTalkParser\stIds.txt" />
      <None Include="Assets\humelo\Lavstar\_Generic\3rdParty\JsonDotNet\Windows\Newtonsoft.Json.XML" />
      <None Include="Assets\Anima2D\Examples\Shaders\VertexLitOneDirectional.shader" />
      <None Include="Assets\humelo\Lavstar\_Generic\3rdParty\JsonDotNet\Standalone\Newtonsoft.Json.XML" />
