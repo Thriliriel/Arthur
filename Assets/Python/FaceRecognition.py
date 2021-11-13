@@ -38,43 +38,43 @@ class FaceRecognition:
 		#with open(arq1, 'wb') as f:
 		#	f.write(b64)
 
-		parser = argparse.ArgumentParser(description = 'Face Recognition 1:1 1:N')
-		parser.add_argument('-arq1', action = 'store', dest = 'arq1',
-			required = False,
-			help = 'Foto a ser comparada')
+		#parser = argparse.ArgumentParser(description = 'Face Recognition 1:1 1:N')
+		#parser.add_argument('-arq1', action = 'store', dest = 'arq1',
+		#	required = False,
+		#	help = 'Foto a ser comparada')
 
-		parser.add_argument('-modo', action = 'store', dest = 'modo',
-			required = True,
-			help = 'Escolha do modo. 1 para 1:1 e N para 1:N')
+		#parser.add_argument('-modo', action = 'store', dest = 'modo',
+		#	required = True,
+		#	help = 'Escolha do modo. 1 para 1:1 e N para 1:N')
 
-		parser.add_argument('-arq2', action = 'store', dest = 'arq2',
-			required = False,
-			help = 'Segunda foto na comparação 1:1')
+		#parser.add_argument('-arq2', action = 'store', dest = 'arq2',
+		#	required = False,
+		#	help = 'Segunda foto na comparação 1:1')
 
-		parser.add_argument('-th', action = 'store', dest = 'th',
-			required = False, default = 0.5, type = float,
-			help = 'Valor que a distancia dos rostos na comparação 1:1 precisa ser menor para retornar verdadeiro')
+		#parser.add_argument('-th', action = 'store', dest = 'th',
+		#	required = False, default = 0.5, type = float,
+		#	help = 'Valor que a distancia dos rostos na comparação 1:1 precisa ser menor para retornar verdadeiro')
 
-		parser.add_argument('-dir', action = 'store', dest = 'direc',
-			required = False, default = "Data",
-			help = 'Diretório das fotos a serem comparadas')
+		#parser.add_argument('-dir', action = 'store', dest = 'direc',
+		#	required = False, default = "Data",
+		#	help = 'Diretório das fotos a serem comparadas')
 
-		parser.add_argument('-n', action = 'store', dest = 'n',
-			required = False, default = 3, type = int,
-			help = 'Número de matches a serem retornados na 1:N')
+		#parser.add_argument('-n', action = 'store', dest = 'n',
+		#	required = False, default = 3, type = int,
+		#	help = 'Número de matches a serem retornados na 1:N')
 
-		parser.add_argument('-reload', action = 'store_true', required = False, dest = 'load',
-								help = 'Chama a função de load novamente para caso tenha acontecido alguma alteração no diretório de dados')
+		#parser.add_argument('-reload', action = 'store_true', required = False, dest = 'load',
+		#						help = 'Chama a função de load novamente para caso tenha acontecido alguma alteração no diretório de dados')
 
-		parser.add_argument('-save', action='store_true')	
-
+		#parser.add_argument('-save', action='store_true')	
 
 		#arguments = parser.parse_args()
 
 		start = time.time()
 
 		#if(arguments.load):
-			#load(arguments.direc)
+		#	load(arguments.direc)
+		load(direc)
 
 		if(modo.lower() == "n"):
 			#print(comp1N(arq1, n, direc))
@@ -94,10 +94,10 @@ class FaceRecognition:
 
 	def saveNewPerson(self, image, direc, name):
 		#delete namefile and facefile
-		if os.path.exists("nameFile.npy"):
-			os.remove("nameFile.npy")
-		if os.path.exists("faceFile.npy"):
-			os.remove("nameFile.npy")
+		#if os.path.exists("nameFile.npy"):
+		#	os.remove("nameFile.npy")
+		#if os.path.exists("faceFile.npy"):
+		#	os.remove("nameFile.npy")
 
 		#save image from string
 		b64 = base64.b64decode(image[0])
@@ -253,17 +253,22 @@ class FaceRecognition:
 		unknown_image = face_recognition.load_image_file(foto)
 		#print(unknown_image)
 	
-		if unknown_image.all(None):
-			print("false")
-			return
+		#here is the problem: it is not being able to load the image
+		#if unknown_image.all(None):
+			#print("false")
+			#return
 
 		unknown_encoding = face_recognition.face_encodings(unknown_image)
 	
 		known_names, known_faces = loadFaces(direc)
 
+		#print(known_names)
+
 		face_names = []
 		dist = face_recognition.face_distance(known_faces, unknown_encoding)
 		top_matches = dist.argsort()[:num_matches]
+
+		#print(dist)
 
 		match_names = []
 
@@ -474,10 +479,10 @@ class FaceRecognition:
 
 	def saveNewPerson(self, image, direc, name):
 		#delete namefile and facefile
-		if os.path.exists("nameFile.npy"):
-			os.remove("nameFile.npy")
-		if os.path.exists("faceFile.npy"):
-			os.remove("faceFile.npy")
+		#if os.path.exists("nameFile.npy"):
+		#	os.remove("nameFile.npy")
+		#if os.path.exists("faceFile.npy"):
+		#	os.remove("faceFile.npy")
 
 		#save image from string
 		b64 = base64.b64decode(image[0])
