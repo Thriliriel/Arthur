@@ -1,4 +1,4 @@
-11/13/2021 2:03:50 PM
+11/23/2021 1:33:22 PM
 <b>Bella</b>: Hello stranger! May i know your name?
 <b></b>: Knob
 <b>Bella</b>: How old are you?
@@ -10,228 +10,38 @@
 <b>Bella</b>: Do you have children?
 <b>Knob</b>: no
 <b>Bella</b>: Thanks! Anything else you would like to talk about?
+<b>Knob</b>: how old are you?
+<b>Bella</b>: 2 years old. Here it is!
 
-11/13/2021 2:04:26 PM
+11/24/2021 1:46:25 PM
 <b>Bella</b>: Hello stranger! May i know your name?
+<b></b>: Knob
+<b>Bella</b>: Thanks! Anything else you would like to talk about?
+<b>Knob</b>: how old are you?
+<b>Bella</b>: 2 years old. Here it is!
+<b>Knob</b>: do you work?
+<b>Bella</b>: I have no job
 
-11/13/2021 2:04:50 PM
+11/24/2021 1:49:08 PM
 <b>Bella</b>: Hello stranger! May i know your name?
-
-11/13/2021 2:05:05 PM
-<b>Bella</b>: Hello stranger! May i know your name?
-
-11/13/2021 2:18:44 PM
-<b>Bella</b>: Hello stranger! May i know your name?
-
-11/13/2021 2:19:52 PM
-<b>Bella</b>: Hello stranger! May i know your name?
-
-11/13/2021 2:20:28 PM
-<b>Bella</b>: Greetings D!How old are you?
-
-11/13/2021 2:22:14 PM
-<b>Bella</b>: Greetings Knob
-Knob!How old are you?
-
-11/13/2021 2:22:57 PM
-<b>Bella</b>: Hello stranger! May i know your name?
-
-11/13/2021 2:28:09 PM
-<b>Bella</b>: Hello stranger! May i know your name?
-
-11/13/2021 2:29:16 PM
-<b>Bella</b>: Hello stranger! May i know your name?
-
-11/13/2021 2:29:36 PM
-<b>Bella</b>: Hello stranger! May i know your name?
-
-11/13/2021 2:30:04 PM
-<b>Bella</b>: Hello stranger! May i know your name?
-
-11/13/2021 2:31:04 PM
-<b>Bella</b>: Hello stranger! May i know your name?
-
-11/13/2021 2:31:52 PM
-<b>Bella</b>: Greetings D!How old are you?
-
-11/13/2021 2:32:52 PM
-<b>Bella</b>: Greetings D!How old are you?
-
-11/13/2021 2:38:51 PM
-<b>Bella</b>: Greetings <PIL.PngImagePlugin.PngImageFile image mode=RGB size=320x240 at 0x1B57CC5A148>
-<PIL.PngImagePlugin.PngImageFile image mode=RGB size=320x240 at 0x1B54D2F42C8>
-D!How old are you?
-
-11/13/2021 2:39:49 PM
-<b>Bella</b>: Greetings [[[115 117 103]
-  [115 117 103]
-  [116 116 116]
-  ...
-  [106 105 105]
-  [ 99  98  94]
-  [ 96  95  91]]
-
- [[118 119 110]
-  [116 117 108]
-  [116 116 116]
-  ...
-  [116 116 116]
-  [117 116 116]
-  [117 116 116]]
-
- [[116 116 116]
-  [116 116 116]
-  [115 115 115]
-  ...
-  [120 119 121]
-  [116 116 116]
-  [116 116 116]]
-
- ...
-
- [[ 81  81  81]
-  [ 82  82  82]
-  [ 77  77  79]
-  ...
-  [115 123 127]
-  [101 105 106]
-  [ 95  99 100]]
-
- [[ 80  80  82]
-  [ 80  80  82]
-  [ 80  79  86]
-  ...
-  [117 125 129]
-  [106 110 111]
-  [ 94  98  99]]
-
- [[ 78  77  79]
-  [ 80  79  81]
-  [ 79  78  85]
-  ...
-  [116 124 132]
-  [ 99 108 107]
-  [ 90  99  98]]]
-[[[112 114 100]
-  [111 113  99]
-  [112 112 114]
-  ...
-  [101 100 100]
-  [102  85  97]
-  [ 95  78  90]]
-
- [[112 112 112]
-  [112 112 112]
-  [112 112 114]
-  ...
-  [115 114 116]
-  [113 112 114]
-  [113 112 114]]
-
- [[111 111 113]
-  [111 111 113]
-  [111 111 113]
-  ...
-  [115 115 117]
-  [115 115 117]
-  [117 117 119]]
-
- ...
-
- [[ 73  76  86]
-  [ 76  79  89]
-  [ 77  76  87]
-  ...
-  [116 129 127]
-  [101 114 110]
-  [ 93 106 102]]
-
- [[ 80  79  90]
-  [ 81  80  91]
-  [ 83  82  93]
-  ...
-  [117 129 132]
-  [104 113 110]
-  [ 97 106 103]]
-
- [[ 77  80  90]
-  [ 78  81  91]
-  [ 83  82  93]
-  ...
-  [117 128 140]
-  [109 113 114]
-  [105 109 110]]]
-D!How old are you?
-
-11/13/2021 2:40:21 PM
-<b>Bella</b>: Greetings D!How old are you?
-
-11/13/2021 2:41:03 PM
-<b>Bella</b>: Hello stranger! May i know your name?
-
-11/13/2021 2:45:57 PM
-<b>Bella</b>: Greetings [[[106 114 118]
-  [108 116 120]
-  [112 112 114]
-  ...
-  [ 94  94  96]
-  [ 82  80  87]
-  [ 77  75  82]]
-
- [[109 112 122]
-  [109 112 122]
-  [112 111 118]
-  ...
-  [112 112 114]
-  [112 112 114]
-  [110 110 112]]
-
- [[112 111 122]
-  [112 111 122]
-  [112 111 118]
-  ...
-  [116 116 118]
-  [117 117 117]
-  [115 115 115]]
-
- ...
-
- [[ 87  87  89]
-  [ 87  87  89]
-  [ 87  86  93]
-  ...
-  [ 85  66  59]
-  [ 88  65  59]
-  [ 91  68  62]]
-
- [[ 88  87  94]
-  [ 91  90  97]
-  [ 94  93 100]
-  ...
-  [ 88  69  62]
-  [ 91  68  62]
-  [ 90  67  61]]
-
- [[ 91  90  97]
-  [ 93  92  99]
-  [125 124 131]
-  ...
-  [ 84  70  61]
-  [ 85  66  59]
-  [ 85  66  59]]]!How old are you?
-
-11/13/2021 2:46:25 PM
-
-11/13/2021 2:47:09 PM
-<b>Bella</b>: Greetings True!How old are you?
-
-11/13/2021 2:47:58 PM
-<b>Bella</b>: Greetings [0.25245628]
-Knob!How old are you?
-
-11/13/2021 2:48:31 PM
-<b>Bella</b>: Greetings Knob!
-
-11/13/2021 2:48:44 PM
-<b>Bella</b>: Greetings Knob!
+<b></b>: Knob
+<b>Bella</b>: Thanks! Anything else you would like to talk about?
+<b>Knob</b>: i am feeeling good today
+<b>Bella</b>: Would you like to say more about that?
+<b>Knob</b>: no, thanks
+<b>Knob</b>: no thanks
+<b>Bella</b>: Thank you for telling me your opinion!
+<b>Knob</b>: so do you study?
+<b>Bella</b>: I am not studying
+<b>Knob</b>: what is your name?
+<b>Bella</b>: Knob be today
+<b>Knob</b>: how are you feeling?
+<b>Bella</b>: Oh, i am feeling good, what about you?
+<b>Knob</b>: i am feeling bad
+<b>Bella</b>: I am sorry to hear that. Did something happen?
+<b>Knob</b>: nothing in special
+<b>Bella</b>: Oh no, that is awful...Hope you can recover soon, i am here for you if you need me.
+<b>Knob</b>: thanks
+<b>Knob</b>: bye
+<b>Bella</b>: It's been a pleasure to be in your company, Sumit.
 

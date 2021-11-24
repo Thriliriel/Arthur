@@ -152,8 +152,9 @@ public class MainController : MonoBehaviour
     //list with the 5 last polarities
     public List<float> lastPolarities;
 
-    //webservice path
+    //webservice path and api key
     public string webServicePath;
+    private string apiKey;
 
     //absolute path
     public string absPath;
@@ -310,7 +311,8 @@ public class MainController : MonoBehaviour
             GameObject.Find("Speaker").SetActive(false);
         }
 
-        webServicePath = "http://localhost:8080/";
+        //webServicePath = "http://localhost:8080/";
+        apiKey = "Bearer 1fbdeab9-3742-4fcb-acc7-0da3f2bb2ae9";
 
         lastPolarity = 0;
 
@@ -389,10 +391,6 @@ public class MainController : MonoBehaviour
 
         //create the facts from the memory
         CreateFactsFromMemory();
-
-        //load from the database
-        //string match = "match(n) return n";
-        //StartCoroutine(MatchWebService(match, true));
 
         //read the next ID from the file
         //first line: ESK Ids. Second line: Episode Ids
@@ -1358,8 +1356,6 @@ public class MainController : MonoBehaviour
             {
                 if(txt.Key != personName && txt.Key != "old")
                 {
-                    //StartCoroutine(UpdateMemoryNodeWebService(personName, "age", txt.Key));
-
                     //since we are saving the Time aspect, just do some math to create a proper date
                     int thisYear = int.Parse(System.DateTime.Now.ToString("yyyy"));
                     int result = thisYear - int.Parse(txt.Key);
@@ -1376,13 +1372,6 @@ public class MainController : MonoBehaviour
             AddGeneralEvent(personName + " was born in " + birth + "-01-01", connectNodes, "person");
         }else if (tokens.ContainsKey("study"))
         {
-            /*foreach (KeyValuePair<string, string> txt in tokens)
-            {
-                if (txt.Key != personName && txt.Key != "study")
-                {
-                    StartCoroutine(UpdateMemoryNodeWebService(personName, "study", txt.Key));
-                }
-            }*/
             //here, we just need to get last polarity, because it is just study or not
             //if it is negative, we can already save it. Otherwise, we just save when details are provided
             if(lastPolarity < 0)
@@ -1395,13 +1384,6 @@ public class MainController : MonoBehaviour
         }
         else if (tokens.ContainsKey("work"))
         {
-            /*foreach (KeyValuePair<string, string> txt in tokens)
-            {
-                if (txt.Key != personName && txt.Key != "work")
-                {
-                    StartCoroutine(UpdateMemoryNodeWebService(personName, "work", txt.Key));
-                }
-            }*/
             //here, we just need to get last polarity, because it is just study or not
             //if it is negative, we can already save it. Otherwise, we just save when details are provided
             if (lastPolarity < 0)
@@ -1481,16 +1463,6 @@ public class MainController : MonoBehaviour
             connectNodes.Add(thisID);
             AddGeneralEvent(personName + " is working as " + job, connectNodes, "person");
         }
-        /*else if (tokens.ContainsKey("children quantity"))
-        {
-            foreach (KeyValuePair<string, string> txt in tokens)
-            {
-                if (txt.Key != personName && txt.Key != "children quantity")
-                {
-                    StartCoroutine(UpdateMemoryNodeWebService(personName, "qntChildren", txt.Key));
-                }
-            }
-        }*/
         else if (tokens.ContainsKey("children names"))
         {
             int qntChild = 0;
@@ -1665,19 +1637,6 @@ public class MainController : MonoBehaviour
                     if (potato == "") potato = txt.Key;
                     else potato += " " + txt.Key;
                 }
-                //save on Neo4j
-                //on temp, we have to find 2 information later
-
-                //if is verb, relationship
-                /*if(txt.Value == "VB" || txt.Value == "VBP")
-                {
-                    tempRelationship = txt.Key.ToUpper();
-                    qntTempNodes--;
-                    continue;
-                }
-                
-                string label = "name:'" + txt.Key + "',activation:1,weight:"+weight+ ",nodeType:'text',lastEmotion:'" + foundEmotion + "'";
-                StartCoroutine(CreateMemoryNodeWebService(txt.Key, "Interaction", label, weight));*/
             }
 
             //create a new general event
@@ -1834,8 +1793,8 @@ public class MainController : MonoBehaviour
         //if it is setting emotion, it means it found a face. So, let us find out whom face it is
         if (personName == "" && marioEmotion == "")
         {
-            //StartCoroutine(RecognitionWebService());
-            RecognitionWebService();
+            StartCoroutine(RecognitionWebService());
+            //RecognitionWebService();
         }
 
         marioEmotion = emotion;
@@ -1921,8 +1880,8 @@ public class MainController : MonoBehaviour
 
         //UPDATE: we always tokenize now, and treat things in the update
         //UPDATE: now we send a request to our webservice, through a json
-        //StartCoroutine(TokenizationWebService(textSend));
-        TokenizationWebService(textSend);
+        StartCoroutine(TokenizationWebService(textSend));
+        //TokenizationWebService(textSend);
 
         //replace occurences of "you" for "Arthur"
         //UPDATE: IT IS BETTER TO REPLACE IT LATER, SO THE VERBS ARE CLASSIFIED IN A BETTER WAY
@@ -2027,7 +1986,7 @@ public class MainController : MonoBehaviour
 
                 sr.Close();
 
-                if (textFile != "" && !textFile.Contains("false"))
+                if (textFile != "" && !textFile.Contains("false") && !textFile.Contains("{}"))
                 {
                     /*string[] info = textFile.Split('[');
                     info = info[1].Split(']');
@@ -2152,7 +2111,8 @@ public class MainController : MonoBehaviour
                 File.Delete("AutobiographicalStorage/Images/" + namePerson + ".png");
 
             File.Copy(absPath + "camImage.png", "AutobiographicalStorage/Images/" + namePerson + ".png");
-            SavePersonWebService();
+            //SavePersonWebService();
+            StartCoroutine(SavePersonWebService());
 
             int thisID = AddToSTM("Person", namePerson, 0.9f);
             personId = thisID;
@@ -2912,7 +2872,7 @@ public class MainController : MonoBehaviour
             //retrieving memory
             isRetrievingMemory = true;
 
-            //StartCoroutine(WordVecWebService(textParam, cues));
+            StartCoroutine(WordVecWebService(textParam, cues));
             //if using word2vec, get some more
             /*if (useW2V)
             {
@@ -2941,7 +2901,7 @@ public class MainController : MonoBehaviour
             //we find the general event which has the most cues compounding its memory nodes
             //BUT... select the general event is a bit trickier, since it can exist many events with the same memory information.
             //so, we select the event which has the most cues
-            int maxCues = 0;
+            /*int maxCues = 0;
             //making a test: instead to find just one event, bring all events which have the same amount of cues, and we decide later which one to pick
             //GeneralEvent eventFound = null;
             List<GeneralEvent> eventFound = new List<GeneralEvent>();
@@ -2971,7 +2931,7 @@ public class MainController : MonoBehaviour
                 {
                     maxCues = eventCues;
                     eventFound = geez.Value;
-                }*/
+                }*
                 //if it is higher than the max cues, add this general event
                 if (eventCues > maxCues)
                 {
@@ -3032,12 +2992,12 @@ public class MainController : MonoBehaviour
                     SpeakYouFool(unk);
                 }//else, dunno
                 else
-                {*/
+                {*
                 SpeakYouFool("Sorry, i do not know.");
                 //}
             }
 
-            isRetrievingMemory = false;
+            isRetrievingMemory = false;*/
         }
     }
 
@@ -3913,13 +3873,13 @@ public class MainController : MonoBehaviour
     }
 
     //Web Service for Tokenization
-    private void TokenizationWebService(string sentence)
+    /*private void TokenizationWebService(string sentence)
     {
         pythonCalls.GetComponent<PythonCalls>().Tokenization(sentence);
-    }
+    }*/
 
     //Web Service for Word2Vec (deactivated)
-    /*private IEnumerator WordVecWebService(string sentence, Dictionary<string, string> cues)
+    private IEnumerator WordVecWebService(string sentence, Dictionary<string, string> cues)
     {
         UnityWebRequest www = new UnityWebRequest(webServicePath + "similarWords", "POST");
         byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes("{\"text\" : [\"" + sentence + "\"]}");
@@ -3927,6 +3887,7 @@ public class MainController : MonoBehaviour
         www.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
 
         www.SetRequestHeader("Content-Type", "application/json");
+        www.SetRequestHeader("Authorization", apiKey);
 
         //before sending, lets see the nouns to guess the topic
         List<string> topicSent = new List<string>();
@@ -4011,13 +3972,111 @@ public class MainController : MonoBehaviour
                     qntCue++;
                 }
 
-                
+                cues = newCues;
+
+                //making a test: instead to find just one event, bring all events which have the same amount of cues, and we decide later which one to pick
+                //GeneralEvent eventFound = null;
+                int maxCues = 0;
+                List<GeneralEvent> eventFound = new List<GeneralEvent>();
+                foreach (KeyValuePair<int, GeneralEvent> geez in agentGeneralEvents)
+                {
+                    //skip the last
+                    if (geez.Value.informationID == nextEpisodeId) continue;
+
+                    //for each general event, we count the cues found
+                    int eventCues = 0;
+                    bool aboutAgent = false;
+                    //for each memory node which compounds this general event
+                    foreach (MemoryClass node in geez.Value.nodes)
+                    {
+                        //if it exists, ++
+                        if (cues.ContainsKey(node.information))
+                        {
+                            eventCues++;
+                        }
+
+                        //we try to avoid finding info about the agent itself or the person, if the cue is only one
+                        if ((node.information == agentName || node.information == personName) && cues.Count == 1) aboutAgent = true;
+                    }
+
+                    //if it is higher than the max cues, select this general event
+                    /*if (eventCues > maxCues || (eventCues == maxCues && !aboutAgent))
+                    {
+                        maxCues = eventCues;
+                        eventFound = geez.Value;
+                    }*/
+                    //if it is higher than the max cues, add this general event
+                    if (eventCues > maxCues)
+                    {
+
+                        if (aboutAgent && eventCues == 1) continue;
+
+                        //reset it
+                        eventFound.Clear();
+
+                        maxCues = eventCues;
+                        eventFound.Add(geez.Value);
+                    }//if has the same amount, add
+                    else if (eventCues == maxCues)
+                    {
+                        if (aboutAgent && eventCues == 1) continue;
+
+                        eventFound.Add(geez.Value);
+                    }
+                }
+
+                //if maxCues changed, we found an event
+                //MAYBE INSTEAD OF GETTING THE MAX CUES, WE TRY TO GET EXACT CUES, SO WE DO NOT GET A RANDOM EVENT EVERYTIME, EVEN WHEN IT IS SOMETHING NOT KNOWN
+                //IDEA: instead of just checking if it is above 0, it has to have, at least, 50% of the cues found
+                //if (maxCues >= (cues.Count/2))
+                if (maxCues > 0)
+                {
+                    GeneralEvent theChosenOne = eventFound[0];
+                    //from the events found, we try to choose the one more aligned with the topic
+                    if (topicSent.Count > 0)
+                    {
+                        foreach (GeneralEvent cow in eventFound)
+                        {
+                            foreach (MemoryClass mem in cow.nodes)
+                            {
+                                if (topicSent.Contains(mem.information))
+                                {
+                                    theChosenOne = cow;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                    //add the nodes back to the STM
+                    foreach (MemoryClass mem in theChosenOne.nodes)
+                    {
+                        AddToSTM(mem.informationType, mem.information, mem.weight);
+                    }
+
+                    DealWithIt(theChosenOne, cues);
+                }//else, nothing was found
+                else
+                {
+                    //else, see if we have some new term to learn
+                    /*string unk = CheckNewTerm(eventFound, newCues);
+                    if (unk != "" && unk != ". ")
+                    {
+                        SpeakYouFool(unk);
+                    }//else, dunno
+                    else
+                    {*/
+                    SpeakYouFool("Sorry, i do not know.");
+                    //}
+                }
+
+                isRetrievingMemory = false;
             }
         }
-    }*/
+    }
 
     //Web Service for Face Recognition
-    private void RecognitionWebService()
+    /*private void RecognitionWebService()
     {
         if (!File.Exists(absPath + "camImage.png"))
         {
@@ -4069,6 +4128,195 @@ public class MainController : MonoBehaviour
 
         //try to find again
         //RecognitionWebService();
+    }*/
+
+    //Web Service for Face Recognition
+    private IEnumerator RecognitionWebService()
+    {
+        if (!File.Exists("camImage.png"))
+        {
+            //save image
+            Texture txtr = cam.GetComponent<ViewCam>().GetComponent<MeshRenderer>().materials[0].mainTexture;
+            Texture2D image = new Texture2D(txtr.width, txtr.height, TextureFormat.RGB24, false);
+
+            RenderTexture rt = new RenderTexture(txtr.width, txtr.height, 0);
+            RenderTexture.active = rt;
+            // Copy your texture ref to the render texture
+            Graphics.Blit(txtr, rt);
+
+            Destroy(rt);
+
+            image.ReadPixels(new Rect(0, 0, txtr.width, txtr.height), 0, 0);
+            image.Apply();
+
+            byte[] _bytes = image.EncodeToPNG();
+            //Debug.Log(_bytes);
+            FileStream newImage = File.Create("camImage.png");
+            newImage.Close();
+            File.WriteAllBytes("camImage.png", _bytes);
+
+            Destroy(image);
+        }
+
+        UnityWebRequest www = new UnityWebRequest(webServicePath + "recognize", "POST");
+
+        //convert image to string
+        byte[] imageData = File.ReadAllBytes("camImage.png");
+        string b64 = System.Convert.ToBase64String(imageData);
+
+        byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes("{\"image\" : [\"" + b64 + "\"], \"direc\" : [\"Data\"], \"th\" : [0.5], \"mode\" : [\"n\"]}");
+        www.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
+        www.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+
+        www.SetRequestHeader("Content-Type", "application/json");
+        www.SetRequestHeader("Authorization", apiKey);
+
+        using (www)
+        {
+            yield return www.SendWebRequest();
+
+            if (www.isNetworkError || www.isHttpError)
+            {
+                //UnityEngine.Debug.Log(www.error);
+                //if error, try again
+                StartCoroutine(RecognitionWebService());
+            }
+            else
+            {
+                //UnityEngine.Debug.Log("Received: " + www.downloadHandler.text);
+                WriteFaceResult(www.downloadHandler.text);
+            }
+        }
+    }
+
+    private void WriteFaceResult(string webServiceResponse)
+    {
+        //need to format it properly now
+        string info = webServiceResponse.Replace("\"", "");
+        info = info.Replace(@"\", "");
+        info = info.Replace("}}", "");
+        info = info.Replace("{0:{0:", "");
+
+        string[] infoSplit = info.Split(',');
+        //end formatting
+
+        //UnityEngine.Debug.Log(tokens[0]);
+        //UnityEngine.Debug.Log(tknType[0]);
+
+        //write the file
+        StreamWriter sr = File.CreateText("result.txt");
+        sr.WriteLine(infoSplit[0].Split(':')[0]);
+        sr.Close();
+    }
+
+    //Web Service for save a new person
+    private IEnumerator SavePersonWebService()
+    {
+        UnityWebRequest www = new UnityWebRequest(webServicePath + "savePerson", "POST");
+
+        //convert image to string
+        byte[] imageData = File.ReadAllBytes("camImage.png");
+        string b64 = System.Convert.ToBase64String(imageData);
+
+        byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes("{\"image\" : [\"" + b64 + "\"], \"direc\" : [\"Data\"], \"name\" : [\"" + personName + "\"]}");
+        www.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
+        www.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+
+        www.SetRequestHeader("Content-Type", "application/json");
+        www.SetRequestHeader("Authorization", apiKey);
+
+        using (www)
+        {
+            yield return www.SendWebRequest();
+
+            if (www.isNetworkError || www.isHttpError)
+            {
+                UnityEngine.Debug.Log(www.error);
+            }
+            else
+            {
+                UnityEngine.Debug.Log("Received: " + www.downloadHandler.text);
+            }
+        }
+
+        //try to find again
+        //StartCoroutine(RecognitionWebService());
+    }
+
+    //Web Service for Tokenization
+    private IEnumerator TokenizationWebService(string sentence)
+    {
+        UnityWebRequest www = new UnityWebRequest(webServicePath + "tokenize", "POST");
+        byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes("{\"text\" : [\"" + sentence + "\"]}");
+        www.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
+        www.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+
+        www.SetRequestHeader("Content-Type", "application/json");
+        www.SetRequestHeader("Authorization", apiKey);
+
+        using (www)
+        {
+            yield return www.SendWebRequest();
+
+            if (www.isNetworkError || www.isHttpError)
+            {
+                UnityEngine.Debug.Log(www.error);
+            }
+            else
+            {
+                //UnityEngine.Debug.Log("Received: " + www.downloadHandler.data);
+                WriteTokens(www.downloadHandler.text);
+            }
+        }
+    }
+
+    private void WriteTokens(string webServiceResponse)
+    {
+        //need to format it properly now
+        string info = webServiceResponse.Replace("\"", "");
+        info = info.Replace(@"\", "");
+        info = info.Replace("},", "@");
+        string[] infoSplit = info.Split('@');
+
+        infoSplit[0] = infoSplit[0].Replace("{0:{", "");
+        infoSplit[1] = infoSplit[1].Replace("1:{", "");
+        infoSplit[1] = infoSplit[1].Replace("}}", "");
+
+        string[] tokens = infoSplit[0].Split(',');
+        string[] tknType = infoSplit[1].Split(',');
+
+        for (int i = 0; i < tokens.Length; i++)
+        {
+            tokens[i] = tokens[i].Split(':')[1];
+        }
+        for (int i = 0; i < tknType.Length; i++)
+        {
+            tknType[i] = tknType[i].Split(':')[1];
+        }
+        //end formatting
+
+        //UnityEngine.Debug.Log(tokens[0]);
+        //UnityEngine.Debug.Log(tknType[0]);
+
+        //write the file
+        StreamWriter sr = File.CreateText("resultToken.txt");
+
+        for (int i = 0; i < tokens.Length; i++)
+        {
+            //if it is the last, it is the polarity
+            if (i == tokens.Length - 1)
+            {
+                sr.WriteLine(tokens[i]);
+                //UnityEngine.Debug.Log(tokens[i]);
+            }
+            else
+            {
+                sr.WriteLine(tokens[i] + ";" + tknType[i]);
+                //UnityEngine.Debug.Log(tknType[i]);
+            }
+        }
+
+        sr.Close();
     }
 
     public void ParseTokens(string webServiceResponse)
