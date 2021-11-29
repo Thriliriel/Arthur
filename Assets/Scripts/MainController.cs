@@ -1996,77 +1996,67 @@ public class MainController : MonoBehaviour
 
                     string info = textFile;
 
-                    faceName.GetComponent<Text>().text = info;
                     personName = info = info.Trim();
 
-                    bool talaaaaa = false;
-
-                    //if it already exists in memory, update it, because it is being rehearsed (just work for the name...)
-                    foreach (KeyValuePair<int, MemoryClass> mc in agentShortTermMemory)
-                    {
-                        if (mc.Value.information == personName)
-                        {
-                            talaaaaa = true;
-
-                            mc.Value.weight = mc.Value.activation = 1;
-                            mc.Value.memoryTime = System.DateTime.Now;
-                            personId = mc.Key;
-                            break;
-                        }
-                    }
-
-                    //if not found, trying to get ID from LTM
-                    foreach (KeyValuePair<int, MemoryClass> mc in agentLongTermMemory)
-                    {
-                        if (mc.Value.information == personName)
-                        {
-                            personId = mc.Key;
-                            break;
-                        }
-                    }
-
-                    //if the person already exists at LTM (and not at the STM), bring it to STM (just work for the name...)
-                    if (!talaaaaa)
-                    {
-                        //search the general event where the agent met this person
-                        /*foreach (GeneralEvent ges in agentGeneralEvents)
-                        {
-                            if (ges.eventType == "meet new person" && ges.information.Contains(personName))
-                            {
-                                foreach (MemoryClass mc in ges.nodes)
-                                {
-                                    if (mc.information.Contains(personName))
-                                    {
-                                        mc.weight = mc.activation = 1;
-                                        mc.memoryTime = System.DateTime.Now;
-
-                                        AddToSTM(mc.informationType, mc.information, mc.weight);
-                                    }
-                                }
-
-                                break;
-                            }
-                        }*/
-                    }
-
-                    //if the agent still did not greeted this motherfucker, howdy mate!
-                    if (!peopleGreeted.Contains(info))
-                    {
-                        isGettingInformation = true;
-                        peopleGreeted.Add(info);
-                        GreetingTraveler(info);
-                    }
+                    AddPersonToMemory();
                 }//else, if it is empty, did not find anyone. So, the agent can meet someone new!! How amazing!!!
                  //UPDATE: just meet someone new IF did not see anyone yet (to avoid changing between person/not knowing)
                 else if ((textFile.Contains("false") || textFile.Contains("{}")) && !isKnowingNewPeople && faceName.GetComponent<Text>().text == "")
                 {
-                    isGettingInformation = true;
+                    //if the face recognition found no one, we can still see if there is a name in the localPerson file
+                    if (new FileInfo("localPerson.txt").Length > 0)
+                    {
+                        StreamReader localPerson = new StreamReader("localPerson.txt", System.Text.Encoding.Default);
+                        personName = localPerson.ReadLine().Trim();
+                        localPerson.Close();
 
-                    faceName.GetComponent<Text>().text = "";
+                        AddPersonToMemory();
+                    }//otherwise, there is no one indeed
+                    else
+                    {
+                        isGettingInformation = true;
 
-                    MeetNewPeople();
+                        faceName.GetComponent<Text>().text = "";
+
+                        MeetNewPeople();
+                    }
                 }
             }
+        }
+    }
+
+    private void AddPersonToMemory()
+    {
+        faceName.GetComponent<Text>().text = personName;
+
+        //if it already exists in memory, update it, because it is being rehearsed (just work for the name...)
+        foreach (KeyValuePair<int, MemoryClass> mc in agentShortTermMemory)
+        {
+            if (mc.Value.information == personName)
+            {
+                mc.Value.weight = mc.Value.activation = 1;
+                mc.Value.memoryTime = System.DateTime.Now;
+                personId = mc.Key;
+                break;
+            }
+        }
+
+        //if not found, trying to get ID from LTM
+        foreach (KeyValuePair<int, MemoryClass> mc in agentLongTermMemory)
+        {
+            if (mc.Value.information == personName)
+            {
+                personId = mc.Key;
+                break;
+            }
+        }
+
+        //if the agent still did not greeted this motherfucker, howdy mate!
+        if (!peopleGreeted.Contains(personName))
+        {
+            isGettingInformation = true;
+            peopleGreeted.Add(personName);
+            GreetingTraveler(personName);
         }
     }
 
@@ -2103,6 +2093,11 @@ public class MainController : MonoBehaviour
             personName = namePerson.Trim();
             //already know it, do not need to greet
             peopleGreeted.Add(personName);
+
+            //also, save the person name in a txt file. If the webservice is not working, we can take the name by it.
+            StreamWriter textToToken = new StreamWriter("localPerson.txt");
+            textToToken.WriteLine(personName);
+            textToToken.Close();
 
             //copy the camFile to the Data directory, saving with person name
             //it is going to serve both for face recognition and autobiographical storage for images
