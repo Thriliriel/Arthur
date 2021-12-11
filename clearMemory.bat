@@ -16,6 +16,8 @@ FOR %%a IN ("%sourcedir%\*") DO IF /i NOT "%%~nxa"=="%file1%" IF /i NOT "%%~nxa"
 echo 10029> nextId.txt
 echo 10016>> nextId.txt
 
+CLS 2>localPerson.txt
+
 SET PYTHONDIR="Assets\Python"
 IF EXIST %PYTHONDIR%\facefile.npy DEL /F %PYTHONDIR%\facefile.npy
 IF EXIST %PYTHONDIR%\namefile.npy DEL /F %PYTHONDIR%\namefile.npy

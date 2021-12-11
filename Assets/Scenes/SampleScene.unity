@@ -2416,18 +2416,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29117dac20cb49e49b06043e6c00595a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TargetAudioSource: {fileID: 416913040}
-  SkinnedMeshRendererTarget: {fileID: 416913039}
-  SkinnedMeshRendererTargetBSName: Mroph_CW_JawOpen
-  BSOpenLerpInterpValue: 50
-  BSOpenMultiply: 300
-  teethDown: {fileID: 1032190919}
---- !u!137 &416913039 stripped
-SkinnedMeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 6550105972626465565, guid: 77f2d9af8a2b54840844574d48c1bbd5,
-    type: 3}
-  m_PrefabInstance: {fileID: 1032190916}
-  m_PrefabAsset: {fileID: 0}
 --- !u!82 &416913040
 AudioSource:
   m_ObjectHideFlags: 0
@@ -7888,7 +7876,7 @@ PrefabInstance:
     - target: {fileID: 6550105972626465565, guid: 77f2d9af8a2b54840844574d48c1bbd5,
         type: 3}
       propertyPath: m_BlendShapeWeights.Array.data[24]
-      value: 26.8
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6550105972626465565, guid: 77f2d9af8a2b54840844574d48c1bbd5,
         type: 3}
@@ -8015,12 +8003,6 @@ PrefabInstance:
 --- !u!4 &1032190917 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7356079408263055728, guid: 77f2d9af8a2b54840844574d48c1bbd5,
-    type: 3}
-  m_PrefabInstance: {fileID: 1032190916}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1032190919 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4185919980523212726, guid: 77f2d9af8a2b54840844574d48c1bbd5,
     type: 3}
   m_PrefabInstance: {fileID: 1032190916}
   m_PrefabAsset: {fileID: 0}
@@ -13960,12 +13942,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67c71a97a6171ce4bbcb95249fd5f02d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TargetAudioSource: {fileID: 1873448609}
-  JawRotationTargetObject: {fileID: 1873448605}
-  JawRotationLerpInterpValue: 70
-  JawRotationMultiply: 1500
-  rotAxis: 0
-  bias: 20
 --- !u!1 &1877419508
 GameObject:
   m_ObjectHideFlags: 0

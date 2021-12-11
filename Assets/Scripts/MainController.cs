@@ -756,6 +756,7 @@ public class MainController : MonoBehaviour
                 //update PAD and emotion, if not bored
                 if (!isBored)
                 {
+                    //Deactivated for tests
                     UpdatePadEmotion(lastPolarity);
                 }
 
@@ -1009,10 +1010,17 @@ public class MainController : MonoBehaviour
         //now, lets see if we have some new term
         //string unk = CheckNewTerm(retrieved, tokens);
 
+        //get emotion as well, if any
+        string memEmotion = "";
+        if(emotion.Count > 0)
+        {
+            memEmotion = emotion[0].information;
+        }
+
         //update PAD based on event polarity, if not bored
         if (!isBored)
         {
-            UpdatePadEmotion(retrieved.polarity);
+            UpdatePadEmotion(retrieved.polarity, memEmotion);
         }
 
         SpeakYouFool(responseText);// + unk
@@ -4448,6 +4456,8 @@ public class MainController : MonoBehaviour
 
         string chosenEmo = FindPADEmotion();
 
+        //Deactivated for tests
+        chosenEmo = "Neutral";
         SetEmotion(chosenEmo.ToLower());
     }
 
@@ -4465,9 +4475,9 @@ public class MainController : MonoBehaviour
     }
 
     //update PAD and check emotion
-    public void UpdatePadEmotion(float polarity)
+    public void UpdatePadEmotion(float polarity, string memEmotion = "")
     {
-        pad.UpdatePAD(polarity);
+        pad.UpdatePAD(polarity, memEmotion);
 
         string chosenEmo = FindPADEmotion();
 

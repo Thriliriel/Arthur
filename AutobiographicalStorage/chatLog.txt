@@ -1,6 +1,8 @@
-11/23/2021 1:33:22 PM
+12/11/2021 1:12:19 PM
+
+12/11/2021 1:16:05 PM
 <b>Bella</b>: Hello stranger! May i know your name?
-<b></b>: Knob
+<b></b>: my name is Knob
 <b>Bella</b>: How old are you?
 <b>Knob</b>: 33
 <b>Bella</b>: Do you study?
@@ -10,55 +12,64 @@
 <b>Bella</b>: Do you have children?
 <b>Knob</b>: no
 <b>Bella</b>: Thanks! Anything else you would like to talk about?
-<b>Knob</b>: how old are you?
-<b>Bella</b>: 2 years old. Here it is!
+<b>Knob</b>: what is your favorite food?
+<b>Bella</b>: My favorite food is pizza
+<b>Knob</b>: and what pizza do you like?
+<b>Bella</b>: My favorite food is pizza
+<b>Knob</b>: but what is your favorite pizza?
+<b>Bella</b>: My favorite food is pizza
+<b>Knob</b>: do you like pepperoni?
+<b>Bella</b>: I like food
+<b>Knob</b>: do you like calabresa?
+<b>Bella</b>: My favorite pizza is calabresa
+<b>Knob</b>: do you like portuguesa?
+<b>Bella</b>: I do not like portuguesa
+<b>Knob</b>: do you like music?
+<b>Bella</b>: My favorite music is White Pearl Black Oceans
+<b>Knob</b>: and what is your favorite band?
+<b>Bella</b>: My favorite band is Sonata Arctica
+<b>Knob</b>: do you like games?
+<b>Bella</b>: I love to play video games
+<b>Knob</b>: and what is your favorite game?
+<b>Bella</b>: My favorite game is Zelda
+<b>Knob</b>: do you have pets?
+<b>Bella</b>: I had a dog pet named Gotchi
+<b>Knob</b>: what happened with him?
+<b>Bella</b>: Sorry, i do not know.
+<b>Knob</b>: what happened with Gotchi?
+<b>Bella</b>: Gotchi died in an accident some time ago
 
-11/24/2021 1:46:25 PM
-<b>Bella</b>: Hello stranger! May i know your name?
-<b></b>: Knob
-<b>Bella</b>: Thanks! Anything else you would like to talk about?
-<b>Knob</b>: how old are you?
-<b>Bella</b>: 2 years old. Here it is!
-<b>Knob</b>: do you work?
-<b>Bella</b>: I have no job
-
-11/24/2021 1:49:08 PM
-<b>Bella</b>: Hello stranger! May i know your name?
-<b></b>: Knob
-<b>Bella</b>: Thanks! Anything else you would like to talk about?
-<b>Knob</b>: i am feeeling good today
-<b>Bella</b>: Would you like to say more about that?
-<b>Knob</b>: no, thanks
-<b>Knob</b>: no thanks
-<b>Bella</b>: Thank you for telling me your opinion!
-<b>Knob</b>: so do you study?
-<b>Bella</b>: I am not studying
-<b>Knob</b>: what is your name?
-<b>Bella</b>: Knob be today
-<b>Knob</b>: how are you feeling?
-<b>Bella</b>: Oh, i am feeling good, what about you?
-<b>Knob</b>: i am feeling bad
-<b>Bella</b>: I am sorry to hear that. Did something happen?
-<b>Knob</b>: nothing in special
-<b>Bella</b>: Oh no, that is awful...Hope you can recover soon, i am here for you if you need me.
-<b>Knob</b>: thanks
-<b>Knob</b>: bye
-<b>Bella</b>: It's been a pleasure to be in your company, Sumit.
-
-11/26/2021 2:37:24 PM
-
-11/29/2021 1:58:51 PM
-
-11/29/2021 2:00:47 PM
-<b>Bella</b>: Hello stranger! May i know your name?
-<b></b>: Knob
-<b>Bella</b>: Thanks! Anything else you would like to talk about?
-
-11/29/2021 2:36:16 PM
-<b>Bella</b>: Hello stranger! May i know your name?
-<b></b>: Knob
-<b>Bella</b>: Thanks! Anything else you would like to talk about?
-
-11/29/2021 2:36:31 PM
+12/11/2021 1:16:56 PM
 <b>Bella</b>: Greetings Knob!
+<b>Knob</b>: do you have pets?
+<b>Bella</b>: I had a dog pet named Gotchi
+
+12/11/2021 1:18:45 PM
+<b>Bella</b>: Greetings Knob!
+<b>Knob</b>: do you have pets?
+<b>Bella</b>: I had a dog pet named Gotchi
+
+12/11/2021 1:20:35 PM
+<b>Bella</b>: Greetings Knob!
+<b>Knob</b>: do you have pets?
+<b>Bella</b>: I had a dog pet named Gotchi
+<b>Knob</b>: what happened with Gotchi?
+<b>Bella</b>: Gotchi died in an accident some time ago
+<b>Knob</b>: do you have pets?
+<b>Bella</b>: I had a dog pet named Gotchi
+<b>Knob</b>: do you have pets?
+<b>Bella</b>: I had a dog pet named Gotchi
+<b>Knob</b>: what happened with Gotchi?
+<b>Bella</b>: Gotchi died in an accident some time ago
+
+12/11/2021 2:38:17 PM
+<b>Bella</b>: Greetings Knob!
+<b>Knob</b>: do you have pets?
+<b>Bella</b>: I had a dog pet named Gotchi
+<b>Knob</b>: what happened with Gotchi?
+<b>Bella</b>: Gotchi died in an accident some time ago
+<b>Knob</b>: do you like music?
+<b>Bella</b>: My favorite music is White Pearl Black Oceans
+<b>Knob</b>: do you like portuguesa?
+<b>Bella</b>: I do not like portuguesa
 

@@ -111,38 +111,51 @@ public class PADClass
     }
 
     //update the pad (for now, based only on what people say)
-    public void UpdatePAD(float polarity)
+    public void UpdatePAD(float polarity, string emotion = "")
     {
-        //P = (P + polarity) / 2
-        //A = |polarity| + boredom
-        //also, depending on the personality of the agent, it can travel more or less distance on PAD dimensions (farther or closer to the comfort zone). 
-        //Sajjadi 2019 considered only the E from OCEAN, but we can try to do a bit more later
-        float actualDist = Vector3.Distance(new Vector3(pleasure, arousal, dominance), comfortZone);
-
-        float oldArousal = arousal;
-
-        pleasure = (pleasure + polarity) / 2.0f;
-        arousal = Mathf.Abs(polarity) + boredom;
-        if (arousal > 1) arousal = 1;
-        if (arousal < -1) arousal = -1;
-
-        float newDist = Vector3.Distance(new Vector3(pleasure, arousal, dominance), comfortZone);
-        //means it is approaching comfort zone, so has bonus
-        if (newDist < actualDist)
+        if (emotion == "")
         {
-            if (polarity > 0) pleasure += 0.05f;
-            else if (polarity < 0) pleasure -= 0.05f;
+            //P = (P + polarity) / 2
+            //A = |polarity| + boredom
+            //also, depending on the personality of the agent, it can travel more or less distance on PAD dimensions (farther or closer to the comfort zone). 
+            //Sajjadi 2019 considered only the E from OCEAN, but we can try to do a bit more later
+            float actualDist = Vector3.Distance(new Vector3(pleasure, arousal, dominance), comfortZone);
 
-            if (arousal < oldArousal) arousal -= 0.05f;
-            else if (arousal > oldArousal) arousal += 0.05f;
-        }//otherwise, it is getting further from comfort zone. So, has penality.
-        else if (newDist > actualDist)
+            float oldArousal = arousal;
+
+            pleasure = (pleasure + polarity) / 2.0f;
+            arousal = Mathf.Abs(polarity) + boredom;
+            if (arousal > 1) arousal = 1;
+            if (arousal < -1) arousal = -1;
+
+            float newDist = Vector3.Distance(new Vector3(pleasure, arousal, dominance), comfortZone);
+            //means it is approaching comfort zone, so has bonus
+            if (newDist < actualDist)
+            {
+                if (polarity > 0) pleasure += 0.05f;
+                else if (polarity < 0) pleasure -= 0.05f;
+
+                if (arousal < oldArousal) arousal -= 0.05f;
+                else if (arousal > oldArousal) arousal += 0.05f;
+            }//otherwise, it is getting further from comfort zone. So, has penality.
+            else if (newDist > actualDist)
+            {
+                if (polarity > 0) pleasure -= 0.05f;
+                else if (polarity < 0) pleasure += 0.05f;
+
+                if (arousal < oldArousal) arousal += 0.05f;
+                else if (arousal > oldArousal) arousal -= 0.05f;
+            }
+        }
+        else
         {
-            if (polarity > 0) pleasure -= 0.05f;
-            else if (polarity < 0) pleasure += 0.05f;
+            //if we have a specific emotion, we change to it.
+            if (emotion == "Joy") emotion = "Happy";
+            if (emotion == "Sadness") emotion = "Sad";
 
-            if (arousal < oldArousal) arousal += 0.05f;
-            else if (arousal > oldArousal) arousal -= 0.05f;
+            Vector3 pe = padEmotions[emotion];
+            pleasure = pe.x;
+            arousal = pe.y;
         }
 
         //Debug.Log("P = " + pleasure + ", A = " + arousal);

@@ -120,6 +120,7 @@ public class Listener : ImageResultsListener
                     //it changes the face. We do not want that now
                     //mc.SetEmotion(chosenEmotion);
                     //update the PAD with the new emotion valence, if not bored.
+                    //Deactivated for tests
                     if(!mc.isBored)
                         mc.UpdatePadEmotion(mc.foundValence);
                 }
