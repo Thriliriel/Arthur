@@ -13,8 +13,8 @@ SET "file1=Arthur.png"
 SET "file2=Bella.png"
 FOR %%a IN ("%sourcedir%\*") DO IF /i NOT "%%~nxa"=="%file1%" IF /i NOT "%%~nxa"=="%file2%" DEL "%%a"
 
-echo 10029> nextId.txt
-echo 10016>> nextId.txt
+echo 10037> nextId.txt
+echo 10019>> nextId.txt
 
 CLS 2>localPerson.txt
 

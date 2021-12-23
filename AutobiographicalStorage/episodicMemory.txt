@@ -1,38 +1,38 @@
-1;12/11/2021 2:38:03 PM;Bella;Person;0.1493867;1
-2;7/10/2019 10:00:00 AM;AutobiographicalStorage/Images/Bella.png;Imagery;1;1
-3;7/10/2019 10:00:00 AM;Brazil;Location;1;1
-4;7/10/2019 10:00:00 AM;2019;Time;1;1
-5;7/10/2019 10:00:00 AM;born;Activity;1;1
+1;12/23/2021 2:57:08 PM;Bella;Person;0.2343073;1
+2;12/23/2021 2:57:08 PM;AutobiographicalStorage/Images/Bella.png;Imagery;0.1392286;1
+3;12/23/2021 2:57:08 PM;Brazil;Location;0.1392286;1
+4;12/23/2021 2:57:08 PM;2019;Time;0.1392286;1
+5;12/23/2021 2:57:08 PM;born;Activity;0.1392286;1
 6;7/10/2019 10:00:00 AM;work;Activity;1;1
 7;7/10/2019 10:00:00 AM;study;Activity;1;1
 8;7/10/2019 10:00:00 AM;has children;Activity;1;1
-9;12/11/2021 2:37:45 PM;Joy;Emotion;0.1493867;1
-10;12/11/2021 2:38:03 PM;Sadness;Emotion;0.1493867;1
+9;7/10/2019 10:00:00 AM;Joy;Emotion;1;1
+10;7/10/2019 10:00:00 AM;Sadness;Emotion;1;1
 11;7/10/2019 10:00:00 AM;meet;Activity;1;1
 12;7/10/2019 10:00:00 AM;learn;Activity;1;1
-13;12/11/2021 2:38:03 PM;like;Activity;0.1493867;1
-14;12/11/2021 2:37:45 PM;love;Activity;0.1493867;1
-15;12/11/2021 1:14:04 PM;food;Object;1;1
-16;12/11/2021 1:14:23 PM;pizza;Object;1;1
-17;12/11/2021 1:14:23 PM;calabresa;Object;1;1
-18;12/11/2021 2:38:03 PM;portuguesa;Object;0.1493867;1
-19;12/11/2021 2:37:45 PM;music;Object;0.1493867;1
-20;12/11/2021 1:15:00 PM;Sonata Artica;Person;1;1
-21;12/11/2021 2:37:45 PM;favorite;Object;0.1493867;1
-22;12/11/2021 1:15:00 PM;band;Object;1;1
-23;12/11/2021 2:37:45 PM;White Pearl Black Oceans;Object;0.1493867;1
-24;12/11/2021 1:15:13 PM;play;Activity;1;1
-25;12/11/2021 1:15:13 PM;video games;Object;1;1
-26;12/11/2021 1:15:13 PM;game;Object;1;1
-27;12/11/2021 1:15:23 PM;Zelda;Object;1;1
-28;12/11/2021 2:37:45 PM;song;Object;0.1493867;1
-29;12/11/2021 2:37:25 PM;pet;Object;0.302171;1
-30;12/11/2021 2:37:35 PM;die;Activity;0.1392286;1
-31;12/11/2021 2:37:25 PM;Gotchi;Person;0.302171;1
-32;12/11/2021 2:37:25 PM;dog;Object;0.1392286;1
-33;12/11/2021 2:37:25 PM;have;Activity;0.1392286;1
-34;12/11/2021 2:37:35 PM;accident;Object;0.1392286;1
-35;12/11/2021 2:37:35 PM;some time ago;Time;0.1392286;1
+13;7/10/2019 10:00:00 AM;like;Activity;1;1
+14;7/10/2019 10:00:00 AM;love;Activity;1;1
+15;7/10/2019 10:00:00 AM;food;Object;1;1
+16;7/10/2019 10:00:00 AM;pizza;Object;1;1
+17;7/10/2019 10:00:00 AM;calabresa;Object;1;1
+18;7/10/2019 10:00:00 AM;portuguesa;Object;1;1
+19;7/10/2019 10:00:00 AM;music;Object;1;1
+20;7/10/2019 10:00:00 AM;Sonata Artica;Person;1;1
+21;7/10/2019 10:00:00 AM;favorite;Object;1;1
+22;7/10/2019 10:00:00 AM;band;Object;1;1
+23;7/10/2019 10:00:00 AM;White Pearl Black Oceans;Object;1;1
+24;7/10/2019 10:00:00 AM;play;Activity;1;1
+25;7/10/2019 10:00:00 AM;video games;Object;1;1
+26;7/10/2019 10:00:00 AM;game;Object;1;1
+27;7/10/2019 10:00:00 AM;Zelda;Object;1;1
+28;7/10/2019 10:00:00 AM;song;Object;1;1
+29;7/10/2019 10:00:00 AM;pet;Object;1;1
+30;7/10/2019 10:00:00 AM;die;Activity;1;1
+31;7/10/2019 10:00:00 AM;Gotchi;Person;1;1
+32;7/10/2019 10:00:00 AM;dog;Object;1;1
+33;7/10/2019 10:00:00 AM;have;Activity;1;1
+34;7/10/2019 10:00:00 AM;accident;Object;1;1
+35;7/10/2019 10:00:00 AM;some time ago;Time;1;1
 36;12/10/2021 3:08:45 PM;entity;Object;1;1
 37;12/10/2021 3:08:45 PM;physical entity;Object;1;1
 38;12/10/2021 3:08:45 PM;abstract entity;Object;1;1
@@ -10034,10 +10034,13 @@
 10034;12/10/2021 3:08:57 PM;genus dermochelys;Object;1;1
 10035;12/10/2021 3:08:57 PM;leatherback turtle;Object;1;1
 10036;12/10/2021 3:08:57 PM;leatherback;Object;1;1
-10037;12/11/2021 1:13:24 PM;Knob;Person;1;0.2914627
-10038;12/11/2021 1:13:24 PM;AutobiographicalStorage/Images/Knob.png;Imagery;1;0.2914627
-10039;12/11/2021 1:13:24 PM;2021-12-11;Time;1;0.2914627
-10040;12/11/2021 1:13:26 PM;1988;Time;1;0.2557754
+10037;12/23/2021 2:57:23 PM;Knob;Person;0.3527925;1
+10038;12/17/2021 12:57:48 PM;AutobiographicalStorage/Images/Knob.png;Imagery;1;0.9
+10039;12/17/2021 12:57:48 PM;2021-12-17;Time;1;0.9
+10040;12/23/2021 2:39:58 PM;1988;Time;1;0.2914627
+10041;12/23/2021 2:57:17 PM;be;Activity;0.1748283;1
+10042;12/23/2021 2:57:17 PM;feel;Activity;0.1748283;1
+10043;12/23/2021 2:57:23 PM;fine;Object;0.3527925;0.8
 %%%
 1;7/10/2019 10:00:00 AM;agent;I was born at Brazil in 2019-08-10;1;1_2_3_4_5
 2;7/10/2019 10:00:00 AM;agent;I have no job;-1;1_6_10
@@ -20057,8 +20060,10 @@
 10016;12/10/2021 3:08:57 PM;belief;type genus of the Dermochelyidae: leatherback turtles;0;1_10034
 10017;12/10/2021 3:08:57 PM;belief;wide-ranging marine turtle with flexible leathery carapace, largest living turtle;0;1_10035
 10018;12/10/2021 3:08:57 PM;belief;wide-ranging marine turtle with flexible leathery carapace, largest living turtle;0;1_10036
-10019;12/11/2021 1:13:24 PM;person;I met Knob today;0;10037_10038_10039_1_11
-10020;12/11/2021 1:13:26 PM;person;Knob was born in 1988-01-01;0;10037_10040_5
-10021;12/11/2021 1:13:28 PM;person;Knob is not studying;-0.296;10037_7
-10022;12/11/2021 1:13:29 PM;person;Knob is not working;-0.296;10037_6
-10023;12/11/2021 1:13:31 PM;person;Knob has no children;-0.296;10037_8
+10019;12/17/2021 12:57:48 PM;person;I met Knob today;0;10037_10038_10039_1_11
+10020;12/23/2021 2:39:58 PM;person;Knob was born in 1988-01-01;0;10040_5_10037
+10021;12/23/2021 2:40:00 PM;person;Knob is not studying;-0.296;7_10037
+10022;12/23/2021 2:40:02 PM;person;Knob is not working;-0.296;6_10037
+10023;12/23/2021 2:40:04 PM;person;Knob has no children;-0.296;8_10037
+10024;12/23/2021 2:50:02 PM;belief;be Bella feel;0.128;1_10041_10042
+10025;12/23/2021 2:57:23 PM;person;Knob fine;0.2023;10037_10043

@@ -1,75 +1,83 @@
-12/11/2021 1:12:19 PM
+12/17/2021 12:10:56 PM
 
-12/11/2021 1:16:05 PM
-<b>Bella</b>: Hello stranger! May i know your name?
-<b></b>: my name is Knob
-<b>Bella</b>: How old are you?
+12/17/2021 12:11:23 PM
+
+12/17/2021 12:57:51 PM
+<b>Arthur</b>: Hello stranger! May i know your name?
+<b></b>: Knob
+<b>Arthur</b>: Merry Christmas to everyone!
+
+12/17/2021 12:58:02 PM
+<b>Arthur</b>: Greetings Knob!Merry Christmas to everyone!
+
+12/17/2021 12:58:43 PM
+<b>Arthur</b>: Merry Christmas to everyone!
+
+12/17/2021 1:01:34 PM
+<b>Arthur</b>: Merry Christmas to everyone!
+
+12/17/2021 1:02:34 PM
+
+12/17/2021 1:03:24 PM
+<b>Bella</b>: Merry Christmas to everyone!
+
+12/17/2021 1:03:34 PM
+
+12/17/2021 1:04:06 PM
+<b>Bella</b>: Merry Christmas to everyone!
+
+12/17/2021 1:05:00 PM
+<b>Bella</b>: Merry Christmas to everyone!
+
+12/23/2021 2:40:13 PM
+<b>Arthur</b>: Greetings Knob!How old are you?
 <b>Knob</b>: 33
-<b>Bella</b>: Do you study?
+<b>Arthur</b>: Do you study?
 <b>Knob</b>: no
-<b>Bella</b>: Do you work?
+<b>Arthur</b>: Do you work?
 <b>Knob</b>: no
-<b>Bella</b>: Do you have children?
+<b>Arthur</b>: Do you have children?
 <b>Knob</b>: no
-<b>Bella</b>: Thanks! Anything else you would like to talk about?
-<b>Knob</b>: what is your favorite food?
-<b>Bella</b>: My favorite food is pizza
-<b>Knob</b>: and what pizza do you like?
-<b>Bella</b>: My favorite food is pizza
-<b>Knob</b>: but what is your favorite pizza?
-<b>Bella</b>: My favorite food is pizza
-<b>Knob</b>: do you like pepperoni?
-<b>Bella</b>: I like food
-<b>Knob</b>: do you like calabresa?
-<b>Bella</b>: My favorite pizza is calabresa
-<b>Knob</b>: do you like portuguesa?
-<b>Bella</b>: I do not like portuguesa
-<b>Knob</b>: do you like music?
-<b>Bella</b>: My favorite music is White Pearl Black Oceans
-<b>Knob</b>: and what is your favorite band?
-<b>Bella</b>: My favorite band is Sonata Arctica
-<b>Knob</b>: do you like games?
-<b>Bella</b>: I love to play video games
-<b>Knob</b>: and what is your favorite game?
-<b>Bella</b>: My favorite game is Zelda
-<b>Knob</b>: do you have pets?
-<b>Bella</b>: I had a dog pet named Gotchi
-<b>Knob</b>: what happened with him?
-<b>Bella</b>: Sorry, i do not know.
-<b>Knob</b>: what happened with Gotchi?
-<b>Bella</b>: Gotchi died in an accident some time ago
+<b>Arthur</b>: Thanks! Anything else you would like to talk about?
 
-12/11/2021 1:16:56 PM
-<b>Bella</b>: Greetings Knob!
-<b>Knob</b>: do you have pets?
-<b>Bella</b>: I had a dog pet named Gotchi
+12/23/2021 2:41:11 PM
+<b>Arthur</b>: Greetings Knob!
+<b>Knob</b>: how old are you?
+<b>Arthur</b>: 2 years old. Here it is!
 
-12/11/2021 1:18:45 PM
+12/23/2021 2:44:13 PM
 <b>Bella</b>: Greetings Knob!
-<b>Knob</b>: do you have pets?
-<b>Bella</b>: I had a dog pet named Gotchi
+<b>Knob</b>: how old are you?
+<b>Bella</b>: 2 years old. Here it is!
 
-12/11/2021 1:20:35 PM
+12/23/2021 2:48:32 PM
 <b>Bella</b>: Greetings Knob!
-<b>Knob</b>: do you have pets?
-<b>Bella</b>: I had a dog pet named Gotchi
-<b>Knob</b>: what happened with Gotchi?
-<b>Bella</b>: Gotchi died in an accident some time ago
-<b>Knob</b>: do you have pets?
-<b>Bella</b>: I had a dog pet named Gotchi
-<b>Knob</b>: do you have pets?
-<b>Bella</b>: I had a dog pet named Gotchi
-<b>Knob</b>: what happened with Gotchi?
-<b>Bella</b>: Gotchi died in an accident some time ago
 
-12/11/2021 2:38:17 PM
+12/23/2021 2:50:07 PM
 <b>Bella</b>: Greetings Knob!
-<b>Knob</b>: do you have pets?
-<b>Bella</b>: I had a dog pet named Gotchi
-<b>Knob</b>: what happened with Gotchi?
-<b>Bella</b>: Gotchi died in an accident some time ago
-<b>Knob</b>: do you like music?
-<b>Bella</b>: My favorite music is White Pearl Black Oceans
-<b>Knob</b>: do you like portuguesa?
-<b>Bella</b>: I do not like portuguesa
+<b>Knob</b>: how old are you?
+<b>Bella</b>: 2 years old. Here it is!
+<b>Knob</b>: how are you feeling?
+<b>Bella</b>: Oh, i am feeling good, what about you?
+
+12/23/2021 2:50:49 PM
+<b>Bella</b>: Greetings Knob!
+<b>Knob</b>: how old are you?
+<b>Bella</b>: 2 years old. Here it is!
+
+12/23/2021 2:55:41 PM
+<b>Bella</b>: Greetings Knob!
+<b>Knob</b>: how old are you?
+<b>Bella</b>: 2 years old. Here it is!
+<b>Knob</b>: how old are you?
+<b>Bella</b>: 2 years old. Here it is!
+
+12/23/2021 2:57:29 PM
+<b>Bella</b>: Greetings Knob!
+<b>Knob</b>: how old are you?
+<b>Bella</b>: 2 years old. Here it is!
+<b>Knob</b>: how are you feeling?
+<b>Bella</b>: Oh, i am feeling good, what about you?
+<b>Knob</b>: i am fine
+<b>Bella</b>: I am glad to know! It is always so fun to talk with you!
 
