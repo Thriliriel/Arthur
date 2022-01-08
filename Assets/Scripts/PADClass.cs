@@ -37,7 +37,7 @@ public class PADClass
     {
         padEmotions = new Dictionary<string, Vector3>();
         padEmotions.Add("Neutral", new Vector3(0, 0, 0));
-        padEmotions.Add("Joyful", new Vector3(0.76f, 0.48f, 0.35f));
+        //padEmotions.Add("Joyful", new Vector3(0.76f, 0.48f, 0.35f));
         padEmotions.Add("Friendly", new Vector3(0.69f, 0.35f, 0.3f));
         padEmotions.Add("Happy", new Vector3(0.81f, 0.51f, 0.46f));
         padEmotions.Add("Surprised", new Vector3(0.4f, 0.67f, -0.13f));
@@ -49,6 +49,7 @@ public class PADClass
         padEmotions.Add("Depressed", new Vector3(-0.72f, -0.29f, -0.41f));
         padEmotions.Add("Bored", new Vector3(-0.65f, -0.62f, -0.33f));
         padEmotions.Add("Sad", new Vector3(-0.63f, -0.27f, -0.33f));
+        padEmotions.Add("Disgust", new Vector3(-0.60f, 0.35f, 0.11f));
     }
 
     public void SetPleasure(float p)
@@ -98,7 +99,7 @@ public class PADClass
         }
 
         //divide by 1000, so the max increment is 0.001
-        float pBore = ((0.25f * (1-O)) + (0.25f * (1-C)) + (0.5f * (1-A))) / 1000;
+        float pBore = ((0.25f * (O)) + (0.25f * (1-C)) + (0.5f * (1-A))) / 1000;
 
         boredom -= pBore;
         //Debug.Log("Boredom: " + boredom);
@@ -175,5 +176,6 @@ Fearful: P=-.64, A=.60, D=-.43
 Confused: P=-.53, A=.27, D=-.32
 Depressed: P=-.72, A=-.29, D=-.41
 Bored: P=-.65, A=-.62, D=-.33
-Sad: P=-.63, A=-.27; D=-.33
+Sad: P=-.63, A=-.27, D=-.33
+Disgust: P=-.60, A=.35, D=.11
 */

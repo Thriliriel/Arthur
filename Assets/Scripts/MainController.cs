@@ -479,6 +479,9 @@ public class MainController : MonoBehaviour
 
         //start the idle timer with the seconds now
         idleTimer = Time.time;
+
+        //test
+        //StartCoroutine(TokenizationWebService("Hello, how are you doing?"));
     }
 
     private void OnDestroy()
@@ -615,6 +618,13 @@ public class MainController : MonoBehaviour
                         tokens.Add(agentName, "NNP");
                     }
 
+                    if(tokens.ContainsKey("bore") || tokens.ContainsKey("afraid") || tokens.ContainsKey("happy")
+                        || tokens.ContainsKey("sad") || tokens.ContainsKey("surprised") || tokens.ContainsKey("disgusted")
+                        || tokens.ContainsKey("angry"))
+                    {
+                        tokens.Add("feel", "VB");
+                    }
+
                     //check if it is a question
                     bool isQuestion = false;
                     foreach (KeyValuePair<string, string> tt in tokens)
@@ -720,8 +730,10 @@ public class MainController : MonoBehaviour
                         //if it is breaking ice, add the topic of the conversation and the person
                         if (isBreakingIce)
                         {
+                            if (tokens.ContainsKey(iceBreakers.FindIcebreaker(usingIceBreaker).GetType()))
+                                tokens.Remove(iceBreakers.FindIcebreaker(usingIceBreaker).GetType());
                             tokens.Add(iceBreakers.FindIcebreaker(usingIceBreaker).GetType(), "NN");
-                            tokens.Add(personName, "NNP");
+                            if(!tokens.ContainsKey(personName)) tokens.Add(personName, "NNP");
 
                             informationEvent = iceBreakers.FindIcebreaker(usingIceBreaker).GetType() + " " + personName;
                         }
@@ -1366,9 +1378,16 @@ public class MainController : MonoBehaviour
                 {
                     //since we are saving the Time aspect, just do some math to create a proper date
                     int thisYear = int.Parse(System.DateTime.Now.ToString("yyyy"));
-                    int result = thisYear - int.Parse(txt.Key);
-                    birth = result.ToString();
-                    thisID = AddToSTM("Time", birth, weight);
+                    try
+                    {
+                        int result = thisYear - int.Parse(txt.Key);
+                        birth = result.ToString();
+                        thisID = AddToSTM("Time", birth, weight);
+                    }
+                    catch
+                    {
+                        continue;
+                    }
                 }
             }
 
@@ -1639,6 +1658,9 @@ public class MainController : MonoBehaviour
                 //if fiveW is empty, no need to store
                 if (fiveW != "")
                 {
+                    //there are still some thing we do not need to save (for example: be)
+                    if (txt.Key == "be") continue;
+
                     //strip the "'"
                     int thisID = AddToSTM(fiveW, txt.Key, weight);
                     connectNodes.Add(thisID);
@@ -1886,6 +1908,10 @@ public class MainController : MonoBehaviour
         if (dialogsAnswersInMemory.Count != dialogsInMemory.Count)
             dialogsAnswersInMemory.Add(lastInteraction);
 
+        //first letter to lower
+        textSend = FirstLetterToLower(textSend);
+        Debug.Log(textSend);
+
         //UPDATE: we always tokenize now, and treat things in the update
         //UPDATE: now we send a request to our webservice, through a json
         StartCoroutine(TokenizationWebService(textSend));
@@ -1928,6 +1954,17 @@ public class MainController : MonoBehaviour
             //UPDATE: now we send a request to our webservice, through a json
             StartCoroutine(TokenizationWebService(textSend));
         }*/
+    }
+
+    private string FirstLetterToLower(string str)
+    {
+        if (str == null)
+            return null;
+
+        if (str.Length > 1)
+            return char.ToLower(str[0]) + str.Substring(1);
+
+        return str.ToLower();
     }
 
     IEnumerator GetRequest(string uri)
@@ -2765,6 +2802,7 @@ public class MainController : MonoBehaviour
             else if (cue.Key == "working") auxCues.Add("work", cue.Value);
             else if (cue.Key == "studying") auxCues.Add("study", cue.Value);
             else if (cue.Key == "children" || cue.Key == "kids") auxCues.Add("has children", cue.Value);
+            
             else auxCues.Add(cue.Key, cue.Value);
 
             //we can also try to infer some things. For example, if asks if has brother/sister, we can search for has children
@@ -4263,11 +4301,11 @@ public class MainController : MonoBehaviour
 
             if (www.isNetworkError || www.isHttpError)
             {
-                UnityEngine.Debug.Log(www.error);
+                Debug.Log(www.error);
             }
             else
             {
-                //UnityEngine.Debug.Log("Received: " + www.downloadHandler.data);
+                //Debug.Log("Received: " + www.downloadHandler.text);
                 WriteTokens(www.downloadHandler.text);
             }
         }
@@ -4457,7 +4495,7 @@ public class MainController : MonoBehaviour
         string chosenEmo = FindPADEmotion();
 
         //Deactivated for tests
-        chosenEmo = "Neutral";
+        //chosenEmo = "Neutral";
         SetEmotion(chosenEmo.ToLower());
     }
 

@@ -78,7 +78,7 @@ public class SpeakerController : MonoBehaviour
 
         SpeechStreamFileMode SpFileMode = SpeechStreamFileMode.SSFMCreateForWrite;
         SpFileStream SpFileStream = new SpFileStream();
-        SpFileStream.Open("arthurHasSpoken.wav", SpFileMode, false);
+        SpFileStream.Open(mc.absPath+"arthurHasSpoken.wav", SpFileMode, false);
         voice.AudioOutputStream = SpFileStream;
         voice.Speak(text, SpeechVoiceSpeakFlags.SVSFlagsAsync);
         voice.WaitUntilDone(Timeout.Infinite);//Using System.Threading;

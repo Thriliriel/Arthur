@@ -1,83 +1,55 @@
-12/17/2021 12:10:56 PM
-
-12/17/2021 12:11:23 PM
-
-12/17/2021 12:57:51 PM
-<b>Arthur</b>: Hello stranger! May i know your name?
-<b></b>: Knob
-<b>Arthur</b>: Merry Christmas to everyone!
-
-12/17/2021 12:58:02 PM
-<b>Arthur</b>: Greetings Knob!Merry Christmas to everyone!
-
-12/17/2021 12:58:43 PM
-<b>Arthur</b>: Merry Christmas to everyone!
-
-12/17/2021 1:01:34 PM
-<b>Arthur</b>: Merry Christmas to everyone!
-
-12/17/2021 1:02:34 PM
-
-12/17/2021 1:03:24 PM
-<b>Bella</b>: Merry Christmas to everyone!
-
-12/17/2021 1:03:34 PM
-
-12/17/2021 1:04:06 PM
-<b>Bella</b>: Merry Christmas to everyone!
-
-12/17/2021 1:05:00 PM
-<b>Bella</b>: Merry Christmas to everyone!
-
-12/23/2021 2:40:13 PM
-<b>Arthur</b>: Greetings Knob!How old are you?
-<b>Knob</b>: 33
-<b>Arthur</b>: Do you study?
+1/8/2022 1:22:15 PM
+<b>Bella</b>: Hello stranger! May i know your name?
+<b></b>: hello i am Knob
+<b>Bella</b>: How old are you?
+<b>Knob</b>: i am 33 years old
+<b>Bella</b>: Do you study?
+<b>Knob</b>: yes i do
+<b>Bella</b>: Nice! What do you study?
+<b>Knob</b>: computer science
+<b>Bella</b>: Do you work?
+<b>Knob</b>: no i do not
+<b>Bella</b>: Do you have children?
 <b>Knob</b>: no
-<b>Arthur</b>: Do you work?
-<b>Knob</b>: no
-<b>Arthur</b>: Do you have children?
-<b>Knob</b>: no
-<b>Arthur</b>: Thanks! Anything else you would like to talk about?
-
-12/23/2021 2:41:11 PM
-<b>Arthur</b>: Greetings Knob!
-<b>Knob</b>: how old are you?
-<b>Arthur</b>: 2 years old. Here it is!
-
-12/23/2021 2:44:13 PM
-<b>Bella</b>: Greetings Knob!
-<b>Knob</b>: how old are you?
-<b>Bella</b>: 2 years old. Here it is!
-
-12/23/2021 2:48:32 PM
-<b>Bella</b>: Greetings Knob!
-
-12/23/2021 2:50:07 PM
-<b>Bella</b>: Greetings Knob!
-<b>Knob</b>: how old are you?
-<b>Bella</b>: 2 years old. Here it is!
+<b>Bella</b>: Thanks! Anything else you would like to talk about?
+<b>Knob</b>: are you happy?
+<b>Bella</b>: 3 years old. Here it is!
+<b>Knob</b>: are you bored?
+<b>Bella</b>: 3 years old. Here it is!
 <b>Knob</b>: how are you feeling?
 <b>Bella</b>: Oh, i am feeling good, what about you?
-
-12/23/2021 2:50:49 PM
-<b>Bella</b>: Greetings Knob!
-<b>Knob</b>: how old are you?
-<b>Bella</b>: 2 years old. Here it is!
-
-12/23/2021 2:55:41 PM
-<b>Bella</b>: Greetings Knob!
-<b>Knob</b>: how old are you?
-<b>Bella</b>: 2 years old. Here it is!
-<b>Knob</b>: how old are you?
-<b>Bella</b>: 2 years old. Here it is!
-
-12/23/2021 2:57:29 PM
-<b>Bella</b>: Greetings Knob!
-<b>Knob</b>: how old are you?
-<b>Bella</b>: 2 years old. Here it is!
-<b>Knob</b>: how are you feeling?
-<b>Bella</b>: Oh, i am feeling good, what about you?
-<b>Knob</b>: i am fine
+<b>Knob</b>: i am fine too
 <b>Bella</b>: I am glad to know! It is always so fun to talk with you!
+<b>Knob</b>: are you bored?
+<b>Bella</b>: Bella feel
+<b>Knob</b>: are you happy?
+<b>Bella</b>: Bella feel
+<b>Knob</b>: how are you feeling?
+<b>Bella</b>: I am feeling a bit angry today. How about you?
+
+1/8/2022 1:26:06 PM
+<b>Bella</b>: Greetings Knob!
+<b>Knob</b>: are you bored?
+<b>Bella</b>: Bella feel
+
+1/8/2022 1:30:14 PM
+<b>Bella</b>: Greetings Knob!
+<b>Knob</b>: are you bored?
+<b>Bella</b>: Oh, i am feeling good, what about you?
+<b>Knob</b>: i am good too
+<b>Bella</b>: I am glad to know! It is always so fun to talk with you!
+<b>Knob</b>: are you angry?
+<b>Bella</b>: I am feeling a bit angry today. How about you?
+<b>Knob</b>: i am fine
+<b>Bella</b>: It is good to hear that
+
+1/8/2022 1:41:58 PM
+<b>Bella</b>: Greetings Knob!
+<b>Knob</b>: who are you?
+<b>Bella</b>: 3 years old. Here it is!
+
+1/8/2022 1:43:11 PM
+<b>Bella</b>: Greetings Knob!
+<b>Knob</b>: how old are you?
+<b>Bella</b>: 3 years old. Here it is!
 

@@ -1,8 +1,8 @@
-1;12/23/2021 2:57:08 PM;Bella;Person;0.2343073;1
-2;12/23/2021 2:57:08 PM;AutobiographicalStorage/Images/Bella.png;Imagery;0.1392286;1
-3;12/23/2021 2:57:08 PM;Brazil;Location;0.1392286;1
-4;12/23/2021 2:57:08 PM;2019;Time;0.1392286;1
-5;12/23/2021 2:57:08 PM;born;Activity;0.1392286;1
+1;1/8/2022 1:42:59 PM;Bella;Person;0.2105099;1
+2;1/8/2022 1:42:59 PM;AutobiographicalStorage/Images/Bella.png;Imagery;0.2105099;1
+3;1/8/2022 1:42:59 PM;Brazil;Location;0.2105099;1
+4;1/8/2022 1:42:59 PM;2019;Time;0.2105099;1
+5;1/8/2022 1:42:59 PM;born;Activity;0.2105099;1
 6;7/10/2019 10:00:00 AM;work;Activity;1;1
 7;7/10/2019 10:00:00 AM;study;Activity;1;1
 8;7/10/2019 10:00:00 AM;has children;Activity;1;1
@@ -10034,13 +10034,14 @@
 10034;12/10/2021 3:08:57 PM;genus dermochelys;Object;1;1
 10035;12/10/2021 3:08:57 PM;leatherback turtle;Object;1;1
 10036;12/10/2021 3:08:57 PM;leatherback;Object;1;1
-10037;12/23/2021 2:57:23 PM;Knob;Person;0.3527925;1
-10038;12/17/2021 12:57:48 PM;AutobiographicalStorage/Images/Knob.png;Imagery;1;0.9
-10039;12/17/2021 12:57:48 PM;2021-12-17;Time;1;0.9
-10040;12/23/2021 2:39:58 PM;1988;Time;1;0.2914627
-10041;12/23/2021 2:57:17 PM;be;Activity;0.1748283;1
-10042;12/23/2021 2:57:17 PM;feel;Activity;0.1748283;1
-10043;12/23/2021 2:57:23 PM;fine;Object;0.3527925;0.8
+10037;1/8/2022 1:30:01 PM;Knob;Person;1;1
+10038;1/8/2022 1:20:54 PM;AutobiographicalStorage/Images/Knob.png;Imagery;1;0.2557754
+10039;1/8/2022 1:20:54 PM;2022-01-08;Time;1;0.2557754
+10040;1/8/2022 1:20:59 PM;1989;Time;1;0.2557754
+10041;1/8/2022 1:21:08 PM;computer_science;Activity;1;0.2557754
+10042;1/8/2022 1:29:38 PM;feel;Activity;1;1
+10043;1/8/2022 1:30:01 PM;fine;Object;1;1
+10044;1/8/2022 1:29:45 PM;good;Object;1;0.2792301
 %%%
 1;7/10/2019 10:00:00 AM;agent;I was born at Brazil in 2019-08-10;1;1_2_3_4_5
 2;7/10/2019 10:00:00 AM;agent;I have no job;-1;1_6_10
@@ -20060,10 +20061,11 @@
 10016;12/10/2021 3:08:57 PM;belief;type genus of the Dermochelyidae: leatherback turtles;0;1_10034
 10017;12/10/2021 3:08:57 PM;belief;wide-ranging marine turtle with flexible leathery carapace, largest living turtle;0;1_10035
 10018;12/10/2021 3:08:57 PM;belief;wide-ranging marine turtle with flexible leathery carapace, largest living turtle;0;1_10036
-10019;12/17/2021 12:57:48 PM;person;I met Knob today;0;10037_10038_10039_1_11
-10020;12/23/2021 2:39:58 PM;person;Knob was born in 1988-01-01;0;10040_5_10037
-10021;12/23/2021 2:40:00 PM;person;Knob is not studying;-0.296;7_10037
-10022;12/23/2021 2:40:02 PM;person;Knob is not working;-0.296;6_10037
-10023;12/23/2021 2:40:04 PM;person;Knob has no children;-0.296;8_10037
-10024;12/23/2021 2:50:02 PM;belief;be Bella feel;0.128;1_10041_10042
-10025;12/23/2021 2:57:23 PM;person;Knob fine;0.2023;10037_10043
+10019;1/8/2022 1:20:54 PM;person;I met Knob today;0;10037_10038_10039_1_11
+10020;1/8/2022 1:20:59 PM;person;Knob was born in 1989-01-01;0;10037_10040_5
+10021;1/8/2022 1:21:08 PM;person;Knob is studying computer_science;0;10037_10041_7
+10022;1/8/2022 1:21:12 PM;person;Knob is not working;-0.296;6_10037
+10023;1/8/2022 1:21:15 PM;person;Knob has no children;-0.296;8_10037
+10024;1/8/2022 1:21:44 PM;belief;Bella feel;-0.5106;1_10042
+10025;1/8/2022 1:21:48 PM;person;Knob fine;0.2023;10043_10037
+10026;1/8/2022 1:29:45 PM;person;Knob good;0.4404;10037_10044
