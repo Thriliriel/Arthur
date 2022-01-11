@@ -1910,6 +1910,10 @@ public class MainController : MonoBehaviour
 
         //first letter to lower
         textSend = FirstLetterToLower(textSend);
+
+        //we can change a bit some common sentences, to make it easier to understand
+        if (textSend == "how are you?") textSend = "how are you feeling?";
+
         Debug.Log(textSend);
 
         //UPDATE: we always tokenize now, and treat things in the update
@@ -2794,6 +2798,10 @@ public class MainController : MonoBehaviour
     //deactivated for now
     private void GenerativeRetrieval(Dictionary<string, string> cues)
     {
+        //first of all, we can take some things out, like interrogation mark and other elements
+        if (cues.ContainsKey("?")) cues.Remove("?");
+        if (cues.ContainsKey("be")) cues.Remove("be");
+
         //GeneralEvent eventFound = new GeneralEvent();
         Dictionary<string, string> auxCues = new Dictionary<string, string>();
         foreach(KeyValuePair<string,string> cue in cues)
@@ -4015,7 +4023,8 @@ public class MainController : MonoBehaviour
 
                 cues = newCues;
 
-                //making a test: instead to find just one event, bring all events which have the same amount of cues, and we decide later which one to pick
+                //making a test: instead to find just one event, bring all events which have the same amount of cues, 
+                //and we decide later which one to pick
                 //GeneralEvent eventFound = null;
                 int maxCues = 0;
                 List<GeneralEvent> eventFound = new List<GeneralEvent>();

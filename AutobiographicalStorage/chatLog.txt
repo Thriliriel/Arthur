@@ -1,55 +1,50 @@
-1/8/2022 1:22:15 PM
+1/11/2022 1:52:15 PM
 <b>Bella</b>: Hello stranger! May i know your name?
-<b></b>: hello i am Knob
+<b></b>: my name is Knob
 <b>Bella</b>: How old are you?
-<b>Knob</b>: i am 33 years old
+<b>Knob</b>: 33
 <b>Bella</b>: Do you study?
-<b>Knob</b>: yes i do
-<b>Bella</b>: Nice! What do you study?
-<b>Knob</b>: computer science
+<b>Knob</b>: no
 <b>Bella</b>: Do you work?
-<b>Knob</b>: no i do not
+<b>Knob</b>: no
 <b>Bella</b>: Do you have children?
 <b>Knob</b>: no
 <b>Bella</b>: Thanks! Anything else you would like to talk about?
-<b>Knob</b>: are you happy?
+<b>Knob</b>: what is a turtle?
+<b>Bella</b>: any of various tailless stout-bodied amphibians with long hind limbs for leaping, semiaquatic and terrestrial species
+
+1/11/2022 1:54:43 PM
+<b>Bella</b>: Greetings Knob!
+<b>Knob</b>: how are you?
 <b>Bella</b>: 3 years old. Here it is!
-<b>Knob</b>: are you bored?
+
+1/11/2022 2:00:29 PM
+<b>Bella</b>: Greetings Knob!
+<b>Knob</b>: how are you?
 <b>Bella</b>: 3 years old. Here it is!
+
+1/11/2022 2:03:36 PM
+<b>Bella</b>: Greetings Knob!
+<b>Knob</b>: how are you?
+<b>Bella</b>: Sorry, i do not know.
 <b>Knob</b>: how are you feeling?
 <b>Bella</b>: Oh, i am feeling good, what about you?
-<b>Knob</b>: i am fine too
+<b>Knob</b>: i am good, thanks
 <b>Bella</b>: I am glad to know! It is always so fun to talk with you!
-<b>Knob</b>: are you bored?
-<b>Bella</b>: Bella feel
-<b>Knob</b>: are you happy?
-<b>Bella</b>: Bella feel
-<b>Knob</b>: how are you feeling?
-<b>Bella</b>: I am feeling a bit angry today. How about you?
+<b>Knob</b>: how are you?
+<b>Bella</b>: Sorry, i do not know.
+<b>Knob</b>: what is a turtle?
+<b>Bella</b>: any of various tailless stout-bodied amphibians with long hind limbs for leaping, semiaquatic and terrestrial species
 
-1/8/2022 1:26:06 PM
+1/11/2022 2:07:05 PM
 <b>Bella</b>: Greetings Knob!
-<b>Knob</b>: are you bored?
-<b>Bella</b>: Bella feel
-
-1/8/2022 1:30:14 PM
-<b>Bella</b>: Greetings Knob!
-<b>Knob</b>: are you bored?
+<b>Knob</b>: how are you?
 <b>Bella</b>: Oh, i am feeling good, what about you?
-<b>Knob</b>: i am good too
-<b>Bella</b>: I am glad to know! It is always so fun to talk with you!
-<b>Knob</b>: are you angry?
-<b>Bella</b>: I am feeling a bit angry today. How about you?
 <b>Knob</b>: i am fine
-<b>Bella</b>: It is good to hear that
-
-1/8/2022 1:41:58 PM
-<b>Bella</b>: Greetings Knob!
-<b>Knob</b>: who are you?
-<b>Bella</b>: 3 years old. Here it is!
-
-1/8/2022 1:43:11 PM
-<b>Bella</b>: Greetings Knob!
-<b>Knob</b>: how old are you?
-<b>Bella</b>: 3 years old. Here it is!
+<b>Bella</b>: I am glad to know! It is always so fun to talk with you!
+<b>Knob</b>: thanks
+<b>Knob</b>: what is a pirouette?
+<b>Bella</b>: (ballet) a rapid spin of the body (especially on the toes as in ballet)
+<b>Knob</b>: do you know jab?
+<b>Bella</b>: a sharp hand gesture (resembling a blow), |he warned me with a jab with his finger|, |he made a thrusting motion with his fist|
 
