@@ -481,7 +481,7 @@ public class MainController : MonoBehaviour
         idleTimer = Time.time;
 
         //test
-        //StartCoroutine(TokenizationWebService("Hello, how are you doing?"));
+        //StartCoroutine(TokenizationWebService("Do you have the hours?"));
     }
 
     private void OnDestroy()
@@ -647,6 +647,11 @@ public class MainController : MonoBehaviour
                     {
                         PickTopic("emotions");
                         emoTalk = true;
+                    }//else, if the user is asking the hours, we answer //what, time -- have, hours
+                    else if(isQuestion && ((tokens.ContainsKey("what") && tokens.ContainsKey("time")) || 
+                        tokens.ContainsKey("hours") && (tokens.ContainsKey("have") || tokens.ContainsKey("tell"))))
+                    {
+                        Clock();
                     }
                     else if (!isGettingInformation && isKnowingNewPeople)
                     {
@@ -717,7 +722,7 @@ public class MainController : MonoBehaviour
                             }//else, dunno
                             else
                             {
-                                SpeakYouFool("Sorry, i do not know.");
+                                Dunno();
                             }
                         }*/
                     }
@@ -1989,18 +1994,21 @@ public class MainController : MonoBehaviour
 
                 if (webRequest.isNetworkError)
                 {
-                    UnityEngine.Debug.Log(pages[page] + ": Error: " + webRequest.error);
+                    Debug.Log(pages[page] + ": Error: " + webRequest.error);
                 }
                 else
                 {
                     //sing for me -> "{\"cnt\":\"<a href=\\\"http://www.msn.com/en-us/music\\\">click here to search and listen music<\\/a>\"}"
                     string response = webRequest.downloadHandler.text;
-                    //UnityEngine.Debug.Log(pages[page] + ":\nReceived: " + webRequest.downloadHandler.text);
+                    //Debug.Log(pages[page] + ":\nReceived: " + webRequest.downloadHandler.text);
 
                     response = response.Replace("\"", "");
                     response = response.Replace("}", "");
                     string[] resp = response.Split(':');
-                    SpeakYouFool(resp[1]);
+
+                    //if it has a link, do not use the answer, just dunno
+                    if (resp[1].Contains("http")) Dunno();
+                    else SpeakYouFool(resp[1]);
                 }
             }
         }
@@ -3042,7 +3050,7 @@ public class MainController : MonoBehaviour
                 }//else, dunno
                 else
                 {*
-                SpeakYouFool("Sorry, i do not know.");
+                Dunno();
                 //}
             }
 
@@ -4116,7 +4124,8 @@ public class MainController : MonoBehaviour
                     }//else, dunno
                     else
                     {*/
-                    SpeakYouFool("Sorry, i do not know.");
+                    //SpeakYouFool("Sorry, i do not know.");
+                    Dunno();
                     //}
                 }
 
@@ -4314,7 +4323,7 @@ public class MainController : MonoBehaviour
             }
             else
             {
-                //Debug.Log("Received: " + www.downloadHandler.text);
+                Debug.Log("Received: " + www.downloadHandler.text);
                 WriteTokens(www.downloadHandler.text);
             }
         }
@@ -5042,5 +5051,26 @@ public class MainController : MonoBehaviour
     {
         thinkingBalloon.GetComponentInChildren<Text>().text = randomThoughts[UnityEngine.Random.Range(0, randomThoughts.Count)];
         thinkingBalloon.SetActive(true);
+    }
+
+    //dunno
+    private void Dunno()
+    {
+        SpeakYouFool("Sorry, i do not know.");
+    }
+
+    private void Clock()
+    {
+        DateTime time = DateTime.Now;
+        string hour = LeadingZero(time.Hour);
+        string minute = LeadingZero(time.Minute);
+        string second = LeadingZero(time.Second); 
+        string full = hour + ":" + minute;
+        SpeakYouFool("The time now is " + full);
+    }
+
+    private string LeadingZero(int n)
+    {
+        return n.ToString().PadLeft(2, '0');
     }
 }
