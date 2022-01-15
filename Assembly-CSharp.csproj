@@ -8,7 +8,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <ProjectGuid>{67278428-761E-54A2-9CE4-975C382F3DAD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -53,6 +54,7 @@
     <UnityVersion>2020.3.20f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Weather.cs" />
     <Compile Include="Assets\Scripts\EyeCTRLBella.cs" />
     <Compile Include="Assets\Scripts\RunAbleThread.cs" />
     <Compile Include="Assets\Anima2D\Scripts\MathUtils.cs" />

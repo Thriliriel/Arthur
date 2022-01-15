@@ -106,3 +106,123 @@
 <b>Knob</b>: oh ok
 <b>Bella</b>: Sure.
 
+1/14/2022 2:11:24 PM
+<b>Bella</b>: 3 years old. Here it is!
+<b>Bella</b>: Greetings Knob!
+<b>Knob</b>: who are you?
+<b>Bella</b>: Sorry, i do not know.
+<b>Knob</b>: Who are you?
+<b>Bella</b>: Sorry, i do not know.
+<b>Knob</b>: who are Bella?
+<b>Bella</b>: Sorry, i do not know.
+
+1/14/2022 2:18:00 PM
+<b>Bella</b>: 3 years old. Here it is!
+<b>Bella</b>: Greetings Knob!
+<b>Knob</b>: who are you?
+<b>Bella</b>: Sorry, i do not know.
+<b>Knob</b>: who are you?
+<b>Bella</b>: Sorry, i do not know.
+
+1/14/2022 2:25:43 PM
+<b>Bella</b>: Greetings Knob!
+<b>Knob</b>: who are you?
+<b>Bella</b>: I am Bella
+<b>Knob</b>: what is your name?
+<b>Bella</b>: My name is Bella
+<b>Knob</b>: lovely
+<b>Bella</b>: What are you saying is lovely, Hana?
+<b>Knob</b>: who is Hana?
+<b>Bella</b>: Sorry, i do not know.
+<b>Knob</b>: what is a turtle?
+<b>Bella</b>: any of various tailless stout-bodied amphibians with long hind limbs for leaping, semiaquatic and terrestrial species
+
+1/14/2022 3:10:07 PM
+
+1/15/2022 1:06:15 PM
+
+1/15/2022 1:13:49 PM
+
+1/15/2022 1:42:11 PM
+<b>Bella</b>: Greetings Knob!
+<b>Knob</b>: how old are you?
+<b>Bella</b>: 3 years old. Here it is!
+<b>Knob</b>: what hour is it now?
+<b>Bella</b>: Sorry, i do not know.
+<b>Knob</b>: what is the time now?
+<b>Bella</b>: time
+<b>Knob</b>: how is the weather?
+<b>Bella</b>: Sorry, i do not know.
+<b>Knob</b>: how will be the weather tomorrow?
+<b>Bella</b>: Sorry, i do not know.
+
+1/15/2022 1:47:06 PM
+<b>Bella</b>: Greetings Knob!
+<b>Knob</b>: what is the time now?
+<b>Bella</b>: time
+<b>Knob</b>: what is the hour now?
+<b>Bella</b>: Sorry, i do not know.
+<b>Knob</b>: do you have the hours?
+<b>Bella</b>: The time now is 13:46
+<b>Knob</b>: what is the time?
+<b>Bella</b>: time
+<b>Knob</b>: what is the weather now?
+<b>Bella</b>: The weather in your location now is: Partly cloudy. The temperature is 33.6 degrees.
+<b>Knob</b>: how is the weather today?
+<b>Bella</b>: The weather in your location now is: Partly cloudy. The temperature is 33.6 degrees.
+
+1/15/2022 1:58:43 PM
+<b>Bella</b>: Greetings Knob!
+<b>Knob</b>: what time is now?
+<b>Bella</b>: time
+<b>Knob</b>: what is the weather today?
+<b>Bella</b>: The weather in your location now is: Partly cloudy. The temperature is 33.6 degrees.
+<b>Knob</b>: what is the weather tomorrow?
+<b>Bella</b>: The weather in your location now is: Partly cloudy. The temperature is 33.6 degrees.
+
+1/15/2022 2:01:01 PM
+<b>Bella</b>: Greetings Knob!
+<b>Knob</b>: what is the weather tomorrow?
+<b>Bella</b>: The weather in your location now is: Partly cloudy. The temperature is 33.6 degrees.
+
+1/15/2022 2:11:55 PM
+<b>Bella</b>: The weather in your location now is: Partly cloudy. The temperature is 32.1 degrees.
+
+1/15/2022 2:18:27 PM
+
+1/15/2022 2:18:54 PM
+<b>Bella</b>: The weather in your location tomorrow will be: Partly cloudy. The temperature will reach 32.1 degrees.
+
+1/15/2022 2:24:40 PM
+
+1/15/2022 2:25:00 PM
+<b>Bella</b>: The weather in your location tomorrow will be: Partly cloudy. The temperature will reach 32.1 degrees.
+
+1/15/2022 2:29:27 PM
+<b>Bella</b>: The weather in your location tomorrow will be: Partly cloudy. The temperature will reach 32.1 degrees.
+
+1/15/2022 2:30:13 PM
+<b>Bella</b>: The weather in your location tomorrow will be: Partly cloudy. The temperature will reach 32.1 degrees.
+
+1/15/2022 2:32:17 PM
+<b>Bella</b>: The weather in your location tomorrow will be: Partly cloudy. The temperature will reach 32.1 degrees.
+
+1/15/2022 2:33:58 PM
+
+1/15/2022 2:37:11 PM
+<b>Bella</b>: The weather in your location tomorrow will be: Partly cloudy. The temperature will reach 32.1 degrees.
+
+1/15/2022 2:42:59 PM
+
+1/15/2022 2:44:18 PM
+<b>Bella</b>: The weather in your location tomorrow will be: Patchy rain possible. The temperature will vary between 19.1 and 36.7 degrees.
+
+1/15/2022 2:46:49 PM
+<b>Bella</b>: Greetings Knob!
+<b>Knob</b>: what is the weather today?
+<b>Bella</b>: The weather in your location now is: Partly cloudy. The temperature is 32.1 degrees.
+<b>Knob</b>: what will be the weather tomorrow?
+<b>Bella</b>: The weather in your location tomorrow will be: Patchy rain possible. The temperature will vary between 19.1 and 36.7 degrees.
+<b>Knob</b>: do you have the hours?
+<b>Bella</b>: The time now is 14:46
+

@@ -230,6 +230,9 @@ public class MainController : MonoBehaviour
     private List<string> randomThoughts;
     private int thoughtsUsed = 0;
 
+    //weather forecast
+    public GameObject weatherForecast;
+
     private void Awake()
     {
         usingEmpathy = true;
@@ -481,7 +484,8 @@ public class MainController : MonoBehaviour
         idleTimer = Time.time;
 
         //test
-        //StartCoroutine(TokenizationWebService("Do you have the hours?"));
+        //StartCoroutine(TokenizationWebService("Who are you?"));
+        //weatherForecast.GetComponent<Weather>().WeatherNow(false);
     }
 
     private void OnDestroy()
@@ -649,9 +653,20 @@ public class MainController : MonoBehaviour
                         emoTalk = true;
                     }//else, if the user is asking the hours, we answer //what, time -- have, hours
                     else if(isQuestion && ((tokens.ContainsKey("what") && tokens.ContainsKey("time")) || 
-                        tokens.ContainsKey("hours") && (tokens.ContainsKey("have") || tokens.ContainsKey("tell"))))
+                        tokens.ContainsKey("hours") && (tokens.ContainsKey("have") || tokens.ContainsKey("tell")) ||
+                        (tokens.ContainsKey("hours") && (tokens.ContainsKey("now")))))
                     {
                         Clock();
+                    }//else, if the user is asking weather forecast
+                    else if (isQuestion && ((tokens.ContainsKey("weather") && tokens.ContainsKey("today")) ||
+                        tokens.ContainsKey("weather") && (tokens.ContainsKey("now")) ||
+                        tokens.ContainsKey("weather") && !(tokens.ContainsKey("tomorrow"))))
+                    {
+                        weatherForecast.GetComponent<Weather>().WeatherNow();
+                    }
+                    else if (isQuestion && ((tokens.ContainsKey("weather") && tokens.ContainsKey("tomorrow"))))
+                    {
+                        weatherForecast.GetComponent<Weather>().WeatherNow(false);
                     }
                     else if (!isGettingInformation && isKnowingNewPeople)
                     {
@@ -872,7 +887,7 @@ public class MainController : MonoBehaviour
     }
 
     //Agent says something
-    private void SpeakYouFool(string weirdThingToTalk)
+    public void SpeakYouFool(string weirdThingToTalk)
     {
         string newText = "<b>" + agentName + "</b>: " + weirdThingToTalk + "\n";
         chatText.text += newText;
@@ -1921,10 +1936,22 @@ public class MainController : MonoBehaviour
 
         Debug.Log(textSend);
 
-        //UPDATE: we always tokenize now, and treat things in the update
-        //UPDATE: now we send a request to our webservice, through a json
-        StartCoroutine(TokenizationWebService(textSend));
-        //TokenizationWebService(textSend);
+        //if it it some common questions, can already answer
+        if (textSend.Contains("who") && textSend.Contains("you"))
+        {
+            SpeakYouFool("I am " + agentName);
+        }
+        else if (textSend.Contains("your") && textSend.Contains("name"))
+        {
+            SpeakYouFool("My name is " + agentName);
+        }//else, keep going
+        else
+        {
+            //UPDATE: we always tokenize now, and treat things in the update
+            //UPDATE: now we send a request to our webservice, through a json
+            StartCoroutine(TokenizationWebService(textSend));
+            //TokenizationWebService(textSend);
+        }
 
         //replace occurences of "you" for "Arthur"
         //UPDATE: IT IS BETTER TO REPLACE IT LATER, SO THE VERBS ARE CLASSIFIED IN A BETTER WAY
