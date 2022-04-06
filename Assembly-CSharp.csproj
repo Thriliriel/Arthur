@@ -1,15 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <LangVersion>latest</LangVersion>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <ProjectGuid>{67278428-761E-54A2-9CE4-975C382F3DAD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -54,7 +53,10 @@
     <UnityVersion>2020.3.20f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Weather.cs" />
+    <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Assets\Scripts\LipSync.cs" />
     <Compile Include="Assets\Scripts\EyeCTRLBella.cs" />
     <Compile Include="Assets\Scripts\RunAbleThread.cs" />
     <Compile Include="Assets\Anima2D\Scripts\MathUtils.cs" />
@@ -67,23 +69,17 @@
     <Compile Include="Assets\Scripts\GeneralEventClass.cs" />
     <Compile Include="Assets\Affdex\Plugins\Scripts\Detector.cs" />
     <Compile Include="Assets\Scripts\Dialog.cs" />
-    <Compile Include="Assets\Word2vec\Word2vec.Tools\Word2VecTextReader.cs" />
     <Compile Include="Assets\Anima2D\Examples\Scripts\SpriteCycle.cs" />
     <Compile Include="Assets\Affdex\Plugins\Scripts\AndroidNativePlatform.cs" />
     <Compile Include="Assets\EditorController.cs" />
     <Compile Include="Assets\Anima2D\Examples\Scripts\SpriteCycleParallax.cs" />
     <Compile Include="Assets\Anima2D\Scripts\IkSolver2DLimb.cs" />
     <Compile Include="Assets\Anima2D\Scripts\Control.cs" />
-    <Compile Include="Assets\Word2vec\Word2vec.Tools\WordDistance.cs" />
-    <Compile Include="Assets\Word2vec\Word2vec.Tools\Representation.cs" />
     <Compile Include="Assets\Affdex\Plugins\Scripts\Expressions.cs" />
     <Compile Include="Assets\Affdex\Examples\Scripts\ViewCam.cs" />
     <Compile Include="Assets\DCXR\UPython2\Scripts\UPython2.cs" />
     <Compile Include="Assets\Affdex\Plugins\Scripts\ImageResultsListener.cs" />
-    <Compile Include="Assets\Word2vec\Word2vec.Tools\LinkedDistance.cs" />
-    <Compile Include="Assets\Word2vec\Word2vec.Tools\TheHelper.cs" />
     <Compile Include="Assets\Anima2D\Scripts\SpriteMeshAnimation.cs" />
-    <Compile Include="Assets\Word2vec\Word2vec.Tools.Example\Word2vecClass.cs" />
     <Compile Include="Assets\Anima2D\Scripts\IkSolver2D.cs" />
     <Compile Include="Assets\Scripts\PythonCalls.cs" />
     <Compile Include="Assets\Scripts\WhichArthur.cs" />
@@ -95,14 +91,12 @@
     <Compile Include="Assets\Scripts\DictationScript.cs" />
     <Compile Include="Assets\Affdex\Plugins\Scripts\AffdexUnityUtils.cs" />
     <Compile Include="Assets\Scripts\Topic.cs" />
-    <Compile Include="Assets\Word2vec\Word2vec.Tools\Word2VecBinaryReader.cs" />
     <Compile Include="Assets\Anima2D\Examples\Scripts\CharacterMotion.cs" />
-    <Compile Include="Assets\Word2vec\Word2vec.Tools\WordRepresentation.cs" />
     <Compile Include="Assets\Scripts\Calibration.cs" />
     <Compile Include="Assets\Anima2D\Scripts\Bone2D.cs" />
     <Compile Include="Assets\Scripts\IceBreakingTreeClass.cs" />
     <Compile Include="Assets\Affdex\Plugins\Scripts\NativePlatform.cs" />
-    <Compile Include="Assets\Word2vec\Word2vec.Tools\Vocabulary.cs" />
+    <Compile Include="Assets\Scripts\Weather.cs" />
     <Compile Include="Assets\DCXR\UPython2\Scripts\UPython2ChannelSO.cs" />
     <Compile Include="Assets\Anima2D\Scripts\PoseManager.cs" />
     <Compile Include="Assets\Anima2D\Examples\Scripts\Follow.cs" />
@@ -123,11 +117,8 @@
     <Compile Include="Assets\Scripts\SpeakerController.cs" />
     <Compile Include="Assets\Anima2D\Scripts\IkGroup.cs" />
     <Compile Include="Assets\Anima2D\Scripts\EditorUpdaterProxy.cs" />
-    <Compile Include="Assets\Word2vec\Word2vec.Tools\IWord2VecReader.cs" />
     <Compile Include="Assets\Scripts\CharacterCTRL.cs" />
-    <Compile Include="Assets\Word2vec\Word2vec.Tools\DistanceTo.cs" />
     <Compile Include="Assets\Scripts\PADClass.cs" />
-    <Compile Include="Assets\Scripts\LipSync.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Packages\CSProlog.6.0.0\lib\net35\CSProlog.xml" />
@@ -751,6 +742,12 @@
     <Reference Include="Unity.VSCode.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.VSCode.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.RenderPipelines.Universal.Shaders">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Shaders.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Universal.Runtime">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Runtime.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
@@ -793,14 +790,26 @@
     <Reference Include="UnityEngine.UI">
       <HintPath>Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.Mathematics">
+      <HintPath>Library\ScriptAssemblies\Unity.Mathematics.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.ShaderGraph.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.ShaderGraph.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Universal.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipeline.Universal.ShaderLibrary">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipeline.Universal.ShaderLibrary.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
       <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.Timeline.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Mathematics.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.Mathematics.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.HighDefinition.Config.Runtime">
       <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.HighDefinition.Config.Runtime.dll</HintPath>

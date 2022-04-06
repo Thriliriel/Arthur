@@ -5023,6 +5023,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8139009508683682161, guid: 77f2d9af8a2b54840844574d48c1bbd5,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 77f2d9af8a2b54840844574d48c1bbd5, type: 3}
 --- !u!4 &1032190917 stripped
@@ -10149,6 +10154,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Arthur
+      objectReference: {fileID: 0}
+    - target: {fileID: 1754325513301245563, guid: ead1725fab625ab44932dd60fb8ff038,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1754325513412284250, guid: ead1725fab625ab44932dd60fb8ff038,
         type: 3}

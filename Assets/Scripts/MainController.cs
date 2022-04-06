@@ -486,6 +486,7 @@ public class MainController : MonoBehaviour
         //test
         //StartCoroutine(TokenizationWebService("Who are you?"));
         //weatherForecast.GetComponent<Weather>().WeatherNow(false);
+        StartCoroutine(SentenceBuilderWebService("man*loves*pizza"));
     }
 
     private void OnDestroy()
@@ -706,7 +707,9 @@ public class MainController : MonoBehaviour
                         {
                             txt += tt.Key + " ";
                         }
-                        StartCoroutine(GetRequest("https://acobot-brainshop-ai-v1.p.rapidapi.com/get?bid=178&key=sX5A2PcYZbsN5EY6&uid=mashape&msg=" + lastInteraction));
+                        //StartCoroutine(GetRequest("https://acobot-brainshop-ai-v1.p.rapidapi.com/get?bid=178&key=sX5A2PcYZbsN5EY6&uid=mashape&msg=" + lastInteraction));
+                        //StartCoroutine(GetRequest("https://waifu.p.rapidapi.com/path", lastInteraction));
+                        StartCoroutine(GetRequest("https://ai-chatbot.p.rapidapi.com/chat/free?uid="+personName+"&message="+lastInteraction, lastInteraction));
                     }
                     else if (!isBreakingIce && !currentTopic.IsDialoging())
                     {
@@ -1415,9 +1418,10 @@ public class MainController : MonoBehaviour
             List<int> connectNodes = new List<int>();
             connectNodes.Add(personId);
             connectNodes.Add(5);
+            connectNodes.Add(9);
             connectNodes.Add(thisID);
             AddGeneralEvent(personName + " was born in " + birth + "-01-01", connectNodes, "person");
-        }else if (tokens.ContainsKey("study"))
+        }else if (tokens.ContainsKey("study") && !tokens.ContainsKey("study course"))
         {
             //here, we just need to get last polarity, because it is just study or not
             //if it is negative, we can already save it. Otherwise, we just save when details are provided
@@ -1426,10 +1430,11 @@ public class MainController : MonoBehaviour
                 List<int> connectNodes = new List<int>();
                 connectNodes.Add(personId);
                 connectNodes.Add(7);
+                connectNodes.Add(9);
                 AddGeneralEvent(personName + " is not studying", connectNodes, "person");
             }
         }
-        else if (tokens.ContainsKey("work"))
+        else if (tokens.ContainsKey("work") && !tokens.ContainsKey("work job"))
         {
             //here, we just need to get last polarity, because it is just study or not
             //if it is negative, we can already save it. Otherwise, we just save when details are provided
@@ -1438,10 +1443,11 @@ public class MainController : MonoBehaviour
                 List<int> connectNodes = new List<int>();
                 connectNodes.Add(personId);
                 connectNodes.Add(6);
+                connectNodes.Add(9);
                 AddGeneralEvent(personName + " is not working", connectNodes, "person");
             }
         }
-        else if (tokens.ContainsKey("children"))
+        else if (tokens.ContainsKey("children") && !tokens.ContainsKey("children quantity") && !tokens.ContainsKey("children names"))
         {
             foreach (KeyValuePair<string, string> txt in tokens)
             {
@@ -1453,6 +1459,7 @@ public class MainController : MonoBehaviour
                         List<int> connectNodes = new List<int>();
                         connectNodes.Add(personId);
                         connectNodes.Add(8);
+                        connectNodes.Add(9);
                         AddGeneralEvent(personName + " has no children", connectNodes, "person");
                     }
                 }
@@ -1463,7 +1470,7 @@ public class MainController : MonoBehaviour
             string course = "";
             foreach (KeyValuePair<string, string> txt in tokens)
             {
-                if (txt.Key != personName && txt.Key != "study course")
+                if (txt.Key != personName && txt.Key != "study course" && (txt.Value == "NN"))
                 {
                     if(course == "")
                     {
@@ -1481,6 +1488,7 @@ public class MainController : MonoBehaviour
             List<int> connectNodes = new List<int>();
             connectNodes.Add(personId);
             connectNodes.Add(7);
+            connectNodes.Add(9);
             connectNodes.Add(thisID);
             AddGeneralEvent(personName + " is studying " + course, connectNodes, "person");
         }
@@ -1507,6 +1515,7 @@ public class MainController : MonoBehaviour
             List<int> connectNodes = new List<int>();
             connectNodes.Add(personId);
             connectNodes.Add(6);
+            connectNodes.Add(9);
             connectNodes.Add(thisID);
             AddGeneralEvent(personName + " is working as " + job, connectNodes, "person");
         }
@@ -1516,6 +1525,7 @@ public class MainController : MonoBehaviour
             List<int> connectNodes = new List<int>();
             connectNodes.Add(personId);
             connectNodes.Add(8);
+            connectNodes.Add(9);
             string who = "";
             foreach (KeyValuePair<string, string> txt in tokens)
             {
@@ -2003,15 +2013,21 @@ public class MainController : MonoBehaviour
         return str.ToLower();
     }
 
-    IEnumerator GetRequest(string uri)
+    IEnumerator GetRequest(string uri, string msg)
     {
         //just update if it is awake
         if (!isSleeping)
         {
+            //WWWForm form = new WWWForm();
+            //form.AddField("message", msg);
+
+            //using (UnityWebRequest webRequest = UnityWebRequest.Post(uri, form))
             using (UnityWebRequest webRequest = UnityWebRequest.Get(uri))
             {
                 webRequest.SetRequestHeader("X-RapidAPI-Key", "0aefee70bdmshb32146707c42e78p196f20jsn250666397e7f");
-                webRequest.SetRequestHeader("X-RapidAPI-Host", "acobot-brainshop-ai-v1.p.rapidapi.com");
+                //webRequest.SetRequestHeader("X-RapidAPI-Host", "acobot-brainshop-ai-v1.p.rapidapi.com");
+                //webRequest.SetRequestHeader("X-RapidAPI-Host", "waifu.p.rapidapi.com");
+                webRequest.SetRequestHeader("X-RapidAPI-Host", "ai-chatbot.p.rapidapi.com");
 
                 // Request and wait for the desired page.
                 yield return webRequest.SendWebRequest();
@@ -2027,15 +2043,18 @@ public class MainController : MonoBehaviour
                 {
                     //sing for me -> "{\"cnt\":\"<a href=\\\"http://www.msn.com/en-us/music\\\">click here to search and listen music<\\/a>\"}"
                     string response = webRequest.downloadHandler.text;
-                    //Debug.Log(pages[page] + ":\nReceived: " + webRequest.downloadHandler.text);
+                    Debug.Log("Received: " + response);
 
                     response = response.Replace("\"", "");
                     response = response.Replace("}", "");
-                    string[] resp = response.Split(':');
+                    response = response.Replace("response:", "*");
+                    string[] resp = response.Split('*');
 
                     //if it has a link, do not use the answer, just dunno
                     if (resp[1].Contains("http")) Dunno();
                     else SpeakYouFool(resp[1]);
+
+                    //SpeakYouFool(response);
                 }
             }
         }
@@ -2237,6 +2256,7 @@ public class MainController : MonoBehaviour
     private void GreetingTraveler(string mate)
     {
         string greetingText = "Greetings " + mate + "!";
+        //string greetingText = "";
 
         //create a new autobiographical storage for the person name, into the STM
         /*int idMemoryName = AddToSTM(0, mate, 1);
@@ -4470,6 +4490,34 @@ public class MainController : MonoBehaviour
         StreamWriter sr = File.CreateText("result.txt");
         sr.WriteLine(infoSplit[0].Split(':')[0]);
         sr.Close();
+    }
+
+    //Web Service for Sentence Builder
+    //#curl -d "{\"text\" : [\"Knob*loves*pizza\"]}" -H "Content-Type: application/json" -X POST http://localhost:8080/sentenceBuilder
+    private IEnumerator SentenceBuilderWebService(string tokens)
+    {
+        UnityWebRequest www = new UnityWebRequest(webServicePath + "sentenceBuilder", "POST");
+        byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes("{\"text\" : [\"" + tokens + "\"]}");
+        www.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
+        www.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+
+        www.SetRequestHeader("Content-Type", "application/json");
+        www.SetRequestHeader("Authorization", apiKey);
+
+        using (www)
+        {
+            yield return www.SendWebRequest();
+
+            if (www.isNetworkError || www.isHttpError)
+            {
+                Debug.Log(www.error);
+            }
+            else
+            {
+                Debug.Log("Received: " + www.downloadHandler.text);
+                
+            }
+        }
     }
 
     //Load Personality

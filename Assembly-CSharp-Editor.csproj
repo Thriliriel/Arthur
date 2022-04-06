@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <LangVersion>latest</LangVersion>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -52,6 +52,9 @@
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
     <UnityVersion>2020.3.20f1</UnityVersion>
   </PropertyGroup>
+  <ItemGroup>
+    <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
+  </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Anima2D\Scripts\Editor\SpriteMeshData.cs" />
     <Compile Include="Assets\Anima2D\Scripts\Editor\Triangle\Mesh.cs" />
@@ -160,8 +163,8 @@
     <Compile Include="Assets\Anima2D\Scripts\Editor\AnimationWindowExtra\AnimationWindowImpl_56.cs" />
     <Compile Include="Assets\Anima2D\Scripts\Editor\VertexAnimation\VertexSelection.cs" />
     <Compile Include="Assets\Anima2D\Scripts\Editor\HandlesExtra.cs" />
-    <Compile Include="Assets\Anima2D\Scripts\Editor\Node.cs" />
     <Compile Include="Assets\Anima2D\Scripts\Editor\Triangle\Geometry\ITriangle.cs" />
+    <Compile Include="Assets\Anima2D\Scripts\Editor\Node.cs" />
     <Compile Include="Assets\Anima2D\Scripts\Editor\Triangle\Data\Osub.cs" />
     <Compile Include="Assets\Anima2D\Scripts\Editor\VertexManipulator\RectManipulator\RectManipulator.cs" />
     <Compile Include="Assets\Anima2D\Scripts\Editor\Triangle\Algorithm\Dwyer.cs" />
@@ -423,6 +426,9 @@
     <Reference Include="UnityEditor.Graphs">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.20f1\Editor\Data\Managed\UnityEditor.Graphs.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.WebGL.Extensions">
+      <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.20f1\Editor\Data\PlaybackEngines\WebGLSupport\UnityEditor.WebGL.Extensions.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEditor.Android.Extensions">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.20f1\Editor\Data\PlaybackEngines\AndroidPlayer\UnityEditor.Android.Extensions.dll</HintPath>
     </Reference>
@@ -437,6 +443,9 @@
     </Reference>
     <Reference Include="AsyncIO">
       <HintPath>Assets\Plugins\AsyncIO.dll</HintPath>
+    </Reference>
+    <Reference Include="CustomMarshalers">
+      <HintPath>Assets\CustomMarshalers.dll</HintPath>
     </Reference>
     <Reference Include="Interop.SpeechLib">
       <HintPath>Assets\Interop.SpeechLib.dll</HintPath>
@@ -455,9 +464,6 @@
     </Reference>
     <Reference Include="NetMQ">
       <HintPath>Assets\Plugins\NetMQ.dll</HintPath>
-    </Reference>
-    <Reference Include="CustomMarshalers">
-      <HintPath>Assets\CustomMarshalers.dll</HintPath>
     </Reference>
     <Reference Include="log4netPlastic">
       <HintPath>Library\PackageCache\com.unity.collab-proxy@1.15.1\Lib\Editor\PlasticSCM\log4netPlastic.dll</HintPath>
@@ -834,6 +840,12 @@
     <Reference Include="Unity.VSCode.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.VSCode.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.RenderPipelines.Universal.Shaders">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Shaders.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Universal.Runtime">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Runtime.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
@@ -876,14 +888,26 @@
     <Reference Include="UnityEngine.UI">
       <HintPath>Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.Mathematics">
+      <HintPath>Library\ScriptAssemblies\Unity.Mathematics.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.ShaderGraph.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.ShaderGraph.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Universal.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipeline.Universal.ShaderLibrary">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipeline.Universal.ShaderLibrary.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
       <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.Timeline.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Mathematics.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.Mathematics.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.HighDefinition.Config.Runtime">
       <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.HighDefinition.Config.Runtime.dll</HintPath>

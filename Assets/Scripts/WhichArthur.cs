@@ -18,6 +18,10 @@ public class WhichArthur: MonoBehaviour
     private void Awake()
     {
         informName.SetActive(false);
+        personName.SetActive(false);
+        togEmpathy.SetActive(false);
+        GameObject.Find("InputField").SetActive(false);
+        GameObject.Find("Button (1)").SetActive(false);
     }
 
     private void Start()
@@ -32,6 +36,8 @@ public class WhichArthur: MonoBehaviour
 
         //D:/Docs/UnityProjects/Arthur/
         globalPath.GetComponentInParent<InputField>().text = appPath;
+
+        GameObject.Find("InputField (1)").SetActive(false);
     }
 
     private IEnumerator Timer()

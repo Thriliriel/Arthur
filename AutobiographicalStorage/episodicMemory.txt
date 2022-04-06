@@ -1,16 +1,16 @@
-1;1/15/2022 2:46:44 PM;Bella;Person;0.4230359;1
-2;1/15/2022 1:41:20 PM;AutobiographicalStorage/Images/Bella.png;Imagery;1;1
-3;1/15/2022 1:41:20 PM;Brazil;Location;1;1
-4;1/15/2022 1:41:20 PM;2019;Time;1;1
-5;1/15/2022 1:41:20 PM;born;Activity;1;1
+1;2/14/2022 2:21:14 PM;Bella;Person;1;1
+2;2/8/2022 1:50:40 PM;AutobiographicalStorage/Images/Bella.png;Imagery;1;1
+3;2/8/2022 1:50:40 PM;Brazil;Location;1;1
+4;2/8/2022 1:50:40 PM;2019;Time;1;1
+5;2/8/2022 1:50:40 PM;born;Activity;1;1
 6;7/10/2019 10:00:00 AM;work;Activity;1;1
 7;7/10/2019 10:00:00 AM;study;Activity;1;1
 8;7/10/2019 10:00:00 AM;has children;Activity;1;1
 9;7/10/2019 10:00:00 AM;Joy;Emotion;1;1
-10;1/12/2022 2:11:57 PM;Sadness;Emotion;1;1
+10;7/10/2019 10:00:00 AM;Sadness;Emotion;1;1
 11;7/10/2019 10:00:00 AM;meet;Activity;1;1
 12;7/10/2019 10:00:00 AM;learn;Activity;1;1
-13;1/13/2022 2:08:42 PM;like;Activity;1;1
+13;7/10/2019 10:00:00 AM;like;Activity;1;1
 14;7/10/2019 10:00:00 AM;love;Activity;1;1
 15;7/10/2019 10:00:00 AM;food;Object;1;1
 16;7/10/2019 10:00:00 AM;pizza;Object;1;1
@@ -21,16 +21,16 @@
 21;7/10/2019 10:00:00 AM;favorite;Object;1;1
 22;7/10/2019 10:00:00 AM;band;Object;1;1
 23;7/10/2019 10:00:00 AM;White Pearl Black Oceans;Object;1;1
-24;1/13/2022 2:08:42 PM;play;Activity;1;1
+24;7/10/2019 10:00:00 AM;play;Activity;1;1
 25;7/10/2019 10:00:00 AM;video games;Object;1;1
 26;7/10/2019 10:00:00 AM;game;Object;1;1
 27;7/10/2019 10:00:00 AM;Zelda;Object;1;1
 28;7/10/2019 10:00:00 AM;song;Object;1;1
-29;1/12/2022 2:11:57 PM;pet;Object;1;1
+29;7/10/2019 10:00:00 AM;pet;Object;1;1
 30;7/10/2019 10:00:00 AM;die;Activity;1;1
-31;1/12/2022 2:11:57 PM;Gotchi;Person;1;1
-32;1/12/2022 2:11:57 PM;dog;Object;1;1
-33;1/15/2022 2:46:44 PM;have;Activity;0.4230359;1
+31;7/10/2019 10:00:00 AM;Gotchi;Person;1;1
+32;7/10/2019 10:00:00 AM;dog;Object;1;1
+33;7/10/2019 10:00:00 AM;have;Activity;1;1
 34;7/10/2019 10:00:00 AM;accident;Object;1;1
 35;7/10/2019 10:00:00 AM;some time ago;Time;1;1
 36;7/10/2019 10:00:00 AM;videogames;Object;1;1
@@ -1523,7 +1523,7 @@
 1523;1/11/2022 1:46:26 PM;gesture;Object;1;1
 1524;1/11/2022 1:46:26 PM;headshake;Object;1;1
 1525;1/11/2022 1:46:26 PM;headshaking;Object;1;1
-1526;1/11/2022 2:06:56 PM;jab;Object;1;1
+1526;1/11/2022 1:46:26 PM;jab;Object;1;1
 1527;1/11/2022 1:46:26 PM;jabbing;Object;1;1
 1528;1/11/2022 1:46:26 PM;poking;Object;1;1
 1529;1/11/2022 1:46:26 PM;thrusting;Object;1;1
@@ -1559,7 +1559,7 @@
 1559;1/11/2022 1:46:26 PM;feathering;Object;1;1
 1560;1/11/2022 1:46:26 PM;whirling;Object;1;1
 1561;1/11/2022 1:46:26 PM;pronation;Object;1;1
-1562;1/11/2022 2:06:36 PM;pirouette;Object;1;1
+1562;1/11/2022 1:46:26 PM;pirouette;Object;1;1
 1563;1/11/2022 1:46:26 PM;birling;Object;1;1
 1564;1/11/2022 1:46:26 PM;shutting;Object;1;1
 1565;1/11/2022 1:46:26 PM;closing;Object;1;1
@@ -9782,7 +9782,7 @@
 9782;1/11/2022 1:46:36 PM;order salientia;Object;1;1
 9783;1/11/2022 1:46:36 PM;anura;Object;1;1
 9784;1/11/2022 1:46:36 PM;order batrachia;Object;1;1
-9785;1/14/2022 2:25:39 PM;frog;Object;1;1
+9785;1/11/2022 1:46:36 PM;frog;Object;1;1
 9786;1/11/2022 1:46:36 PM;toad;Object;1;1
 9787;1/11/2022 1:46:36 PM;toad frog;Object;1;1
 9788;1/11/2022 1:46:36 PM;anuran;Object;1;1
@@ -10036,22 +10036,19 @@
 10036;1/11/2022 1:46:37 PM;genus dermochelys;Object;1;1
 10037;1/11/2022 1:46:37 PM;leatherback turtle;Object;1;1
 10038;1/11/2022 1:46:37 PM;leatherback;Object;1;1
-10039;1/13/2022 2:08:42 PM;Knob;Person;1;1
-10040;1/11/2022 1:51:52 PM;AutobiographicalStorage/Images/Knob.png;Imagery;1;0.2557754
-10041;1/11/2022 1:51:52 PM;2022-01-11;Time;1;0.2557754
-10042;1/11/2022 1:51:57 PM;1989;Time;1;0.2914627
-10043;1/11/2022 2:06:05 PM;feel;Activity;1;1
-10044;1/11/2022 2:03:04 PM;good;Object;1;0.462341
-10045;1/11/2022 2:06:15 PM;thank;Object;1;1
-10046;1/11/2022 2:06:10 PM;fine;Object;1;0.2462584
-10047;1/15/2022 1:58:10 PM;time;Object;1;1
-10048;1/12/2022 2:17:56 PM;tell;Activity;1;0.5
-10049;1/13/2022 2:08:42 PM;sometime;Activity;1;1
-10051;1/13/2022 2:09:03 PM;ok;Object;1;0.5
-10050;1/13/2022 2:08:59 PM;please;Object;1;0.5
-10052;1/15/2022 2:46:18 PM;weather;Object;0.4230359;1
-10053;1/15/2022 2:46:18 PM;today;Object;0.1392286;1
-10054;1/15/2022 2:46:29 PM;tomorrow;Object;0.1493867;1
+10039;2/8/2022 2:18:54 PM;Knob;Person;1;1
+10040;1/25/2022 1:20:33 PM;AutobiographicalStorage/Images/Knob.png;Imagery;1;0.9
+10041;1/25/2022 1:20:33 PM;2022-01-25;Time;1;0.9
+10042;1/31/2022 2:18:24 PM;1989;Time;1;0.9
+10043;2/8/2022 1:50:28 PM;computer_science;Activity;1;0.2557754
+10044;2/8/2022 2:15:46 PM;tell;Activity;1;1
+10045;2/8/2022 2:15:46 PM;joke;Object;1;1
+10046;2/14/2022 2:21:14 PM;look;Activity;1;1
+10047;2/8/2022 2:18:11 PM;angel;Object;1;0.205929
+10048;2/8/2022 2:18:42 PM;weird;Object;1;0.228666
+10050;2/8/2022 2:18:54 PM;worry;Activity;1;0.5
+10049;2/8/2022 2:18:54 PM;do;Activity;1;0.5
+10051;2/8/2022 2:18:54 PM;anyway;Activity;1;0.5
 %%%
 1;7/10/2019 10:00:00 AM;agent;I was born at Brazil in 2019-08-10;1;1_2_3_4_5
 2;7/10/2019 10:00:00 AM;agent;I have no job;-1;1_6_10
@@ -20071,23 +20068,15 @@
 10016;1/11/2022 1:46:37 PM;belief;type genus of the Dermochelyidae: leatherback turtles;0;1_10036
 10017;1/11/2022 1:46:37 PM;belief;wide-ranging marine turtle with flexible leathery carapace, largest living turtle;0;1_10037
 10018;1/11/2022 1:46:37 PM;belief;wide-ranging marine turtle with flexible leathery carapace, largest living turtle;0;1_10038
-10019;1/11/2022 1:51:52 PM;person;I met Knob today;0;10039_10040_10041_1_11
-10020;1/11/2022 1:51:57 PM;person;Knob was born in 1989-01-01;0;10039_10042_5
-10021;1/11/2022 1:51:59 PM;person;Knob is not studying;-0.296;10039_7
-10022;1/11/2022 1:52:00 PM;person;Knob is not working;-0.296;10039_6
-10023;1/11/2022 1:52:02 PM;person;Knob has no children;-0.296;10039_8
-10024;1/11/2022 2:03:00 PM;belief;Bella feel;0.128;1_10043
-10025;1/11/2022 2:03:04 PM;person;Knob good thank;0.7003;10039_10044_10045
-10026;1/11/2022 2:06:10 PM;person;Knob fine;0.2023;10039_10046
-10027;1/11/2022 2:06:15 PM;person;Knob thank;0.4404;10039_10045
-10028;1/12/2022 2:17:07 PM;belief;Bella have;0;33_1
-10029;1/12/2022 2:17:14 PM;belief;time;0;10047
-10030;1/12/2022 2:17:56 PM;belief;Bella tell Knob;0;10039_10048_1
-10031;1/13/2022 1:50:03 PM;belief;Knob like play Bella sometime;0.5994;10039_13_24_1_10049
-10032;1/13/2022 1:57:59 PM;belief;Knob play Bella;0.4019;10039_24_1
-10033;1/13/2022 2:08:53 PM;belief;Knob;0;10039
-10034;1/13/2022 2:08:59 PM;belief;please;0.6124;10050
-10035;1/13/2022 2:09:03 PM;belief;ok;0.296;10051
-10036;1/15/2022 1:46:43 PM;belief;weather;0;10052
-10037;1/15/2022 1:46:56 PM;belief;weather today;0;10052_10053
-10038;1/15/2022 1:58:32 PM;belief;weather tomorrow;0;10052_10054
+10019;1/25/2022 1:20:33 PM;person;I met Knob today;0;10039_10040_10041_1_11
+10020;1/31/2022 2:18:24 PM;person;Knob was born in 1989-01-01;0;10042_5_9_10039
+10021;2/8/2022 1:50:28 PM;person;Knob is studying computer_science;0;10043_7_9_10039
+10022;2/8/2022 1:50:30 PM;person;Knob is not working;-0.296;6_9_10039
+10023;2/8/2022 1:50:32 PM;person;Knob has no children;-0.296;8_9_10039
+10024;2/8/2022 1:50:48 PM;belief;tell Knob joke;0.296;10044_10039_10045
+10025;2/8/2022 1:53:18 PM;belief;Bella;0.4215;1
+10026;2/8/2022 2:16:50 PM;belief;Knob;0;10039
+10027;2/8/2022 2:18:11 PM;belief;Bella look angel;0.3612;1_10046_10047
+10028;2/8/2022 2:18:42 PM;belief;Bella weird;-0.1557;10048_1
+10029;2/8/2022 2:18:54 PM;belief;do worry Knob Bella anyway;0.0762;10050_10049_10039_1_10051
+10030;2/14/2022 2:21:14 PM;belief;Bella look;0.6124;1_10046
