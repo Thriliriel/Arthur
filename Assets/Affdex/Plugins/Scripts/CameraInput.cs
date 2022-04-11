@@ -90,7 +90,7 @@ namespace Affdex
 #if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX || UNITY_XBOXONE || UNITY_IOS || UNITY_ANDROID
                 return cameraTexture;
 #else
-                return new Texture();
+                return new WebCamTexture();
 #endif
             }
         }

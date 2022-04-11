@@ -14,6 +14,7 @@ public class MicrophoneController : MonoBehaviour
     private int samples = 8192;
     private AudioSource audioSource;
 
+#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX || UNITY_XBOXONE
     void Start()
     {
         //get components you'll need
@@ -63,4 +64,5 @@ public class MicrophoneController : MonoBehaviour
             Debug.Log(microphone + " doesn't work!");
         }
     }
+#endif
 }

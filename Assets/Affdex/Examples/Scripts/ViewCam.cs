@@ -43,10 +43,12 @@ public class ViewCam : MonoBehaviour {
         this.GetComponent<MeshRenderer>().material.mainTexture = texture;
 
         // rotate the image to be upright on the display
-		if (cameraInput != null) {
+#if UNITY_STANDALONE_WIN
+        if (cameraInput != null) {
 			float videoRotationAngle = -cameraInput.videoRotationAngle;
 			transform.rotation = transform.rotation * Quaternion.AngleAxis (videoRotationAngle, Vector3.forward);
 		}
+#endif
 
         width = texture.width;
         height = texture.height;

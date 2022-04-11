@@ -45,7 +45,7 @@ namespace Affdex
 #if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX || UNITY_XBOXONE
                 return movie.texture;
 #else
-                return new Texture();
+                return new WebCamTexture();
 #endif
             }
         }
