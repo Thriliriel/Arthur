@@ -1,8 +1,8 @@
-1;2/14/2022 2:21:14 PM;Bella;Person;1;1
-2;2/8/2022 1:50:40 PM;AutobiographicalStorage/Images/Bella.png;Imagery;1;1
-3;2/8/2022 1:50:40 PM;Brazil;Location;1;1
-4;2/8/2022 1:50:40 PM;2019;Time;1;1
-5;2/8/2022 1:50:40 PM;born;Activity;1;1
+1;7/10/2019 10:00:00 AM;Arthur;Person;1;1
+2;7/10/2019 10:00:00 AM;AutobiographicalStorage/Images/Arthur.png;Imagery;1;1
+3;7/10/2019 10:00:00 AM;Brazil;Location;1;1
+4;7/10/2019 10:00:00 AM;2019;Time;1;1
+5;7/10/2019 10:00:00 AM;born;Activity;1;1
 6;7/10/2019 10:00:00 AM;work;Activity;1;1
 7;7/10/2019 10:00:00 AM;study;Activity;1;1
 8;7/10/2019 10:00:00 AM;has children;Activity;1;1
@@ -10036,19 +10036,6 @@
 10036;1/11/2022 1:46:37 PM;genus dermochelys;Object;1;1
 10037;1/11/2022 1:46:37 PM;leatherback turtle;Object;1;1
 10038;1/11/2022 1:46:37 PM;leatherback;Object;1;1
-10039;2/8/2022 2:18:54 PM;Knob;Person;1;1
-10040;1/25/2022 1:20:33 PM;AutobiographicalStorage/Images/Knob.png;Imagery;1;0.9
-10041;1/25/2022 1:20:33 PM;2022-01-25;Time;1;0.9
-10042;1/31/2022 2:18:24 PM;1989;Time;1;0.9
-10043;2/8/2022 1:50:28 PM;computer_science;Activity;1;0.2557754
-10044;2/8/2022 2:15:46 PM;tell;Activity;1;1
-10045;2/8/2022 2:15:46 PM;joke;Object;1;1
-10046;2/14/2022 2:21:14 PM;look;Activity;1;1
-10047;2/8/2022 2:18:11 PM;angel;Object;1;0.205929
-10048;2/8/2022 2:18:42 PM;weird;Object;1;0.228666
-10050;2/8/2022 2:18:54 PM;worry;Activity;1;0.5
-10049;2/8/2022 2:18:54 PM;do;Activity;1;0.5
-10051;2/8/2022 2:18:54 PM;anyway;Activity;1;0.5
 %%%
 1;7/10/2019 10:00:00 AM;agent;I was born at Brazil in 2019-08-10;1;1_2_3_4_5
 2;7/10/2019 10:00:00 AM;agent;I have no job;-1;1_6_10
@@ -20068,15 +20055,3 @@
 10016;1/11/2022 1:46:37 PM;belief;type genus of the Dermochelyidae: leatherback turtles;0;1_10036
 10017;1/11/2022 1:46:37 PM;belief;wide-ranging marine turtle with flexible leathery carapace, largest living turtle;0;1_10037
 10018;1/11/2022 1:46:37 PM;belief;wide-ranging marine turtle with flexible leathery carapace, largest living turtle;0;1_10038
-10019;1/25/2022 1:20:33 PM;person;I met Knob today;0;10039_10040_10041_1_11
-10020;1/31/2022 2:18:24 PM;person;Knob was born in 1989-01-01;0;10042_5_9_10039
-10021;2/8/2022 1:50:28 PM;person;Knob is studying computer_science;0;10043_7_9_10039
-10022;2/8/2022 1:50:30 PM;person;Knob is not working;-0.296;6_9_10039
-10023;2/8/2022 1:50:32 PM;person;Knob has no children;-0.296;8_9_10039
-10024;2/8/2022 1:50:48 PM;belief;tell Knob joke;0.296;10044_10039_10045
-10025;2/8/2022 1:53:18 PM;belief;Bella;0.4215;1
-10026;2/8/2022 2:16:50 PM;belief;Knob;0;10039
-10027;2/8/2022 2:18:11 PM;belief;Bella look angel;0.3612;1_10046_10047
-10028;2/8/2022 2:18:42 PM;belief;Bella weird;-0.1557;10048_1
-10029;2/8/2022 2:18:54 PM;belief;do worry Knob Bella anyway;0.0762;10050_10049_10039_1_10051
-10030;2/14/2022 2:21:14 PM;belief;Bella look;0.6124;1_10046

@@ -1,11 +1,14 @@
-﻿#if (UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN)
-using UnityEditor;
+﻿//using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
+
+#if (UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN)
 using UnityEngine.Windows.Speech;
+#endif
 
 public class DictationScript : MonoBehaviour
 {
+#if (UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN)
     public GameObject voiceButton;
 
     [SerializeField]
@@ -88,5 +91,5 @@ public class DictationScript : MonoBehaviour
         voiceButton.GetComponentInParent<Button>().onClick.RemoveAllListeners();
         voiceButton.GetComponentInParent<Button>().onClick.AddListener(StartDictator);
     }
-}
 #endif
+}

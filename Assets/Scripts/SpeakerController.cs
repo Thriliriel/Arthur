@@ -7,6 +7,7 @@ using System.Threading;
 
 public class SpeakerController : MonoBehaviour
 {
+#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX || UNITY_XBOXONE
     private SpVoice voice;
     private MainController mc;
     private AudioSource aus;
@@ -93,4 +94,5 @@ public class SpeakerController : MonoBehaviour
 
         //voice.Pause();
     }
+#endif
 }

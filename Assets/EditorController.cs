@@ -17,11 +17,22 @@ public class EditorController : Editor
         {
             ClearMemory();
         }
+
+        rect = GUILayoutUtility.GetRect(500, 40);
+        if (GUI.Button(rect, "GenerateString"))
+        {
+            GenerateString();
+        }
     }
 
     public void ClearMemory()
     {
         (target as MainController).ClearMemoryFile();
+    }
+
+    public void GenerateString()
+    {
+        (target as MainController).GenerateString();
     }
 }
 #endif

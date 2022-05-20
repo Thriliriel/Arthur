@@ -60,6 +60,7 @@ public class ViewCam : MonoBehaviour {
         dfv = gameObject.GetComponent<DebugFeatureViewer>();
 	}
 
+#if !UNITY_WEBGL
     private void Update()
     {
         if (dfv.face != null && !mainController.isSleeping)
@@ -96,6 +97,7 @@ public class ViewCam : MonoBehaviour {
             StartSaveImageCoRo(mainController.absPath+"camImage.png");
         }
     }
+#endif
 
     public void StartSaveImageCoRo(string imageName)
     {

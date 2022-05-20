@@ -14,7 +14,7 @@ using Prolog;
 
 using TopicCS;
 using DialogCS;
-using DCXR.Demo;
+//using DCXR.Demo;
 using System.Globalization;
 using System.Threading;
 
@@ -235,6 +235,12 @@ public class MainController : MonoBehaviour
 
     private void Awake()
     {
+#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX || UNITY_XBOXONE
+        canSpeak = true;
+#else
+        canSpeak = false;
+#endif
+
         usingEmpathy = true;
 
         Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
@@ -242,17 +248,14 @@ public class MainController : MonoBehaviour
         chatLog = "";
 
         //Arthur mode
-        StreamReader sr = new StreamReader("whichArthur.txt", System.Text.Encoding.Default);
-        absPath = sr.ReadLine();
-        //useW2V = Boolean.Parse(sr.ReadLine());
-        usingEmpathy = Boolean.Parse(sr.ReadLine());
-        string textFile = sr.ReadLine();
-        if (textFile == "0") chatMode = false;
-        else if (textFile == "1") chatMode = true;
-        agentName = sr.ReadLine();
-        chosenBackground = sr.ReadLine();
-        personName = sr.ReadLine();
-        sr.Close();
+        absPath = PlayerPrefs.GetString("absPath");
+        usingEmpathy = Boolean.Parse(PlayerPrefs.GetString("usingEmpathy"));
+        int whichMode = PlayerPrefs.GetInt("whichMode");
+        if (whichMode == 0) chatMode = false;
+        else if (whichMode == 1) chatMode = true;
+        agentName = PlayerPrefs.GetString("whichAgent");
+        chosenBackground = PlayerPrefs.GetString("whichScenario");
+        personName = PlayerPrefs.GetString("nominho");
 
         //get the random thougths
         randomThoughts = new List<string>();
@@ -307,6 +310,10 @@ public class MainController : MonoBehaviour
                 belinha.transform.Find("EyeCTRLBella").GetComponent<EyeCTRLBella>().enabled = true;
             }
         }
+
+#if UNITY_WEBGL
+        cam.SetActive(false);
+#endif
 
         //if arthur cannot speak, deactivate the game Object
         if (!canSpeak)
@@ -374,9 +381,11 @@ public class MainController : MonoBehaviour
         agentGeneralEvents = new Dictionary<int, GeneralEvent>();
         memorySpan = new TimeSpan(0, 0, 15);
 
+#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX || UNITY_XBOXONE
         //start the prolog
         prolog = new PrologEngine(persistentCommandHistory: false);
         prologStatements = new Dictionary<string, int>();
+#endif
 
         //what we have on textLTM, load into auxiliary LTM
         LoadEpisodicMemory();
@@ -392,20 +401,19 @@ public class MainController : MonoBehaviour
             agentLongTermMemory[2].information = "AutobiographicalStorage/Images/Bella.png";
         }
 
+#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX || UNITY_XBOXONE
         //create the facts from the memory
         CreateFactsFromMemory();
+#endif
 
         //read the next ID from the file
         //first line: ESK Ids. Second line: Episode Ids
-        sr = new StreamReader("nextId.txt", System.Text.Encoding.Default);
-        textFile = sr.ReadLine();
-        nextEskId = int.Parse(textFile.Trim());
-        textFile = sr.ReadLine();
-        nextEpisodeId = int.Parse(textFile.Trim());
-        sr.Close();
-
+        nextEpisodeId = PlayerPrefs.GetInt("nextIdEvent");
+        nextEskId = PlayerPrefs.GetInt("nextIdMemory");
+#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX || UNITY_XBOXONE
         //load prolog beliefs
         LoadBeliefs();
+#endif
 
         //also, see if this person already exists in memory, in the case of chat mode. If it does not, we need to add.
         if (chatMode)
@@ -461,10 +469,7 @@ public class MainController : MonoBehaviour
         LoadPersonality();
 
         //reset the result file
-        StreamWriter writingResult;
-        writingResult = File.CreateText("result.txt");
-        writingResult.Write("");
-        writingResult.Close();
+        PlayerPrefs.SetString("resultFile", "");
 
         //SpeakYouFool("i would like to introduce Soraia, our awesome advisor!");
 
@@ -486,7 +491,12 @@ public class MainController : MonoBehaviour
         //test
         //StartCoroutine(TokenizationWebService("Who are you?"));
         //weatherForecast.GetComponent<Weather>().WeatherNow(false);
-        StartCoroutine(SentenceBuilderWebService("man*loves*pizza"));
+        //StartCoroutine(SentenceBuilderWebService("man*loves*pizza"));
+    }
+
+    public void EndInteraction()
+    {
+        Application.Quit();
     }
 
     private void OnDestroy()
@@ -495,9 +505,8 @@ public class MainController : MonoBehaviour
         SaveEpisodic();
 
         //save next ID
-        StreamWriter textToToken = new StreamWriter("nextId.txt");
-        textToToken.WriteLine(nextEskId+"\n"+nextEpisodeId);
-        textToToken.Close();
+        PlayerPrefs.SetInt("nextIdEvent", nextEpisodeId);
+        PlayerPrefs.SetInt("nextIdMemory", nextEskId);
 
         //consolidate memory
         MemoryREM();
@@ -835,58 +844,50 @@ public class MainController : MonoBehaviour
     //Load Episodic memory
     private void LoadEpisodicMemory()
     {
-        StreamReader readingLTM = new StreamReader("AutobiographicalStorage/episodicMemory.txt", System.Text.Encoding.Default);
-        //the file stores both info, divided by "%%%"
+        string[] em = PlayerPrefs.GetString("episodicMemory").Split('*');
         bool readingESK = true;
-        using (readingLTM)
+        foreach (string line in em)
         {
-            string line;
-            do
+            //when we read the dividing sequence "%%%", episodes start
+            if (line == "%%%")
             {
-                line = readingLTM.ReadLine();
+                readingESK = false;
+                continue;
+            }
 
-                //when we read the dividing sequence "%%%", episodes start
-                if(line == "%%%")
+            if (line != "" && line != null)
+            {
+                string[] info = line.Split(';');
+                int ide = System.Convert.ToInt32(info[0]);
+
+                //while it is reading ESK
+                if (readingESK)
                 {
-                    readingESK = false;
-                    continue;
-                }
+                    //id;memory timestamp;information;5W1H class;Activation;Weight
+                    MemoryClass newMem = new MemoryClass(System.DateTime.Parse(info[1]), info[3], info[2], ide, float.Parse(info[5]));
+                    //newMem.activation = System.Convert.ToSingle(info[4]);
 
-                if (line != "" && line != null)
+                    //LTM - everything
+                    agentLongTermMemory.Add(ide, newMem);
+                }//else, it is episodes
+                else
                 {
-                    string[] info = line.Split(';');
-                    int ide = System.Convert.ToInt32(info[0]);
+                    //id;memory timestamp;type;information;polarity;nodes
+                    GeneralEvent newGen = new GeneralEvent(System.DateTime.Parse(info[1]), info[2], info[3], ide, "");
+                    newGen.polarity = float.Parse(info[4]);
 
-                    //while it is reading ESK
-                    if (readingESK)
+                    //add the associated nodes of this episode
+                    string[] memNodes = info[5].Split('_');
+                    foreach (string nod in memNodes)
                     {
-                        //id;memory timestamp;information;5W1H class;Activation;Weight
-                        MemoryClass newMem = new MemoryClass(System.DateTime.Parse(info[1]), info[3], info[2], ide, float.Parse(info[5]));
-                        //newMem.activation = System.Convert.ToSingle(info[4]);
-
-                        //LTM - everything
-                        agentLongTermMemory.Add(ide, newMem);
-                    }//else, it is episodes
-                    else
-                    {
-                        //id;memory timestamp;type;information;polarity;nodes
-                        GeneralEvent newGen = new GeneralEvent(System.DateTime.Parse(info[1]), info[2], info[3], ide, "");
-                        newGen.polarity = float.Parse(info[4]);
-
-                        //add the associated nodes of this episode
-                        string[] memNodes = info[5].Split('_');
-                        foreach(string nod in memNodes)
-                        {
-                            newGen.nodes.Add(agentLongTermMemory[int.Parse(nod)]);
-                        }
-
-                        //add
-                        agentGeneralEvents.Add(ide, newGen);
+                        newGen.nodes.Add(agentLongTermMemory[int.Parse(nod)]);
                     }
+
+                    //add
+                    agentGeneralEvents.Add(ide, newGen);
                 }
-            } while (line != null);
+            }
         }
-        readingLTM.Close();
     }
 
     //Agent says something
@@ -902,7 +903,9 @@ public class MainController : MonoBehaviour
         if (canSpeak)
         {
             //also, speak it
+#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX || UNITY_XBOXONE
             sc.GetComponent<SpeakerController>().SpeakSomething(weirdThingToTalk);
+#endif
         }
     }
 
@@ -1026,6 +1029,7 @@ public class MainController : MonoBehaviour
         }
 
         //if has image, and it is not chat, show it to the user
+#if !UNITY_WEBGL
         if (imagery.Count > 0 && !chatMode)
         {
             string imagePath = imagery[0].information;
@@ -1041,6 +1045,7 @@ public class MainController : MonoBehaviour
             randomImage.SetActive(true);
             riTarget.SetActive(true);
         }
+#endif
 
         //now, lets see if we have some new term
         //string unk = CheckNewTerm(retrieved, tokens);
@@ -1373,17 +1378,8 @@ public class MainController : MonoBehaviour
     //reset token files
     private void ResetTokenFiles()
     {
-        StreamWriter writingResult;
-
-        //reset the result token file
-        writingResult = File.CreateText("resultToken.txt");
-        writingResult.Write("");
-        writingResult.Close();
-
-        //reset the textToToken
-        writingResult = File.CreateText("textToToken.txt");
-        writingResult.Write("");
-        writingResult.Close();
+        PlayerPrefs.SetString("resultTokenFile", "");
+        PlayerPrefs.SetString("textToTokenFile", "");
     }
 
     //save ice breakers on memory
@@ -1722,56 +1718,47 @@ public class MainController : MonoBehaviour
 
         //open the file
         //open file with result
-        StreamReader sr = new StreamReader("resultToken.txt", System.Text.Encoding.Default);
-
-        using (sr)
+        string[] rt = PlayerPrefs.GetString("resultTokenFile").Split('*');
+        foreach(string line in rt)
         {
-            string line;
-            do
+            if (line != "" && line != null && line != "[]" && !line.Contains("false"))
             {
-                line = sr.ReadLine();
+                //skip comments
+                if (line.Contains("#")) continue;
 
-                if (line != "" && line != null && line != "[]" && !line.Contains("false"))
+                //memory time;person;emotion
+                string[] info = line.Split(';');
+
+                //if just have 1 index, it is the polarity. BUT: just change it if it is not influencing
+                if (info.Length == 1)
                 {
-                    //skip comments
-                    if (line.Contains("#")) continue;
-
-                    //memory time;person;emotion
-                    string[] info = line.Split(';');
-
-                    //if just have 1 index, it is the polarity. BUT: just change it if it is not influencing
-                    if (info.Length == 1)
+                    //just change it if it is not influencing
+                    if (!isInfluencing)
                     {
-                        //just change it if it is not influencing
-                        if (!isInfluencing)
+                        lastPolarity = float.Parse(info[0]);
+                        //add to the list
+                        if (lastPolarities.Count == 5)
                         {
-                            lastPolarity = float.Parse(info[0]);
-                            //add to the list
-                            if(lastPolarities.Count == 5)
-                            {
-                                lastPolarities.RemoveAt(0);
-                            }
-                            lastPolarities.Add(lastPolarity);
+                            lastPolarities.RemoveAt(0);
                         }
-                    }
-                    else
-                    {
-                        string token = info[0];
-                        string tknType = info[1];
-
-                        //if it is punctuation, exclude it unless it is a question
-                        if (tknType == "." && token != "?") continue;
-
-                        if (!returnValues.ContainsKey(token))
-                        {
-                            returnValues.Add(token, tknType);
-                        }
+                        lastPolarities.Add(lastPolarity);
                     }
                 }
-            } while (line != null);
-        }
+                else
+                {
+                    string token = info[0];
+                    string tknType = info[1];
 
-        sr.Close();
+                    //if it is punctuation, exclude it unless it is a question
+                    if (tknType == "." && token != "?") continue;
+
+                    if (!returnValues.ContainsKey(token))
+                    {
+                        returnValues.Add(token, tknType);
+                    }
+                }
+            }
+        }
 
         //reset it
         ResetTokenFiles();
@@ -1853,7 +1840,11 @@ public class MainController : MonoBehaviour
         //if it is setting emotion, it means it found a face. So, let us find out whom face it is
         if (personName == "" && marioEmotion == "")
         {
+#if !UNITY_WEBGL
             StartCoroutine(RecognitionWebService());
+#else
+            WriteFaceResult("false");
+#endif
             //RecognitionWebService();
         }
 
@@ -2075,6 +2066,7 @@ public class MainController : MonoBehaviour
             isGettingInformation = true;
             peopleGreeted.Add(personName);
             GreetingTraveler(personName);
+            Debug.LogWarning("ChatMode");
         }
         else
         {
@@ -2083,14 +2075,11 @@ public class MainController : MonoBehaviour
                 yield return new WaitForSeconds(1f);
 
                 //open file with result
-                StreamReader sr = new StreamReader("result.txt", System.Text.Encoding.Default);
-
-                string textFile = sr.ReadToEnd();
-
-                sr.Close();
+                string textFile = PlayerPrefs.GetString("resultPersonFile");
 
                 if (textFile != "" && !textFile.Contains("false") && !textFile.Contains("{}"))
                 {
+                    Debug.LogWarning("FoundPerson");
                     /*string[] info = textFile.Split('[');
                     info = info[1].Split(']');
                     info = info[0].Split(',');
@@ -2106,17 +2095,19 @@ public class MainController : MonoBehaviour
                  //UPDATE: just meet someone new IF did not see anyone yet (to avoid changing between person/not knowing)
                 else if ((textFile.Contains("false") || textFile.Contains("{}")) && !isKnowingNewPeople && faceName.GetComponent<Text>().text == "")
                 {
+                    Debug.LogWarning("NoPerson");
                     //if the face recognition found no one, we can still see if there is a name in the localPerson file
-                    if (new FileInfo("localPerson.txt").Length > 0)
+                    //if (new FileInfo("localPerson.txt").Length > 0)
+                    if (PlayerPrefs.GetString("localPersonFile") != "")
                     {
-                        StreamReader localPerson = new StreamReader("localPerson.txt", System.Text.Encoding.Default);
-                        personName = localPerson.ReadLine().Trim();
-                        localPerson.Close();
+                        Debug.LogWarning("LocalPersonFound");
+                        personName = PlayerPrefs.GetString("localPersonFile");
 
                         AddPersonToMemory();
                     }//otherwise, there is no one indeed
                     else
                     {
+                        Debug.LogWarning("Meet");
                         isGettingInformation = true;
 
                         faceName.GetComponent<Text>().text = "";
@@ -2167,10 +2158,7 @@ public class MainController : MonoBehaviour
     private void SaveNewPerson(Dictionary<string,string> tokens)
     {
         //reset the result file
-        StreamWriter writingResult;
-        writingResult = File.CreateText("result.txt");
-        writingResult.Write("");
-        writingResult.Close();
+        PlayerPrefs.SetString("resultPersonFile", "");
 
         //people can answer with more than just the name (My name is Knob). So, lets treat this
         string namePerson = "";
@@ -2198,19 +2186,20 @@ public class MainController : MonoBehaviour
             peopleGreeted.Add(personName);
 
             //also, save the person name in a txt file. If the webservice is not working, we can take the name by it.
-            StreamWriter textToToken = new StreamWriter("localPerson.txt");
-            textToToken.WriteLine(personName);
-            textToToken.Close();
+            PlayerPrefs.SetString("localPersonFile", personName);
 
             //copy the camFile to the Data directory, saving with person name
             //it is going to serve both for face recognition and autobiographical storage for images
             //File.Copy("camImage.png", "Python/face_recognition-master/Data/"+personName+".png");
+#if !UNITY_WEBGL
             if (File.Exists("AutobiographicalStorage/Images/" + namePerson + ".png"))
                 File.Delete("AutobiographicalStorage/Images/" + namePerson + ".png");
 
             File.Copy(absPath + "camImage.png", "AutobiographicalStorage/Images/" + namePerson + ".png");
+
             //SavePersonWebService();
             StartCoroutine(SavePersonWebService());
+#endif
 
             int thisID = AddToSTM("Person", namePerson, 0.9f);
             personId = thisID;
@@ -2540,20 +2529,30 @@ public class MainController : MonoBehaviour
     //save episodic memory file
     private void SaveEpisodic()
     {
-        //save LTM as it is
-        StreamWriter writingLTM;
-        writingLTM = File.CreateText("AutobiographicalStorage/episodicMemory.txt");
+        //string to store it all
+        string allMem = "";
 
         //first, save the ESK
         foreach (KeyValuePair<int, MemoryClass> mem in agentLongTermMemory)
         {
-            //ID;Timestamp;Information;Type;Activation;Weight
-            writingLTM.WriteLine(mem.Key.ToString() + ";" + mem.Value.memoryTime + ";" + mem.Value.information.Trim() + ";"
-                + mem.Value.informationType.ToString() + ";" + mem.Value.activation.ToString() + ";" + mem.Value.weight.ToString());
+            if(allMem == "")
+            {
+                //ID;Timestamp;Information;Type;Activation;Weight
+                allMem += mem.Key.ToString() + ";" + mem.Value.memoryTime + ";" + mem.Value.information.Trim() + ";"
+                + mem.Value.informationType.ToString() + ";" + mem.Value.activation.ToString() + ";" +
+                mem.Value.weight.ToString();
+            }
+            else
+            {
+                //ID;Timestamp;Information;Type;Activation;Weight
+                allMem += "*" + mem.Key.ToString() + ";" + mem.Value.memoryTime + ";" + mem.Value.information.Trim() + ";"
+                + mem.Value.informationType.ToString() + ";" + mem.Value.activation.ToString() + ";" +
+                mem.Value.weight.ToString();
+            }
         }
 
         //second, we save the episodes
-        writingLTM.WriteLine("%%%");
+        allMem += "*%%%";
         foreach (KeyValuePair<int, GeneralEvent> mem in agentGeneralEvents)
         {
             //get the nodes first
@@ -2565,11 +2564,11 @@ public class MainController : MonoBehaviour
             }
 
             //ID;Timestamp;Type;Information;Polarity;Nodes
-            writingLTM.WriteLine(mem.Key.ToString() + ";" + mem.Value.eventTime + ";" + mem.Value.eventType.Trim() + ";" 
-                + mem.Value.information.Trim() + ";" + mem.Value.polarity.ToString() + ";" + allNodes);
+            allMem += "*" + mem.Key.ToString() + ";" + mem.Value.eventTime + ";" + mem.Value.eventType.Trim() + ";"
+                + mem.Value.information.Trim() + ";" + mem.Value.polarity.ToString() + ";" + allNodes;
         }
 
-        writingLTM.Close();
+        PlayerPrefs.SetString("episodicMemory", allMem);
     }
 
     /*public void SleepAgent()
@@ -2622,26 +2621,38 @@ public class MainController : MonoBehaviour
     {
         if (dialogsInMemory.Count > 0)
         {
-            //save LTM as it is
-            StreamWriter writingLTM = File.CreateText("AutobiographicalStorage/smallTalksUsed.txt");
+            string allUsed = "";
 
             //save the old ones as well
             foreach (string dmem in dialogsUsed)
             {
-                //str with the used ones
-                writingLTM.WriteLine(dmem);
+                if(allUsed == "")
+                {
+                    allUsed += dmem;
+                }
+                else
+                {
+                    allUsed += "*" + dmem;
+                }
             }
+
             //save the ESK
             foreach (string dmem in dialogsInMemory)
             {
-                //str with the used ones
-                if(!dialogsUsed.Contains(dmem))
-                    writingLTM.WriteLine(dmem);
+                if (allUsed == "")
+                {
+                    allUsed += dmem;
+                }
+                else
+                {
+                    allUsed += "*" + dmem;
+                }
             }
-            writingLTM.Close();
+
+            PlayerPrefs.SetString("smalltalksused", allUsed);
 
             //also, save the file for Scherer
-            writingLTM = File.CreateText("AutobiographicalStorage/historic.txt");
+            string historic = "";
 
             //format: FODff0101;Yes, I love food!;FODff0202;
             //it means: dialog id -> answer -> next dialog
@@ -2652,10 +2663,19 @@ public class MainController : MonoBehaviour
                 if(i+1 < dialogsInMemory.Count)
                 {
                     string[] info2 = dialogsInMemory[i+1].Split('-');
-                    writingLTM.WriteLine(info[2] + ";" + dialogsAnswersInMemory[i] + ";" + info2[2]);
+
+                    if(historic == "")
+                    {
+                        historic += info[2] + ";" + dialogsAnswersInMemory[i] + ";" + info2[2];
+                    }
+                    else
+                    {
+                        historic += "*" + info[2] + ";" + dialogsAnswersInMemory[i] + ";" + info2[2];
+                    }
                 }
             }
-            writingLTM.Close();
+
+            PlayerPrefs.SetString("historic", historic);
         }
     }
 
@@ -2899,6 +2919,7 @@ public class MainController : MonoBehaviour
 
         //now that we have the nouns, we can check the facts
         bool foundProlog = false;
+#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX || UNITY_XBOXONE
         //if we find something, we can already answer, do not need to search the memory itself.
         //TODO: get the facts in the file, so it is not "hardcoded"
         if (topicSent.Count > 0)
@@ -2970,6 +2991,7 @@ public class MainController : MonoBehaviour
                 }
             }
         }
+#endif
 
         if (!foundProlog)
         {
@@ -3474,7 +3496,8 @@ public class MainController : MonoBehaviour
     //checks if there are new tokens in the file
     private void CheckNewTokens()
     {
-        if (new FileInfo("resultToken.txt").Length > 0)
+        if(PlayerPrefs.GetString("resultTokenFile") != "")
+        //if (new FileInfo("resultToken.txt").Length > 0)
         {
             saveNewMemoryNode = true;
         }
@@ -3483,95 +3506,52 @@ public class MainController : MonoBehaviour
     //load the icebreakers and respective answers
     private void LoadIceBreakersAndStuff()
     {
-        string iceBreakerFile = "iceBreakers.txt";
-        string positiveFile = "positiveAnswers.txt";
-        string negativeFile = "negativeAnswers.txt";
+        //not used
         string influencerFile = "influencer.txt";
+        //not used
 
-        StreamReader readingLTM = new StreamReader(iceBreakerFile, System.Text.Encoding.Default);
-        using (readingLTM)
+        string[] iceBreak = PlayerPrefs.GetString("icebreakers").Split('-');
+        foreach(string line in iceBreak)
         {
-            string line;
-            do
+            string[] info = line.Split(';');
+            int ibId = int.Parse(info[0]);
+            string ibType = info[1];
+            string ibQuestion = info[2];
+            bool ibPolarity = bool.Parse(info[3]);
+            int ibParent = int.Parse(info[4]);
+
+            //if parent is 0, is one of the primary ones
+            if (ibParent == 0)
             {
-                line = readingLTM.ReadLine();
-
-                if (line != "" && line != null)
-                {
-                    //skip comments
-                    if (line.Contains("#")) continue;
-
-                    //memory time;person;emotion
-                    string[] info = line.Split(';');
-                    int ibId = int.Parse(info[0]);
-                    string ibType = info[1];
-                    string ibQuestion = info[2];
-                    bool ibPolarity = bool.Parse(info[3]);
-                    int ibParent = int.Parse(info[4]);
-
-                    //if parent is 0, is one of the primary ones
-                    if (ibParent == 0)
-                    {
-                        iceBreakers.AddChild(new IceBreakingTreeClass(ibId, ibType, ibQuestion, ibPolarity));
-                    }//otherwise, it is one of the secondary ones. Need to first find the parent and, then, add
-                    else
-                    {
-                        iceBreakers.FindIcebreaker(ibParent).AddChild(new IceBreakingTreeClass(ibId, ibType, ibQuestion, ibPolarity));
-                    }
-                }
-            } while (line != null);
+                iceBreakers.AddChild(new IceBreakingTreeClass(ibId, ibType, ibQuestion, ibPolarity));
+            }//otherwise, it is one of the secondary ones. Need to first find the parent and, then, add
+            else
+            {
+                iceBreakers.FindIcebreaker(ibParent).AddChild(new IceBreakingTreeClass(ibId, ibType, ibQuestion, ibPolarity));
+            }
         }
-        readingLTM.Close();
 
-        readingLTM = new StreamReader(positiveFile, System.Text.Encoding.Default);
-        using (readingLTM)
+        string[] pa = PlayerPrefs.GetString("positiveAnswers").Split('-');
+        foreach(string line in pa)
         {
-            string line;
-            do
-            {
-                line = readingLTM.ReadLine();
+            string[] info = line.Split(';');
+            int ibId = int.Parse(info[0]);
+            string ibQuestion = info[1];
 
-                if (line != "" && line != null)
-                {
-                    //skip comments
-                    if (line.Contains("#")) continue;
-
-                    //memory time;person;emotion
-                    string[] info = line.Split(';');
-                    int ibId = int.Parse(info[0]);
-                    string ibQuestion = info[1];
-
-                    positiveAnswer.Add(ibId, ibQuestion);
-                }
-            } while (line != null);
+            positiveAnswer.Add(ibId, ibQuestion);
         }
-        readingLTM.Close();
 
-        readingLTM = new StreamReader(negativeFile, System.Text.Encoding.Default);
-        using (readingLTM)
+        string[] na = PlayerPrefs.GetString("negativeAnswers").Split('-');
+        foreach (string line in na)
         {
-            string line;
-            do
-            {
-                line = readingLTM.ReadLine();
+            string[] info = line.Split(';');
+            int ibId = int.Parse(info[0]);
+            string ibQuestion = info[1];
 
-                if (line != "" && line != null)
-                {
-                    //skip comments
-                    if (line.Contains("#")) continue;
-
-                    //memory time;person;emotion
-                    string[] info = line.Split(';');
-                    int ibId = int.Parse(info[0]);
-                    string ibQuestion = info[1];
-
-                    negativeAnswer.Add(ibId, ibQuestion);
-                }
-            } while (line != null);
+            negativeAnswer.Add(ibId, ibQuestion);
         }
-        readingLTM.Close();
 
-        readingLTM = new StreamReader(influencerFile, System.Text.Encoding.Default);
+        /*readingLTM = new StreamReader(influencerFile, System.Text.Encoding.Default);
         using (readingLTM)
         {
             string line;
@@ -3593,125 +3573,95 @@ public class MainController : MonoBehaviour
                 }
             } while (line != null);
         }
-        readingLTM.Close();
+        readingLTM.Close();*/
     }
 
     public void LoadKeywords()
     {
-        string keywordsPath = "keywords.txt";
-
-        StreamReader keywordsFile = new StreamReader(keywordsPath, System.Text.Encoding.Default);
-
+        string[] keyWords = PlayerPrefs.GetString("keywords").Split('-'); topics = new List<Topic>();
         keywordsDataset = new Dictionary<string, List<Tuple<string, double>>>(); // node_id [(word, weight) ..]
-        using (keywordsFile)
+        foreach (string kw in keyWords)
         {
-            string line;
+            if (kw == "" || kw == null) continue;
+            string line = kw.Trim();
+            string[] data = line.Split(' ');
 
-            do
+            string nodeId = data[0].Trim();
+            if (!keywordsDataset.ContainsKey(nodeId))
             {
-                line = keywordsFile.ReadLine();
-                if (line == "" || line == null) continue;
-                line = line.Trim();
-                string[] data = line.Split(' ');
-
-                string nodeId = data[0].Trim();
-                if (!keywordsDataset.ContainsKey(nodeId))
-                {
-                    keywordsDataset[nodeId] = new List<Tuple<string, double>>();
-                }
-                keywordsDataset[nodeId].Add(new Tuple<string, double>(data[1].Trim(), double.Parse(data[2].Trim())));
-
-            } while (line != null);
-        }
-        keywordsFile.Close();
-
-
-        /*foreach (KeyValuePair<string, List<Tuple<string, double>>> kd in keywordsDataset)
-        {
-            foreach (Tuple<string, double> kw in kd.Value)
-            {
-                Debug.Log(kd.Key + "  (" + kw.Item1 + ", " + kw.Item2 + ")");
+                keywordsDataset[nodeId] = new List<Tuple<string, double>>();
             }
-
-        }*/
+            keywordsDataset[nodeId].Add(new Tuple<string, double>(data[1].Trim(), double.Parse(data[2].Trim())));
+        }
     }
 
     public void LoadSmallTalk()
     {
-        string smallTalkFile = "smallTalk.txt";
+        string[] smallT = PlayerPrefs.GetString("smalltalks").Split('*');
+        topics = new List<Topic>();
+        Topic currentTopic = null;
+        Dialog currentDialog = null;
+        //int lastParent = -1;
+        //int treeLevel = 0;
 
-        StreamReader readingLTM = new StreamReader(smallTalkFile, System.Text.Encoding.Default);
-        using (readingLTM)
+        var dialogIds = new HashSet<string>();
+        foreach (string st in smallT)
         {
-            string line;
-            //Dictionary<int, Node> aux = new Dictionary<int, Node>();
-            topics = new List<Topic>();
-            Topic currentTopic = null;
-            Dialog currentDialog = null;
-            //int lastParent = -1;
-            //int treeLevel = 0;
+            if (st == "" || st == null) continue;
+            string line = st.Trim();
+            char command = line[0];
+            line = (line.Substring(1, line.Length - 1)).Trim();
 
-            var dialogIds = new HashSet<string>();
-            do
+            //new topic
+            if (command.Equals('$'))
             {
-                line = readingLTM.ReadLine();
-                if (line == "" || line == null) continue;
-                line = line.Trim();
-                char command = line[0];
-                line = (line.Substring(1, line.Length - 1)).Trim();
+                currentTopic = new Topic(line);
+                topics.Add(currentTopic);
+            }
+            //new dialog
+            else if (command.Equals('['))
+            {
+                currentDialog = new Dialog(line);
+            }
+            //dialog
+            else if (command.Equals('#'))
+            {
 
-                //new topic
-                if (command.Equals('$'))
+                //id, sentence, polarity, isLeaf, father id, memory edge, memory node value..
+                string[] data = line.Split(';');
+                string nodeId = data[0].Trim();
+                string fatherId = data[2].Trim();
+
+                //currentDialog.AddNode(int.Parse(data[0]), data[1].Trim(), double.Parse(data[2]), bool.Parse(data[3].Trim()), int.Parse(data[4]), data[5].Trim(), data[6].Trim());
+                //currentDialog.AddNode(int.Parse(data[0]), data[1].Trim(), double.Parse(data[2]), data[3].Replace(" ", "").Split(',') , int.Parse(data[4]), "c", "c");
+                if (dialogIds.Contains(nodeId))
                 {
-                    currentTopic = new Topic(line);
-                    topics.Add(currentTopic);
-                }
-                //new dialog
-                else if (command.Equals('['))
-                {
-                    currentDialog = new Dialog(line);
-                }
-                //dialog
-                else if (command.Equals('#'))
-                {
-
-                    //id, sentence, polarity, isLeaf, father id, memory edge, memory node value..
-                    string[] data = line.Split(';');
-                    string nodeId = data[0].Trim();
-                    string fatherId = data[2].Trim();
-
-                    //currentDialog.AddNode(int.Parse(data[0]), data[1].Trim(), double.Parse(data[2]), bool.Parse(data[3].Trim()), int.Parse(data[4]), data[5].Trim(), data[6].Trim());
-                    //currentDialog.AddNode(int.Parse(data[0]), data[1].Trim(), double.Parse(data[2]), data[3].Replace(" ", "").Split(',') , int.Parse(data[4]), "c", "c");
-                    if (dialogIds.Contains(nodeId))
-                    {
-                        throw new ArgumentException("PARSER ERROR: Node id already used (must be unique!): " + nodeId, nameof(nodeId));
-                    }
-
-                    currentDialog.AddNode(nodeId, data[1].Trim(), fatherId);
-
-                    dialogIds.Add(nodeId);
-
-                    if (fatherId == "-1") continue; //raiz não tem pai para inserir keywords !!
-
-                    List<Tuple<string, double>> lst;
-                    if (keywordsDataset.TryGetValue(nodeId, out lst))
-                    {
-                        currentDialog.AddKeywords(nodeId, lst, fatherId);
-                    }
-                    else
-                    {
-                        throw new ArgumentException("PARSER ERROR: Node id not found: " + nodeId, nameof(nodeId));
-                    }
-
-                }
-                //close dialog (insert on topic)
-                else if (command.Equals(']'))
-                {
-                    //currentDialog.CloseInsertion();
-                    currentTopic.InsertDialog(currentDialog.GetDescription(), currentDialog);
+                    throw new ArgumentException("PARSER ERROR: Node id already used (must be unique!): " + nodeId, nameof(nodeId));
                 }
 
-            } while (line != null);
+                currentDialog.AddNode(nodeId, data[1].Trim(), fatherId);
+
+                dialogIds.Add(nodeId);
+
+                if (fatherId == "-1") continue; //raiz não tem pai para inserir keywords !!
+
+                List<Tuple<string, double>> lst;
+                if (keywordsDataset.TryGetValue(nodeId, out lst))
+                {
+                    currentDialog.AddKeywords(nodeId, lst, fatherId);
+                }
+                else
+                {
+                    throw new ArgumentException("PARSER ERROR: Node id not found: " + nodeId, nameof(nodeId));
+                }
+
+            }
+            //close dialog (insert on topic)
+            else if (command.Equals(']'))
+            {
+                //currentDialog.CloseInsertion();
+                currentTopic.InsertDialog(currentDialog.GetDescription(), currentDialog);
+            }
         }
 
         /*if (topics.Count >= 1)
@@ -3720,59 +3670,40 @@ public class MainController : MonoBehaviour
         }*/
 
         keywordsDataset.Clear();
-        readingLTM.Close();
     }
 
     //load small talks saved in memory
     private void LoadMemoryDialogs()
     {
-        //StartCoroutine(MatchTopicsDialogs());
-
-        StreamReader readingLTM = new StreamReader("AutobiographicalStorage/smallTalksUsed.txt", System.Text.Encoding.Default);
-
-        using (readingLTM)
+        string[] stu = PlayerPrefs.GetString("smalltalksused").Split('-');
+        foreach(string line in stu)
         {
-            string line;
-            do
+            if (line != "" && line != null)
             {
-                line = readingLTM.ReadLine();
-
-                if (line != "" && line != null)
-                {
-                    dialogsUsed.Add(line);
-                }
-            } while (line != null);
+                dialogsUsed.Add(line);
+            }
         }
-        readingLTM.Close();
     }
 
     //load beliefs
     private void LoadBeliefs()
     {
-        StreamReader readingLTM = new StreamReader("beliefs.txt", System.Text.Encoding.Default);
-
-        using (readingLTM)
+        string[] bel = PlayerPrefs.GetString("beliefs").Split('*');
+        foreach(string line in bel)
         {
-            string line;
-            do
+            if (line != "" && line != null)
             {
-                line = readingLTM.ReadLine();
+                prolog.ConsultFromString(line + ".");
 
-                if (line != "" && line != null)
-                {
-                    prolog.ConsultFromString(line + ".");
-
-                    //get the statements
-                    string[] arrrr = line.Split(':');
-                    arrrr[0] = arrrr[0].Trim();
-                    arrrr = arrrr[0].Split('(');
-                    string state = arrrr[0];
-                    arrrr = arrrr[1].Split(',');
-                    prologStatements.Add(state, arrrr.Length);
-                }
-            } while (line != null);
+                //get the statements
+                string[] arrrr = line.Split(':');
+                arrrr[0] = arrrr[0].Trim();
+                arrrr = arrrr[0].Split('(');
+                string state = arrrr[0];
+                arrrr = arrrr[1].Split(',');
+                prologStatements.Add(state, arrrr.Length);
+            }
         }
-        readingLTM.Close();
     }
 
     //create prolog facts from memory
@@ -4239,6 +4170,7 @@ public class MainController : MonoBehaviour
     //Web Service for Face Recognition
     private IEnumerator RecognitionWebService()
     {
+#if !UNITY_WEBGL
         if (!File.Exists("camImage.png"))
         {
             //save image
@@ -4263,16 +4195,19 @@ public class MainController : MonoBehaviour
 
             Destroy(image);
         }
+#endif
 
         UnityWebRequest www = new UnityWebRequest(webServicePath + "recognize", "POST");
 
         //convert image to string
+#if !UNITY_WEBGL
         byte[] imageData = File.ReadAllBytes("camImage.png");
         string b64 = System.Convert.ToBase64String(imageData);
 
         byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes("{\"image\" : [\"" + b64 + "\"], \"direc\" : [\"Data\"], \"th\" : [0.5], \"mode\" : [\"n\"]}");
         www.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
         www.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+#endif
 
         www.SetRequestHeader("Content-Type", "application/json");
         www.SetRequestHeader("Authorization", apiKey);
@@ -4285,7 +4220,11 @@ public class MainController : MonoBehaviour
             {
                 //UnityEngine.Debug.Log(www.error);
                 //if error, try again
+#if !UNITY_WEBGL
                 StartCoroutine(RecognitionWebService());
+#else
+                WriteFaceResult("false");
+#endif
             }
             else
             {
@@ -4310,9 +4249,7 @@ public class MainController : MonoBehaviour
         //UnityEngine.Debug.Log(tknType[0]);
 
         //write the file
-        StreamWriter sr = File.CreateText("result.txt");
-        sr.WriteLine(infoSplit[0].Split(':')[0]);
-        sr.Close();
+        PlayerPrefs.SetString("resultPersonFile", infoSplit[0].Split(':')[0]);
     }
 
     //Web Service for save a new person
@@ -4405,24 +4342,38 @@ public class MainController : MonoBehaviour
         //UnityEngine.Debug.Log(tknType[0]);
 
         //write the file
-        StreamWriter sr = File.CreateText("resultToken.txt");
+        string allTok = "";
 
         for (int i = 0; i < tokens.Length; i++)
         {
             //if it is the last, it is the polarity
             if (i == tokens.Length - 1)
             {
-                sr.WriteLine(tokens[i]);
+                if(allTok == "")
+                {
+                    allTok += tokens[i];
+                }
+                else
+                {
+                    allTok += "*" + tokens[i];
+                }
                 //UnityEngine.Debug.Log(tokens[i]);
             }
             else
             {
-                sr.WriteLine(tokens[i] + ";" + tknType[i]);
+                if (allTok == "")
+                {
+                    allTok += tokens[i] + ";" + tknType[i];
+                }
+                else
+                {
+                    allTok += "*" + tokens[i] + ";" + tknType[i];
+                }
                 //UnityEngine.Debug.Log(tknType[i]);
             }
         }
 
-        sr.Close();
+        PlayerPrefs.SetString("resultTokenFile", allTok);
     }
 
     public void ParseTokens(string webServiceResponse)
@@ -4442,7 +4393,7 @@ public class MainController : MonoBehaviour
         //end formatting
 
         //write the file
-        StreamWriter sr = File.CreateText("resultToken.txt");
+        string allTok = "";
 
         //potato: (name, NN- (be, VB- (Knob, NNP- (0.0, 0
         for (int i = 0; i < infoSplit.Length; i++)
@@ -4454,17 +4405,33 @@ public class MainController : MonoBehaviour
             //if it is the last, it is the polarity
             if (i == infoSplit.Length - 1)
             {
-                sr.WriteLine(brick[0].Trim());
+                if (allTok == "")
+                {
+                    allTok += brick[0].Trim();
+                }
+                else
+                {
+                    allTok += "*" + brick[0].Trim();
+                }
+                
                 //UnityEngine.Debug.Log(tokens[i]);
             }
             else
             {
-                sr.WriteLine(brick[0].Trim() + ";" + brick[1].Trim());
+                if (allTok == "")
+                {
+                    allTok += brick[0].Trim() + ";" + brick[1].Trim();
+                }
+                else
+                {
+                    allTok += "*" + brick[0].Trim() + ";" + brick[1].Trim();
+                }
+                
                 //UnityEngine.Debug.Log(tknType[i]);
             }
         }
 
-        sr.Close();
+        PlayerPrefs.SetString("resultTokenFile", allTok);
     }
 
     public void ParseFaceResult(string webServiceResponse)
@@ -4487,9 +4454,7 @@ public class MainController : MonoBehaviour
         //UnityEngine.Debug.Log(tknType[0]);
 
         //write the file
-        StreamWriter sr = File.CreateText("result.txt");
-        sr.WriteLine(infoSplit[0].Split(':')[0]);
-        sr.Close();
+        PlayerPrefs.SetString("resultPersonFile", infoSplit[0].Split(':')[0]);
     }
 
     //Web Service for Sentence Builder
@@ -4523,34 +4488,20 @@ public class MainController : MonoBehaviour
     //Load Personality
     private void LoadPersonality()
     {
-        StreamReader readingLTM = new StreamReader("personality.txt", System.Text.Encoding.Default);
-        
-        using (readingLTM)
-        {
-            string line;
-            do
-            {
-                line = readingLTM.ReadLine();
+        string line = PlayerPrefs.GetString("personality");
+        string[] info = line.Split(';');
 
-                if (line != "" && line != null)
-                {
-                    string[] info = line.Split(';');
-                    
-                    if(info.Length != 5)
-                    {
-                        Debug.LogError("File incomplete, fix it and try again!");
-                    }
-                    else
-                    {
-                        foreach(string inf in info)
-                        {
-                            personality.Add(float.Parse(inf));
-                        }
-                    }
-                }
-            } while (line != null);
+        if (info.Length != 5)
+        {
+            Debug.LogError("File incomplete, fix it and try again!");
         }
-        readingLTM.Close();
+        else
+        {
+            foreach (string inf in info)
+            {
+                personality.Add(float.Parse(inf));
+            }
+        }
 
         //depending on the personality, we assign an initial PAD space
         /*In the second condition (i.e. extrovert), she is assigned a controlled
@@ -4679,58 +4630,51 @@ public class MainController : MonoBehaviour
         Dictionary<int, MemoryClass> ltm = new Dictionary<int, MemoryClass>();
         Dictionary<int, GeneralEvent> ge = new Dictionary<int, GeneralEvent>();
 
-        StreamReader readingLTM = new StreamReader("AutobiographicalStorage/episodicMemory.txt", System.Text.Encoding.Default);
         //the file stores both info, divided by "%%%"
         bool readingESK = true;
-        using (readingLTM)
+        string[] em = PlayerPrefs.GetString("episodicMemory").Split('*');
+        foreach(string line in em)
         {
-            string line;
-            do
+            //when we read the dividing sequence "%%%", episodes start
+            if (line == "%%%")
             {
-                line = readingLTM.ReadLine();
+                readingESK = false;
+                continue;
+            }
 
-                //when we read the dividing sequence "%%%", episodes start
-                if (line == "%%%")
+            if (line != "" && line != null)
+            {
+                string[] info = line.Split(';');
+                int ide = System.Convert.ToInt32(info[0]);
+
+                //while it is reading ESK
+                if (readingESK)
                 {
-                    readingESK = false;
-                    continue;
-                }
+                    //id;memory timestamp;information;5W1H class;Activation;Weight
+                    MemoryClass newMem = new MemoryClass(System.DateTime.Parse(info[1]), info[3], info[2], ide, float.Parse(info[5]));
+                    //newMem.activation = System.Convert.ToSingle(info[4]);
 
-                if (line != "" && line != null)
+                    //LTM - everything
+                    ltm.Add(ide, newMem);
+                }//else, it is episodes
+                else
                 {
-                    string[] info = line.Split(';');
-                    int ide = System.Convert.ToInt32(info[0]);
+                    //id;memory timestamp;type;information;polarity;nodes
+                    GeneralEvent newGen = new GeneralEvent(System.DateTime.Parse(info[1]), info[2], info[3], ide, "");
+                    newGen.polarity = float.Parse(info[4]);
 
-                    //while it is reading ESK
-                    if (readingESK)
+                    //add the associated nodes of this episode
+                    string[] memNodes = info[5].Split('_');
+                    foreach (string nod in memNodes)
                     {
-                        //id;memory timestamp;information;5W1H class;Activation;Weight
-                        MemoryClass newMem = new MemoryClass(System.DateTime.Parse(info[1]), info[3], info[2], ide, float.Parse(info[5]));
-                        //newMem.activation = System.Convert.ToSingle(info[4]);
-
-                        //LTM - everything
-                        ltm.Add(ide, newMem);
-                    }//else, it is episodes
-                    else
-                    {
-                        //id;memory timestamp;type;information;polarity;nodes
-                        GeneralEvent newGen = new GeneralEvent(System.DateTime.Parse(info[1]), info[2], info[3], ide, "");
-                        newGen.polarity = float.Parse(info[4]);
-
-                        //add the associated nodes of this episode
-                        string[] memNodes = info[5].Split('_');
-                        foreach (string nod in memNodes)
-                        {
-                            newGen.nodes.Add(ltm[int.Parse(nod)]);
-                        }
-
-                        //add
-                        ge.Add(ide, newGen);
+                        newGen.nodes.Add(ltm[int.Parse(nod)]);
                     }
+
+                    //add
+                    ge.Add(ide, newGen);
                 }
-            } while (line != null);
+            }
         }
-        readingLTM.Close();
 
         //for each event, we check if it can be wiped
         List<int> eventsKill = new List<int>();
@@ -4787,19 +4731,29 @@ public class MainController : MonoBehaviour
         }
 
         //finally, we save again
-        StreamWriter writingLTM;
-        writingLTM = File.CreateText("AutobiographicalStorage/episodicMemory.txt");
+        string allMem = "";
 
         //first, save the ESK
         foreach (KeyValuePair<int, MemoryClass> mem in ltm)
         {
-            //ID;Timestamp;Information;Type;Activation;Weight
-            writingLTM.WriteLine(mem.Key.ToString() + ";" + mem.Value.memoryTime + ";" + mem.Value.information.Trim() + ";"
-                + mem.Value.informationType.ToString() + ";" + mem.Value.activation.ToString() + ";" + mem.Value.weight.ToString());
+            if(allMem == "")
+            {
+                //ID;Timestamp;Information;Type;Activation;Weight
+                allMem += mem.Key.ToString() + ";" + mem.Value.memoryTime + ";" + mem.Value.information.Trim() + ";"
+                + mem.Value.informationType.ToString() + ";" + mem.Value.activation.ToString() + ";" + 
+                mem.Value.weight.ToString();
+            }
+            else
+            {
+                //ID;Timestamp;Information;Type;Activation;Weight
+                allMem += "*" + mem.Key.ToString() + ";" + mem.Value.memoryTime + ";" + mem.Value.information.Trim() + ";"
+                + mem.Value.informationType.ToString() + ";" + mem.Value.activation.ToString() + ";" +
+                mem.Value.weight.ToString();
+            }
         }
 
         //second, we save the episodes
-        writingLTM.WriteLine("%%%");
+        allMem += "*%%%";
         foreach (KeyValuePair<int, GeneralEvent> mem in ge)
         {
             //get the nodes first
@@ -4811,11 +4765,11 @@ public class MainController : MonoBehaviour
             }
 
             //ID;Timestamp;Type;Information;Polarity;Nodes
-            writingLTM.WriteLine(mem.Key.ToString() + ";" + mem.Value.eventTime + ";" + mem.Value.eventType.Trim() + ";"
-                + mem.Value.information.Trim() + ";" + mem.Value.polarity.ToString() + ";" + allNodes);
+            allMem += "*" + mem.Key.ToString() + ";" + mem.Value.eventTime + ";" + mem.Value.eventType.Trim() + ";"
+                + mem.Value.information.Trim() + ";" + mem.Value.polarity.ToString() + ";" + allNodes;
         }
 
-        writingLTM.Close();
+        PlayerPrefs.SetString("episodicMemory", allMem);
     }
 
     //get info from WordNet to create memories and beliefs
@@ -4829,12 +4783,8 @@ public class MainController : MonoBehaviour
         LoadEpisodicMemory();
 
         //next ids
-        StreamReader sr = new StreamReader("nextId.txt", System.Text.Encoding.Default);
-        string textFile = sr.ReadLine();
-        nextEskId = int.Parse(textFile.Trim());
-        textFile = sr.ReadLine();
-        nextEpisodeId = int.Parse(textFile.Trim());
-        sr.Close();
+        nextEpisodeId = PlayerPrefs.GetInt("nextIdEvent");
+        nextEskId = PlayerPrefs.GetInt("nextIdMemory");
 
         //load wordnet
         LoadWordnetFile();
@@ -4843,9 +4793,8 @@ public class MainController : MonoBehaviour
         SaveEpisodic();
 
         //save next ID
-        StreamWriter textToToken = new StreamWriter("nextId.txt");
-        textToToken.WriteLine(nextEskId + "\n" + nextEpisodeId);
-        textToToken.Close();
+        PlayerPrefs.SetInt("nextIdEvent", nextEpisodeId);
+        PlayerPrefs.SetInt("nextIdMemory", nextEskId);
     }
 
     //load wordnet file
@@ -4913,33 +4862,25 @@ public class MainController : MonoBehaviour
     //load sentiment sentences
     private void LoadSenSenFile()
     {
-        StreamReader readingLTM = new StreamReader("sentimentSentences.txt", System.Text.Encoding.Default);
-        using (readingLTM)
+        string[] ss = PlayerPrefs.GetString("sensen").Split('-');
+
+        foreach(string line in ss)
         {
-            string line;
-            do
+            string[] info = line.Split(';');
+
+            //sentiment;sentence
+            string sentiment = info[0];
+            string sentence = info[1].Trim();
+
+            if (sentiment == "happy")
             {
-                line = readingLTM.ReadLine();
-
-                if (line != "" && line != null)
-                {
-                    string[] info = line.Split(';');
-
-                    //sentiment;sentence
-                    string sentiment = info[0];
-                    string sentence = info[1].Trim();
-
-                    if(sentiment == "happy")
-                    {
-                        happySentences.Add(sentence);
-                    }else if (sentiment == "sad")
-                    {
-                        sadSentences.Add(sentence);
-                    }
-                }
-            } while (line != null);
+                happySentences.Add(sentence);
+            }
+            else if (sentiment == "sad")
+            {
+                sadSentences.Add(sentence);
+            }
         }
-        readingLTM.Close();
     }
 
     //check the amount in lastPolatiries
@@ -4979,11 +4920,8 @@ public class MainController : MonoBehaviour
     //save the chat log file
     private void SaveChatLog()
     {
-        using (StreamWriter sw = File.AppendText("AutobiographicalStorage/chatLog.txt"))
-        {
-            sw.WriteLine(System.DateTime.Now);
-            sw.WriteLine(chatLog);
-        }
+        string cl = System.DateTime.Now.ToString() + "#" + chatLog;
+        PlayerPrefs.SetString("chatlog", cl);
     }
 
     public void ImportST()
@@ -5104,21 +5042,11 @@ public class MainController : MonoBehaviour
     //Load random thoughts
     private void LoadRandomThoughts()
     {
-        StreamReader readingLTM = new StreamReader("randomThoughts.txt", System.Text.Encoding.Default);
-        using (readingLTM)
+        string[] rt = PlayerPrefs.GetString("randomThoughts").Split(';');
+        foreach(string tou in rt)
         {
-            string line;
-            do
-            {
-                line = readingLTM.ReadLine();
-
-                if (line != "" && line != null)
-                {
-                    randomThoughts.Add(line.Trim());
-                }
-            } while (line != null);
+            randomThoughts.Add(tou.Trim());
         }
-        readingLTM.Close();
     }
 
     //wondering...
@@ -5147,5 +5075,39 @@ public class MainController : MonoBehaviour
     private string LeadingZero(int n)
     {
         return n.ToString().PadLeft(2, '0');
+    }
+
+    public void GenerateString()
+    {
+        string result = "";
+
+        StreamReader readingLTM = new StreamReader("backupepisodicMemory.txt", System.Text.Encoding.Default);
+
+        using (readingLTM)
+        {
+            string line;
+            do
+            {
+                line = readingLTM.ReadLine();
+
+                if (line != "" && line != null)
+                {
+                    if(result == "")
+                    {
+                        result += line;
+                    }
+                    else
+                    {
+                        result += "*" + line;
+                    }
+                }
+            } while (line != null);
+        }
+        readingLTM.Close();
+
+        StreamWriter writingResult;
+        writingResult = File.CreateText("stringo.txt");
+        writingResult.Write(result);
+        writingResult.Close();
     }
 }

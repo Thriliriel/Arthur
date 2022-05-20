@@ -17,7 +17,9 @@ public class CharacterCTRL : MonoBehaviour
 
     private void Awake()
     {
+#if (UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN)
         Application.targetFrameRate = 60;
+#endif
     }
 
     // Start is called before the first frame update
