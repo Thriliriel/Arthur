@@ -496,6 +496,8 @@ public class MainController : MonoBehaviour
 
     public void EndInteraction()
     {
+        SpeakYouFool("Bye!");
+
         Application.Quit();
     }
 
@@ -4084,13 +4086,31 @@ public class MainController : MonoBehaviour
                         }
                     }
 
-                    //add the nodes back to the STM
+                    //the chosen event must have more than 1 maxCues if it has person or agent
+                    bool allGood = true;
                     foreach (MemoryClass mem in theChosenOne.nodes)
                     {
-                        AddToSTM(mem.informationType, mem.information, mem.weight);
+                        if((mem.information == agentName || mem.information == personName) && maxCues <= 1)
+                        {
+                            allGood = false;
+                            break;
+                        }
                     }
 
-                    DealWithIt(theChosenOne, cues);
+                    if (allGood)
+                    {
+                        //add the nodes back to the STM
+                        foreach (MemoryClass mem in theChosenOne.nodes)
+                        {
+                            AddToSTM(mem.informationType, mem.information, mem.weight);
+                        }
+
+                        DealWithIt(theChosenOne, cues);
+                    }
+                    else
+                    {
+                        Dunno();
+                    }
                 }//else, nothing was found
                 else
                 {

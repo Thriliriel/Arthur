@@ -2,6 +2,7 @@
 using System.Collections;
 using System.IO;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -15,6 +16,8 @@ public class WhichArthur: MonoBehaviour
     //public GameObject useW2V;
     public GameObject togEmpathy;
     public GameObject scenario;
+    public string webServicePath;
+    private string apiKey;
 
     private void Awake()
     {
@@ -23,6 +26,7 @@ public class WhichArthur: MonoBehaviour
         togEmpathy.SetActive(false);
         GameObject.Find("InputField").SetActive(false);
         GameObject.Find("Button (1)").SetActive(false);
+        apiKey = "Bearer 1fbdeab9-3742-4fcb-acc7-0da3f2bb2ae9";
     }
 
     private void Start()
@@ -39,6 +43,8 @@ public class WhichArthur: MonoBehaviour
         globalPath.GetComponentInParent<InputField>().text = appPath;
 
         GameObject.Find("InputField (1)").SetActive(false);
+
+        StartCoroutine(WakeUpWebService());
     }
 
     private IEnumerator Timer()
@@ -283,5 +289,31 @@ public class WhichArthur: MonoBehaviour
         PlayerPrefs.DeleteAll();
         PlayerPrefs.SetString("episodicMemory", "");
         Debug.LogWarning("Clear!");
+    }
+
+    //Web Service only to wake the server up
+    private IEnumerator WakeUpWebService()
+    {
+        UnityWebRequest www = new UnityWebRequest(webServicePath + "tokenize", "POST");
+        byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes("{\"text\" : [\"wake up\"]}");
+        www.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
+        www.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+
+        www.SetRequestHeader("Content-Type", "application/json");
+        www.SetRequestHeader("Authorization", apiKey);
+
+        using (www)
+        {
+            yield return www.SendWebRequest();
+
+            if (www.isNetworkError || www.isHttpError)
+            {
+                Debug.Log(www.error);
+            }
+            else
+            {
+                Debug.Log("Received: " + www.downloadHandler.text);
+            }
+        }
     }
 }

@@ -159,6 +159,7 @@ MonoBehaviour:
   globalPath: {fileID: 1188557292}
   togEmpathy: {fileID: 1465707894}
   scenario: {fileID: 273073051}
+  webServicePath: https://limitless-lake-90641.herokuapp.com/
 --- !u!4 &18185300
 Transform:
   m_ObjectHideFlags: 0
