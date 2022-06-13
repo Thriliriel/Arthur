@@ -235,11 +235,7 @@ public class MainController : MonoBehaviour
 
     private void Awake()
     {
-#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX || UNITY_XBOXONE
         canSpeak = true;
-#else
-        canSpeak = false;
-#endif
 
         usingEmpathy = true;
 
@@ -905,9 +901,7 @@ public class MainController : MonoBehaviour
         if (canSpeak)
         {
             //also, speak it
-#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX || UNITY_XBOXONE
             sc.GetComponent<SpeakerController>().SpeakSomething(weirdThingToTalk);
-#endif
         }
     }
 
@@ -5130,4 +5124,31 @@ public class MainController : MonoBehaviour
         writingResult.Write(result);
         writingResult.Close();
     }
+
+    //Python to read a file (webgl cannot do that because of server policy)
+    /*private IEnumerator PythonReadFile(string fileName)
+    {
+        UnityWebRequest www = new UnityWebRequest(webServicePath + "tokenize", "POST");
+        byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes("{\"text\" : [\"" + sentence + "\"]}");
+        www.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
+        www.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+
+        www.SetRequestHeader("Content-Type", "application/json");
+        www.SetRequestHeader("Authorization", apiKey);
+
+        using (www)
+        {
+            yield return www.SendWebRequest();
+
+            if (www.isNetworkError || www.isHttpError)
+            {
+                Debug.Log(www.error);
+            }
+            else
+            {
+                Debug.Log("Received: " + www.downloadHandler.text);
+                WriteTokens(www.downloadHandler.text);
+            }
+        }
+    }*/
 }

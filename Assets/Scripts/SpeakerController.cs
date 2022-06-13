@@ -5,6 +5,10 @@ using System.Xml;
 using System.IO;
 using System.Threading;
 
+#if UNITY_WEBGL
+using System.Runtime.InteropServices;
+#endif
+
 public class SpeakerController : MonoBehaviour
 {
 #if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX || UNITY_XBOXONE
@@ -94,5 +98,24 @@ public class SpeakerController : MonoBehaviour
 
         //voice.Pause();
     }
+#elif UNITY_WEBGL
+    private MainController mc;
+
+    // this is supplied by TTS.jslib in the plugins folder
+    [DllImport("__Internal")]
+    private static extern void Speak(string str, string str2);
+
+    public void SpeakSomething(string line)
+    {
+        Debug.Log(line + " --- " + mc.agentName);
+        // the jslib only works while in the browser
+        Speak(line, mc.agentName);
+    }
+
+    private void Awake()
+    {
+        mc = GameObject.Find("MainController").GetComponent<MainController>();
+    }
 #endif
+
 }

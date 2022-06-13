@@ -1,9 +1,0 @@
-CMake
-opencv-python
-datetime
-face_recognition
-requests
-pandas
-cherrypy
-nltk
-gensim

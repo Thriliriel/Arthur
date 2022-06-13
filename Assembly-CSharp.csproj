@@ -122,13 +122,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Packages\CSProlog.6.0.0\lib\net35\CSProlog.xml" />
-    <None Include="Assets\Python\file.txt" />
     <None Include="Assets\Interop.SpeechLib.dll" />
-    <None Include="Assets\Python\requirements.txt" />
     <None Include="Assets\Affdex\Plugins\x86\affdex-native.dll" />
     <None Include="Assets\StreamingAssets\affdex-data-3\haarcascade\haarcascade_frontalface_alt2.xml" />
     <None Include="Assets\Anima2D\Readme.txt" />
-    <None Include="Assets\Python\SmallTalkParser\stIds.txt" />
     <None Include="Assets\Anima2D\Examples\Shaders\VertexLitOneDirectional.shader" />
     <None Include="Assets\StreamingAssets\affdex-data-ios\haarcascade\004_lbp_15stage.xml" />
     <None Include="Assets\StreamingAssets\affdex-data-ios\haarcascade\haarcascade_frontalface_alt2.xml" />
@@ -140,7 +137,6 @@
     <None Include="Assets\StreamingAssets\affdex-data-3\haarcascade\004_lbp_15stage.xml" />
     <None Include="Assets\StreamingAssets\affdex-data-osx\haarcascade\004_lbp_15stage.xml" />
     <None Include="Assets\Anima2D\Examples\Shaders\VisibleOutsideMask.shader" />
-    <None Include="Assets\Python\ReadMe.txt" />
     <None Include="Assets\Anima2D\Examples\Shaders\VisibleInsideMask.shader" />
     <None Include="Assets\CustomMarshalers.dll" />
     <None Include="Assets\Anima2D\Examples\Shaders\Unlit-Alpha-Cull-off.shader" />

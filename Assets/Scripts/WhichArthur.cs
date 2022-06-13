@@ -16,12 +16,14 @@ public class WhichArthur: MonoBehaviour
     //public GameObject useW2V;
     public GameObject togEmpathy;
     public GameObject scenario;
+    public GameObject loadingServer;
     public string webServicePath;
     private string apiKey;
 
     private void Awake()
     {
         informName.SetActive(false);
+        loadingServer.SetActive(false);
         personName.SetActive(false);
         togEmpathy.SetActive(false);
         GameObject.Find("InputField").SetActive(false);
@@ -44,7 +46,7 @@ public class WhichArthur: MonoBehaviour
 
         GameObject.Find("InputField (1)").SetActive(false);
 
-        StartCoroutine(WakeUpWebService());
+        //StartCoroutine(WakeUpWebService());
     }
 
     private IEnumerator Timer()
@@ -262,8 +264,8 @@ public class WhichArthur: MonoBehaviour
             }
         }
 
-        //load the agent
-        SceneManager.LoadScene(1);
+        //start the python server first
+        StartCoroutine(WakeUpWebService());
     }
 
     public void ChangeAgent(string who)
@@ -294,6 +296,7 @@ public class WhichArthur: MonoBehaviour
     //Web Service only to wake the server up
     private IEnumerator WakeUpWebService()
     {
+        loadingServer.SetActive(true);
         UnityWebRequest www = new UnityWebRequest(webServicePath + "tokenize", "POST");
         byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes("{\"text\" : [\"wake up\"]}");
         www.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
@@ -313,6 +316,16 @@ public class WhichArthur: MonoBehaviour
             else
             {
                 Debug.Log("Received: " + www.downloadHandler.text);
+                if (www.downloadHandler.text.Contains("wake"))
+                {
+                    loadingServer.SetActive(false);
+                    //load the agent
+                    SceneManager.LoadScene(1);
+                }
+                else //try again
+                {
+                    StartCoroutine(WakeUpWebService());
+                }
             }
         }
     }
