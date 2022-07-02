@@ -460,6 +460,8 @@ public class MainController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        StartCoroutine(GetText());
+
         pad = new PADClass();
 
         LoadPersonality();
@@ -5125,30 +5127,25 @@ public class MainController : MonoBehaviour
         writingResult.Close();
     }
 
-    //Python to read a file (webgl cannot do that because of server policy)
-    /*private IEnumerator PythonReadFile(string fileName)
+    //WebRequest to read a file (webgl cannot do that because of server policy)
+    IEnumerator GetText()
     {
-        UnityWebRequest www = new UnityWebRequest(webServicePath + "tokenize", "POST");
-        byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes("{\"text\" : [\"" + sentence + "\"]}");
-        www.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
-        www.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+        string path = Application.dataPath + "/personality.txt";
+        Debug.Log(path);
+        UnityWebRequest www = UnityWebRequest.Get(path);
+        yield return www.SendWebRequest();
 
-        www.SetRequestHeader("Content-Type", "application/json");
-        www.SetRequestHeader("Authorization", apiKey);
-
-        using (www)
+        if (www.isNetworkError)
         {
-            yield return www.SendWebRequest();
-
-            if (www.isNetworkError || www.isHttpError)
-            {
-                Debug.Log(www.error);
-            }
-            else
-            {
-                Debug.Log("Received: " + www.downloadHandler.text);
-                WriteTokens(www.downloadHandler.text);
-            }
+            Debug.Log(www.error);
         }
-    }*/
+        else
+        {
+            // Show results as text
+            Debug.Log(www.downloadHandler.text);
+
+            // Or retrieve results as binary data
+            byte[] results = www.downloadHandler.data;
+        }
+    }
 }
