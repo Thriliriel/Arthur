@@ -43,7 +43,7 @@ namespace TopicCS
     {
 
         protected string _identificator;
-        protected List<Dialog> dialogs; //using to pick a random dialog 
+        public List<Dialog> dialogs; //using to pick a random dialog 
         protected bool busy; //dialog is running
 
         Dialog currentDialog;

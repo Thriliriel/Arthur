@@ -9,7 +9,7 @@ using UnityEngine;
 using UnityEngine.UI;
 //using System.Text;
 //using System.Globalization;
-using Prolog;
+//using Prolog;
 //using Word2vec.Tools.Example;
 
 using TopicCS;
@@ -183,9 +183,9 @@ public class MainController : MonoBehaviour
     //private bool canDestroy = false;
 
     //prolog var for beliefs
-    PrologEngine prolog;
+    //PrologEngine prolog;
     //list of statements to test
-    Dictionary<string, int> prologStatements;
+    //Dictionary<string, int> prologStatements;
 
     //chat mode xD
     public bool chatMode;
@@ -379,8 +379,8 @@ public class MainController : MonoBehaviour
 
 #if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX || UNITY_XBOXONE
         //start the prolog
-        prolog = new PrologEngine(persistentCommandHistory: false);
-        prologStatements = new Dictionary<string, int>();
+        //prolog = new PrologEngine(persistentCommandHistory: false);
+        //prologStatements = new Dictionary<string, int>();
 #endif
 
         //what we have on textLTM, load into auxiliary LTM
@@ -2920,7 +2920,7 @@ public class MainController : MonoBehaviour
 #if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX || UNITY_XBOXONE
         //if we find something, we can already answer, do not need to search the memory itself.
         //TODO: get the facts in the file, so it is not "hardcoded"
-        if (topicSent.Count > 0)
+        /*if (topicSent.Count > 0)
         {
             PrologEngine.ISolution solution;
 
@@ -2988,7 +2988,7 @@ public class MainController : MonoBehaviour
                     break;
                 }
             }
-        }
+        }*/
 #endif
 
         if (!foundProlog)
@@ -3405,7 +3405,7 @@ public class MainController : MonoBehaviour
         }
     }
 
-    private void SmallTalking(List<string> tokenizeSentence, string beforeText = "")
+    private void SmallTalking(List<string> tokenizeSentence, Dialog useThis = null, string beforeText = "")
     {
         if (currentTopic == null || topics == null) return;
 
@@ -3423,13 +3423,56 @@ public class MainController : MonoBehaviour
 
         if (!currentTopic.IsDialoging()) //sort new dialog
         {
-            if (!currentTopic.IsDialogsAvailable()) PickTopic(); //there isnt available dialogs in current topic
+            if (!currentTopic.IsDialogsAvailable())
+            { //there isnt available dialogs in current topic
+                //if already chosen, use it
+                if(useThis != null)
+                {
+                    //find the topic of this dialog
+                    foreach(Topic tp in topics)
+                    {
+                        foreach (Dialog dl in tp.dialogs)
+                        {
+                            if(dl.GetDescription() == useThis.GetDescription())
+                            {
+                                currentTopic = tp;
+                                break;
+                            }
+                        }
+                    }
+                }
+                else //just follow the usual flow
+                {
+                    PickTopic();
+                }
+            }
+
+            //just to be sure
+            //if already chosen, use it
+            if (useThis != null)
+            {
+                //find the topic of this dialog
+                foreach (Topic tp in topics)
+                {
+                    foreach (Dialog dl in tp.dialogs)
+                    {
+                        if (dl.GetDescription() == useThis.GetDescription())
+                        {
+                            currentTopic = tp;
+                            break;
+                        }
+                    }
+                }
+            }
 
             //if the topic is emotions, we pass the marioEmotion together to select the appropiate dialog
             if (currentTopic.GetId() == "emotions")
             {
                 Debug.Log(marioEmotion);
                 currentTopic.StartNewDialog(marioEmotion);
+            }else if(useThis != null)
+            {
+                currentTopic.StartNewDialog(useThis.GetDescription());
             }
             else
             {
@@ -3482,6 +3525,28 @@ public class MainController : MonoBehaviour
         }
 
         Debug.Log(ct);
+    }
+
+    //try to find a specific smalltalk
+    private Dialog FindSmallTalk(Dictionary<string, string> cues)
+    {
+        int qntFound = 0;
+        Dialog dialFound = null;
+        foreach(Topic tp in topicsFinal)
+        {
+            foreach(Dialog dl in tp.dialogs)
+            {
+                int ndFound = dl.CheckCuesNodes(cues);
+
+                if (ndFound > qntFound)
+                {
+                    qntFound = ndFound;
+                    dialFound = dl;
+                }
+            }
+        }
+
+        return dialFound;
     }
 
     //hide the random image
@@ -3687,7 +3752,7 @@ public class MainController : MonoBehaviour
     private void LoadBeliefs()
     {
         string[] bel = PlayerPrefs.GetString("beliefs").Split('*');
-        foreach(string line in bel)
+        /*foreach(string line in bel)
         {
             if (line != "" && line != null)
             {
@@ -3701,7 +3766,7 @@ public class MainController : MonoBehaviour
                 arrrr = arrrr[1].Split(',');
                 prologStatements.Add(state, arrrr.Length);
             }
-        }
+        }*/
     }
 
     //create prolog facts from memory
@@ -3710,7 +3775,7 @@ public class MainController : MonoBehaviour
         //for each general event, we create one or more prolog facts
         //we do not add directly because ConsultFromStrong does not allow to define same facts separately. So, we need to add it in the same command
         Dictionary<string, string> facts = new Dictionary<string, string>();
-        foreach(KeyValuePair<int, GeneralEvent> ge in agentGeneralEvents)
+        /*foreach(KeyValuePair<int, GeneralEvent> ge in agentGeneralEvents)
         {
             //get all nodes separated by type
             List<MemoryClass> person = new List<MemoryClass>();
@@ -3902,7 +3967,7 @@ public class MainController : MonoBehaviour
         foreach(KeyValuePair<string,string> fct in facts)
         {
             prolog.ConsultFromString(fct.Value);
-        }
+        }*/
     }
 
     //Web Service for Tokenization
@@ -4105,7 +4170,20 @@ public class MainController : MonoBehaviour
                     }
                     else
                     {
-                        Dunno();
+                        //try to find the best smalltalk for this
+                        Dialog haa = FindSmallTalk(cues);
+
+                        //if not null, use it
+                        if(haa != null)
+                        {
+                            List<string> asToki = new List<string>();
+                            SmallTalking(asToki, haa);
+                        }
+                        //else, at least we tried
+                        else
+                        {
+                            Dunno();
+                        }
                     }
                 }//else, nothing was found
                 else
@@ -4119,7 +4197,20 @@ public class MainController : MonoBehaviour
                     else
                     {*/
                     //SpeakYouFool("Sorry, i do not know.");
-                    Dunno();
+                    //try to find the best smalltalk for this
+                    Dialog haa = FindSmallTalk(cues);
+
+                    //if not null, use it
+                    if (haa != null)
+                    {
+                        List<string> asToki = new List<string>();
+                        SmallTalking(asToki, haa);
+                    }
+                    //else, at least we tried
+                    else
+                    {
+                        Dunno();
+                    }
                     //}
                 }
 

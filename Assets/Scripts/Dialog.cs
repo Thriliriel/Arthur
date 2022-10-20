@@ -286,5 +286,24 @@ namespace DialogCS
             currentNode.ResetChildren();
         }
 
+        //check how many cues are inside the nodes of this dialog
+        public int CheckCuesNodes(Dictionary<string, string> cues)
+        {
+            int qntFound = 0;
+
+            foreach (KeyValuePair<string, Node> nd in nodes)
+            {
+                foreach(KeyValuePair<string, string> cue in cues)
+                {
+                    if (nd.Value.GetSentence().Contains(cue.Key))
+                    {
+                        qntFound++;
+                    }
+                }
+            }
+
+            return qntFound;
+        }
+
     }
 }
