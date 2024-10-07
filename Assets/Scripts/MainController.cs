@@ -4666,6 +4666,7 @@ public class MainController : MonoBehaviour
     //update PAD and check emotion
     public void UpdatePadEmotion(float polarity, string memEmotion = "")
     {
+        //Debug.Log(pad);
         pad.UpdatePAD(polarity, memEmotion);
 
         string chosenEmo = FindPADEmotion();
